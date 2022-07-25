@@ -13,6 +13,9 @@
         android:theme="@style/Theme.PerpustakaanApp"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.admin.updatebook.UpdateBookActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.SettingsActivity"
             android:exported="false" />
         <activity
