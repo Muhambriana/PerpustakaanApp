@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">PerpustakaanApp</string>
+    <string name="nis">Nomor Induk Siswa</string>
+    <string name="password">Password</string>
+    <string name="remember_password">Remember Password</string>
+    <string name="login">Login</string>
+    <string name="dont_have_an_account">Don\'t have an account?</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="text_nisn">*User Id Siswa Adalah NISN</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="required">Required</string>
+    <string name="toolbar_title">Daya Utama Library</string>
+    <string name="img_description">Menu 1</string>
+    <string name="alphabet_A">Menu A</string>
+    <string name="action_settings">Settings</string>
+    <string name="daftar_buku">Daftar Buku</string>
+    <string name="bookName">Cara Memahami Musik</string>
+    <string name="poster">Poster</string>
+    <string name="description">Deskripsi Buku</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
+    <string name="text_author">Penulis</string>
+    <string name="author">Pramoedya Ananta Toer</string>
+    <string name="text_year">Tahun terbit</string>
+    <string name="year">2018</string>
+    <string name="publisher">Penerbit</string>
+    <string name="text_publisher">Penerbit</string>
+    <string name="text_description">Deskripsi</string>
+    <string name="book_title">Sebuah Seni Untuk Bersikap Bodo Amat</string>
+    <string name="loan">Pinjam Buku</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="search">Search</string>
+    <string name="setting">Settings</string>
+    <string name="logout">Logout</string>
+</resources>

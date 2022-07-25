@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.admin.createbook.CreateBookActivity">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/ed_book_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Judul Buku"
+        android:inputType="text"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
+        app:met_floatingLabel="highlight" />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/ed_edition"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Edisi Buku"
+        android:inputType="text"
+        android:textSize="16sp"
+        app:met_floatingLabel="highlight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ed_book_title"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp" />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/ed_author"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Penulis"
+        android:inputType="textPersonName"
+        android:textSize="16sp"
+        app:met_floatingLabel="highlight"
+        app:met_maxCharacters="2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ed_edition"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp" />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/ed_publisher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Penerbit"
+        android:inputType="text"
+        android:textSize="16sp"
+        app:met_floatingLabel="highlight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ed_author"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp" />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/ed_publisher_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Tahun Terbit"
+        android:inputType="date"
+        android:textSize="16sp"
+        app:met_floatingLabel="highlight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ed_publisher"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp" />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/ed_copies"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Jumlah Examplar"
+        android:inputType="number"
+        android:textSize="16sp"
+        app:met_floatingLabel="highlight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ed_publisher_date"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp" />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/ed_source"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Sumber"
+        android:inputType="text"
+        android:textSize="16sp"
+        app:met_floatingLabel="highlight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ed_copies"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp" />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/ed_remark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Remark"
+        android:inputType="text"
+        android:textSize="16sp"
+        app:met_floatingLabel="highlight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ed_source"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp" />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/ed_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Harga Buku"
+        android:inputType="number"
+        android:textSize="16sp"
+        app:met_floatingLabel="highlight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ed_remark"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp" />
+
+    <Button
+        android:id="@+id/button_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SIMPAN"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ed_price"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="20dp"/>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!--  <LinearLayout-->
+    <!--      android:layout_width="match_parent"-->
+    <!--      android:layout_height="180dp"-->
+    <!--      android:background="#eceff1"-->
+    <!--      android:orientation="horizontal">-->
+
+    <!--    <LinearLayout-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:orientation="vertical"-->
+    <!--        android:layout_marginLeft="8dp"-->
+    <!--        android:layout_marginTop="8dp">-->
+
+    <!--      <TextView-->
+    <!--          android:layout_width="wrap_content"-->
+    <!--          android:layout_height="wrap_content"-->
+    <!--          android:layout_weight="1"-->
+    <!--          android:text="Nama" />-->
+
+    <!--      <TextView-->
+    <!--          android:layout_width="wrap_content"-->
+    <!--          android:layout_height="wrap_content"-->
+    <!--          android:layout_weight="1"-->
+    <!--          android:text="NIK" />-->
+
+    <!--      <TextView-->
+    <!--          android:layout_width="wrap_content"-->
+    <!--          android:layout_height="wrap_content"-->
+    <!--          android:layout_weight="1"-->
+    <!--          android:text="Umur" />-->
+
+    <!--      <TextView-->
+    <!--          android:layout_width="wrap_content"-->
+    <!--          android:layout_height="wrap_content"-->
+    <!--          android:layout_weight="1"-->
+    <!--          android:text="Alamat" />-->
+
+    <!--      <TextView-->
+    <!--          android:layout_width="wrap_content"-->
+    <!--          android:layout_height="wrap_content"-->
+    <!--          android:layout_weight="1"-->
+    <!--          android:text="Asal Institusi" />-->
+
+    <!--    </LinearLayout>-->
+
+    <!--    <LinearLayout-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:orientation="vertical"-->
+    <!--        android:layout_marginLeft="8dp"-->
+    <!--        android:layout_marginTop="8dp">-->
+
+    <!--      <TextView-->
+    <!--          android:layout_width="wrap_content"-->
+    <!--          android:layout_height="wrap_content"-->
+    <!--          android:layout_weight="1"-->
+    <!--          android:text=":" />-->
+
+    <!--      <TextView-->
+    <!--          android:layout_width="wrap_content"-->
+    <!--          android:layout_height="wrap_content"-->
+    <!--          android:layout_weight="1"-->
+    <!--          android:text=":" />-->
+
+    <!--      <TextView-->
+    <!--          android:layout_width="wrap_content"-->
+    <!--          android:layout_height="wrap_content"-->
+    <!--          android:layout_weight="1"-->
+    <!--          android:text=":" />-->
+
+    <!--      <TextView-->
+    <!--          android:layout_width="wrap_content"-->
+    <!--          android:layout_height="wrap_content"-->
+    <!--          android:layout_weight="1"-->
+    <!--          android:text=":" />-->
+
+    <!--      <TextView-->
+    <!--          android:layout_width="wrap_content"-->
+    <!--          android:layout_height="wrap_content"-->
+    <!--          android:layout_weight="1"-->
+    <!--          android:text=":" />-->
+
+    <!--    </LinearLayout>-->
+
+    <!--    <LinearLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:orientation="vertical"-->
+    <!--        android:layout_marginLeft="8dp"-->
+    <!--        android:layout_marginTop="8dp">-->
+
+    <!--      <TextView-->
+    <!--          android:id="@+id/hasil_nama"-->
+    <!--          android:layout_width="match_parent"-->
+    <!--          android:layout_height="wrap_content"-->
+    <!--          android:layout_weight="1" />-->
+
+    <!--      <TextView-->
+    <!--          android:id="@+id/hasil_nik"-->
+    <!--          android:layout_width="match_parent"-->
+    <!--          android:layout_height="wrap_content"-->
+    <!--          android:layout_weight="1" />-->
+
+    <!--      <TextView-->
+    <!--          android:id="@+id/hasil_umur"-->
+    <!--          android:layout_width="match_parent"-->
+    <!--          android:layout_height="wrap_content"-->
+    <!--          android:layout_weight="1" />-->
+
+    <!--      <TextView-->
+    <!--          android:id="@+id/hasil_alamat"-->
+    <!--          android:layout_width="match_parent"-->
+    <!--          android:layout_height="wrap_content"-->
+    <!--          android:layout_weight="1" />-->
+
+    <!--      <TextView-->
+    <!--          android:id="@+id/hasil_institusi"-->
+    <!--          android:layout_width="match_parent"-->
+    <!--          android:layout_height="wrap_content"-->
+    <!--          android:layout_weight="1" />-->
+
+    <!--    </LinearLayout>-->
+
+    <!--  </LinearLayout>-->
+
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

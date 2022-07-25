@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nis">Nomor Induk Siswa</string>
+    <string name="password">Password</string>
+    <string name="remember_password">Remember Password</string>
+    <string name="login">Login</string>
+    <string name="dont_have_an_account">Don\'t have an account?</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="required">Required</string>
+    <string name="action_settings">Settings</string>
+    <string name="bookName">Cara Memahami Musik</string>
+    <string name="author">Pramoedya Ananta Toer</string>
+    <string name="book_title">Sebuah Seni Untuk Bersikap Bodo Amat</string>
+    <string name="loan">Pinjam Buku</string>
+</resources>
