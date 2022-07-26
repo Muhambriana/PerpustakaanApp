@@ -1,6 +1,7 @@
-package com.skripsi.perpustakaanapp.core.models
+package com.skripsi.perpustakaanapp.core.response
 
 import com.google.gson.annotations.SerializedName
+import com.skripsi.perpustakaanapp.core.models.Book
 
 data class BookCreateResponse(
     @field:SerializedName("code")

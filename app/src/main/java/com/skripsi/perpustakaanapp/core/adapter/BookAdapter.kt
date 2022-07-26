@@ -50,6 +50,9 @@ class BookAdapter : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
             binding.root.setOnClickListener {
                 onItemClick?.invoke(books[adapterPosition])
             }
+//            binding.buttonMore.setOnClickListener{
+//                onItemClick?.invoke(books[adapterPosition])
+//            }
         }
     }
 }

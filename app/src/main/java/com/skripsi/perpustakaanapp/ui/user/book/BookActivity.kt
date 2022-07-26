@@ -68,6 +68,7 @@ class BookActivity : AppCompatActivity() {
             intent.putExtra(DetailBookActivity.EXTRA_DATA, it)
             startActivity(intent)
         }
+
     }
 
     companion object{

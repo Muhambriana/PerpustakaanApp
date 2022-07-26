@@ -1,10 +1,8 @@
 package com.skripsi.perpustakaanapp.ui.user.book
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.skripsi.perpustakaanapp.core.models.Book
-import com.skripsi.perpustakaanapp.core.models.BookCreateResponse
 import com.skripsi.perpustakaanapp.core.models.BookList
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import retrofit2.Call

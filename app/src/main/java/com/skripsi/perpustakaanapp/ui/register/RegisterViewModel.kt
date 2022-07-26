@@ -2,7 +2,7 @@ package com.skripsi.perpustakaanapp.ui.register
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.skripsi.perpustakaanapp.core.models.CreateUserResponse
+import com.skripsi.perpustakaanapp.core.response.CreateUserResponse
 import com.skripsi.perpustakaanapp.core.models.User
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import retrofit2.Call

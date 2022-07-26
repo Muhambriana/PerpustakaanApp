@@ -1,6 +1,7 @@
 package com.skripsi.perpustakaanapp.core.apihelper
 
 import com.skripsi.perpustakaanapp.core.models.*
+import com.skripsi.perpustakaanapp.core.response.*
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -35,6 +36,12 @@ interface Api {
         @Header("Authorization") token: String,
         @Body book: Book
     ):Call<BookCreateResponse>
+
+    @POST("book/update")
+    fun postUpdateBook(
+        @Header("Authorization") token: String,
+        @Body book: Book
+    ):Call<BookUpdateResponse>
 
 //    @POST("book/loan")
 //    fun loanBook(

@@ -3,7 +3,7 @@ package com.skripsi.perpustakaanapp.ui.admin.createbook
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.skripsi.perpustakaanapp.core.models.Book
-import com.skripsi.perpustakaanapp.core.models.BookCreateResponse
+import com.skripsi.perpustakaanapp.core.response.BookCreateResponse
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import retrofit2.Call
 import retrofit2.Callback

@@ -2,7 +2,7 @@ package com.skripsi.perpustakaanapp.ui.home
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.skripsi.perpustakaanapp.core.models.LogoutResponse
+import com.skripsi.perpustakaanapp.core.response.LogoutResponse
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import retrofit2.Call
 import retrofit2.Callback
@@ -18,7 +18,7 @@ class HomeViewModel(private val repository: LibraryRepository) : ViewModel() {
         isLoading.value = true
         val response = repository.userLogout(token)
         response.enqueue(object : Callback<LogoutResponse> {
-            override fun onResponse( call: Call<LogoutResponse>, response: Response<LogoutResponse>
+            override fun onResponse(call: Call<LogoutResponse>, response: Response<LogoutResponse>
             ) {
                 if (response.body()?.code == 0) {
                     isSuccess.value = true

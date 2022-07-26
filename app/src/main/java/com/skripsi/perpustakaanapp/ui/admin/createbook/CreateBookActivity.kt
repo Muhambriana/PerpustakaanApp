@@ -58,7 +58,7 @@ class CreateBookActivity : AppCompatActivity() {
         sessionManager = SessionManager(this)
 
         viewModel.isLoading.observe(this) { boolean ->
-            binding.progressBar.visibility = if (boolean) View.VISIBLE else View.INVISIBLE
+            binding.progressBar.visibility = if (boolean) View.VISIBLE else View.GONE
         }
 
         viewModel.createBook(

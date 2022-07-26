@@ -17,6 +17,7 @@ import com.skripsi.perpustakaanapp.databinding.ActivityHomeAdminBinding
 import com.skripsi.perpustakaanapp.ui.admin.createbook.CreateBookActivity
 import com.skripsi.perpustakaanapp.ui.admin.createnewadmin.CreateNewAdminActivity
 import com.skripsi.perpustakaanapp.ui.login.LoginActivity
+import com.skripsi.perpustakaanapp.ui.user.book.BookActivity
 
 class HomeAdminActivity : AppCompatActivity() {
 
@@ -44,7 +45,7 @@ class HomeAdminActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.option_menu, menu)
+        menuInflater.inflate(R.menu.activity_home_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -92,9 +93,14 @@ class HomeAdminActivity : AppCompatActivity() {
                     val intent = Intent(this@HomeAdminActivity, CreateNewAdminActivity::class.java)
                     startActivity(intent)
                 }
+                R.id.book_list -> {
+                    val intent = Intent(this@HomeAdminActivity, BookActivity::class.java)
+                    startActivity(intent)
+                }
             }
         }
         binding.createBook.setOnClickListener(clickListener)
         binding.createAdmin.setOnClickListener(clickListener)
+        binding.bookList.setOnClickListener(clickListener)
     }
 }

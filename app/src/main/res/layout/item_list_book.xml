@@ -43,3 +43,65 @@
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <!--    <?xml version="1.0" encoding="utf-8"?>-->
+    <!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--xmlns:tools="http://schemas.android.com/tools"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginStart="9dp"-->
+    <!--android:layout_marginTop="10dp"-->
+    <!--android:layout_marginEnd="9dp"-->
+    <!--android:background="@drawable/card_selector"-->
+    <!--android:descendantFocusability="beforeDescendants"-->
+    <!--android:paddingTop="15dp"-->
+
+    <!--android:paddingBottom="15dp">-->
+
+    <!--<de.hdodenhof.circleimageview.CircleImageView-->
+    <!--    android:id="@+id/img_avatar"-->
+    <!--    android:layout_width="63dp"-->
+    <!--    android:layout_height="59dp"-->
+    <!--    android:layout_alignParentStart="true"-->
+    <!--    android:layout_marginStart="9dp"-->
+    <!--    app:civ_border_color="#40504d"-->
+    <!--    app:civ_border_width="3dp"-->
+    <!--    app:layout_constraintStart_toStartOf="parent"-->
+    <!--    app:layout_constraintTop_toTopOf="parent" />-->
+
+    <!--<TextView-->
+    <!--    android:id="@+id/tv_book_title"-->
+    <!--    android:layout_width="212dp"-->
+    <!--    android:layout_height="59dp"-->
+    <!--    android:layout_marginStart="12dp"-->
+    <!--    android:layout_toEndOf="@+id/img_avatar"-->
+    <!--    android:gravity="center"-->
+    <!--    android:textColor="@color/colorSilver"-->
+    <!--    android:textSize="11sp"-->
+    <!--    android:textStyle="bold|italic"-->
+    <!--    app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--    app:layout_constraintEnd_toEndOf="parent"-->
+    <!--    app:layout_constraintHorizontal_bias="0.0"-->
+    <!--    app:layout_constraintStart_toEndOf="@+id/img_avatar"-->
+    <!--    app:layout_constraintTop_toTopOf="parent"-->
+    <!--    app:layout_constraintVertical_bias="0.516"-->
+    <!--    tools:text="@string/book_title" />-->
+
+    <!--<Button-->
+    <!--    android:id="@+id/button_more"-->
+    <!--    android:layout_width="35dp"-->
+    <!--    android:layout_height="38dp"-->
+    <!--    android:layout_margin="5dp"-->
+    <!--    android:background="@drawable/icon_more"-->
+    <!--    android:textSize="20sp"-->
+    <!--    app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--    app:layout_constraintStart_toEndOf="@+id/tv_book_title"-->
+    <!--    app:layout_constraintTop_toTopOf="parent" />-->
+
+
+    <!--</androidx.constraintlayout.widget.ConstraintLayout>-->
+
+
+
+
+

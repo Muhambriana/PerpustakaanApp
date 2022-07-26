@@ -16,5 +16,5 @@ class LibraryRepository constructor(private val retrofitClient: RetrofitClient) 
 
     fun createUser(user: User) = retrofitClient.create().createUser(user)
 
-
+    fun updateBook(token: String, book: Book) = retrofitClient.create().postUpdateBook(token, book)
 }
