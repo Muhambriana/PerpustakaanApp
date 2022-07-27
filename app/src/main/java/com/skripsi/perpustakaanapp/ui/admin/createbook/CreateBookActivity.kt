@@ -37,16 +37,16 @@ class CreateBookActivity : AppCompatActivity() {
 
     private fun askAppointment() {
         val title = binding.edBookTitle.text.toString()
-        val price = binding.edPrice.text.toString()
+//        val price = binding.edPrice.text.toString()
         when {
             title.isEmpty() -> {
                 binding.edBookTitle.error = "Judul Buku Tidak Boleh Kosong"
                 binding.edBookTitle.requestFocus()
             }
-            price.isEmpty() -> {
-                binding.edPrice.error = "Harga Buku Tidak Boleh Kosong"
-                binding.edPrice.requestFocus()
-            }
+//            price.isEmpty() -> {
+//                binding.edPrice.error = "Harga Buku Tidak Boleh Kosong"
+//                binding.edPrice.requestFocus()
+//            }
             else -> {
                 postBookData()
             }
@@ -71,7 +71,7 @@ class CreateBookActivity : AppCompatActivity() {
             binding.edCopies.text.toString(),
             binding.edSource.text.toString(),
             binding.edRemark.text.toString(),
-            binding.edPrice.text.toString().toDouble()
+//            binding.edPrice.text.toString().toDouble()
         )
 
         viewModel.failMessage.observe(this) {

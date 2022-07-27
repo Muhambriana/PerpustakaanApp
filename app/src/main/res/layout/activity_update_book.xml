@@ -125,7 +125,8 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp" />
 
-<!--        <com.rengwuxian.materialedittext.MaterialEditText-->
+
+        <!--        <com.rengwuxian.materialedittext.MaterialEditText-->
 <!--            android:id="@+id/ed_price"-->
 <!--            android:layout_width="match_parent"-->
 <!--            android:layout_height="wrap_content"-->
@@ -138,6 +139,17 @@
 <!--            app:layout_constraintTop_toBottomOf="@id/ed_remark"-->
 <!--            android:layout_marginStart="10dp"-->
 <!--            android:layout_marginEnd="10dp" />-->
+
+        <TextView
+            android:id="@+id/tv_book_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            tools:text="100"
+            android:visibility="invisible"
+            app:layout_constraintTop_toBottomOf="@id/button_save"
+            app:layout_constraintLeft_toLeftOf="parent"
+            tools:layout_editor_absoluteX="193dp" />
 
         <Button
             android:id="@+id/button_save"

@@ -6,12 +6,12 @@ import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.ui.admin.createbook.CreateBookViewModel
 import com.skripsi.perpustakaanapp.ui.admin.createnewadmin.CreateNewAdminViewModel
 import com.skripsi.perpustakaanapp.ui.admin.pendingtask.PendingTaskViewModel
-import com.skripsi.perpustakaanapp.ui.admin.updatebook.UpdateBookActivity
 import com.skripsi.perpustakaanapp.ui.admin.updatebook.UpdateBookViewModel
 import com.skripsi.perpustakaanapp.ui.home.HomeViewModel
 import com.skripsi.perpustakaanapp.ui.login.LoginViewModel
 import com.skripsi.perpustakaanapp.ui.register.RegisterViewModel
 import com.skripsi.perpustakaanapp.ui.user.book.BookViewModel
+import com.skripsi.perpustakaanapp.ui.user.DetailBookViewModel
 import com.skripsi.perpustakaanapp.ui.user.loan.LoanViewModel
 
 class MViewModelFactory constructor(private val libraryRepository: LibraryRepository) :
@@ -44,6 +44,9 @@ class MViewModelFactory constructor(private val libraryRepository: LibraryReposi
             }
             modelClass.isAssignableFrom(UpdateBookViewModel::class.java) -> {
                 return UpdateBookViewModel(this.libraryRepository) as T
+            }
+            modelClass.isAssignableFrom(DetailBookViewModel::class.java) -> {
+                return DetailBookViewModel(this.libraryRepository) as T
             }
             else -> throw IllegalArgumentException("ViewModel Not Found")
         }

@@ -71,6 +71,10 @@ class BookActivity : AppCompatActivity() {
 
     }
 
+    override fun onRestart() {
+        super.onRestart()
+    }
+
     companion object{
         private val TAG = "BookActivity"
     }

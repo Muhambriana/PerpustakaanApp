@@ -1,8 +1,8 @@
-package com.skripsi.perpustakaanapp.core.response
+package com.skripsi.perpustakaanapp.core.responses
 
 import com.google.gson.annotations.SerializedName
 
-data class LoginResponse(
+data class LogoutResponse(
 
     @field:SerializedName("code")
     val code: Int? = null,
@@ -14,12 +14,6 @@ data class LoginResponse(
     val token: String? = null,
 
     @field:SerializedName("sessionId")
-    val sessionId: String? = null,
-
-    @field:SerializedName("firstName")
-    val fullName: String? = null,
-
-    @field:SerializedName("roleName")
-    val roleName: String? = null
+    val sessionId: String? = null
 
 )

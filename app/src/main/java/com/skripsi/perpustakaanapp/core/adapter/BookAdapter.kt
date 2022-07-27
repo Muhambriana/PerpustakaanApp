@@ -10,11 +10,13 @@ import com.skripsi.perpustakaanapp.databinding.ItemListBookBinding
 
 class BookAdapter : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
 
-    private var books = mutableListOf<Book>()
+    private var listBook = mutableListOf<Book>()
     var onItemClick: ((Book) -> Unit)? = null
 
-    fun setBookList(books: List<Book>) {
-        this.books = books.toMutableList()
+    fun setBookList(books: List<Book>?) {
+        if (books == null) return
+        listBook.clear()
+        listBook.addAll(books)
         notifyDataSetChanged()
     }
 
@@ -24,13 +26,13 @@ class BookAdapter : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
 
     // untuk memasukkan atau set data ke dalam view
     override fun onBindViewHolder(holder: BookViewHolder, position: Int) {
-        val book = books[position]
+        val book = listBook[position]
         holder.bind(book)
     }
 
     // untuk mendapatkan jumlah data buku yang dimasukkan ke dalam adapter
     override fun getItemCount(): Int {
-        return books.size
+        return listBook.size
     }
 
     inner class BookViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -48,7 +50,7 @@ class BookAdapter : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
 
         init {
             binding.root.setOnClickListener {
-                onItemClick?.invoke(books[adapterPosition])
+                onItemClick?.invoke(listBook[adapterPosition])
             }
 //            binding.buttonMore.setOnClickListener{
 //                onItemClick?.invoke(books[adapterPosition])

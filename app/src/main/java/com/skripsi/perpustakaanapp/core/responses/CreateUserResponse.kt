@@ -1,4 +1,4 @@
-package com.skripsi.perpustakaanapp.core.response
+package com.skripsi.perpustakaanapp.core.responses
 
 import com.google.gson.annotations.SerializedName
 

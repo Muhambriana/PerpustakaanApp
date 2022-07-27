@@ -7,6 +7,9 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class Book(
 
+    @field:SerializedName("id")
+    val bookId: String? = null,
+
     @field:SerializedName("title")
     val title: String? = null,
 
@@ -29,9 +32,6 @@ data class Book(
     val source: String? = null,
 
     @field:SerializedName("remark")
-    val remark: String? = null,
-
-    @field:SerializedName("price")
-    val price: Double? = null,
+    val remark: String? = null
 
 ) : Parcelable

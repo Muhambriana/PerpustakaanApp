@@ -2,6 +2,7 @@ package com.skripsi.perpustakaanapp.core.repository
 
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.models.Book
+import com.skripsi.perpustakaanapp.core.models.TempModel
 import com.skripsi.perpustakaanapp.core.models.User
 
 class LibraryRepository constructor(private val retrofitClient: RetrofitClient) {
@@ -17,4 +18,7 @@ class LibraryRepository constructor(private val retrofitClient: RetrofitClient) 
     fun createUser(user: User) = retrofitClient.create().createUser(user)
 
     fun updateBook(token: String, book: Book) = retrofitClient.create().postUpdateBook(token, book)
+
+    fun deleteBook(token: String, bookId: TempModel) = retrofitClient.create().deleteBook(token, bookId)
+
 }

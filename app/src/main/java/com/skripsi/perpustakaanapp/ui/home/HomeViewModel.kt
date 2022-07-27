@@ -2,7 +2,7 @@ package com.skripsi.perpustakaanapp.ui.home
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.skripsi.perpustakaanapp.core.response.LogoutResponse
+import com.skripsi.perpustakaanapp.core.responses.LogoutResponse
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import retrofit2.Call
 import retrofit2.Callback

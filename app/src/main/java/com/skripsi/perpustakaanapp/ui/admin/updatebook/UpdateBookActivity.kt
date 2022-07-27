@@ -3,6 +3,7 @@ package com.skripsi.perpustakaanapp.ui.admin.updatebook
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import com.skripsi.perpustakaanapp.core.MViewModelFactory
 import com.skripsi.perpustakaanapp.core.SessionManager
@@ -40,8 +41,15 @@ class UpdateBookActivity : AppCompatActivity() {
     }
 
     private fun setEditText(dataBook: Book?) {
-        println("kocakk $dataBook?.title")
+        binding.tvBookId.text = dataBook?.bookId
         binding.edBookTitle.setText(dataBook?.title)
+        binding.edEdition.setText(dataBook?.edition)
+        binding.edAuthor.setText(dataBook?.author)
+        binding.edCopies.setText(dataBook?.copies)
+        binding.edPublisher.setText(dataBook?.publisher)
+        binding.edPublisherDate.setText(dataBook?.publisherDate)
+        binding.edSource.setText(dataBook?.source)
+        binding.edRemark.setText(dataBook?.remark)
     }
 
     private fun askAppointment() {
@@ -71,6 +79,7 @@ class UpdateBookActivity : AppCompatActivity() {
 
         viewModel.updateBook(
             token = "Bearer ${sessionManager.fetchAuthToken()}",
+            binding.tvBookId.text.toString(),
             binding.edBookTitle.text.toString(),
             binding.edEdition.text.toString(),
             binding.edAuthor.text.toString(),
@@ -78,8 +87,27 @@ class UpdateBookActivity : AppCompatActivity() {
             binding.edPublisherDate.text.toString(),
             binding.edCopies.text.toString(),
             binding.edSource.text.toString(),
-            binding.edRemark.text.toString(),
+            binding.edRemark.text.toString()
         )
+
+        viewModel.failMessage.observe(this) { message ->
+            println("masuk fail$message")
+            if(message != null) {
+
+                //Reset status value at first to prevent multitriggering
+                //and to be available to trigger action again
+                viewModel.failMessage.value = null
+                if(message == "A") {
+                    AlertDialog.Builder(this@UpdateBookActivity)
+                        .setTitle("Success")
+                        .setMessage("Data Berhasil Di Update")
+                        .setPositiveButton("Tutup") { _, _ ->
+                            finish()
+                        }
+                        .show()
+                }
+            }
+        }
     }
 
     companion object {
