@@ -74,25 +74,30 @@ class CreateBookActivity : AppCompatActivity() {
 //            binding.edPrice.text.toString().toDouble()
         )
 
-        viewModel.failMessage.observe(this) {
-            if (it == "") {
-                AlertDialog.Builder(this@CreateBookActivity)
-                    .setTitle("Success")
-                    .setMessage("Data Berhasil Ditambahkan")
-                    .setPositiveButton("Tutup") { _, _ ->
-                        binding.edBookTitle.text?.clear()
-                        //clear semua edit text
-                    }
-                    .show()
-            }
-            else {
-                AlertDialog.Builder(this@CreateBookActivity)
-                    .setTitle("Data Gagal Ditambahkan")
-                    .setMessage(it)
-                    .setPositiveButton("Tutup") { _, _ ->
-                        //Do nothing
-                    }
-                    .show()
+        viewModel.failMessage.observe(this) { message ->
+            println("kocak $message")
+            if (message != null) {
+                //Reset status value at first to prevent multitriggering
+                //and to be available to trigger action again
+                viewModel.failMessage.value = null
+                if (message == "") {
+                    AlertDialog.Builder(this@CreateBookActivity)
+                        .setTitle("Success")
+                        .setMessage("Data Berhasil Ditambahkan")
+                        .setPositiveButton("Tutup") { _, _ ->
+                            binding.edBookTitle.text?.clear()
+                            //clear semua edit text
+                        }
+                        .show()
+                } else {
+                    AlertDialog.Builder(this@CreateBookActivity)
+                        .setTitle("Data Gagal Ditambahkan")
+                        .setMessage(message)
+                        .setPositiveButton("Tutup") { _, _ ->
+                            //Do nothing
+                        }
+                        .show()
+                }
             }
         }
 

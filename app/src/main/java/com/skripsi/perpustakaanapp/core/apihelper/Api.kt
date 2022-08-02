@@ -12,7 +12,7 @@ interface Api {
     @POST("user/create")
     fun createUser(
         @Body user: User
-    ): Call<CreateUserResponse>
+    ): Call<GeneralResponse>
 
     @Headers("Content-Type: application/json")
     @POST("login")
@@ -25,7 +25,7 @@ interface Api {
     @POST("logout")
     fun userLogout(
         @Header("Authorization") token: String
-    ): Call<LogoutResponse>
+    ): Call<GeneralResponse>
 
     @POST("book/list")
     fun getAllBook(
@@ -36,19 +36,19 @@ interface Api {
     fun postCreateBook(
         @Header("Authorization") token: String,
         @Body book: Book
-    ):Call<BookCreateResponse>
+    ):Call<GeneralResponse>
 
     @POST("book/update")
     fun postUpdateBook(
         @Header("Authorization") token: String,
         @Body book: Book
-    ):Call<BookUpdateResponse>
+    ):Call<GeneralResponse>
 
     @POST("book/delete")
     fun deleteBook(
         @Header("Authorization") token: String,
         @Body bookId: TempModel
-    ):Call<BookDeleteResponse>
+    ):Call<GeneralResponse>
 
 //    @POST("book/loan")
 //    fun loanBook(

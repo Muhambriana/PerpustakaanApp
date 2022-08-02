@@ -92,20 +92,23 @@ class LoginActivity : AppCompatActivity() {
                 if (message == "") {
                     // for get role name
                     viewModel.roleName.observe(this) { roleName ->
-                        if (roleName == "admin") {
-                            viewModel.userName.observe(this){ username ->
-                                val home = Intent(this@LoginActivity, HomeAdminActivity::class.java)
-                                home.putExtra("user_name", username)
-                                startActivity(home)
-                                finish()
+                        if (roleName != null) {
+                            sessionManager.saveUserRole(roleName)
+                            if (roleName == "admin") {
+                                viewModel.userName.observe(this){ username ->
+                                    val home = Intent(this@LoginActivity, HomeAdminActivity::class.java)
+                                    home.putExtra("user_name", username)
+                                    startActivity(home)
+                                    finish()
+                                }
                             }
-                        }
-                        else if (roleName == "student") {
-                            viewModel.userName.observe(this){ username ->
-                                val home = Intent(this@LoginActivity, HomeUserActivity::class.java)
-                                home.putExtra("user_name", username)
-                                startActivity(home)
-                                finish()
+                            else if (roleName == "student") {
+                                viewModel.userName.observe(this){ username ->
+                                    val home = Intent(this@LoginActivity, HomeUserActivity::class.java)
+                                    home.putExtra("user_name", username)
+                                    startActivity(home)
+                                    finish()
+                                }
                             }
                         }
                     }

@@ -91,18 +91,25 @@ class UpdateBookActivity : AppCompatActivity() {
         )
 
         viewModel.failMessage.observe(this) { message ->
-            println("masuk fail$message")
             if(message != null) {
-
                 //Reset status value at first to prevent multitriggering
                 //and to be available to trigger action again
                 viewModel.failMessage.value = null
-                if(message == "A") {
+                if(message == "") {
                     AlertDialog.Builder(this@UpdateBookActivity)
                         .setTitle("Success")
                         .setMessage("Data Berhasil Di Update")
                         .setPositiveButton("Tutup") { _, _ ->
                             finish()
+                        }
+                        .show()
+                }
+                else {
+                    AlertDialog.Builder(this@UpdateBookActivity)
+                        .setTitle("Gagal")
+                        .setMessage(message)
+                        .setPositiveButton("Tutup") { _, _ ->
+                            // do nothing
                         }
                         .show()
                 }

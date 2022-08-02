@@ -19,7 +19,18 @@ class SessionManager (context: Context) {
         return prefs.getString(USER_TOKEN, null)
     }
 
+    fun saveUserRole(roleName: String) {
+        val editor = prefs.edit()
+        editor.putString(USER_ROLE, roleName)
+        editor.apply()
+    }
+
+    fun fetchUserRole(): String? {
+        return prefs.getString(USER_ROLE, null)
+    }
+
     companion object{
         const val USER_TOKEN = "user_token"
+        const val USER_ROLE = "user_role"
     }
 }

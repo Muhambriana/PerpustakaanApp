@@ -53,7 +53,8 @@
         </activity>
         <activity
             android:name=".ui.home.HomeUserActivity"
-            android:exported="false" />
+            android:exported="false">
+        </activity>
     </application>
 
 </manifest>
