@@ -4,39 +4,159 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.user.loan.LoanActivity">
+    tools:context=".ui.user.loan.LoanActivity"
+    android:background="#24281a">
+
 
     <RelativeLayout
         android:id="@+id/illust_2"
-        android:layout_width="177dp"
-        android:layout_height="158dp"
+        android:layout_width="130dp"
+        android:layout_height="104dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="264dp"
+        android:layout_marginTop="128dp"
         android:background="@drawable/icon_reading"
         android:clipToOutline="true"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-<!--    <View-->
-<!--        android:id="@+id/vector_1"-->
-<!--        android:layout_width="355dp"-->
-<!--        android:layout_height="258dp"-->
-<!--        android:layout_alignParentStart="true"-->
-<!--        android:layout_alignParentTop="true"-->
-<!--        android:background="@drawable/vector_5"-->
-<!--        tools:layout_editor_absoluteX="3dp"-->
-<!--        tools:layout_editor_absoluteY="643dp" />-->
+    <TextView
+        android:id="@+id/welcome_back"
+        android:layout_width="168dp"
+        android:layout_height="23dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="25dp"
+        android:fontFamily="@font/amiko"
+        android:gravity="center"
+        android:text="Welcome Back!"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/illust_2" />
 
-<!--    <View-->
-<!--        android:id="@+id/vector_6"-->
-<!--        android:layout_width="541dp"-->
-<!--        android:layout_height="225dp"-->
-<!--        android:layout_alignParentLeft="true"-->
-<!--        android:layout_alignParentTop="true"-->
-<!--        android:background="@drawable/vector_6"-->
-<!--        tools:layout_editor_absoluteX="-38dp"-->
-<!--        tools:layout_editor_absoluteY="720dp" />-->
+    <TextView
+        android:id="@+id/please_login"
+        android:layout_width="349dp"
+        android:layout_height="20dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/amiko"
+        android:gravity="center"
+        android:text="Please Log into your existing account"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcome_back" />
+
+
+    <EditText
+        android:id="@+id/edt_username"
+        android:layout_width="293dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="20dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="5dp"
+        android:background="@drawable/edit_text_corner"
+        android:fontFamily="@font/amiko"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:hint="Username"
+        android:textColorHint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/please_login" />
+
+    <EditText
+        android:id="@+id/edt_password"
+        android:layout_width="293dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/edit_text_corner"
+        android:fontFamily="@font/amiko"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:hint="Password"
+        android:paddingStart="10dp"
+        android:paddingEnd="5dp"
+        android:textColorHint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edt_username" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/edt_password"
+        tools:layout_editor_absoluteX="-17dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dont_have_an_account"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/txtSignUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:text="@string/sign_up"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/vector_1"
+        android:layout_width="429dp"
+        android:layout_height="160dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/ic_wave_bottom_1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <View
+        android:id="@+id/vector_2"
+        android:layout_width="551dp"
+        android:layout_height="105dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="1dp"
+        android:background="@drawable/ic_wave_bottom_2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <View
+        android:id="@+id/vector_3"
+        android:layout_width="429dp"
+        android:layout_height="160dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/ic_wave_top_2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/vector_4"
+        android:layout_width="720dp"
+        android:layout_height="151dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/ic_wave_top_1"
+        app:layout_constraintBottom_toTopOf="@+id/illust_2"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

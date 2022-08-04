@@ -3,18 +3,14 @@ package com.skripsi.perpustakaanapp.ui.login
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
-import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.MViewModelFactory
 import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.databinding.ActivityLoginBinding
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
-import com.skripsi.perpustakaanapp.ui.SettingsActivity
 import com.skripsi.perpustakaanapp.ui.home.HomeAdminActivity
 import com.skripsi.perpustakaanapp.ui.home.HomeUserActivity
 import com.skripsi.perpustakaanapp.ui.register.RegisterActivity
@@ -39,8 +35,6 @@ class LoginActivity : AppCompatActivity() {
         )
 
         binding.progressBar.visibility = View.INVISIBLE
-        binding.nisContainer.isHelperTextEnabled = false
-        binding.passwordContainer.isHelperTextEnabled = false
         binding.progressBar.visibility = View.INVISIBLE
         binding.txtSignUp.setOnClickListener {
             val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
@@ -53,19 +47,19 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun askAppointment() {
-        val nis = binding.etNIS.text.toString()
-        val password = binding.etPassword.text.toString()
+        val username = binding.edtUsername.text.toString()
+        val password = binding.edtPassword.text.toString()
         when {
-            nis.isEmpty() -> {
-                binding.etNIS.error = "Nomor Induk Siswa Tidak Boleh Kosong"
-                binding.etNIS.requestFocus()
+            username.isEmpty() -> {
+                binding.edtUsername.error = "Nomor Induk Siswa Tidak Boleh Kosong"
+                binding.edtUsername.requestFocus()
             }
             password.isEmpty() -> {
-                binding.etPassword.error = "Password Tidak Boleh Kosong"
-                binding.etPassword.requestFocus()
+                binding.edtPassword.error = "Password Tidak Boleh Kosong"
+                binding.edtPassword.requestFocus()
             }
             else -> {
-                postLogin(nis, password)
+                postLogin(username, password)
             }
         }
     }
