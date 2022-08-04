@@ -39,6 +39,7 @@ class LoginActivity : AppCompatActivity() {
         binding.txtSignUp.setOnClickListener {
             val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
                 startActivity(intent)
+//            RegisterActivity().show(supportFragmentManager, "aa")
         }
         //listener for login button
         binding.btnLogin.setOnClickListener {

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.user.loan.LoanActivity"
+    tools:context=".ui.login.LoginActivity"
     android:background="#24281a">
 
 
@@ -86,6 +86,7 @@
         android:textColor="@color/white"
         android:textColorHint="@color/white"
         android:textSize="15sp"
+        android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edt_username" />
@@ -118,7 +119,7 @@
             android:clickable="true"
             android:text="@string/sign_up"
             android:textColor="@color/white"
-            android:textStyle="bold" />
+            android:textStyle="bold|italic" />
 
     </LinearLayout>
 
@@ -197,7 +198,6 @@
         android:background="@drawable/ic_wave_top_1"
         app:layout_constraintBottom_toTopOf="@+id/illust_2"
         app:layout_constraintEnd_toEndOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
