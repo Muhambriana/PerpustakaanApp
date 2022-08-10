@@ -27,7 +27,7 @@
             app:met_floatingLabel="highlight" />
 
         <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/ed_password"
+            android:id="@+id/edt_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password"
@@ -41,7 +41,7 @@
             android:layout_marginEnd="10dp" />
 
         <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/ed_name"
+            android:id="@+id/edt_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Nama"
@@ -50,7 +50,7 @@
             app:met_floatingLabel="highlight"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ed_password"
+            app:layout_constraintTop_toBottomOf="@id/edt_password"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp" />
 
@@ -65,12 +65,12 @@
             app:met_maxCharacters="2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ed_name"
+            app:layout_constraintTop_toBottomOf="@id/edt_name"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp" />
 
         <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/ed_phone_number"
+            android:id="@+id/edt_tel_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Nomor Handphone"
@@ -84,7 +84,7 @@
             android:layout_marginEnd="10dp" />
 
         <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/ed_address"
+            android:id="@+id/edt_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Alamat"
@@ -93,7 +93,7 @@
             app:met_floatingLabel="highlight"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ed_phone_number"
+            app:layout_constraintTop_toBottomOf="@id/edt_tel_number"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp" />
 
@@ -108,7 +108,7 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            app:layout_constraintTop_toBottomOf="@+id/ed_address">
+            app:layout_constraintTop_toBottomOf="@+id/edt_address">
 
             <RadioButton
                 android:id="@+id/rb_gender_male"

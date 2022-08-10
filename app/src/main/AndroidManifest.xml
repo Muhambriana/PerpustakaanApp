@@ -29,7 +29,8 @@
             android:exported="false" />
         <activity
             android:name=".ui.register.RegisterActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/TextColorWhite"/>
         <activity
             android:name=".ui.admin.createbook.CreateBookActivity"
             android:exported="false" />
@@ -44,7 +45,8 @@
             android:exported="false" />
         <activity
             android:name=".ui.login.LoginActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/TextColorWhite">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -53,7 +55,8 @@
         </activity>
         <activity
             android:name=".ui.home.HomeUserActivity"
-            android:exported="false">
+            android:exported="false"
+            android:icon="@drawable/user_icon">
 
         </activity>
 

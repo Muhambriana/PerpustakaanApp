@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.login.LoginActivity"
-    android:background="#24281a">
+    android:background="#24281a"
+    >
 
 
     <RelativeLayout
@@ -14,7 +15,7 @@
         android:layout_height="104dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="128dp"
+        android:layout_marginTop="144dp"
         android:background="@drawable/icon_reading"
         android:clipToOutline="true"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,7 +33,6 @@
         android:fontFamily="@font/amiko"
         android:gravity="center"
         android:text="Welcome Back!"
-        android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -49,7 +49,6 @@
         android:fontFamily="@font/amiko"
         android:gravity="center"
         android:text="Please Log into your existing account"
-        android:textColor="@color/white"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -66,8 +65,6 @@
         android:hint="Username"
         android:paddingStart="10dp"
         android:paddingEnd="5dp"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -83,8 +80,6 @@
         android:hint="Password"
         android:paddingStart="10dp"
         android:paddingEnd="5dp"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
         android:textSize="15sp"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
@@ -109,8 +104,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/dont_have_an_account"
-            android:textColor="@color/white" />
+            android:text="@string/dont_have_an_account" />
 
         <TextView
             android:id="@+id/txtSignUp"
@@ -118,35 +112,20 @@
             android:layout_height="wrap_content"
             android:clickable="true"
             android:text="@string/sign_up"
-            android:textColor="@color/white"
             android:textStyle="bold|italic" />
 
     </LinearLayout>
 
-    <com.google.android.material.card.MaterialCardView
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_login"
         android:layout_width="279dp"
         android:layout_height="44dp"
         android:layout_marginTop="28dp"
-        app:cardBackgroundColor="#FF6200EE"
-        app:cardCornerRadius="12dp"
+        android:background="@drawable/button_custom"
+        android:text="LOG IN"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edt_password">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:padding="12dp"
-            android:fontFamily="@font/amiko"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:text="@string/login"
-            android:textAllCaps="true"
-            android:textColor="@android:color/white" />
-
-    </com.google.android.material.card.MaterialCardView>
+        app:layout_constraintTop_toBottomOf="@id/edt_password" />
 
     <ProgressBar
         android:id="@+id/progress_bar"
@@ -178,26 +157,52 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+
+
     <View
         android:id="@+id/vector_3"
-        android:layout_width="429dp"
-        android:layout_height="160dp"
+        android:layout_width="469dp"
+        android:layout_height="177dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/ic_wave_top_2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteY="4dp" />
 
     <View
         android:id="@+id/vector_4"
-        android:layout_width="720dp"
-        android:layout_height="151dp"
+        android:layout_width="793dp"
+        android:layout_height="198dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginBottom="12dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/ic_wave_top_1"
-        app:layout_constraintBottom_toTopOf="@+id/illust_2"
+        app:layout_constraintBottom_toTopOf="@+id/edt_nisn"
         app:layout_constraintEnd_toEndOf="parent" />
+
+<!--    <View-->
+<!--        android:id="@+id/vector_3"-->
+<!--        android:layout_width="429dp"-->
+<!--        android:layout_height="160dp"-->
+<!--        android:layout_alignParentStart="true"-->
+<!--        android:layout_alignParentTop="true"-->
+<!--        android:background="@drawable/ic_wave_top_2"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--    <View-->
+<!--        android:id="@+id/vector_4"-->
+<!--        android:layout_width="720dp"-->
+<!--        android:layout_height="151dp"-->
+<!--        android:layout_alignParentStart="true"-->
+<!--        android:layout_alignParentTop="true"-->
+<!--        android:layout_marginBottom="12dp"-->
+<!--        android:background="@drawable/ic_wave_top_1"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/illust_2"-->
+<!--        app:layout_constraintEnd_toEndOf="parent" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

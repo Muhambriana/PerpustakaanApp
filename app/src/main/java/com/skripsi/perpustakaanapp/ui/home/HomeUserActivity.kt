@@ -32,7 +32,11 @@ class HomeUserActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeUserBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        supportActionBar?.title = "Daya Utama Library"
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setLogo(R.drawable.user_icon_2)
+        supportActionBar?.setDisplayUseLogoEnabled(true)
+        supportActionBar?.title = "Daya Utama Librar"
+        supportActionBar?.setDisplayShowTitleEnabled(true)
 
         if (intent.extras!=null){
             println(intent.getStringExtra("user_name"))

@@ -27,6 +27,7 @@ class RegisterActivity : AppCompatActivity() {
 //        setTheme(R.style.textColorWhite)
         setContentView(binding.root)
         supportActionBar?.title = "Register"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         binding.rbGender.setOnCheckedChangeListener { _, i ->
             gender =
@@ -49,14 +50,19 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return super.onSupportNavigateUp()
+    }
+
     private fun askAppointment() {
         println("gende = $gender")
-        val NISN = binding.edNisn.text.toString()
+        val NISN = binding.edtNisn.text.toString()
 
         when {
             NISN.isEmpty() -> {
-                binding.edNisn.error = "NISN Tidak Boleh Kosong"
-                binding.edNisn.requestFocus()
+                binding.edtNisn.error = "NISN Tidak Boleh Kosong"
+                binding.edtNisn.requestFocus()
             }
             binding.rbGender.checkedRadioButtonId.equals(-1) -> {
                 AlertDialog.Builder(this@RegisterActivity)
@@ -80,13 +86,13 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         viewModel.registerUser(
-            binding.edNisn.text.toString(),
-            binding.edPassword.text.toString(),
-            binding.edName.text.toString(),
+            binding.edtNisn.text.toString(),
+            binding.edtPassword.text.toString(),
+            binding.edtName.text.toString(),
             "student",
             binding.edEmail.text.toString(),
-            binding.edPhoneNumber.text.toString(),
-            binding.edAddress.text.toString(),
+            binding.edtTelNumber.text.toString(),
+            binding.edtAddress.text.toString(),
             gender!!
         )
 

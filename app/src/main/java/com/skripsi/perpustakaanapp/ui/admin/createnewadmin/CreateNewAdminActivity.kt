@@ -80,12 +80,12 @@ class CreateNewAdminActivity : AppCompatActivity() {
         //pass data to view model
         viewModel.createNewAdmin(
             binding.edId.text.toString(),
-            binding.edPassword.text.toString(),
-            binding.edName.text.toString(),
+            binding.edtPassword.text.toString(),
+            binding.edtName.text.toString(),
             "admin",
             binding.edEmail.text.toString(),
-            binding.edPhoneNumber.text.toString(),
-            binding.edAddress.text.toString(),
+            binding.edtTelNumber.text.toString(),
+            binding.edtAddress.text.toString(),
             gender!!
         )
 
