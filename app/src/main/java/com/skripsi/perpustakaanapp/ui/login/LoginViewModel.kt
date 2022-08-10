@@ -11,7 +11,7 @@ import retrofit2.Response
 
 class LoginViewModel(private val repository: LibraryRepository) : ViewModel(){
 
-    val errorMessage = MutableLiveData<String>()
+    val errorMessage = MutableLiveData<String?>()
     val isLoading = MutableLiveData<Boolean>()
     var failMessage = MutableLiveData<String?>()
     val token = MutableLiveData<String?>()

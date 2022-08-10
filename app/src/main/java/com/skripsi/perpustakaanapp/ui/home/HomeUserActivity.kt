@@ -14,7 +14,6 @@ import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.databinding.ActivityHomeUserBinding
-import com.skripsi.perpustakaanapp.ui.admin.createbook.CreateBookActivity
 import com.skripsi.perpustakaanapp.ui.login.LoginActivity
 import com.skripsi.perpustakaanapp.ui.user.book.BookActivity
 import com.skripsi.perpustakaanapp.ui.user.loan.LoanActivity
@@ -33,7 +32,7 @@ class HomeUserActivity : AppCompatActivity() {
         binding = ActivityHomeUserBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-        supportActionBar?.setLogo(R.drawable.user_icon_2)
+        supportActionBar?.setLogo(R.drawable.icon_user_2)
         supportActionBar?.setDisplayUseLogoEnabled(true)
         supportActionBar?.title = "Daya Utama Librar"
         supportActionBar?.setDisplayShowTitleEnabled(true)

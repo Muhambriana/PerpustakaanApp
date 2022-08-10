@@ -2,15 +2,18 @@ package com.skripsi.perpustakaanapp.ui.register
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Message
 import android.view.View
 import android.widget.RadioButton
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.MViewModelFactory
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.databinding.ActivityRegisterBinding
+import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -56,7 +59,6 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun askAppointment() {
-        println("gende = $gender")
         val NISN = binding.edtNisn.text.toString()
 
         when {
@@ -65,13 +67,7 @@ class RegisterActivity : AppCompatActivity() {
                 binding.edtNisn.requestFocus()
             }
             binding.rbGender.checkedRadioButtonId.equals(-1) -> {
-                AlertDialog.Builder(this@RegisterActivity)
-                    .setTitle("Warning")
-                    .setMessage("Pilih Gender Terlebih Dahulu")
-                    .setPositiveButton("Tutup") { _, _ ->
-                        // do nothing
-                    }
-                    .show()
+                MyAlertDialog.showAlertDialog(this@RegisterActivity, R.drawable.icon_warning, "WARNING", "Pilih Gender Terlebih Dahulu")
             }
             else -> {
                 postUserData()
@@ -80,7 +76,6 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun postUserData() {
-        println("satu")
         viewModel.isLoading.observe(this) { boolean ->
             binding.progressBar.visibility = if (boolean) View.VISIBLE else View.INVISIBLE
         }
@@ -102,41 +97,26 @@ class RegisterActivity : AppCompatActivity() {
                 //and to be available to trigger action again
                 viewModel.failMessage.value = null
                 if (it == ""){
-
-                    AlertDialog.Builder(this@RegisterActivity)
-                        .setTitle("Success")
-                        .setMessage("Berhasil Mendaftar")
-                        .setPositiveButton("Login") { _, _ ->
-                            finish()
-                        }
-                        .show()
-                    println("ada succesmessage")
+                    MyAlertDialog.showAlertDialog(this@RegisterActivity, R.drawable.icon_checked, "SUCCESS", "BERHASIL MENDAFTAR")
                 }
                 else {
-                    AlertDialog.Builder(this@RegisterActivity)
-                        .setTitle("Gagal")
-                        .setMessage(it)
-                        .setPositiveButton("Tutup") { _, _ ->
-                            //do nothing
-                        }
-                        .show()
+                    MyAlertDialog.showAlertDialog(this@RegisterActivity, R.drawable.icon_cancel, "FAILED", it)
                 }
             }
         }
 
         viewModel.errorMessage.observe(this) {
-            binding.progressBar.visibility = View.GONE
-            AlertDialog.Builder(this@RegisterActivity)
-                .setTitle("ERROR")
-                .setMessage(it)
-                    //close alert dialog
-                .setPositiveButton("Tutup"){_,_ ->
-                    //do nothing
-                }
-                .show()
+            if (it != null) {
+                MyAlertDialog.showAlertDialog(this@RegisterActivity, R.drawable.icon_cancel, "ERROR", it)
+                viewModel.errorMessage.value = null
+            }
         }
     }
 }
+
+
+// bikin function 7untuk alert dialog
+// yang dioper adalah icon dan warna, kalo ga da berrati yang dioper null
 
 //class RegisterActivity : BottomSheetDialogFragment() {
 //

@@ -12,8 +12,7 @@ import retrofit2.Response
 class RegisterViewModel(private val repository: LibraryRepository) : ViewModel() {
 
     val isLoading = MutableLiveData<Boolean>()
-    val errorMessage = MutableLiveData<String>()
-
+    val errorMessage = MutableLiveData<String?>()
     var failMessage = MutableLiveData<String?>()
 
     fun registerUser(nisn: String, password: String, fullName: String, roleName: String, email: String, phoneNo: String, address: String, gender: Int){

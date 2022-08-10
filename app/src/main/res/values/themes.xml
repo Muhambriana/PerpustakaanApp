@@ -15,9 +15,18 @@
         <item name="bottomSheetDialogTheme">@style/CustomBottomSheetDialog</item>
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
-        <item name="actionBarStyle">@style/ActionBarLogo</item>
+        <item name="materialAlertDialogTheme">@style/CustomAlertDialogStyle</item>
     </style>
 
+    <!--Custom Action Bar Logo with Title-->
+    <style name="ActionBarLogo" parent="Theme.PerpustakaanApp">
+        <item name="displayOptions">showHome|useLogo|showTitle</item>
+        <item name="logo">@drawable/icon_user_2</item>
+        <item name="android:gravity">left</item>
+        <item name="android:layout_gravity">left</item>
+    </style>
+
+    <!--Custom AllTextToWhite Color-->
     <style name="TextColorWhite" parent="@style/Theme.PerpustakaanApp">
         <item name="android:textColor">@color/white</item>
         <item name="android:editTextColor">@color/white</item>
@@ -25,6 +34,7 @@
         <item name="android:fontFamily">@font/amiko</item>
     </style>
 
+    <!--Custom Activity/Fragment to Bottom Sheet Dialog-->
     <style name="CustomBottomSheetDialog" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/CustomBottomSheet</item>
     </style>
@@ -40,12 +50,37 @@
         <item name="cornerSizeBottomRight">0dp</item>
         <item name="cornerSizeBottomLeft">0dp</item>
     </style>
+    <!--====================================================================================================-->
 
-    <style name="ActionBarLogo" parent="Theme.PerpustakaanApp">
-        <item name="displayOptions">showHome|useLogo|showTitle</item>
-        <item name="logo">@drawable/user_icon_2</item>
-        <item name="android:gravity">left</item>
-        <item name="android:layout_gravity">left</item>
+    <!--Custom Alert Dialog-->
+    <style name="CustomAlertDialogStyle" parent="Theme.MaterialComponents.Dialog.Alert">
+        <item name="colorSurface">@color/black</item>
+        <item name="materialAlertDialogTitleTextStyle">@style/TitleTextStyle</item>
+        <item name="materialAlertDialogBodyTextStyle">@style/BodyTextStyle</item>
+        <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
+        <item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>
     </style>
+
+    <style name="TitleTextStyle" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
+        <item name="android:textColor">#fafafa</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="BodyTextStyle" parent="MaterialAlertDialog.MaterialComponents.Body.Text">
+        <item name="android:textColor">#c7c7c7</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="PositiveButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/purple_500</item>
+        <item name="rippleColor">#ad1457</item>
+    </style>
+
+    <style name="NegativeButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/colorRed</item>
+        <item name="rippleColor">#a4a4a4</item>
+    </style>
+    <!--===========================================================================================-->
 
 </resources>

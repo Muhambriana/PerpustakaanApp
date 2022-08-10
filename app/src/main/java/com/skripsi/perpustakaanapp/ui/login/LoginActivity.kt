@@ -1,16 +1,20 @@
 package com.skripsi.perpustakaanapp.ui.login
 
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
+import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.MViewModelFactory
 import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.databinding.ActivityLoginBinding
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
+import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.home.HomeAdminActivity
 import com.skripsi.perpustakaanapp.ui.home.HomeUserActivity
 import com.skripsi.perpustakaanapp.ui.register.RegisterActivity
@@ -39,7 +43,6 @@ class LoginActivity : AppCompatActivity() {
         binding.txtSignUp.setOnClickListener {
             val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
                 startActivity(intent)
-//            RegisterActivity().show(supportFragmentManager, "aa")
         }
         //listener for login button
         binding.btnLogin.setOnClickListener {
@@ -60,13 +63,25 @@ class LoginActivity : AppCompatActivity() {
                 binding.edtPassword.requestFocus()
             }
             else -> {
-                postLogin(username, password)
+                isConnect(username, password)
             }
         }
     }
 
+    //check connectivity available
+    private fun isConnect(username: String, password: String){
+        val connectionManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkInfo = connectionManager.activeNetworkInfo
+        if (networkInfo != null && networkInfo.isConnected) {
+            //post login data to API
+            postLogin(username, password)
+        } else {
+            MyAlertDialog.showAlertDialog(this@LoginActivity, R.drawable.icon_no_connection, "No Internet Connection", "Periksa Data Seluler Atau WIFI Anda")
+        }
+    }
+
     //function for pass data login request to api
-    private fun postLogin(nis: String, password: String) {
+    private fun postLogin(username: String, password: String) {
 
         sessionManager = SessionManager(this)
 
@@ -74,16 +89,16 @@ class LoginActivity : AppCompatActivity() {
             binding.progressBar.visibility = if (boolean) View.VISIBLE else View.INVISIBLE
         }
 
-        viewModel.userLogin(nis, password)
+        viewModel.userLogin(username, password)
 
+        //failed handling, if there is problem with database rules
         viewModel.failMessage.observe(this) { message ->
             //jika fail message ada isinya
             if (message != null) {
                 //Reset status value at first to prevent multitriggering
                 //and to be available to trigger action again
                 viewModel.failMessage.value = null
-
-                //jika isi fail message adalah kosong
+                //if fail message is "" but not null
                 if (message == "") {
                     // for get role name
                     viewModel.roleName.observe(this) { roleName ->
@@ -91,31 +106,27 @@ class LoginActivity : AppCompatActivity() {
                             sessionManager.saveUserRole(roleName)
                             if (roleName == "admin") {
                                 viewModel.userName.observe(this){ username ->
-                                    val home = Intent(this@LoginActivity, HomeAdminActivity::class.java)
-                                    home.putExtra("user_name", username)
-                                    startActivity(home)
-                                    finish()
+                                    startIntentExtraData(this@LoginActivity, HomeAdminActivity::class.java, username)
                                 }
                             }
                             else if (roleName == "student") {
                                 viewModel.userName.observe(this){ username ->
-                                    val home = Intent(this@LoginActivity, HomeUserActivity::class.java)
-                                    home.putExtra("user_name", username)
-                                    startActivity(home)
-                                    finish()
+                                    startIntentExtraData(this@LoginActivity, HomeUserActivity::class.java, username)
                                 }
                             }
                         }
                     }
                 } else {
-                        AlertDialog.Builder(this@LoginActivity)
-                            .setTitle("Login Gagal")
-                            .setMessage(message)
-                            .setPositiveButton("Tutup") { _, _ ->
-                                //do nothing
-                            }
-                            .show()
+                    MyAlertDialog.showAlertDialog(this@LoginActivity,R.drawable.icon_cancel,"Login Gagal",message)
                 }
+            }
+        }
+
+        //error handling, if there is problem with connection or server
+        viewModel.errorMessage.observe(this) {
+            if (it != null) {
+                MyAlertDialog.showAlertDialog(this@LoginActivity, R.drawable.icon_cancel, "ERROR", it)
+                viewModel.errorMessage.value = null
             }
         }
 
@@ -124,16 +135,12 @@ class LoginActivity : AppCompatActivity() {
                 sessionManager.saveAuthToken(it)
             }
         }
+    }
 
-        viewModel.errorMessage.observe(this) {
-            binding.progressBar.visibility = View.GONE
-            AlertDialog.Builder(this@LoginActivity)
-                .setTitle("ERROR")
-                .setMessage(it)
-                .setPositiveButton("Tutup") { _, _ ->
-                    // do nothing
-                }
-                .show()
-        }
+    private fun startIntentExtraData(activity: Activity, cls: Class<*>, username: String?) {
+        val home = Intent(activity, cls)
+        home.putExtra("user_name", username)
+        startActivity(home)
+        finish()
     }
 }
