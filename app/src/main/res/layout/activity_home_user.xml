@@ -5,53 +5,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.HomeUserActivity"
-    android:fitsSystemWindows="true">
+    tools:context=".ui.home.HomeUserActivity" >
 
     <View
+        android:id="@+id/bg_top_header"
         android:layout_width="match_parent"
         android:layout_height="230dp"
-        android:id="@+id/bg_top_header"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:background="@drawable/header_vector"/>
-
-    <ImageView
-        android:id="@+id/user_photo"
-        android:layout_width="71dp"
-        android:layout_height="71dp"
-        android:layout_marginStart="26dp"
-        android:layout_marginTop="24dp"
-        android:src="@drawable/icon_user"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:textSize="20sp"
-        android:text="Welcome"
-        android:id="@+id/welcome"
-        android:textColor="#ffffff"
-        android:fontFamily="@font/mo_re"
-        android:layout_marginTop="32dp"
-        android:layout_marginStart="18dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/user_photo"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <TextView
-        android:textSize="16sp"
-        android:text="Briana Muham"
-        android:id="@+id/user_name"
-        android:fontFamily="@font/mo_re"
-        android:textColor="#ffffff"
-        android:layout_marginTop="32dp"
-        android:layout_marginStart="18dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/user_photo"
-        app:layout_constraintTop_toTopOf="@id/welcome"/>
 
     <GridLayout
         android:layout_width="match_parent"
@@ -66,7 +29,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="@id/bg_top_header"
         app:layout_constraintVertical_bias="0.0"
-        app:layout_editor_absoluteX="0dp">
+        app:layout_editor_absoluteX="0dp" >
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/book_list"
@@ -320,3 +283,17 @@
     </GridLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--
+android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="180dp"
+        android:layout_marginBottom="10dp"
+        android:alignmentMode="alignMargins"
+        android:columnCount="2"
+        android:columnOrderPreserved="false"
+        android:padding="14dp"
+        android:rowCount="3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+-->

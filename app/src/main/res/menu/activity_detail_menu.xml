@@ -9,8 +9,7 @@
         android:icon="@drawable/icon_more"
         app:iconifiedByDefault="false"
         app:showAsAction="collapseActionView|always"
-        app:queryBackground="@null"
-        app:queryHint="Username">
+        app:queryBackground="@null">
 
         <menu>
             <item

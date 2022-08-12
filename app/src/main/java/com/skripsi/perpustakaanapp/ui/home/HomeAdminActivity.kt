@@ -33,8 +33,7 @@ class HomeAdminActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         if (intent.extras!=null){
-            println(intent.getStringExtra("user_name"))
-            binding.userName.text = intent.getStringExtra("user_name")
+            supportActionBar?.title = "Hi, ${intent.getStringExtra("user_name")}"
         }
 
         viewModel = ViewModelProvider(this, MViewModelFactory(LibraryRepository(client))).get(

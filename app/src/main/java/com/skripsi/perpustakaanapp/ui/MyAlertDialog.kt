@@ -8,26 +8,30 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 class MyAlertDialog {
     companion object{
         //Alert Dialog
-        fun showAlertDialog (activity: Activity, icon: Int, title: String, message: String) {
-            MaterialAlertDialogBuilder(activity)
-                .setIcon(icon)
-                .setTitle(title)
-                .setMessage(message)
-                .setPositiveButton("Tutup"){_,_ ->
-                    //do nothing
-             }
-                .show()
+        fun showAlertDialog (context: Context?, icon: Int, title: String, message: String) {
+            if (context != null) {
+                MaterialAlertDialogBuilder(context)
+                    .setIcon(icon)
+                    .setTitle(title)
+                    .setMessage(message)
+                    .setPositiveButton("Tutup"){_,_ ->
+                        //do nothing
+                    }
+                    .show()
+            }
         }
 
         //Alert Dialog With Click Event
-        fun showAlertDialogEvent (activity: Activity, icon: Int, title: String, message: String, listener: DialogInterface.OnClickListener) {
-            MaterialAlertDialogBuilder(activity)
-                .setIcon(icon)
-                .setTitle(title)
-                .setMessage(message)
-                .setPositiveButton("Tutup", listener)
-//                .setNegativeButton("ApA", DialogInterface.OnClickListener { dialogInterface, i ->  })
-                .show()
+        fun showAlertDialogEvent (context: Context?, icon: Int, title: String, message: String, listener: DialogInterface.OnClickListener) {
+            if (context != null) {
+                MaterialAlertDialogBuilder(context)
+                    .setIcon(icon)
+                    .setTitle(title)
+                    .setMessage(message)
+                    .setPositiveButton("Tutup", listener)
+        //                .setNegativeButton("ApA", DialogInterface.OnClickListener { dialogInterface, i ->  })
+                    .show()
+            }
         }
     }
 }

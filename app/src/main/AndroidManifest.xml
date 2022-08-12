@@ -14,9 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PerpustakaanApp"
         android:usesCleartextTraffic="true">
-        <activity
-            android:name=".ui.admin.updatebook.UpdateBookActivity"
-            android:exported="false" />
+<!--        <activity-->
+<!--            android:name=".ui.admin.updatebook.UpdateBookActivity"-->
+<!--            android:exported="false" />-->
         <activity
             android:name=".ui.SettingsActivity"
             android:exported="false" />
@@ -27,8 +27,14 @@
             android:name=".ui.admin.createnewadmin.CreateNewAdminActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.home.HomeUserActivity"
+            android:exported="false"
+            android:theme="@style/HomeActivityStyle">
+        </activity>
+        <activity
             android:name=".ui.home.HomeAdminActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/HomeActivityStyle"/>
         <activity
             android:name=".ui.register.RegisterActivity"
             android:exported="false"
@@ -54,11 +60,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".ui.home.HomeUserActivity"
-            android:exported="false"
-            android:icon="@drawable/icon_user">
         </activity>
 
         <meta-data

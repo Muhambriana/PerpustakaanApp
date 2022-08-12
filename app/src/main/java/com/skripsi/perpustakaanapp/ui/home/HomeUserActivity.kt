@@ -31,15 +31,10 @@ class HomeUserActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeUserBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
-        supportActionBar?.setLogo(R.drawable.icon_user_2)
-        supportActionBar?.setDisplayUseLogoEnabled(true)
-        supportActionBar?.title = "Daya Utama Librar"
-        supportActionBar?.setDisplayShowTitleEnabled(true)
 
         if (intent.extras!=null){
-            println(intent.getStringExtra("user_name"))
-            binding.userName.text = intent.getStringExtra("user_name")
+            supportActionBar?.title = " Hi,${intent.getStringExtra("user_name")}"
+            supportActionBar?.setLogo(R.drawable.icon_user)
         }
 
         viewModel = ViewModelProvider(this, MViewModelFactory(LibraryRepository(client))).get(
@@ -65,6 +60,11 @@ class HomeUserActivity : AppCompatActivity() {
             }
             else -> true
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return super.onSupportNavigateUp()
     }
 
     private fun userLogout() {

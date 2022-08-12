@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.PerpustakaanApp" parent="Theme.MaterialComponents.DayNight">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/transparent</item>
+        <item name="colorPrimary">@color/green_700</item>
         <item name="colorPrimaryVariant">@color/green_400</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
@@ -12,18 +12,33 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
         <!-- Customize your theme here. -->
-        <item name="bottomSheetDialogTheme">@style/CustomBottomSheetDialog</item>
+        <item name="actionBarStyle">@style/ActionBarStyle</item>
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
         <item name="materialAlertDialogTheme">@style/CustomAlertDialogStyle</item>
+        <item name="bottomSheetDialogTheme">@style/CustomBottomSheetDialog</item>
+    </style>
+
+    <!--Custom Style For Home Activity-->
+    <style name="HomeActivityStyle" parent="Theme.PerpustakaanApp">
+        <item name="actionBarStyle">@style/ActionBarStyle.Padding</item>
     </style>
 
     <!--Custom Action Bar Logo with Title-->
-    <style name="ActionBarLogo" parent="Theme.PerpustakaanApp">
+    <style name="ActionBarStyle" parent="Theme.PerpustakaanApp">
         <item name="displayOptions">showHome|useLogo|showTitle</item>
-        <item name="logo">@drawable/icon_user_2</item>
         <item name="android:gravity">left</item>
         <item name="android:layout_gravity">left</item>
+    </style>
+
+    <style name="ActionBarStyle.Padding" parent="Theme.PerpustakaanApp">
+        <item name="displayOptions">showHome|useLogo|showTitle</item>
+        <item name="android:paddingStart">20dp</item>
+<!--        <item name="titleTextStyle">@style/aa</item>-->
+        <item name="android:paddingTop">20dp</item>
+        <item name="android:gravity">left</item>
+        <item name="android:layout_gravity">left</item>
+        <item name="logo">@drawable/actionbar_space</item>
     </style>
 
     <!--Custom AllTextToWhite Color-->
@@ -83,4 +98,7 @@
     </style>
     <!--===========================================================================================-->
 
+    <style name="UpdateActivityStyle" parent="Theme.PerpustakaanApp">
+        <item name="android:windowAnimationStyle">@null</item>
+    </style>
 </resources>

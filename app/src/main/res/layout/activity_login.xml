@@ -66,6 +66,7 @@
         android:paddingStart="10dp"
         android:paddingEnd="5dp"
         android:textSize="15sp"
+        android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/please_login" />

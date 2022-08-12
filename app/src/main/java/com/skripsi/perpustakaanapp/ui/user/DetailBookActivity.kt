@@ -16,7 +16,7 @@ import com.skripsi.perpustakaanapp.core.models.Book
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.databinding.ActivityDetailBookBinding
 import com.skripsi.perpustakaanapp.ui.admin.updatebook.UpdateBookActivity
-import com.skripsi.perpustakaanapp.ui.user.book.BookActivity
+import com.skripsi.perpustakaanapp.ui.register.RegisterActivity
 
 class DetailBookActivity : AppCompatActivity() {
 
@@ -27,19 +27,24 @@ class DetailBookActivity : AppCompatActivity() {
     private var detailBook: Book? = null
     private val client = RetrofitClient
 
+    var activityDetailBook: DetailBookActivity? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBookBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        detailBook = intent.getParcelableExtra<Book>(EXTRA_DATA)
-        showDetailBook(detailBook)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
 
         sessionManager = SessionManager(this)
+
+        activityDetailBook = this@DetailBookActivity
 
         viewModel= ViewModelProvider(this,MViewModelFactory(LibraryRepository(client))).get(
             DetailBookViewModel::class.java
         )
+
+        detailBook = intent.getParcelableExtra<Book>(EXTRA_DATA)
+        showDetailBook(detailBook)
 
         //if buku belum ada yang pinjam
         //binding.buttonLoan.isEnabled = true
@@ -67,6 +72,10 @@ class DetailBookActivity : AppCompatActivity() {
             else -> true
         }
     }
+
+//    fun getInstance(): DetailBookActivity? {
+//        return activityDetailBook
+//    }
 
     private fun deleteBook(){
         detailBook?.bookId?.let {
@@ -104,9 +113,22 @@ class DetailBookActivity : AppCompatActivity() {
     }
 
     private fun updateBook() {
-        val intent = Intent(this, UpdateBookActivity::class.java)
-        intent.putExtra(UpdateBookActivity.EXTRA_DATA, detailBook)
-        startActivity(intent)
+        val b = UpdateBookActivity()
+        b.show(supportFragmentManager, "Hi")
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
+        if (requestCode == 1) {
+            if (resultCode == 1) {
+                val i = getIntent()
+                overridePendingTransition(0, 0)
+                i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+                finish()
+                overridePendingTransition(0, 0)
+                startActivity(i)
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, intent)
     }
 
     private fun showDetailBook(detailBook: Book?) {

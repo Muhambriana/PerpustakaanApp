@@ -108,9 +108,7 @@ class BookActivity : AppCompatActivity() {
     }
 
     override fun onRestart() {
-        finish()
-        startActivity(intent)
-        overridePendingTransition(0,0)
+        getBookData()
         super.onRestart()
     }
 
