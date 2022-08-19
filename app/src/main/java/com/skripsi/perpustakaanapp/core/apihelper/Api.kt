@@ -1,6 +1,5 @@
 package com.skripsi.perpustakaanapp.core.apihelper
 
-import com.google.gson.annotations.SerializedName
 import com.skripsi.perpustakaanapp.core.models.*
 import com.skripsi.perpustakaanapp.core.responses.*
 import retrofit2.Call
@@ -45,9 +44,14 @@ interface Api {
     ):Call<GeneralResponse>
 
     @POST("book/delete")
-    fun deleteBook(
+    fun postDeleteBook(
         @Header("Authorization") token: String,
-        @Body bookId: TempModel
+        @Body bookId: ModelForDelete
+    ):Call<GeneralResponse>
+
+    @POST("transaction/create")
+    fun postCreateTransaction(
+        @Body data: ModelForCreateTransaction
     ):Call<GeneralResponse>
 
 //    @POST("book/loan")

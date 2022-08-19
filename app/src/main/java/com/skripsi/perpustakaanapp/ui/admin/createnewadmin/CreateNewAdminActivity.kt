@@ -10,7 +10,7 @@ import com.skripsi.perpustakaanapp.core.MViewModelFactory
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.databinding.ActivityCreateNewAdminBinding
-import com.skripsi.perpustakaanapp.ui.register.RegisterViewModel
+import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 
 class CreateNewAdminActivity : AppCompatActivity() {
 
@@ -48,13 +48,11 @@ class CreateNewAdminActivity : AppCompatActivity() {
     }
 
     private fun askAppointment() {
-        println("gende = $gender")
-        val userId = binding.edId.text.toString()
-
+        val username = binding.edUsername.text.toString()
         when {
-            userId.isEmpty() -> {
-                binding.edId.error = "NISN Tidak Boleh Kosong"
-                binding.edId.requestFocus()
+            username.isEmpty() -> {
+                binding.edUsername.error = "NISN Tidak Boleh Kosong"
+                binding.edUsername.requestFocus()
             }
             binding.rbGender.checkedRadioButtonId.equals(-1) -> {
                 AlertDialog.Builder(this@CreateNewAdminActivity)
@@ -79,7 +77,7 @@ class CreateNewAdminActivity : AppCompatActivity() {
 
         //pass data to view model
         viewModel.createNewAdmin(
-            binding.edId.text.toString(),
+            binding.edUsername.text.toString(),
             binding.edtPassword.text.toString(),
             binding.edtName.text.toString(),
             "admin",
@@ -90,44 +88,29 @@ class CreateNewAdminActivity : AppCompatActivity() {
         )
 
         // get fail message from view model
-        viewModel.failMessage.observe(this) {
-            if (it != null){
+        viewModel.responseMessage.observe(this) { message ->
+            if (message != null){
                 //Reset status value at first to prevent multitriggering
                 //and to be available to trigger action again
-                viewModel.failMessage.value = null
-                if (it == ""){
-                    AlertDialog.Builder(this@CreateNewAdminActivity)
-                        .setTitle("Success")
-                        .setMessage("Berhasil Ditambahkan")
-                        .setPositiveButton("Tutup") { _, _ ->
-                            // clear all edit text
-                        }
-                        .show()
-                    println("ada succesmessage")
+                viewModel.responseMessage.value = null
+                if (message == "success"){
+                    MyAlertDialog.showAlertDialogEvent(this@CreateNewAdminActivity, R.drawable.icon_checked, "SUCCESS", "Berhasil Membuat Admin Baru")
+                    {_, _ ->
+//                        binding.edUsername.text?.clear()
+                    }
                 }
                 else {
-                    AlertDialog.Builder(this@CreateNewAdminActivity)
-                        .setTitle("Gagal")
-                        .setMessage(it)
-                        .setPositiveButton("Tutup") { _, _ ->
-                            //do nothing
-                        }
-                        .show()
+                    MyAlertDialog.showAlertDialog(this@CreateNewAdminActivity, R.drawable.icon_cancel, "FAILED", message)
                 }
             }
         }
         
         // get error message from view model
         viewModel.errorMessage.observe(this) {
-            binding.progressBar.visibility = View.GONE
-            AlertDialog.Builder(this@CreateNewAdminActivity)
-                .setTitle("ERROR")
-                .setMessage(it)
-                //close alert dialog
-                .setPositiveButton("Tutup"){_,_ ->
-                    //do nothing
-                }
-                .show()
+            if (it != null) {
+                viewModel.errorMessage.value  = null
+                MyAlertDialog.showAlertDialog(this@CreateNewAdminActivity, R.drawable.icon_cancel, "ERROR", it)
+            }
         }
     }
 }

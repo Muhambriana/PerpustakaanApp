@@ -12,9 +12,8 @@ import retrofit2.Response
 class CreateNewAdminViewModel(private val repository: LibraryRepository) : ViewModel() {
 
     val isLoading = MutableLiveData<Boolean>()
-    val errorMessage = MutableLiveData<String>()
-
-    var failMessage = MutableLiveData<String?>()
+    val errorMessage = MutableLiveData<String?>()
+    var responseMessage = MutableLiveData<String?>()
 
     fun createNewAdmin(userId: String, password: String, fullName: String, roleName: String, email: String, phoneNo: String, address: String, gender: Int){
         isLoading.value = true
@@ -24,12 +23,8 @@ class CreateNewAdminViewModel(private val repository: LibraryRepository) : ViewM
             override fun onResponse(call: Call<GeneralResponse>, response: Response<GeneralResponse>
             ) {
                 isLoading.value = false
-                if (response.body()?.code == 0 ) {
-                    failMessage.value = ""
-                }
-                else {
-                    failMessage.value = response.body()?.message
-                }
+                responseMessage.value = response.body()?.message
+
             }
 
             override fun onFailure(call: Call<GeneralResponse>, t: Throwable) {

@@ -3,14 +3,14 @@ package com.skripsi.perpustakaanapp.ui.admin.createbook
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
+import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.MViewModelFactory
 import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.databinding.ActivityCreateBookBinding
-import com.skripsi.perpustakaanapp.ui.user.book.BookViewModel
+import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 
 class CreateBookActivity : AppCompatActivity() {
 
@@ -74,42 +74,29 @@ class CreateBookActivity : AppCompatActivity() {
 //            binding.edPrice.text.toString().toDouble()
         )
 
-        viewModel.failMessage.observe(this) { message ->
+        viewModel.responseMessage.observe(this) { message ->
             println("kocak $message")
             if (message != null) {
                 //Reset status value at first to prevent multitriggering
                 //and to be available to trigger action again
-                viewModel.failMessage.value = null
-                if (message == "") {
-                    AlertDialog.Builder(this@CreateBookActivity)
-                        .setTitle("Success")
-                        .setMessage("Data Berhasil Ditambahkan")
-                        .setPositiveButton("Tutup") { _, _ ->
-                            binding.edBookTitle.text?.clear()
-                            //clear semua edit text
-                        }
-                        .show()
+                viewModel.responseMessage.value = null
+                if (message == "success") {
+                   MyAlertDialog.showAlertDialogEvent(this@CreateBookActivity, R.drawable.icon_checked, "SUCCESS", "Buku Berhasil Ditambahkan") {_, _  ->
+                       //clear edit text
+//                       binding.edBookTitle.text?.clear()
+                   }
                 } else {
-                    AlertDialog.Builder(this@CreateBookActivity)
-                        .setTitle("Data Gagal Ditambahkan")
-                        .setMessage(message)
-                        .setPositiveButton("Tutup") { _, _ ->
-                            //Do nothing
-                        }
-                        .show()
+                   MyAlertDialog.showAlertDialog(this@CreateBookActivity, R.drawable.icon_cancel, "FAILED", message)
                 }
             }
         }
 
         viewModel.errorMessage.observe(this) {
             binding.progressBar.visibility = View.GONE
-            AlertDialog.Builder(this@CreateBookActivity)
-                .setTitle("ERROR")
-                .setMessage(it)
-                .setPositiveButton("Tutup"){_,_ ->
-                    finish()
-                }
-                .show()
+            if (it != null) {
+                viewModel.errorMessage.value = null
+                MyAlertDialog.showAlertDialog(this@CreateBookActivity, R.drawable.icon_cancel, "ERROR", it)
+            }
         }
 
     }

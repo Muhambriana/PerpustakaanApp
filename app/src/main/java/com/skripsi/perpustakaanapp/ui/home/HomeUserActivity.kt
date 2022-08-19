@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.MViewModelFactory
@@ -14,6 +13,7 @@ import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.databinding.ActivityHomeUserBinding
+import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.login.LoginActivity
 import com.skripsi.perpustakaanapp.ui.user.book.BookActivity
 import com.skripsi.perpustakaanapp.ui.user.loan.LoanActivity
@@ -33,8 +33,7 @@ class HomeUserActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         if (intent.extras!=null){
-            supportActionBar?.title = " Hi,${intent.getStringExtra("user_name")}"
-            supportActionBar?.setLogo(R.drawable.icon_user)
+            supportActionBar?.title = " Hi,${intent.getStringExtra("first_name")}"
         }
 
         viewModel = ViewModelProvider(this, MViewModelFactory(LibraryRepository(client))).get(
@@ -80,14 +79,10 @@ class HomeUserActivity : AppCompatActivity() {
             }
         }
         viewModel.errorMessage.observe(this) {
-//            binding.progressBar.visibility = View.GONE
-            AlertDialog.Builder(this@HomeUserActivity)
-                .setTitle("ERROR")
-                .setMessage(it)
-                .setPositiveButton("Tutup"){_,_ ->
-                    // do nothing
-                }
-                .show()
+            if (it != null) {
+                viewModel.errorMessage.value = null
+                MyAlertDialog.showAlertDialog(this@HomeUserActivity, R.drawable.icon_cancel, "ERROR", it)
+            }
         }
     }
 

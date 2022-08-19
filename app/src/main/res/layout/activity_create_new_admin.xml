@@ -13,7 +13,7 @@
         android:layout_height="wrap_content">
 
         <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/ed_id"
+            android:id="@+id/ed_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Username"
@@ -37,7 +37,7 @@
             app:met_floatingLabel="highlight"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ed_id"
+            app:layout_constraintTop_toBottomOf="@id/ed_username"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp" />
 

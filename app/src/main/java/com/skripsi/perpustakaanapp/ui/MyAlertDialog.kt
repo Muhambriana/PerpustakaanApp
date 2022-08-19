@@ -29,7 +29,18 @@ class MyAlertDialog {
                     .setTitle(title)
                     .setMessage(message)
                     .setPositiveButton("Tutup", listener)
-        //                .setNegativeButton("ApA", DialogInterface.OnClickListener { dialogInterface, i ->  })
+                    .show()
+            }
+        }
+
+        fun showAlertDialog2Event (context: Context?, icon: Int, title: String, message: String, listenerPositive: DialogInterface.OnClickListener, listenerNegative: DialogInterface.OnClickListener) {
+            if (context != null) {
+                MaterialAlertDialogBuilder(context)
+                    .setIcon(icon)
+                    .setTitle(title)
+                    .setMessage(message)
+                    .setPositiveButton("Coba Lagi", listenerPositive)
+                    .setNegativeButton("Kembali Ke Dashboard", listenerNegative)
                     .show()
             }
         }

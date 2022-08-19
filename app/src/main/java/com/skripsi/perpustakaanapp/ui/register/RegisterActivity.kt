@@ -1,17 +1,14 @@
 package com.skripsi.perpustakaanapp.ui.register
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Message
 import android.view.View
-import android.widget.RadioButton
-import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.MViewModelFactory
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
+import com.skripsi.perpustakaanapp.core.resource.Resource
 import com.skripsi.perpustakaanapp.databinding.ActivityRegisterBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 
@@ -22,23 +19,22 @@ class RegisterActivity : AppCompatActivity() {
 
     private val client = RetrofitClient
 
-    var gender: Int? = null
+    private var gender: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
-//        setTheme(R.style.textColorWhite)
         setContentView(binding.root)
         supportActionBar?.title = "Register"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         binding.rbGender.setOnCheckedChangeListener { _, i ->
             gender =
-                when(i){
+                when (i) {
                     R.id.rb_gender_male -> 1
                     R.id.rb_gender_female -> 0
-                else -> -1
-            }
+                    else -> -1
+                }
         }
 
 
@@ -59,15 +55,18 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun askAppointment() {
-        val NISN = binding.edtNisn.text.toString()
+        val nisn = binding.edtNisn.text.toString()
 
         when {
-            NISN.isEmpty() -> {
+            nisn.isEmpty() -> {
                 binding.edtNisn.error = "NISN Tidak Boleh Kosong"
                 binding.edtNisn.requestFocus()
             }
-            binding.rbGender.checkedRadioButtonId.equals(-1) -> {
-                MyAlertDialog.showAlertDialog(this@RegisterActivity, R.drawable.icon_warning, "WARNING", "Pilih Gender Terlebih Dahulu")
+            binding.rbGender.checkedRadioButtonId == -1 -> {
+                MyAlertDialog.showAlertDialog(this@RegisterActivity,
+                    R.drawable.icon_warning,
+                    "WARNING",
+                    "Pilih Gender Terlebih Dahulu")
             }
             else -> {
                 postUserData()
@@ -76,9 +75,6 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun postUserData() {
-        viewModel.isLoading.observe(this) { boolean ->
-            binding.progressBar.visibility = if (boolean) View.VISIBLE else View.INVISIBLE
-        }
 
         viewModel.registerUser(
             binding.edtNisn.text.toString(),
@@ -91,24 +87,29 @@ class RegisterActivity : AppCompatActivity() {
             gender!!
         )
 
-        viewModel.failMessage.observe(this) {
-            if (it != null){
-                //Reset status value at first to prevent multitriggering
-                //and to be available to trigger action again
-                viewModel.failMessage.value = null
-                if (it == ""){
-                    MyAlertDialog.showAlertDialog(this@RegisterActivity, R.drawable.icon_checked, "SUCCESS", "BERHASIL MENDAFTAR")
+        viewModel.resourceRegisterUser.observe(this) { event ->
+            event.getContentIfNotHandled()?.let {
+                when (it) {
+                    is Resource.Loading -> {
+                        binding.progressBar.visibility = View.VISIBLE
+                    }
+                    is Resource.Success -> {
+                        binding.progressBar.visibility = View.GONE
+                        MyAlertDialog.showAlertDialogEvent(this@RegisterActivity,
+                            R.drawable.icon_checked,
+                            it.data.toString().uppercase(),
+                            "Berhasil Mendaftar") { _, _ ->
+//                            finish()
+                        }
+                    }
+                    is Resource.Error -> {
+                        binding.progressBar.visibility = View.GONE
+                        MyAlertDialog.showAlertDialog(this@RegisterActivity,
+                            R.drawable.icon_cancel,
+                            "FAILED",
+                            it.message.toString())
+                    }
                 }
-                else {
-                    MyAlertDialog.showAlertDialog(this@RegisterActivity, R.drawable.icon_cancel, "FAILED", it)
-                }
-            }
-        }
-
-        viewModel.errorMessage.observe(this) {
-            if (it != null) {
-                MyAlertDialog.showAlertDialog(this@RegisterActivity, R.drawable.icon_cancel, "ERROR", it)
-                viewModel.errorMessage.value = null
             }
         }
     }
@@ -207,7 +208,7 @@ class RegisterActivity : AppCompatActivity() {
 //
 //                    context?.let { it1 ->
 //                        AlertDialog.Builder(it1)
-//                            .setTitle("Success")
+//                            .setTitle("SUCCESS")
 //                            .setMessage("Berhasil Mendaftar")
 //                            .setPositiveButton("Login") { _, _ ->
 //                                activity?.supportFragmentManager

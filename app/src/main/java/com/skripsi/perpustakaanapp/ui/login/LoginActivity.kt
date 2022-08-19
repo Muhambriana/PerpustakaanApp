@@ -91,27 +91,30 @@ class LoginActivity : AppCompatActivity() {
 
         viewModel.userLogin(username, password)
 
-        //failed handling, if there is problem with database rules
-        viewModel.failMessage.observe(this) { message ->
+        //failed handling, with message status
+        viewModel.responseMessage.observe(this) { message ->
             //jika fail message ada isinya
             if (message != null) {
                 //Reset status value at first to prevent multitriggering
                 //and to be available to trigger action again
-                viewModel.failMessage.value = null
+                viewModel.responseMessage.value = null
                 //if fail message is "" but not null
-                if (message == "") {
+                if (message == "success") {
                     // for get role name
                     viewModel.roleName.observe(this) { roleName ->
                         if (roleName != null) {
+                            //for rolename
                             sessionManager.saveUserRole(roleName)
+                            //for username
+                            sessionManager.saveUserName(binding.edtUsername.text.toString())
                             if (roleName == "admin") {
-                                viewModel.userName.observe(this){ username ->
-                                    startIntentExtraData(this@LoginActivity, HomeAdminActivity::class.java, username)
+                                viewModel.firstName.observe(this){ firstName ->
+                                    startIntentExtraData(this@LoginActivity, HomeAdminActivity::class.java, firstName)
                                 }
                             }
                             else if (roleName == "student") {
-                                viewModel.userName.observe(this){ username ->
-                                    startIntentExtraData(this@LoginActivity, HomeUserActivity::class.java, username)
+                                viewModel.firstName.observe(this){ firstName ->
+                                    startIntentExtraData(this@LoginActivity, HomeUserActivity::class.java, firstName)
                                 }
                             }
                         }
@@ -125,8 +128,8 @@ class LoginActivity : AppCompatActivity() {
         //error handling, if there is problem with connection or server
         viewModel.errorMessage.observe(this) {
             if (it != null) {
-                MyAlertDialog.showAlertDialog(this@LoginActivity, R.drawable.icon_cancel, "ERROR", it)
                 viewModel.errorMessage.value = null
+                MyAlertDialog.showAlertDialog(this@LoginActivity, R.drawable.icon_cancel, "ERROR", it)
             }
         }
 
@@ -137,9 +140,9 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun startIntentExtraData(activity: Activity, cls: Class<*>, username: String?) {
+    private fun startIntentExtraData(activity: Activity, cls: Class<*>, firstname: String?) {
         val home = Intent(activity, cls)
-        home.putExtra("user_name", username)
+        home.putExtra("first_name", firstname)
         startActivity(home)
         finish()
     }

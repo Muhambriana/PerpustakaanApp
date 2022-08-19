@@ -1,11 +1,9 @@
 package com.skripsi.perpustakaanapp.ui.user
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.skripsi.perpustakaanapp.R
@@ -14,9 +12,173 @@ import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.models.Book
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
+import com.skripsi.perpustakaanapp.core.resource.Resource
 import com.skripsi.perpustakaanapp.databinding.ActivityDetailBookBinding
+import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.admin.updatebook.UpdateBookActivity
-import com.skripsi.perpustakaanapp.ui.register.RegisterActivity
+
+class DetailBookActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityDetailBookBinding
+    private lateinit var sessionManager: SessionManager
+    private lateinit var viewModel: DetailBookViewModel
+
+    private var detailBook: Book? = null
+    private val client = RetrofitClient
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityDetailBookBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+
+        sessionManager = SessionManager(this)
+
+        viewModel = ViewModelProvider(this, MViewModelFactory(LibraryRepository(client))).get(
+            DetailBookViewModel::class.java
+        )
+
+        detailBook = intent.getParcelableExtra<Book>(EXTRA_DATA)
+        showDetailBook()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        if (sessionManager.fetchUserRole() == "admin") {
+            menuInflater.inflate(R.menu.activity_detail_menu, menu)
+        }
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.edit_menu -> {
+                updateBook()
+                true
+            }
+            R.id.delete_menu -> {
+                deleteBook()
+                true
+            }
+            else -> true
+        }
+    }
+
+    private fun updateBook() {
+        val b = UpdateBookActivity()
+        b.show(supportFragmentManager, "UpdateBookActivity")
+    }
+
+    private fun deleteBook() {
+        detailBook?.bookId?.let {
+            viewModel.deleteBook(token = "Bearer ${sessionManager.fetchAuthToken()}", it)
+        }
+
+        viewModel.resourceDeleteBook.observe(this) { event ->
+            event.getContentIfNotHandled()?.let {
+                when (it) {
+                    is Resource.Loading -> {
+                        binding.progressBar.visibility = View.VISIBLE
+                    }
+                    is Resource.Success -> {
+                        binding.progressBar.visibility = View.GONE
+                        MyAlertDialog.showAlertDialogEvent(this@DetailBookActivity,
+                            R.drawable.icon_checked,
+                            it.data.toString().uppercase(),
+                            "Buku Berhasil Di Hapus")
+                        { _, _ ->
+                            finish()
+                        }
+                    }
+                    is Resource.Error -> {
+                        binding.progressBar.visibility = View.GONE
+                        MyAlertDialog.showAlertDialog(this@DetailBookActivity,
+                            R.drawable.icon_cancel,
+                            "FAILED",
+                            it.message.toString())
+                    }
+                }
+            }
+        }
+    }
+
+    private fun showDetailBook() {
+        setEnableButton()
+        binding.progressBar.visibility = View.GONE
+        supportActionBar?.title = detailBook?.title
+        binding.author.text = detailBook?.author
+        binding.year.text = detailBook?.edition  //harusnya tahun terbit
+        binding.publisher.text = detailBook?.publisher
+
+    }
+
+    private fun setEnableButton() {
+        if (detailBook?.copies != "0") {
+            doLoan()
+        } else {
+            binding.buttonLoan.isEnabled = false
+        }
+    }
+
+    private fun doLoan() {
+        binding.buttonLoan.setOnClickListener {
+            viewModel.createTransaction(sessionManager.fetchUserName(), detailBook?.bookId)
+
+            viewModel.resourceLoanBook.observe(this) { event ->
+                event.getContentIfNotHandled()?.let {
+                    when (it) {
+                        is Resource.Loading -> {
+                            binding.progressBar.visibility = View.VISIBLE
+                        }
+
+                        is Resource.Success -> {
+                            binding.progressBar.visibility = View.GONE
+                            MyAlertDialog.showAlertDialogEvent(this@DetailBookActivity,
+                                R.drawable.icon_checked,
+                                it.data.toString().uppercase(),
+                                "Menunggu Admin")
+                            { _, _ ->
+                                binding.buttonLoan.isEnabled = false
+                            }
+                        }
+
+                        is Resource.Error -> {
+                            binding.progressBar.visibility = View.GONE
+                            MyAlertDialog.showAlertDialog(this@DetailBookActivity,
+                                R.drawable.icon_cancel,
+                                "FAILED",
+                                it.message.toString())
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    companion object {
+        const val EXTRA_DATA = "extra_data"
+    }
+}
+
+
+/*
+package com.skripsi.perpustakaanapp.ui.user
+
+import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import com.skripsi.perpustakaanapp.R
+import com.skripsi.perpustakaanapp.core.MViewModelFactory
+import com.skripsi.perpustakaanapp.core.SessionManager
+import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
+import com.skripsi.perpustakaanapp.core.models.Book
+import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
+import com.skripsi.perpustakaanapp.core.resource.Resource
+import com.skripsi.perpustakaanapp.databinding.ActivityDetailBookBinding
+import com.skripsi.perpustakaanapp.ui.MyAlertDialog
+import com.skripsi.perpustakaanapp.ui.admin.updatebook.UpdateBookActivity
 
 class DetailBookActivity : AppCompatActivity() {
 
@@ -44,7 +206,7 @@ class DetailBookActivity : AppCompatActivity() {
         )
 
         detailBook = intent.getParcelableExtra<Book>(EXTRA_DATA)
-        showDetailBook(detailBook)
+        showDetailBook()
 
         //if buku belum ada yang pinjam
         //binding.buttonLoan.isEnabled = true
@@ -73,83 +235,131 @@ class DetailBookActivity : AppCompatActivity() {
         }
     }
 
-//    fun getInstance(): DetailBookActivity? {
-//        return activityDetailBook
-//    }
+    private fun updateBook() {
+        val b = UpdateBookActivity()
+        b.show(supportFragmentManager, "Hi")
+    }
 
     private fun deleteBook(){
         detailBook?.bookId?.let {
             viewModel.deleteBook(token = "Bearer ${sessionManager.fetchAuthToken()}", it)
         }
 
-        viewModel.failMessage.observe(this) { message ->
-            if (message != null) {
-                //Reset status value at first to prevent multitriggering
-                //and to be available to trigger action again
-                viewModel.failMessage.value = null
-                if (message == "") {
-                    AlertDialog.Builder(this@DetailBookActivity)
-                        .setTitle("Success")
-                        .setMessage("Data Berhasil Di Delete")
-                        .setPositiveButton("Tutup") { _, _ ->
+//        viewModel.responseMessage.observe(this) { message ->
+//            if (message != null) {
+////                var i = 0
+////                while (i<=10) {
+////                    println("nilai message = $message")
+////                    i++
+////                }
+//                //Reset status value at first to prevent multitriggering
+//                //and to be available to trigger action again
+//                viewModel.responseMessage.value = null
+//                if (message == "success") {
+//                    MyAlertDialog.showAlertDialogEvent(this@DetailBookActivity, R.drawable.icon_checked, "SUCCESS", "Buku Berhasil Di Hapus") { _, _ ->
+//                        finish()
+//                    }
+//                }
+//                else {
+//                    MyAlertDialog.showAlertDialog(this@DetailBookActivity, R.drawable.icon_cancel, "FAILED", message)
+//                }
+//            }
+//        }
+
+        viewModel.deleteBook.observe(this) { event ->
+            event.getContentIfNotHandled()?.let {
+               when (it) {
+                   is  Resource.Loading -> {
+                       binding.progressBar.visibility = View.VISIBLE
+                   }
+                   is Resource.Success -> {
+                       binding.progressBar.visibility = View.GONE
+                       MyAlertDialog.showAlertDialogEvent(this@DetailBookActivity, R.drawable.icon_checked, it.data.toString().uppercase(), "Buku Berhasil Di Hapus")
+                       { _, _ ->
                             finish()
-//                            finishActivity(10)
-//                            val intent = Intent(this, BookActivity::class.java)
-//                            startActivity(intent)
-                        }
-                        .show()
-                }
-                else {
-                    AlertDialog.Builder(this@DetailBookActivity)
-                        .setTitle("Gagal")
-                        .setMessage(message)
-                        .setPositiveButton("Tutup") { _, _ ->
-                            // do nothing
-                        }
-                        .show()
-                }
+                       }
+                   }
+                   is Resource.Error -> {
+                       binding.progressBar.visibility = View.GONE
+                       MyAlertDialog.showAlertDialog(this@DetailBookActivity, R.drawable.icon_cancel, "FAILED", it.message.toString())
+                   }
+               }
             }
         }
+
+//        viewModel.errorMessage.observe(this) {
+//            if (it != null) {
+//                MyAlertDialog.showAlertDialog(this@DetailBookActivity, R.drawable.icon_cancel, "ERROR", it)
+//                viewModel.errorMessage.value = null
+//            }
+//        }
     }
 
-    private fun updateBook() {
-        val b = UpdateBookActivity()
-        b.show(supportFragmentManager, "Hi")
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
-        if (requestCode == 1) {
-            if (resultCode == 1) {
-                val i = getIntent()
-                overridePendingTransition(0, 0)
-                i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
-                finish()
-                overridePendingTransition(0, 0)
-                startActivity(i)
-            }
-        }
-        super.onActivityResult(requestCode, resultCode, intent)
-    }
-
-    private fun showDetailBook(detailBook: Book?) {
-        detailBook?.let {
+    private fun showDetailBook() {
+            setEnableButton()
             binding.progressBar.visibility = View.GONE
-            setEnableButton(detailBook.copies)
-            supportActionBar?.title = detailBook.title
-            binding.author.text = detailBook.author
-            binding.year.text = detailBook.edition  //harusnya tahun terbit
-            binding.publisher.text = detailBook.publisher
-        }
+            supportActionBar?.title = detailBook?.title
+            binding.author.text = detailBook?.author
+            binding.year.text = detailBook?.edition  //harusnya tahun terbit
+            binding.publisher.text = detailBook?.publisher
+
     }
 
-    private fun setEnableButton(copies: String?) {
-        if (copies != "0") {
-            binding.buttonLoan.setOnClickListener{
-                //memasukan judul buku kedalam daftar request pinjam
-
-            }
+    private fun setEnableButton() {
+        if (detailBook?.copies != "0") {
+            doLoan()
         } else {
             binding.buttonLoan.isEnabled = false
+        }
+    }
+
+    private fun doLoan() {
+        binding.buttonLoan.setOnClickListener {
+            viewModel.createTransaction(sessionManager.fetchUserName(), detailBook?.bookId)
+
+            println("Disini ${sessionManager.fetchUserName()}, ${detailBook?.bookId}")
+
+//            viewModel.responseMessage2.observe(this) { messsage ->
+//                if (messsage != null) {
+//                    //Reset status value at first to prevent multitriggering
+//                    //and to be available to trigger action again
+//                    viewModel.responseMessage2.value = null
+//                    if (messsage == "success") {
+//                        MyAlertDialog.showAlertDialog(this@DetailBookActivity, R.drawable.icon_checked, messsage.uppercase(Locale.getDefault()), "Berhasil Dan Mohon Menunggu Persetujuan Admin")
+//                        binding.buttonLoan.isEnabled = false
+//                    }
+//                    else {
+//                        MyAlertDialog.showAlertDialog(this@DetailBookActivity, R.drawable.icon_cancel, "FAILED", messsage)
+//                    }
+//                }
+//            }
+            viewModel.loanBook.observe(this) { event ->
+                event.getContentIfNotHandled()?.let {
+                    when (it) {
+                        is Resource.Loading -> {
+                            binding.progressBar.visibility = View.VISIBLE
+                        }
+                        is Resource.Success -> {
+                            binding.progressBar.visibility = View.GONE
+                            MyAlertDialog.showAlertDialogEvent(this@DetailBookActivity, R.drawable.icon_checked, it.data.toString().uppercase(), "Menunggu Admin")
+                            { _, _ ->
+                                binding.buttonLoan.isEnabled = false
+                            }
+                        }
+                        is Resource.Error -> {
+                            binding.progressBar.visibility = View.GONE
+                            MyAlertDialog.showAlertDialog(this@DetailBookActivity, R.drawable.icon_cancel, "FAILED", it.message.toString())
+                        }
+                    }
+                }
+            }
+
+//            viewModel.errorMessage.observe(this) {
+//                if (it != null) {
+//                    MyAlertDialog.showAlertDialog(this@DetailBookActivity, R.drawable.icon_cancel, "ERROR", "Mohon Maaf Silahkan Coba Beberapa Saat Lagi")
+//                    viewModel.responseMessage.value = null
+//                }
+//            }
         }
     }
 
@@ -157,3 +367,4 @@ class DetailBookActivity : AppCompatActivity() {
         const val EXTRA_DATA = "extra_data"
     }
 }
+ */

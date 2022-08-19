@@ -20,6 +20,7 @@ class UpdateBookActivity : BottomSheetDialogFragment() {
     private lateinit var sessionManager: SessionManager
     private lateinit var binding: ActivityUpdateBookBinding
     private lateinit var viewModel: UpdateBookViewModel
+    private lateinit var book: Book
 
     private var dataBook: Book? = null
     private val client = RetrofitClient
@@ -87,10 +88,6 @@ class UpdateBookActivity : BottomSheetDialogFragment() {
                 binding.edBookTitle.error = "Judul Buku Tidak Boleh Kosong"
                 binding.edBookTitle.requestFocus()
             }
-//            price.isEmpty() -> {
-//                binding.edPrice.error = "Harga Buku Tidak Boleh Kosong"
-//                binding.edPrice.requestFocus()
-//            }
             else -> {
                 postBookData()
             }
@@ -117,12 +114,12 @@ class UpdateBookActivity : BottomSheetDialogFragment() {
             binding.edRemark.text.toString()
         )
 
-        viewModel.failMessage.observe(this) { message ->
+        viewModel.responseMessage.observe(this) { message ->
             if(message != null) {
                 //Reset status value at first to prevent multitriggering
                 //and to be available to trigger action again
-                viewModel.failMessage.value = null
-                if(message == "") {
+                viewModel.responseMessage.value = null
+                if(message == "success") {
                     dataBook = Book(
                         binding.tvBookId.text.toString(),
                         binding.edBookTitle.text.toString(),
@@ -143,8 +140,15 @@ class UpdateBookActivity : BottomSheetDialogFragment() {
                     }
                 }
                 else {
-                    MyAlertDialog.showAlertDialog(context, R.drawable.icon_cancel, "Failed", message)
+                    MyAlertDialog.showAlertDialog(context, R.drawable.icon_cancel, "FAILED", message)
                 }
+            }
+        }
+
+        viewModel.errorMessage.observe(this) {
+            if (it != null) {
+                viewModel.errorMessage.value = null
+                MyAlertDialog.showAlertDialog(context, R.drawable.icon_cancel, "ERROR", it)
             }
         }
     }

@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.MViewModelFactory
@@ -14,6 +13,7 @@ import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.databinding.ActivityHomeAdminBinding
+import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.admin.createbook.CreateBookActivity
 import com.skripsi.perpustakaanapp.ui.admin.createnewadmin.CreateNewAdminActivity
 import com.skripsi.perpustakaanapp.ui.login.LoginActivity
@@ -33,7 +33,7 @@ class HomeAdminActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         if (intent.extras!=null){
-            supportActionBar?.title = "Hi, ${intent.getStringExtra("user_name")}"
+            supportActionBar?.title = "Hi, ${intent.getStringExtra("first_name")}"
         }
 
         viewModel = ViewModelProvider(this, MViewModelFactory(LibraryRepository(client))).get(
@@ -58,6 +58,11 @@ class HomeAdminActivity : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        onPause()
+        super.onBackPressed()
+    }
+
     private fun userLogout() {
         sessionManager = SessionManager(this)
         viewModel.userLogout(token = "Bearer ${sessionManager.fetchAuthToken()}")
@@ -71,14 +76,10 @@ class HomeAdminActivity : AppCompatActivity() {
             }
         }
         viewModel.errorMessage.observe(this) {
-//            binding.progressBar.visibility = View.GONE
-            AlertDialog.Builder(this@HomeAdminActivity)
-                .setTitle("ERROR")
-                .setMessage(it)
-                .setPositiveButton("Tutup"){_,_ ->
-                    // do nothing
-                }
-                .show()
+            if (it != null) {
+                viewModel.errorMessage.value = null
+                MyAlertDialog.showAlertDialog(this@HomeAdminActivity, R.drawable.icon_cancel, "ERROR", it)
+            }
         }
     }
 

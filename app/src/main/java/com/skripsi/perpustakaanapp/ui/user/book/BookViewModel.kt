@@ -5,33 +5,37 @@ import androidx.lifecycle.ViewModel
 import com.skripsi.perpustakaanapp.core.models.Book
 import com.skripsi.perpustakaanapp.core.models.BookList
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
+import com.skripsi.perpustakaanapp.core.resource.Event
+import com.skripsi.perpustakaanapp.core.resource.Resource
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class BookViewModel(private val repository: LibraryRepository) : ViewModel() {
 
-    val bookList = MutableLiveData<List<Book>>()
-    val errorMessage = MutableLiveData<String>()
-    val isLoading = MutableLiveData<Boolean>()
+    val resourceBook = MutableLiveData<Event<Resource<List<Book>>>>()
 
     fun getAllBooks(token: String) {
-        isLoading.value = true
+        resourceBook.postValue(Event(Resource.Loading()))
         val response = repository.getAllBooks(token)
         response.enqueue(object : Callback<BookList> {
-            override fun onResponse(call: Call<BookList>, response: Response<BookList>) {
-                isLoading.value = false
-                bookList.postValue(response.body()?.bookItems)
+            override fun onResponse(
+                call: Call<BookList>,
+                response: Response<BookList>)
+            {
+                if (response.body()?.code == 0) {
+                    resourceBook.postValue(Event(Resource.Success(response.body()?.bookItems)))
+                } else {
+                    resourceBook.postValue(Event(Resource.Error(response.body()?.message)))
+                }
             }
 
-            override fun onFailure(call: Call<BookList>, t: Throwable) {
-                isLoading.value = false
-                errorMessage.postValue(t.message)
+            override fun onFailure(
+                call: Call<BookList>,
+                t: Throwable)
+            {
+                resourceBook.postValue(Event(Resource.Error(t.message)))
             }
         })
-    }
-
-    companion object {
-        private const val TAG = "BookViewModel"
     }
 }

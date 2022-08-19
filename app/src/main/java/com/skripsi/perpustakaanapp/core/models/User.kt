@@ -11,7 +11,7 @@ data class User(
     val password: String? = null,
 
     @field:SerializedName("firstName")
-    val fullName: String? = null,
+    val firstName: String? = null,
 
     @field:SerializedName("roleName")
     val roleName: String? = null,
