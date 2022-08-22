@@ -1,4 +1,4 @@
-package com.skripsi.perpustakaanapp.ui.register
+package com.skripsi.perpustakaanapp.ui.member.register
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

@@ -8,7 +8,7 @@ data class ModelForDelete(
 )
 
 data class ModelForCreateTransaction(
-    @SerializedName("userId")
+    @SerializedName("username")
     val userName : String? = null,
 
     @SerializedName("bookId")

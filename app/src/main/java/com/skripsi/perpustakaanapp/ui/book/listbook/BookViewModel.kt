@@ -1,9 +1,9 @@
-package com.skripsi.perpustakaanapp.ui.user.book
+package com.skripsi.perpustakaanapp.ui.book.listbook
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.skripsi.perpustakaanapp.core.models.Book
-import com.skripsi.perpustakaanapp.core.models.BookList
+import com.skripsi.perpustakaanapp.core.responses.BookResponse
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.core.resource.Event
 import com.skripsi.perpustakaanapp.core.resource.Resource
@@ -18,10 +18,10 @@ class BookViewModel(private val repository: LibraryRepository) : ViewModel() {
     fun getAllBooks(token: String) {
         resourceBook.postValue(Event(Resource.Loading()))
         val response = repository.getAllBooks(token)
-        response.enqueue(object : Callback<BookList> {
+        response.enqueue(object : Callback<BookResponse> {
             override fun onResponse(
-                call: Call<BookList>,
-                response: Response<BookList>)
+                call: Call<BookResponse>,
+                response: Response<BookResponse>)
             {
                 if (response.body()?.code == 0) {
                     resourceBook.postValue(Event(Resource.Success(response.body()?.bookItems)))
@@ -31,7 +31,7 @@ class BookViewModel(private val repository: LibraryRepository) : ViewModel() {
             }
 
             override fun onFailure(
-                call: Call<BookList>,
+                call: Call<BookResponse>,
                 t: Throwable)
             {
                 resourceBook.postValue(Event(Resource.Error(t.message)))

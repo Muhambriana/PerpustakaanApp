@@ -24,4 +24,6 @@ class LibraryRepository constructor(private val retrofitClient: RetrofitClient) 
 
     fun createTransaction(data: ModelForCreateTransaction) = retrofitClient.create().postCreateTransaction(data)
 
+    fun getAllPendingLoan(token: String) = retrofitClient.create().getAllPendingTask(token)
+
 }

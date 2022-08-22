@@ -1,4 +1,4 @@
-package com.skripsi.perpustakaanapp.ui.admin.createbook
+package com.skripsi.perpustakaanapp.ui.admin.managebook.createbook
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -62,7 +62,7 @@ class CreateBookActivity : AppCompatActivity() {
         }
 
         viewModel.createBook(
-            token = "Bearer ${sessionManager.fetchAuthToken()}",
+            token = sessionManager.fetchAuthToken().toString(),
             binding.edBookTitle.text.toString(),
             binding.edEdition.text.toString(),
             binding.edAuthor.text.toString(),

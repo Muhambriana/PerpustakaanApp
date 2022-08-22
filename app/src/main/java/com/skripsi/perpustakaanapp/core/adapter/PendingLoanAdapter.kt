@@ -1,0 +1,52 @@
+package com.skripsi.perpustakaanapp.core.adapter
+
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.skripsi.perpustakaanapp.R
+import com.skripsi.perpustakaanapp.core.models.PendingLoan
+import com.skripsi.perpustakaanapp.databinding.ItemListPendingLoanBinding
+
+class PendingLoanAdapter : RecyclerView.Adapter<PendingLoanAdapter.PendingLoanViewHolder>() {
+
+    private var listPendingLoan = mutableListOf<PendingLoan>()
+    var onItemClick: ((PendingLoan) -> Unit)? = null
+
+    fun setPendingLoanList(pendingLoans: List<PendingLoan>?) {
+        if (pendingLoans == null) return
+        listPendingLoan.clear()
+        listPendingLoan.addAll(pendingLoans)
+        notifyDataSetChanged()
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+        PendingLoanViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_list_pending_loan, parent, false))
+
+
+    override fun onBindViewHolder(holder: PendingLoanViewHolder, position: Int) {
+        val pendingLoan = listPendingLoan[position]
+        holder.bind(pendingLoan)
+    }
+
+    override fun getItemCount(): Int {
+        return listPendingLoan.size
+    }
+
+    inner class PendingLoanViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val binding = ItemListPendingLoanBinding.bind(itemView)
+        fun bind(pendingLoan: PendingLoan) {
+            with(binding){
+                tvBookTitle.text = pendingLoan.bookTitle
+//                tvUsername.text = pendingLoan.username
+            }
+        }
+
+        init {
+            binding.root.setOnClickListener {
+                onItemClick?.invoke(listPendingLoan[adapterPosition])
+            }
+        }
+    }
+
+}

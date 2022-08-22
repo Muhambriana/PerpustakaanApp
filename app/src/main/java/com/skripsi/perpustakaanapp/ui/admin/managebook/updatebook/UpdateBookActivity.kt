@@ -1,5 +1,6 @@
-package com.skripsi.perpustakaanapp.ui.admin.updatebook
+package com.skripsi.perpustakaanapp.ui.admin.managebook.updatebook
 
+import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
@@ -13,7 +14,7 @@ import com.skripsi.perpustakaanapp.core.models.Book
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.databinding.ActivityUpdateBookBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
-import com.skripsi.perpustakaanapp.ui.user.DetailBookActivity
+import com.skripsi.perpustakaanapp.ui.book.detailbook.DetailBookActivity
 
 class UpdateBookActivity : BottomSheetDialogFragment() {
 
@@ -102,7 +103,7 @@ class UpdateBookActivity : BottomSheetDialogFragment() {
         }
 
         viewModel.updateBook(
-            token = "Bearer ${sessionManager.fetchAuthToken()}",
+            token = sessionManager.fetchAuthToken().toString(),
             binding.tvBookId.text.toString(),
             binding.edBookTitle.text.toString(),
             binding.edEdition.text.toString(),
@@ -120,6 +121,7 @@ class UpdateBookActivity : BottomSheetDialogFragment() {
                 //and to be available to trigger action again
                 viewModel.responseMessage.value = null
                 if(message == "success") {
+                    activity?.setResult(RESULT_OK) // //set return data is "RESULT_OK" after success updated
                     dataBook = Book(
                         binding.tvBookId.text.toString(),
                         binding.edBookTitle.text.toString(),

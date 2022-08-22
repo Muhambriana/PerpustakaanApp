@@ -1,8 +1,9 @@
-package com.skripsi.perpustakaanapp.core.models
+package com.skripsi.perpustakaanapp.core.responses
 
 import com.google.gson.annotations.SerializedName
+import com.skripsi.perpustakaanapp.core.models.Book
 
-data class BookList(
+data class BookResponse(
 
     @field:SerializedName("code")
     val code: Int? = null,

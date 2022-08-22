@@ -1,4 +1,4 @@
-package com.skripsi.perpustakaanapp.ui.user
+package com.skripsi.perpustakaanapp.ui.book.detailbook
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

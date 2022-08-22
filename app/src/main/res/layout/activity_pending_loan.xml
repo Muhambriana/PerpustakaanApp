@@ -4,19 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.book.listbook.BookActivity"
+    tools:context=".ui.admin.loan.pendingloan.PendingLoanActivity"
     android:fitsSystemWindows="true">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_book"
+        android:id="@+id/rv_pending_loan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         tools:itemCount="6"
-        tools:listitem="@layout/item_list_book" />
+        tools:listitem="@layout/item_list_pending_loan"/>
 
     <ProgressBar
         android:id="@+id/progress_bar"
@@ -26,5 +26,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

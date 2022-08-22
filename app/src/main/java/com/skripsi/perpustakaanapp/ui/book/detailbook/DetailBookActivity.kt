@@ -1,9 +1,12 @@
-package com.skripsi.perpustakaanapp.ui.user
+package com.skripsi.perpustakaanapp.ui.book.detailbook
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.skripsi.perpustakaanapp.R
@@ -15,7 +18,8 @@ import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.core.resource.Resource
 import com.skripsi.perpustakaanapp.databinding.ActivityDetailBookBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
-import com.skripsi.perpustakaanapp.ui.admin.updatebook.UpdateBookActivity
+import com.skripsi.perpustakaanapp.ui.admin.managebook.updatebook.UpdateBookActivity
+
 
 class DetailBookActivity : AppCompatActivity() {
 
@@ -37,6 +41,8 @@ class DetailBookActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, MViewModelFactory(LibraryRepository(client))).get(
             DetailBookViewModel::class.java
         )
+
+
 
         detailBook = intent.getParcelableExtra<Book>(EXTRA_DATA)
         showDetailBook()
@@ -70,7 +76,7 @@ class DetailBookActivity : AppCompatActivity() {
 
     private fun deleteBook() {
         detailBook?.bookId?.let {
-            viewModel.deleteBook(token = "Bearer ${sessionManager.fetchAuthToken()}", it)
+            viewModel.deleteBook(token = sessionManager.fetchAuthToken().toString(), it)
         }
 
         viewModel.resourceDeleteBook.observe(this) { event ->
@@ -81,6 +87,9 @@ class DetailBookActivity : AppCompatActivity() {
                     }
                     is Resource.Success -> {
                         binding.progressBar.visibility = View.GONE
+
+                        setResult(RESULT_OK) //set return data is "RESULT_OK" after success deleted
+
                         MyAlertDialog.showAlertDialogEvent(this@DetailBookActivity,
                             R.drawable.icon_checked,
                             it.data.toString().uppercase(),
@@ -178,7 +187,7 @@ import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.core.resource.Resource
 import com.skripsi.perpustakaanapp.databinding.ActivityDetailBookBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
-import com.skripsi.perpustakaanapp.ui.admin.updatebook.UpdateBookActivity
+import com.skripsi.perpustakaanapp.ui.admin.book.UpdateBookActivity
 
 class DetailBookActivity : AppCompatActivity() {
 

@@ -3,10 +3,13 @@ package com.skripsi.perpustakaanapp.ui.home
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.snackbar.Snackbar
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.MViewModelFactory
 import com.skripsi.perpustakaanapp.core.SessionManager
@@ -14,16 +17,18 @@ import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.databinding.ActivityHomeAdminBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
-import com.skripsi.perpustakaanapp.ui.admin.createbook.CreateBookActivity
+import com.skripsi.perpustakaanapp.ui.admin.managebook.createbook.CreateBookActivity
 import com.skripsi.perpustakaanapp.ui.admin.createnewadmin.CreateNewAdminActivity
+import com.skripsi.perpustakaanapp.ui.admin.loan.pendingloan.PendingLoanActivity
 import com.skripsi.perpustakaanapp.ui.login.LoginActivity
-import com.skripsi.perpustakaanapp.ui.user.book.BookActivity
+import com.skripsi.perpustakaanapp.ui.book.listbook.BookActivity
 
 class HomeAdminActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeAdminBinding
     private lateinit var sessionManager: SessionManager
     private lateinit var viewModel: HomeViewModel
+    private var doubleBackPressed = false
 
     private val client = RetrofitClient
 
@@ -59,13 +64,19 @@ class HomeAdminActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        onPause()
-        super.onBackPressed()
+        if (doubleBackPressed) {
+            super.onBackPressed()
+            return
+        }
+        doubleBackPressed = true
+        Snackbar.make(binding.root, "Tekan Sekali Lagi Untuk Keluar", Snackbar.LENGTH_LONG)
+            .show()
+        Handler(Looper.getMainLooper()).postDelayed(Runnable { doubleBackPressed = false }, 2000)
     }
 
     private fun userLogout() {
         sessionManager = SessionManager(this)
-        viewModel.userLogout(token = "Bearer ${sessionManager.fetchAuthToken()}")
+        viewModel.userLogout(sessionManager.fetchAuthToken().toString())
         viewModel.isSuccess.observe(this) {
             viewModel.isSuccess.postValue(null)
             if (it == true) {
@@ -86,22 +97,27 @@ class HomeAdminActivity : AppCompatActivity() {
     private fun cardListener() {
         val clickListener = View.OnClickListener { view ->
             when (view.id){
-                R.id.create_book -> {
+                R.id.card_create_book -> {
                     val intent = Intent(this@HomeAdminActivity, CreateBookActivity::class.java)
                     startActivity(intent)
                 }
-                R.id.create_admin -> {
+                R.id.card_create_admin -> {
                     val intent = Intent(this@HomeAdminActivity, CreateNewAdminActivity::class.java)
                     startActivity(intent)
                 }
-                R.id.book_list -> {
+                R.id.card_book_list -> {
                     val intent = Intent(this@HomeAdminActivity, BookActivity::class.java)
+                    startActivity(intent)
+                }
+                R.id.card_pending_loan_list -> {
+                    val intent = Intent(this@HomeAdminActivity, PendingLoanActivity::class.java)
                     startActivity(intent)
                 }
             }
         }
-        binding.createBook.setOnClickListener(clickListener)
-        binding.createAdmin.setOnClickListener(clickListener)
-        binding.bookList.setOnClickListener(clickListener)
+        binding.cardCreateBook.setOnClickListener(clickListener)
+        binding.cardCreateAdmin.setOnClickListener(clickListener)
+        binding.cardBookList.setOnClickListener(clickListener)
+        binding.cardPendingLoanList.setOnClickListener(clickListener)
     }
 }

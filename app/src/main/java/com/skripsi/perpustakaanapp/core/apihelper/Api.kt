@@ -29,7 +29,7 @@ interface Api {
     @POST("book/list")
     fun getAllBook(
         @Header("Authorization") token: String
-    ): Call<BookList>
+    ): Call<BookResponse>
 
     @POST("book/create")
     fun postCreateBook(
@@ -53,6 +53,11 @@ interface Api {
     fun postCreateTransaction(
         @Body data: ModelForCreateTransaction
     ):Call<GeneralResponse>
+
+    @POST("pendingtask/list")
+    fun getAllPendingTask(
+        @Header("Authorization") token: String
+    ):Call<PendingLoanResponse>
 
 //    @POST("book/loan")
 //    fun loanBook(

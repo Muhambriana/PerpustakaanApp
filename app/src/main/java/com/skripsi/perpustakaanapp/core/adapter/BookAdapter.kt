@@ -12,6 +12,7 @@ class BookAdapter : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
 
     private var listBook = mutableListOf<Book>()
     var onItemClick: ((Book) -> Unit)? = null
+//    var positionAdapter: Int? = null
 
     fun setBookList(books: List<Book>?) {
         if (books == null) return
@@ -40,6 +41,7 @@ class BookAdapter : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
         fun bind(book: Book){
             with(binding){
                 tvBookTitle.text = book.title
+//                positionAdapter = adapterPosition
 //                Glide.with(holder.itemView.context)
 //                    .load(book.poster)
 //                    .placeholder(R.drawable.placeholder)
@@ -52,6 +54,7 @@ class BookAdapter : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
             binding.root.setOnClickListener {
                 onItemClick?.invoke(listBook[adapterPosition])
             }
+
 //            binding.buttonMore.setOnClickListener{
 //                onItemClick?.invoke(books[adapterPosition])
 //            }

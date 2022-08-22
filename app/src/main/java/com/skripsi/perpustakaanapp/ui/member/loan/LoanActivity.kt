@@ -1,4 +1,4 @@
-package com.skripsi.perpustakaanapp.ui.user.loan
+package com.skripsi.perpustakaanapp.ui.member.loan
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

@@ -17,7 +17,7 @@ import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.home.HomeAdminActivity
 import com.skripsi.perpustakaanapp.ui.home.HomeUserActivity
-import com.skripsi.perpustakaanapp.ui.register.RegisterActivity
+import com.skripsi.perpustakaanapp.ui.member.register.RegisterActivity
 
 
 class LoginActivity : AppCompatActivity() {
@@ -135,7 +135,7 @@ class LoginActivity : AppCompatActivity() {
 
         viewModel.token.observe(this) {
             if (it != null) {
-                sessionManager.saveAuthToken(it)
+                sessionManager.saveAuthToken("Bearer $it")
             }
         }
     }

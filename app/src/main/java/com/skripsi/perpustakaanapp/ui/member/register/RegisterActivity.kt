@@ -1,4 +1,4 @@
-package com.skripsi.perpustakaanapp.ui.register
+package com.skripsi.perpustakaanapp.ui.member.register
 
 import android.os.Bundle
 import android.view.View

@@ -1,9 +1,12 @@
-package com.skripsi.perpustakaanapp.ui.user.book
+package com.skripsi.perpustakaanapp.ui.book.listbook
 
+import android.R.attr
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.skripsi.perpustakaanapp.R
@@ -15,7 +18,8 @@ import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.core.resource.Resource
 import com.skripsi.perpustakaanapp.databinding.ActivityBookBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
-import com.skripsi.perpustakaanapp.ui.user.DetailBookActivity
+import com.skripsi.perpustakaanapp.ui.book.detailbook.DetailBookActivity
+import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 
 
 class BookActivity : AppCompatActivity() {
@@ -23,23 +27,30 @@ class BookActivity : AppCompatActivity() {
     private lateinit var binding: ActivityBookBinding
     private lateinit var sessionManager: SessionManager
     private lateinit var viewModel: BookViewModel
+    private lateinit var resultLauncher: ActivityResultLauncher<Intent>
 
     private val client = RetrofitClient
     private val bookAdapter = BookAdapter()
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityBookBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.progressBar.visibility = View.VISIBLE
         viewModel = ViewModelProvider(this, MViewModelFactory(LibraryRepository(client))).get(
                 BookViewModel::class.java
             )
-
         getBookData()
+
+        //For get return data after launch activity
+        resultLauncher =  registerForActivityResult(
+            StartActivityForResult()
+        ){ result ->
+            if (result.resultCode == RESULT_OK) {
+                //Re-run getBookData and update with the latest
+                getBookData()
+            }
+        }
     }
 
 //    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -73,17 +84,16 @@ class BookActivity : AppCompatActivity() {
     private fun getBookData() {
         sessionManager = SessionManager(this)
 
-        viewModel.getAllBooks(token = "Bearer ${sessionManager.fetchAuthToken()}")
+        viewModel.getAllBooks(token = sessionManager.fetchAuthToken().toString())
 
         viewModel.resourceBook.observe(this) {
-            Log.d(TAG, "bookList: $it")
             binding.progressBar.visibility = View.GONE
 
         }
 
         viewModel.resourceBook.observe(this) { event ->
-            event.getContentIfNotHandled()?.let {
-                when (it) {
+            event.getContentIfNotHandled()?.let { resource ->
+                when (resource) {
                     is Resource.Loading -> {
                         binding.progressBar.visibility = View.VISIBLE
                     }
@@ -91,15 +101,18 @@ class BookActivity : AppCompatActivity() {
                         //set recyclerview adapter
                         binding.rvBook.adapter = bookAdapter
                         binding.progressBar.visibility = View.GONE
-                        bookAdapter.setBookList(it.data)
+                        bookAdapter.setBookList(resource.data)
                     }
                     is Resource.Error -> {
                         binding.progressBar.visibility = View.GONE
-                        MyAlertDialog.showAlertDialog2Event(this@BookActivity, R.drawable.icon_cancel, "FAILED", it.message.toString(), { _, _ ->
-                            getBookData()
-                        }, { _,_ ->
-                            finish()
-                        })
+                        MyAlertDialog.showAlertDialog2Event(this@BookActivity, R.drawable.icon_cancel, "FAILED", resource.message.toString(),
+                            { _, _ ->
+                                getBookData()
+                            },
+                            { _,_ ->
+                                finish()
+                            }
+                        )
                     }
                 }
             }
@@ -109,18 +122,19 @@ class BookActivity : AppCompatActivity() {
         bookAdapter.onItemClick = {
             val intent = Intent(this, DetailBookActivity::class.java)
             intent.putExtra(DetailBookActivity.EXTRA_DATA, it)
-            startActivity(intent)
+            resultLauncher.launch(intent) //Launch Activity and return something
         }
     }
 
-    override fun onRestart() {
-        getBookData()
-        super.onRestart()
-    }
-
-    companion object{
-        private const val TAG = "BookActivity"
-    }
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        if (requestCode == 10) {
+//            if (resultCode == RESULT_OK) {
+//                print("masuk set result")
+//                getBookData()
+//            }
+//        }
+//        super.onActivityResult(requestCode, resultCode, data)
+//    }
 }
 
 /*

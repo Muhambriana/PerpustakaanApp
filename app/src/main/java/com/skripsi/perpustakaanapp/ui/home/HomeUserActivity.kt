@@ -3,10 +3,13 @@ package com.skripsi.perpustakaanapp.ui.home
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.snackbar.Snackbar
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.MViewModelFactory
 import com.skripsi.perpustakaanapp.core.SessionManager
@@ -15,8 +18,8 @@ import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.databinding.ActivityHomeUserBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.login.LoginActivity
-import com.skripsi.perpustakaanapp.ui.user.book.BookActivity
-import com.skripsi.perpustakaanapp.ui.user.loan.LoanActivity
+import com.skripsi.perpustakaanapp.ui.book.listbook.BookActivity
+import com.skripsi.perpustakaanapp.ui.member.loan.LoanActivity
 
 
 class HomeUserActivity : AppCompatActivity() {
@@ -24,6 +27,7 @@ class HomeUserActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeUserBinding
     private lateinit var sessionManager: SessionManager
     private lateinit var viewModel: HomeViewModel
+    private var doubleBackPressed = false
 
     private val client = RetrofitClient
 
@@ -61,14 +65,21 @@ class HomeUserActivity : AppCompatActivity() {
         }
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return super.onSupportNavigateUp()
+    override fun onBackPressed() {
+        if (doubleBackPressed) {
+            super.onBackPressed()
+            return
+        }
+        doubleBackPressed = true
+        Snackbar
+            .make(binding.root, "Tekan Sekali Lagi Untuk Keluar", Snackbar.LENGTH_LONG)
+            .show()
+        Handler(Looper.getMainLooper()).postDelayed(Runnable { doubleBackPressed = false }, 2000)
     }
 
     private fun userLogout() {
         sessionManager = SessionManager(this)
-        viewModel.userLogout(token = "Bearer ${sessionManager.fetchAuthToken()}")
+        viewModel.userLogout(token = sessionManager.fetchAuthToken().toString())
         viewModel.isSuccess.observe(this) {
             viewModel.isSuccess.postValue(null)
             if (it == true) {
@@ -89,7 +100,7 @@ class HomeUserActivity : AppCompatActivity() {
     private fun cardListener() {
         val clickListener = View.OnClickListener {view ->
             when (view.id){
-                R.id.book_list -> {
+                R.id.card_book_list -> {
                     val intent = Intent(this@HomeUserActivity, BookActivity::class.java)
                     startActivity(intent)
                 }
@@ -101,7 +112,7 @@ class HomeUserActivity : AppCompatActivity() {
 
         }
 
-        binding.bookList.setOnClickListener(clickListener)
+        binding.cardBookList.setOnClickListener(clickListener)
         binding.loanList.setOnClickListener(clickListener)
     }
 

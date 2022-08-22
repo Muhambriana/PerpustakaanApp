@@ -3,16 +3,16 @@ package com.skripsi.perpustakaanapp.core
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
-import com.skripsi.perpustakaanapp.ui.admin.createbook.CreateBookViewModel
+import com.skripsi.perpustakaanapp.ui.admin.managebook.createbook.CreateBookViewModel
 import com.skripsi.perpustakaanapp.ui.admin.createnewadmin.CreateNewAdminViewModel
-import com.skripsi.perpustakaanapp.ui.admin.pendingtask.PendingTaskViewModel
-import com.skripsi.perpustakaanapp.ui.admin.updatebook.UpdateBookViewModel
+import com.skripsi.perpustakaanapp.ui.admin.loan.pendingloan.PendingLoanViewModel
+import com.skripsi.perpustakaanapp.ui.admin.managebook.updatebook.UpdateBookViewModel
 import com.skripsi.perpustakaanapp.ui.home.HomeViewModel
 import com.skripsi.perpustakaanapp.ui.login.LoginViewModel
-import com.skripsi.perpustakaanapp.ui.register.RegisterViewModel
-import com.skripsi.perpustakaanapp.ui.user.book.BookViewModel
-import com.skripsi.perpustakaanapp.ui.user.DetailBookViewModel
-import com.skripsi.perpustakaanapp.ui.user.loan.LoanViewModel
+import com.skripsi.perpustakaanapp.ui.member.register.RegisterViewModel
+import com.skripsi.perpustakaanapp.ui.book.listbook.BookViewModel
+import com.skripsi.perpustakaanapp.ui.book.detailbook.DetailBookViewModel
+import com.skripsi.perpustakaanapp.ui.member.loan.LoanViewModel
 
 class MViewModelFactory constructor(private val libraryRepository: LibraryRepository) :
     ViewModelProvider.Factory {
@@ -36,8 +36,8 @@ class MViewModelFactory constructor(private val libraryRepository: LibraryReposi
             modelClass.isAssignableFrom(CreateNewAdminViewModel::class.java) -> {
                 return  CreateNewAdminViewModel(this.libraryRepository) as T
             }
-            modelClass.isAssignableFrom(PendingTaskViewModel::class.java) -> {
-                return PendingTaskViewModel(this.libraryRepository) as T
+            modelClass.isAssignableFrom(PendingLoanViewModel::class.java) -> {
+                return PendingLoanViewModel(this.libraryRepository) as T
             }
             modelClass.isAssignableFrom(LoanViewModel::class.java) -> {
                 return  LoanViewModel(this.libraryRepository) as T
@@ -47,6 +47,9 @@ class MViewModelFactory constructor(private val libraryRepository: LibraryReposi
             }
             modelClass.isAssignableFrom(DetailBookViewModel::class.java) -> {
                 return DetailBookViewModel(this.libraryRepository) as T
+            }
+            modelClass.isAssignableFrom(PendingLoanViewModel::class.java) -> {
+                return PendingLoanViewModel(this.libraryRepository) as T
             }
             else -> throw IllegalArgumentException("ViewModel Not Found")
         }
