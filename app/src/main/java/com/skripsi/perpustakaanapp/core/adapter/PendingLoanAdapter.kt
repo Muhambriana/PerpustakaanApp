@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.models.PendingLoan
 import com.skripsi.perpustakaanapp.databinding.ItemListPendingLoanBinding
+import com.skripsi.perpustakaanapp.ui.setSingleClickListener
 
 class PendingLoanAdapter : RecyclerView.Adapter<PendingLoanAdapter.PendingLoanViewHolder>() {
 
@@ -48,12 +49,12 @@ class PendingLoanAdapter : RecyclerView.Adapter<PendingLoanAdapter.PendingLoanVi
 //            binding.root.setOnClickListener {
 //                onItemClick?.invoke(listPendingLoan[adapterPosition])
 //            }
-            binding.btnApprove.setOnClickListener {
+            binding.btnApprove.setSingleClickListener {
                 listPendingLoan[adapterPosition].pendingLoanId?.let { id ->
                     buttonApproveClick?.invoke(id)
                 }
             }
-            binding.btnReject.setOnClickListener {
+            binding.btnReject.setSingleClickListener {
                 listPendingLoan[adapterPosition].pendingLoanId?.let { id ->
                     buttonRejectClick?.invoke(id)
                 }

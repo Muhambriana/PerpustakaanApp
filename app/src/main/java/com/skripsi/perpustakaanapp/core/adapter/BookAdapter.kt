@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.models.Book
 import com.skripsi.perpustakaanapp.databinding.ItemListBookBinding
+import com.skripsi.perpustakaanapp.ui.setSingleClickListener
 
 class BookAdapter : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
 
@@ -50,7 +51,7 @@ class BookAdapter : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
         }
 
         init {
-            binding.root.setOnClickListener {
+            binding.root.setSingleClickListener {
                 onItemClick?.invoke(listBook[adapterPosition])
             }
 

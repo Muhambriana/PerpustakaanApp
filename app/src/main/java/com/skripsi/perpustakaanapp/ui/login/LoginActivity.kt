@@ -18,6 +18,7 @@ import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.home.HomeAdminActivity
 import com.skripsi.perpustakaanapp.ui.home.HomeUserActivity
 import com.skripsi.perpustakaanapp.ui.member.register.RegisterActivity
+import com.skripsi.perpustakaanapp.ui.setSingleClickListener
 
 
 class LoginActivity : AppCompatActivity() {
@@ -40,12 +41,12 @@ class LoginActivity : AppCompatActivity() {
 
         binding.progressBar.visibility = View.INVISIBLE
         binding.progressBar.visibility = View.INVISIBLE
-        binding.txtSignUp.setOnClickListener {
+        binding.txtSignUp.setSingleClickListener {
             val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
                 startActivity(intent)
         }
         //listener for login button
-        binding.btnLogin.setOnClickListener {
+        binding.btnLogin.setSingleClickListener {
             askAppointment()
         }
     }

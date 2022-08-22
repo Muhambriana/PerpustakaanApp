@@ -11,6 +11,7 @@ import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.databinding.ActivityCreateNewAdminBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
+import com.skripsi.perpustakaanapp.ui.setSingleClickListener
 
 class CreateNewAdminActivity : AppCompatActivity() {
 
@@ -42,7 +43,7 @@ class CreateNewAdminActivity : AppCompatActivity() {
 
         binding.progressBar.visibility = View.INVISIBLE
 
-        binding.buttonSave.setOnClickListener {
+        binding.buttonSave.setSingleClickListener {
             askAppointment()
         }
     }

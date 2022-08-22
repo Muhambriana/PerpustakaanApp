@@ -11,6 +11,7 @@ import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.core.resource.Resource
 import com.skripsi.perpustakaanapp.databinding.ActivityRegisterBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
+import com.skripsi.perpustakaanapp.ui.setSingleClickListener
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -44,7 +45,7 @@ class RegisterActivity : AppCompatActivity() {
 
         binding.progressBar.visibility = View.INVISIBLE
 
-        binding.buttonSave.setOnClickListener {
+        binding.buttonSave.setSingleClickListener {
             askAppointment()
         }
     }
@@ -55,12 +56,12 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun askAppointment() {
-        val nisn = binding.edtNisn.text.toString()
+        val username = binding.edtUsername.text.toString()
 
         when {
-            nisn.isEmpty() -> {
-                binding.edtNisn.error = "NISN Tidak Boleh Kosong"
-                binding.edtNisn.requestFocus()
+            username.isEmpty() -> {
+                binding.edtUsername.error = "NISN Tidak Boleh Kosong"
+                binding.edtUsername.requestFocus()
             }
             binding.rbGender.checkedRadioButtonId == -1 -> {
                 MyAlertDialog.showAlertDialog(this@RegisterActivity,
@@ -77,7 +78,7 @@ class RegisterActivity : AppCompatActivity() {
     private fun postUserData() {
 
         viewModel.registerUser(
-            binding.edtNisn.text.toString(),
+            binding.edtUsername.text.toString(),
             binding.edtPassword.text.toString(),
             binding.edtName.text.toString(),
             "student",

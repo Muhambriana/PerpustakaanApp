@@ -15,9 +15,9 @@ class CreateNewAdminViewModel(private val repository: LibraryRepository) : ViewM
     val errorMessage = MutableLiveData<String?>()
     var responseMessage = MutableLiveData<String?>()
 
-    fun createNewAdmin(userId: String, password: String, fullName: String, roleName: String, email: String, phoneNo: String, address: String, gender: Int){
+    fun createNewAdmin(username: String, password: String, fullName: String, roleName: String, email: String, phoneNo: String, address: String, gender: Int){
         isLoading.value = true
-        val user = User(userId, password, fullName, roleName, email, phoneNo, address, gender)
+        val user = User(username, password, fullName, roleName, email, phoneNo, address, gender)
         val post = repository.createUser(user)
         post.enqueue(object : Callback<GeneralResponse> {
             override fun onResponse(call: Call<GeneralResponse>, response: Response<GeneralResponse>

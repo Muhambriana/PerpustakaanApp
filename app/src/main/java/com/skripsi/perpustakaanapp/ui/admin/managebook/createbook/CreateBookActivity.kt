@@ -11,6 +11,7 @@ import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.databinding.ActivityCreateBookBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
+import com.skripsi.perpustakaanapp.ui.setSingleClickListener
 
 class CreateBookActivity : AppCompatActivity() {
 
@@ -30,7 +31,7 @@ class CreateBookActivity : AppCompatActivity() {
         )
         binding.progressBar.visibility = View.INVISIBLE
 
-        binding.buttonSave.setOnClickListener {
+        binding.buttonSave.setSingleClickListener {
             askAppointment()
         }
     }

@@ -15,6 +15,7 @@ import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.databinding.ActivityUpdateBookBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.book.detailbook.DetailBookActivity
+import com.skripsi.perpustakaanapp.ui.setSingleClickListener
 
 class UpdateBookActivity : BottomSheetDialogFragment() {
 
@@ -41,11 +42,11 @@ class UpdateBookActivity : BottomSheetDialogFragment() {
         dataBook = activity?.intent?.getParcelableExtra<Book>(EXTRA_DATA)
         setEditText(dataBook)
 
-        binding.buttonBack.setOnClickListener {
+        binding.buttonBack.setSingleClickListener {
             requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
         }
 
-        binding.buttonSave.setOnClickListener {
+        binding.buttonSave.setSingleClickListener {
             askAppointment()
         }
 

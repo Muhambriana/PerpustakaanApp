@@ -15,7 +15,9 @@ import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.core.resource.Resource
 import com.skripsi.perpustakaanapp.databinding.ActivityDetailBookBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
+import com.skripsi.perpustakaanapp.ui.SingleClickListener
 import com.skripsi.perpustakaanapp.ui.admin.managebook.updatebook.UpdateBookActivity
+import com.skripsi.perpustakaanapp.ui.setSingleClickListener
 
 
 class DetailBookActivity : AppCompatActivity() {
@@ -122,7 +124,7 @@ class DetailBookActivity : AppCompatActivity() {
     }
 
     private fun doLoan() {
-        binding.buttonLoan.setOnClickListener {
+        binding.buttonLoan.setSingleClickListener {
             viewModel.createTransaction(sessionManager.fetchUsername(), detailBook?.bookId)
 
             viewModel.resourceLoanBook.observe(this) { event ->
@@ -160,6 +162,8 @@ class DetailBookActivity : AppCompatActivity() {
         const val EXTRA_DATA = "extra_data"
     }
 }
+
+
 
 
 /*
