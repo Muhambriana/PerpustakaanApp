@@ -70,5 +70,37 @@ class PendingLoanActivity : AppCompatActivity() {
                 }
             }
         }
+
+        pendingLoanAdapter.buttonApproveClick = { id ->
+            viewModel.approveLoans(sessionManager.fetchAuthToken().toString(), id)
+
+            viewModel.resourceApproveLoan.observe(this) { event ->
+                event.getContentIfNotHandled()?.let { resource ->
+                    when (resource) {
+                        is Resource.Loading -> {
+                            binding.progressBar.visibility = View.VISIBLE
+                        }
+                        is Resource.Success -> {
+                            binding.progressBar.visibility = View.GONE
+                            MyAlertDialog.showAlertDialog(
+                                this@PendingLoanActivity,
+                                R.drawable.icon_checked,
+                                resource.data.toString().uppercase(),
+                                "Peminjaman Disetujui, Serhakan Buku Kepada Siswa"
+                            )
+                        }
+                        is Resource.Error -> {
+                            binding.progressBar.visibility = View.GONE
+                            MyAlertDialog.showAlertDialog(
+                                this@PendingLoanActivity,
+                                R.drawable.icon_cancel,
+                                "Failed",
+                                resource.message.toString()
+                            )
+                        }
+                    }
+                }
+            }
+        }
     }
 }

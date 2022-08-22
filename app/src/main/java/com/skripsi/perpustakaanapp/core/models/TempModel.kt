@@ -14,3 +14,8 @@ data class ModelForCreateTransaction(
     @SerializedName("bookId")
     val bookId: String? = null
 )
+
+data class ModelForApproveLoan(
+    @SerializedName("pendingTaskId")
+    val pendingLoan: Int
+)

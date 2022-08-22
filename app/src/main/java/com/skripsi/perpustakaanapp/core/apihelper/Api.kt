@@ -2,6 +2,7 @@ package com.skripsi.perpustakaanapp.core.apihelper
 
 import com.skripsi.perpustakaanapp.core.models.*
 import com.skripsi.perpustakaanapp.core.responses.*
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -55,9 +56,15 @@ interface Api {
     ):Call<GeneralResponse>
 
     @POST("pendingtask/list")
-    fun getAllPendingTask(
+    fun getAllPendingLoan(
         @Header("Authorization") token: String
     ):Call<PendingLoanResponse>
+
+    @POST("pendingtask/approve")
+    fun postApproveLoan(
+        @Header("Authorization") token: String,
+        @Body pendingLoanId: ModelForApproveLoan
+    ):Call<GeneralResponse>
 
 //    @POST("book/loan")
 //    fun loanBook(

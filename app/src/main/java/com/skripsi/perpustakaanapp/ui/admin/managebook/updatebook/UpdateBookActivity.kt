@@ -21,7 +21,6 @@ class UpdateBookActivity : BottomSheetDialogFragment() {
     private lateinit var sessionManager: SessionManager
     private lateinit var binding: ActivityUpdateBookBinding
     private lateinit var viewModel: UpdateBookViewModel
-    private lateinit var book: Book
 
     private var dataBook: Book? = null
     private val client = RetrofitClient

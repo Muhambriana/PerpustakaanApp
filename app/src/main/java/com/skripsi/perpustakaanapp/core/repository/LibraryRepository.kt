@@ -1,10 +1,8 @@
 package com.skripsi.perpustakaanapp.core.repository
 
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
-import com.skripsi.perpustakaanapp.core.models.Book
-import com.skripsi.perpustakaanapp.core.models.ModelForCreateTransaction
-import com.skripsi.perpustakaanapp.core.models.ModelForDelete
-import com.skripsi.perpustakaanapp.core.models.User
+import com.skripsi.perpustakaanapp.core.models.*
+import okhttp3.RequestBody
 
 class LibraryRepository constructor(private val retrofitClient: RetrofitClient) {
 
@@ -24,6 +22,8 @@ class LibraryRepository constructor(private val retrofitClient: RetrofitClient) 
 
     fun createTransaction(data: ModelForCreateTransaction) = retrofitClient.create().postCreateTransaction(data)
 
-    fun getAllPendingLoan(token: String) = retrofitClient.create().getAllPendingTask(token)
+    fun getAllPendingLoan(token: String) = retrofitClient.create().getAllPendingLoan(token)
+
+    fun approveLoan(token: String, pendingLoanId: ModelForApproveLoan) = retrofitClient.create().postApproveLoan(token, pendingLoanId)
 
 }

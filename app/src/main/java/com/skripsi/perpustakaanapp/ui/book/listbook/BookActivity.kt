@@ -126,15 +126,6 @@ class BookActivity : AppCompatActivity() {
         }
     }
 
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        if (requestCode == 10) {
-//            if (resultCode == RESULT_OK) {
-//                print("masuk set result")
-//                getBookData()
-//            }
-//        }
-//        super.onActivityResult(requestCode, resultCode, data)
-//    }
 }
 
 /*

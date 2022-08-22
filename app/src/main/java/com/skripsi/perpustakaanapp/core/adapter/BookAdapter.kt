@@ -12,7 +12,6 @@ class BookAdapter : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
 
     private var listBook = mutableListOf<Book>()
     var onItemClick: ((Book) -> Unit)? = null
-//    var positionAdapter: Int? = null
 
     fun setBookList(books: List<Book>?) {
         if (books == null) return

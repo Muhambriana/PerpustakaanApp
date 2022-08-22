@@ -12,6 +12,8 @@ class PendingLoanAdapter : RecyclerView.Adapter<PendingLoanAdapter.PendingLoanVi
 
     private var listPendingLoan = mutableListOf<PendingLoan>()
     var onItemClick: ((PendingLoan) -> Unit)? = null
+    var buttonApproveClick: ((Int) -> Unit)? = null
+    var buttonRejectClick: ((Int) -> Unit)? = null
 
     fun setPendingLoanList(pendingLoans: List<PendingLoan>?) {
         if (pendingLoans == null) return
@@ -43,8 +45,13 @@ class PendingLoanAdapter : RecyclerView.Adapter<PendingLoanAdapter.PendingLoanVi
         }
 
         init {
-            binding.root.setOnClickListener {
-                onItemClick?.invoke(listPendingLoan[adapterPosition])
+//            binding.root.setOnClickListener {
+//                onItemClick?.invoke(listPendingLoan[adapterPosition])
+//            }
+            binding.btnApprove.setOnClickListener {
+                listPendingLoan[adapterPosition].pendingLoanId?.let { id ->
+                    buttonApproveClick?.invoke(id)
+                }
             }
         }
     }
