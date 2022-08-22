@@ -11,7 +11,7 @@ import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import com.skripsi.perpustakaanapp.R
-import com.skripsi.perpustakaanapp.core.MViewModelFactory
+import com.skripsi.perpustakaanapp.core.MyViewModelFactory
 import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
@@ -41,7 +41,7 @@ class HomeAdminActivity : AppCompatActivity() {
             supportActionBar?.title = "Hi, ${intent.getStringExtra("first_name")}"
         }
 
-        viewModel = ViewModelProvider(this, MViewModelFactory(LibraryRepository(client))).get(
+        viewModel = ViewModelProvider(this, MyViewModelFactory(LibraryRepository(client))).get(
             HomeViewModel::class.java
         )
 

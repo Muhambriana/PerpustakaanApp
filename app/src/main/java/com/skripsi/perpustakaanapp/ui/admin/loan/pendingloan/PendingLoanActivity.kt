@@ -6,11 +6,10 @@ import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.resource.Resource
-import com.skripsi.perpustakaanapp.core.MViewModelFactory
+import com.skripsi.perpustakaanapp.core.MyViewModelFactory
 import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.core.adapter.PendingLoanAdapter
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
-import com.skripsi.perpustakaanapp.core.models.PendingLoan
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.databinding.ActivityPendingLoanBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
@@ -23,17 +22,24 @@ class PendingLoanActivity : AppCompatActivity() {
 
     private val client=  RetrofitClient
     private val pendingLoanAdapter = PendingLoanAdapter()
+    private val context = this@PendingLoanActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPendingLoanBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel = ViewModelProvider(this, MViewModelFactory(LibraryRepository(client))).get(
+        sessionManager = SessionManager(this)
+
+        viewModel = ViewModelProvider(this, MyViewModelFactory(LibraryRepository(client))).get(
             PendingLoanViewModel::class.java
         )
 
         getPendingLoanData()
+
+        buttonApproveListener()
+
+        buttonRejectListener()
     }
 
     override fun onRestart() {
@@ -42,8 +48,6 @@ class PendingLoanActivity : AppCompatActivity() {
     }
 
     private fun getPendingLoanData() {
-        sessionManager = SessionManager(this)
-
         viewModel.getAllPendingLoans(sessionManager.fetchAuthToken().toString())
 
         viewModel.resourcePendingLoan.observe(this) { event ->
@@ -58,7 +62,12 @@ class PendingLoanActivity : AppCompatActivity() {
                         pendingLoanAdapter.setPendingLoanList(resource.data)
                     }
                     is Resource.Error -> {
-                        MyAlertDialog.showAlertDialog2Event(this@PendingLoanActivity, R.drawable.icon_cancel, "ERROR", resource.message.toString(),
+                        binding.progressBar.visibility = View.GONE
+                        MyAlertDialog.showAlertDialog2Event(
+                            context,
+                            R.drawable.icon_cancel,
+                            "ERROR",
+                            resource.message.toString(),
                             { _,_ ->
                                 getPendingLoanData()
                             },
@@ -70,9 +79,11 @@ class PendingLoanActivity : AppCompatActivity() {
                 }
             }
         }
+    }
 
+    private fun buttonApproveListener() {
         pendingLoanAdapter.buttonApproveClick = { id ->
-            viewModel.approveLoans(sessionManager.fetchAuthToken().toString(), id)
+            viewModel.approveLoan(sessionManager.fetchAuthToken().toString(), id, sessionManager.fetchUsername().toString())
 
             viewModel.resourceApproveLoan.observe(this) { event ->
                 event.getContentIfNotHandled()?.let { resource ->
@@ -82,17 +93,55 @@ class PendingLoanActivity : AppCompatActivity() {
                         }
                         is Resource.Success -> {
                             binding.progressBar.visibility = View.GONE
-                            MyAlertDialog.showAlertDialog(
-                                this@PendingLoanActivity,
+                            MyAlertDialog.showAlertDialogEvent(
+                                context,
                                 R.drawable.icon_checked,
                                 resource.data.toString().uppercase(),
                                 "Peminjaman Disetujui, Serhakan Buku Kepada Siswa"
-                            )
+                            ) { _,_ ->
+                                getPendingLoanData()
+                            }
                         }
                         is Resource.Error -> {
                             binding.progressBar.visibility = View.GONE
                             MyAlertDialog.showAlertDialog(
-                                this@PendingLoanActivity,
+                                context,
+                                R.drawable.icon_cancel,
+                                "Failed",
+                                resource.message.toString()
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun buttonRejectListener() {
+        print("hasil token ${sessionManager.fetchAuthToken().toString()}")
+        pendingLoanAdapter.buttonRejectClick = { id ->
+            viewModel.rejectLoan(sessionManager.fetchAuthToken().toString(), id, sessionManager.fetchUsername().toString())
+
+            viewModel.resourceRejectLoan.observe(this) { event ->
+                event.getContentIfNotHandled()?.let { resource ->
+                    when (resource) {
+                        is Resource.Loading -> {
+                            binding.progressBar.visibility = View.VISIBLE
+                        }
+                        is Resource.Success -> {
+                            binding.progressBar.visibility = View.GONE
+                            MyAlertDialog.showAlertDialogEvent(
+                                context,
+                                R.drawable.icon_checked,
+                                resource.data.toString().uppercase(),
+                                "Peminjaman Ditolak"
+                            ) { _,_ ->
+                                getPendingLoanData()
+                            }
+                        }
+                        is Resource.Error -> {
+                            MyAlertDialog.showAlertDialog(
+                                context,
                                 R.drawable.icon_cancel,
                                 "Failed",
                                 resource.message.toString()

@@ -53,6 +53,11 @@ class PendingLoanAdapter : RecyclerView.Adapter<PendingLoanAdapter.PendingLoanVi
                     buttonApproveClick?.invoke(id)
                 }
             }
+            binding.btnReject.setOnClickListener {
+                listPendingLoan[adapterPosition].pendingLoanId?.let { id ->
+                    buttonRejectClick?.invoke(id)
+                }
+            }
         }
     }
 

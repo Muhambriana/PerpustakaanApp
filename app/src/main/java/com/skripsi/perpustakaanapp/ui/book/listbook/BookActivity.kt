@@ -1,16 +1,13 @@
 package com.skripsi.perpustakaanapp.ui.book.listbook
 
-import android.R.attr
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.skripsi.perpustakaanapp.R
-import com.skripsi.perpustakaanapp.core.MViewModelFactory
+import com.skripsi.perpustakaanapp.core.MyViewModelFactory
 import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.core.adapter.BookAdapter
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
@@ -37,7 +34,7 @@ class BookActivity : AppCompatActivity() {
         binding = ActivityBookBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel = ViewModelProvider(this, MViewModelFactory(LibraryRepository(client))).get(
+        viewModel = ViewModelProvider(this, MyViewModelFactory(LibraryRepository(client))).get(
                 BookViewModel::class.java
             )
         getBookData()
@@ -86,10 +83,10 @@ class BookActivity : AppCompatActivity() {
 
         viewModel.getAllBooks(token = sessionManager.fetchAuthToken().toString())
 
-        viewModel.resourceBook.observe(this) {
-            binding.progressBar.visibility = View.GONE
-
-        }
+//        viewModel.resourceBook.observe(this) {
+//            binding.progressBar.visibility = View.GONE
+//
+//        }
 
         viewModel.resourceBook.observe(this) { event ->
             event.getContentIfNotHandled()?.let { resource ->

@@ -14,7 +14,7 @@ import com.skripsi.perpustakaanapp.ui.book.listbook.BookViewModel
 import com.skripsi.perpustakaanapp.ui.book.detailbook.DetailBookViewModel
 import com.skripsi.perpustakaanapp.ui.member.loan.LoanViewModel
 
-class MViewModelFactory constructor(private val libraryRepository: LibraryRepository) :
+class MyViewModelFactory constructor(private val libraryRepository: LibraryRepository) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         when {

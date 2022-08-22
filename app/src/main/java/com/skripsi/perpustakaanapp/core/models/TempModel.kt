@@ -15,7 +15,10 @@ data class ModelForCreateTransaction(
     val bookId: String? = null
 )
 
-data class ModelForApproveLoan(
+data class ModelForApproveAndRejectLoan(
     @SerializedName("pendingTaskId")
-    val pendingLoan: Int
+    val pendingLoanId: Int,
+
+    @SerializedName("username")
+    val adminUsername: String?
 )

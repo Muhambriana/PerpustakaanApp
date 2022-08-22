@@ -30,18 +30,18 @@ class SessionManager (context: Context) {
         return prefs.getString(USER_ROLE, null)
     }
 
-    fun saveUserName(userId: String) {
-        editor.putString(USER_NAME, userId)
+    fun saveUsername(username: String) {
+        editor.putString(USERNAME, username)
         editor.apply()
     }
 
-    fun fetchUserName(): String? {
-        return prefs.getString(USER_NAME, null)
+    fun fetchUsername(): String? {
+        return prefs.getString(USERNAME, null)
     }
 
     companion object{
         const val USER_TOKEN = "user_token"
         const val USER_ROLE = "user_role"
-        const val USER_NAME = "user_name"
+        const val USERNAME = "username"
     }
 }

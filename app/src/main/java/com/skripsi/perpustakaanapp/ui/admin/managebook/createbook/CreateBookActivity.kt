@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.skripsi.perpustakaanapp.R
-import com.skripsi.perpustakaanapp.core.MViewModelFactory
+import com.skripsi.perpustakaanapp.core.MyViewModelFactory
 import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
@@ -25,7 +25,7 @@ class CreateBookActivity : AppCompatActivity() {
         binding = ActivityCreateBookBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel = ViewModelProvider(this, MViewModelFactory(LibraryRepository(client))).get(
+        viewModel = ViewModelProvider(this, MyViewModelFactory(LibraryRepository(client))).get(
             CreateBookViewModel::class.java
         )
         binding.progressBar.visibility = View.INVISIBLE

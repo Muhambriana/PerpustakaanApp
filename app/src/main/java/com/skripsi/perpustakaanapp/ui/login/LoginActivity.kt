@@ -9,7 +9,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.skripsi.perpustakaanapp.R
-import com.skripsi.perpustakaanapp.core.MViewModelFactory
+import com.skripsi.perpustakaanapp.core.MyViewModelFactory
 import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.databinding.ActivityLoginBinding
@@ -34,7 +34,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.hide()
 
-        viewModel = ViewModelProvider(this, MViewModelFactory(LibraryRepository(client))).get(
+        viewModel = ViewModelProvider(this, MyViewModelFactory(LibraryRepository(client))).get(
             LoginViewModel::class.java
         )
 
@@ -106,7 +106,7 @@ class LoginActivity : AppCompatActivity() {
                             //for rolename
                             sessionManager.saveUserRole(roleName)
                             //for username
-                            sessionManager.saveUserName(binding.edtUsername.text.toString())
+                            sessionManager.saveUsername(binding.edtUsername.text.toString())
                             if (roleName == "admin") {
                                 viewModel.firstName.observe(this){ firstName ->
                                     startIntentExtraData(this@LoginActivity, HomeAdminActivity::class.java, firstName)

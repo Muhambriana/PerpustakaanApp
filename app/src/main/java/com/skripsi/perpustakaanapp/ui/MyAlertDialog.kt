@@ -17,6 +17,7 @@ class MyAlertDialog {
                     .setPositiveButton("Tutup"){_,_ ->
                         //do nothing
                     }
+                    .setCancelable(false)
                     .show()
             }
         }
@@ -29,6 +30,7 @@ class MyAlertDialog {
                     .setTitle(title)
                     .setMessage(message)
                     .setPositiveButton("Tutup", listener)
+                    .setCancelable(false)
                     .show()
             }
         }
@@ -41,6 +43,7 @@ class MyAlertDialog {
                     .setMessage(message)
                     .setPositiveButton("Coba Lagi", listenerPositive)
                     .setNegativeButton("Kembali Ke Dashboard", listenerNegative)
+                    .setCancelable(false)
                     .show()
             }
         }

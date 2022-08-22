@@ -5,7 +5,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.skripsi.perpustakaanapp.R
-import com.skripsi.perpustakaanapp.core.MViewModelFactory
+import com.skripsi.perpustakaanapp.core.MyViewModelFactory
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.core.resource.Resource
@@ -38,7 +38,7 @@ class RegisterActivity : AppCompatActivity() {
         }
 
 
-        viewModel = ViewModelProvider(this, MViewModelFactory(LibraryRepository(client))).get(
+        viewModel = ViewModelProvider(this, MyViewModelFactory(LibraryRepository(client))).get(
             RegisterViewModel::class.java
         )
 

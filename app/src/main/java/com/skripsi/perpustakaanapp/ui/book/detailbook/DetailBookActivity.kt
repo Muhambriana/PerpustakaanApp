@@ -1,16 +1,13 @@
 package com.skripsi.perpustakaanapp.ui.book.detailbook
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.skripsi.perpustakaanapp.R
-import com.skripsi.perpustakaanapp.core.MViewModelFactory
+import com.skripsi.perpustakaanapp.core.MyViewModelFactory
 import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.models.Book
@@ -38,11 +35,9 @@ class DetailBookActivity : AppCompatActivity() {
 
         sessionManager = SessionManager(this)
 
-        viewModel = ViewModelProvider(this, MViewModelFactory(LibraryRepository(client))).get(
+        viewModel = ViewModelProvider(this, MyViewModelFactory(LibraryRepository(client))).get(
             DetailBookViewModel::class.java
         )
-
-
 
         detailBook = intent.getParcelableExtra<Book>(EXTRA_DATA)
         showDetailBook()
@@ -70,8 +65,8 @@ class DetailBookActivity : AppCompatActivity() {
     }
 
     private fun updateBook() {
-        val b = UpdateBookActivity()
-        b.show(supportFragmentManager, "UpdateBookActivity")
+        val bottomDialogFragment = UpdateBookActivity()
+        bottomDialogFragment.show(supportFragmentManager, "UpdateBookActivity")
     }
 
     private fun deleteBook() {
@@ -87,14 +82,12 @@ class DetailBookActivity : AppCompatActivity() {
                     }
                     is Resource.Success -> {
                         binding.progressBar.visibility = View.GONE
-
-                        setResult(RESULT_OK) //set return data is "RESULT_OK" after success deleted
-
                         MyAlertDialog.showAlertDialogEvent(this@DetailBookActivity,
                             R.drawable.icon_checked,
                             it.data.toString().uppercase(),
                             "Buku Berhasil Di Hapus")
                         { _, _ ->
+                            setResult(RESULT_OK) //set return data is "RESULT_OK" after success deleted
                             finish()
                         }
                     }
@@ -130,7 +123,7 @@ class DetailBookActivity : AppCompatActivity() {
 
     private fun doLoan() {
         binding.buttonLoan.setOnClickListener {
-            viewModel.createTransaction(sessionManager.fetchUserName(), detailBook?.bookId)
+            viewModel.createTransaction(sessionManager.fetchUsername(), detailBook?.bookId)
 
             viewModel.resourceLoanBook.observe(this) { event ->
                 event.getContentIfNotHandled()?.let {
