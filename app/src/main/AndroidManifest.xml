@@ -24,7 +24,7 @@
             android:name=".ui.SettingsActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.admin.loan.pendingloan.PendingLoanActivity"
+            android:name=".ui.admin.loanmanagerial.pendingloan.PendingLoanActivity"
             android:exported="false" />
         <activity
             android:name=".ui.admin.createnewadmin.CreateNewAdminActivity"
@@ -32,7 +32,7 @@
         <activity
             android:name=".ui.home.HomeUserActivity"
             android:exported="false"
-            android:theme="@style/HomeActivityStyle"></activity>
+            android:theme="@style/HomeActivityStyle"/>
         <activity
             android:name=".ui.home.HomeAdminActivity"
             android:exported="false"
@@ -42,13 +42,13 @@
             android:exported="false"
             android:theme="@style/TextColorWhite" />
         <activity
-            android:name=".ui.admin.managebook.createbook.CreateBookActivity"
+            android:name=".ui.admin.bookmanagerial.createbook.CreateBookActivity"
             android:exported="false" />
         <activity
             android:name=".ui.book.detailbook.DetailBookActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.member.loan.LoanActivity"
+            android:name=".ui.member.loanhistory.LoanHistoryActivity"
             android:exported="false" />
         <activity
             android:name=".ui.book.listbook.BookActivity"

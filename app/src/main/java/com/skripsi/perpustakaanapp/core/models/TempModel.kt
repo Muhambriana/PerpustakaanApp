@@ -2,8 +2,8 @@ package com.skripsi.perpustakaanapp.core.models
 
 import com.google.gson.annotations.SerializedName
 
-data class ModelForDelete(
-    @SerializedName("id")
+data class ModelBookId(
+    @SerializedName("bookId")
     val bookId : String? = null
 )
 
@@ -21,4 +21,9 @@ data class ModelForApproveAndRejectLoan(
 
     @SerializedName("username")
     val adminUsername: String?
+)
+
+data class ModelUsername(
+    @SerializedName("username")
+    val username: String? = null
 )

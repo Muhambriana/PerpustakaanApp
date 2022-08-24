@@ -3,7 +3,7 @@ package com.skripsi.perpustakaanapp.ui.book.detailbook
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.skripsi.perpustakaanapp.core.models.ModelForCreateTransaction
-import com.skripsi.perpustakaanapp.core.models.ModelForDelete
+import com.skripsi.perpustakaanapp.core.models.ModelBookId
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.core.resource.Event
 import com.skripsi.perpustakaanapp.core.resource.Resource
@@ -17,10 +17,11 @@ class DetailBookViewModel(private val repository: LibraryRepository) : ViewModel
     val resourceDeleteBook = MutableLiveData<Event<Resource<String?>>>()
     val resourceLoanBook = MutableLiveData<Event<Resource<String?>>>()
 
+
     fun deleteBook(token: String, bookId: String) {
         resourceDeleteBook.postValue(Event(Resource.Loading()))
-        val modelForDelete = ModelForDelete(bookId)
-        val post = repository.deleteBook(token, modelForDelete)
+        val modelBookId = ModelBookId(bookId)
+        val post = repository.deleteBook(token, modelBookId)
         post.enqueue(object : Callback<GeneralResponse> {
             override fun onResponse(
                 call: Call<GeneralResponse>,

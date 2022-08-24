@@ -17,7 +17,7 @@ class LibraryRepository constructor(private val retrofitClient: RetrofitClient) 
 
     fun updateBook(token: String, book: Book) = retrofitClient.create().postUpdateBook(token, book)
 
-    fun deleteBook(token: String, bookId: ModelForDelete) = retrofitClient.create().postDeleteBook(token, bookId)
+    fun deleteBook(token: String, bookId: ModelBookId) = retrofitClient.create().postDeleteBook(token, bookId)
 
     fun createTransaction(data: ModelForCreateTransaction) = retrofitClient.create().postCreateTransaction(data)
 
@@ -26,5 +26,9 @@ class LibraryRepository constructor(private val retrofitClient: RetrofitClient) 
     fun approveLoan(token: String, data: ModelForApproveAndRejectLoan) = retrofitClient.create().postApproveLoan(token, data)
 
     fun rejectLoan(token: String, data: ModelForApproveAndRejectLoan) = retrofitClient.create().postRejectLoan(token, data)
+
+    fun getAllLoanHistoryMember(token: String, username: ModelUsername) = retrofitClient.create().getAllLoanHistoryMember(token, username)
+
+    fun getDetailBook(token: String, bookId: ModelBookId) = retrofitClient.create().getDetailBook(token, bookId)
 
 }

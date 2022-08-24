@@ -1,4 +1,4 @@
-package com.skripsi.perpustakaanapp.ui.admin.managebook.updatebook
+package com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.updatebook
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

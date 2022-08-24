@@ -16,10 +16,10 @@ class PendingLoanAdapter : RecyclerView.Adapter<PendingLoanAdapter.PendingLoanVi
     var buttonApproveClick: ((Int) -> Unit)? = null
     var buttonRejectClick: ((Int) -> Unit)? = null
 
-    fun setPendingLoanList(pendingLoans: List<PendingLoan>?) {
-        if (pendingLoans == null) return
+    fun setPendingLoanList(pendingLoanData: List<PendingLoan>?) {
+        if (pendingLoanData == null) return
         listPendingLoan.clear()
-        listPendingLoan.addAll(pendingLoans)
+        listPendingLoan.addAll(pendingLoanData)
         notifyDataSetChanged()
     }
 
@@ -46,9 +46,6 @@ class PendingLoanAdapter : RecyclerView.Adapter<PendingLoanAdapter.PendingLoanVi
         }
 
         init {
-//            binding.root.setOnClickListener {
-//                onItemClick?.invoke(listPendingLoan[adapterPosition])
-//            }
             binding.btnApprove.setSingleClickListener {
                 listPendingLoan[adapterPosition].pendingLoanId?.let { id ->
                     buttonApproveClick?.invoke(id)

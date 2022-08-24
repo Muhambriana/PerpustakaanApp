@@ -15,8 +15,7 @@ import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.core.resource.Resource
 import com.skripsi.perpustakaanapp.databinding.ActivityDetailBookBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
-import com.skripsi.perpustakaanapp.ui.SingleClickListener
-import com.skripsi.perpustakaanapp.ui.admin.managebook.updatebook.UpdateBookActivity
+import com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.updatebook.UpdateBookActivity
 import com.skripsi.perpustakaanapp.ui.setSingleClickListener
 
 

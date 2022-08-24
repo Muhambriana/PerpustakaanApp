@@ -37,17 +37,10 @@ class BookActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, MyViewModelFactory(LibraryRepository(client))).get(
                 BookViewModel::class.java
             )
-        getBookData()
 
-        //For get return data after launch activity
-        resultLauncher =  registerForActivityResult(
-            StartActivityForResult()
-        ){ result ->
-            if (result.resultCode == RESULT_OK) {
-                //Re-run getBookData and update with the latest
-                getBookData()
-            }
-        }
+        setLauncher()
+
+        getBookData()
     }
 
 //    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -77,6 +70,17 @@ class BookActivity : AppCompatActivity() {
 //    }
 
 
+    private fun setLauncher() {
+        //For get return data after launch activity
+        resultLauncher =  registerForActivityResult(
+            StartActivityForResult()
+        ){ result ->
+            if (result.resultCode == RESULT_OK) {
+                //Re-run getBookData and update with the latest
+                getBookData()
+            }
+        }
+    }
 
     private fun getBookData() {
         sessionManager = SessionManager(this)

@@ -46,7 +46,7 @@ interface Api {
     @POST("book/delete")
     fun postDeleteBook(
         @Header("Authorization") token: String,
-        @Body bookId: ModelForDelete
+        @Body bookId: ModelBookId
     ):Call<GeneralResponse>
 
     @POST("transaction/create")
@@ -70,6 +70,18 @@ interface Api {
         @Header("Authorization") token: String,
         @Body data: ModelForApproveAndRejectLoan
     ):Call<GeneralResponse>
+
+    @POST("transaction/history")
+    fun getAllLoanHistoryMember(
+        @Header("Authorization") token: String,
+        @Body username: ModelUsername
+    ):Call<LoanHistoryResponse>
+
+    @POST("transaction/detail")
+    fun getDetailBook(
+        @Header("Authorization") token: String,
+        @Body bookId: ModelBookId
+    ):Call<DetailBookResponse>
 
 //    @POST("book/loan")
 //    fun loanBook(

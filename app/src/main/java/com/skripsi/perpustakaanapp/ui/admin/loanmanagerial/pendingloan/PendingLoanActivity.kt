@@ -1,8 +1,9 @@
-package com.skripsi.perpustakaanapp.ui.admin.loan.pendingloan
+package com.skripsi.perpustakaanapp.ui.admin.loanmanagerial.pendingloan
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import androidx.lifecycle.ViewModelProvider
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.resource.Resource
@@ -40,11 +41,6 @@ class PendingLoanActivity : AppCompatActivity() {
         buttonApproveListener()
 
         buttonRejectListener()
-    }
-
-    override fun onRestart() {
-        getPendingLoanData()
-        super.onRestart()
     }
 
     private fun getPendingLoanData() {
@@ -89,9 +85,11 @@ class PendingLoanActivity : AppCompatActivity() {
                 event.getContentIfNotHandled()?.let { resource ->
                     when (resource) {
                         is Resource.Loading -> {
+                            window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                             binding.progressBar.visibility = View.VISIBLE
                         }
                         is Resource.Success -> {
+                            window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                             binding.progressBar.visibility = View.GONE
                             MyAlertDialog.showAlertDialogEvent(
                                 context,
@@ -103,6 +101,7 @@ class PendingLoanActivity : AppCompatActivity() {
                             }
                         }
                         is Resource.Error -> {
+                            window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                             binding.progressBar.visibility = View.GONE
                             MyAlertDialog.showAlertDialog(
                                 context,
@@ -126,9 +125,11 @@ class PendingLoanActivity : AppCompatActivity() {
                 event.getContentIfNotHandled()?.let { resource ->
                     when (resource) {
                         is Resource.Loading -> {
+                            window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                             binding.progressBar.visibility = View.VISIBLE
                         }
                         is Resource.Success -> {
+                            window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                             binding.progressBar.visibility = View.GONE
                             MyAlertDialog.showAlertDialogEvent(
                                 context,
@@ -140,6 +141,7 @@ class PendingLoanActivity : AppCompatActivity() {
                             }
                         }
                         is Resource.Error -> {
+                            window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                             MyAlertDialog.showAlertDialog(
                                 context,
                                 R.drawable.icon_cancel,

@@ -19,7 +19,7 @@ import com.skripsi.perpustakaanapp.databinding.ActivityHomeUserBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.login.LoginActivity
 import com.skripsi.perpustakaanapp.ui.book.listbook.BookActivity
-import com.skripsi.perpustakaanapp.ui.member.loan.LoanActivity
+import com.skripsi.perpustakaanapp.ui.member.loanhistory.LoanHistoryActivity
 
 
 class HomeUserActivity : AppCompatActivity() {
@@ -104,16 +104,17 @@ class HomeUserActivity : AppCompatActivity() {
                     val intent = Intent(this@HomeUserActivity, BookActivity::class.java)
                     startActivity(intent)
                 }
-                R.id.loan_list -> {
-                    val intent = Intent(this@HomeUserActivity, LoanActivity::class.java)
+                R.id.card_loan_history_member -> {
+                    val intent = Intent(this@HomeUserActivity, LoanHistoryActivity::class.java)
                     startActivity(intent)
                 }
+
             }
 
         }
 
         binding.cardBookList.setOnClickListener(clickListener)
-        binding.loanList.setOnClickListener(clickListener)
+        binding.cardLoanHistoryMember.setOnClickListener(clickListener)
     }
 
 //    override fun onClick(v: View?) {

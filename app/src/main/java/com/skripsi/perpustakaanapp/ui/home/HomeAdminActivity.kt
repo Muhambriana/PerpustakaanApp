@@ -17,9 +17,9 @@ import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.databinding.ActivityHomeAdminBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
-import com.skripsi.perpustakaanapp.ui.admin.managebook.createbook.CreateBookActivity
+import com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.createbook.CreateBookActivity
 import com.skripsi.perpustakaanapp.ui.admin.createnewadmin.CreateNewAdminActivity
-import com.skripsi.perpustakaanapp.ui.admin.loan.pendingloan.PendingLoanActivity
+import com.skripsi.perpustakaanapp.ui.admin.loanmanagerial.pendingloan.PendingLoanActivity
 import com.skripsi.perpustakaanapp.ui.login.LoginActivity
 import com.skripsi.perpustakaanapp.ui.book.listbook.BookActivity
 

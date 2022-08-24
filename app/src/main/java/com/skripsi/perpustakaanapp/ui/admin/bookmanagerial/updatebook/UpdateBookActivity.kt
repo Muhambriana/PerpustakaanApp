@@ -1,4 +1,4 @@
-package com.skripsi.perpustakaanapp.ui.admin.managebook.updatebook
+package com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.updatebook
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
