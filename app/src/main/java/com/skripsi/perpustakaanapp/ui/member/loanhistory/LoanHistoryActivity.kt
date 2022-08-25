@@ -44,28 +44,9 @@ class LoanHistoryActivity : AppCompatActivity() {
 
     private fun bookTitleOnClickListener() {
         loanHistoryAdapter.onBookTitleClick = { bookId ->
-            viewModel.getDetailBook(sessionManager.fetchAuthToken().toString(), bookId)
-
-
-            viewModel.resourceToDetailBook.observe(this) { event ->
-                event.getContentIfNotHandled()?.let { resource ->
-                    when(resource) {
-                        is Resource.Loading -> {
-                            binding.progressBar.visibility = View.VISIBLE
-                        }
-                        is Resource.Success -> {
-                            binding.progressBar.visibility = View.GONE
-                            val intent = Intent(context, DetailBookActivity::class.java)
-                            startActivity(intent)
-                        }
-                        is Resource.Error -> {
-                            Log.e("LoanHistoryActivity", "nih book id nya $bookId")
-                            binding.progressBar.visibility = View.GONE
-                            MyAlertDialog.showAlertDialog(context, R.drawable.icon_cancel, "Failed", resource.message.toString())
-                        }
-                    }
-                }
-            }
+            val intent = Intent(context, DetailBookActivity::class.java)
+            intent.putExtra(DetailBookActivity.BOOK_ID, bookId)
+            startActivity(intent)
         }
     }
 

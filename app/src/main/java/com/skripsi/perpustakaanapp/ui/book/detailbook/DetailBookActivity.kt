@@ -1,6 +1,8 @@
 package com.skripsi.perpustakaanapp.ui.book.detailbook
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -27,12 +29,15 @@ class DetailBookActivity : AppCompatActivity() {
 
     private var detailBook: Book? = null
     private val client = RetrofitClient
+    private val context = this@DetailBookActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBookBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        //when still loading the data, action bar will show nothing
+        supportActionBar?.title = ""
 
         sessionManager = SessionManager(this)
 
@@ -40,8 +45,15 @@ class DetailBookActivity : AppCompatActivity() {
             DetailBookViewModel::class.java
         )
 
-        detailBook = intent.getParcelableExtra<Book>(EXTRA_DATA)
-        showDetailBook()
+        if(intent.extras != null) {
+            if (intent.getStringExtra(BOOK_ID) != null) {
+                setDetailBook(intent.getStringExtra(BOOK_ID).toString())
+            }
+            else {
+                detailBook = intent.getParcelableExtra<Book>(EXTRA_DATA)
+                showDetailBook()
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -61,8 +73,18 @@ class DetailBookActivity : AppCompatActivity() {
                 deleteBook()
                 true
             }
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
             else -> true
         }
+    }
+
+
+    override fun onBackPressed() {
+        Log.i("DetailActivity", "pencet kembali")
+        super.onBackPressed()
     }
 
     private fun updateBook() {
@@ -83,7 +105,7 @@ class DetailBookActivity : AppCompatActivity() {
                     }
                     is Resource.Success -> {
                         binding.progressBar.visibility = View.GONE
-                        MyAlertDialog.showAlertDialogEvent(this@DetailBookActivity,
+                        MyAlertDialog.showAlertDialogEvent(context,
                             R.drawable.icon_checked,
                             it.data.toString().uppercase(),
                             "Buku Berhasil Di Hapus")
@@ -94,7 +116,7 @@ class DetailBookActivity : AppCompatActivity() {
                     }
                     is Resource.Error -> {
                         binding.progressBar.visibility = View.GONE
-                        MyAlertDialog.showAlertDialog(this@DetailBookActivity,
+                        MyAlertDialog.showAlertDialog(context,
                             R.drawable.icon_cancel,
                             "FAILED",
                             it.message.toString())
@@ -104,8 +126,34 @@ class DetailBookActivity : AppCompatActivity() {
         }
     }
 
+    private fun setDetailBook(bookId: String) {
+        viewModel.getDetailBook(sessionManager.fetchAuthToken().toString(), bookId)
+
+        viewModel.resourceDetailBook.observe(this) { event ->
+            event.getContentIfNotHandled()?.let { resource ->
+                when(resource) {
+                    is Resource.Loading -> {
+                        binding.progressBar.visibility = View.VISIBLE
+                    }
+                    is Resource.Success -> {
+                        detailBook = resource.data
+                        Log.d("isi detailbook",detailBook.toString())
+                        showDetailBook()
+                        binding.progressBar.visibility = View.GONE
+                    }
+                    is Resource.Error -> {
+                        binding.progressBar.visibility = View.GONE
+                        MyAlertDialog.showAlertDialog(context, R.drawable.icon_cancel, "Failed", resource.message.toString())
+                    }
+                }
+            }
+        }
+    }
+
+
     private fun showDetailBook() {
         setEnableButton()
+        Log.d("DetailActivity", detailBook?.title.toString())
         binding.progressBar.visibility = View.GONE
         supportActionBar?.title = detailBook?.title
         binding.author.text = detailBook?.author
@@ -159,6 +207,7 @@ class DetailBookActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_DATA = "extra_data"
+        const val BOOK_ID = "book_id"
     }
 }
 

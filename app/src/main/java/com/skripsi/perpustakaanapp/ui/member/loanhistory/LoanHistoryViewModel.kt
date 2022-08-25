@@ -2,6 +2,7 @@ package com.skripsi.perpustakaanapp.ui.member.loanhistory
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.skripsi.perpustakaanapp.core.models.Book
 import com.skripsi.perpustakaanapp.core.models.LoanHistory
 import com.skripsi.perpustakaanapp.core.models.ModelBookId
 import com.skripsi.perpustakaanapp.core.models.ModelUsername
@@ -17,7 +18,6 @@ import retrofit2.Response
 class LoanHistoryViewModel(private val repository: LibraryRepository) : ViewModel() {
 
     val resourceHistoryLoan = MutableLiveData<Event<Resource<List<LoanHistory>>>>()
-    val resourceToDetailBook = MutableLiveData<Event<Resource<String>>>()
 
     fun getAllLoanHistories(token: String, username: String) {
         resourceHistoryLoan.postValue(Event(Resource.Loading()))
@@ -45,29 +45,4 @@ class LoanHistoryViewModel(private val repository: LibraryRepository) : ViewMode
         })
     }
 
-    fun getDetailBook(token: String, bookId: String) {
-        resourceToDetailBook.postValue(Event(Resource.Loading()))
-        val modelBookId = ModelBookId(bookId)
-        val response = repository.getDetailBook(token, modelBookId)
-        response.enqueue(object : Callback<DetailBookResponse> {
-            override fun onResponse(
-                call: Call<DetailBookResponse>,
-                response: Response<DetailBookResponse>
-            ) {
-                if (response.body()?.code == 0) {
-                    resourceToDetailBook.postValue(Event(Resource.Success(response.body()?.message)))
-                }
-                else {
-                    resourceToDetailBook.postValue((Event(Resource.Error(response.body()?.message))))
-                }
-            }
-
-            override fun onFailure(
-                call: Call<DetailBookResponse>,
-                t: Throwable
-            ) {
-                resourceToDetailBook.postValue(Event(Resource.Error(t.message)))
-            }
-        })
-    }
 }
