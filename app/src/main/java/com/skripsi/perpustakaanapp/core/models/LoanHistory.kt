@@ -7,6 +7,9 @@ data class LoanHistory(
     @SerializedName("bookId")
     val bookId: String? = null,
 
+    @SerializedName("bookTitle")
+    val bookTitle: String? = null,
+
     @SerializedName("releaseDate")
     val releaseDate: String? = null,
 
@@ -14,5 +17,8 @@ data class LoanHistory(
     val dueDate: String? = null,
 
     @SerializedName("status")
-    val status: String? = null
+    val status: String? = null,
+
+    @SerializedName("managedBy")
+    val managedBy: String? = null
 )

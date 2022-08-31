@@ -7,8 +7,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
     //initialization api address
-//        private const val BASE_URL: String = "http://192.168.43.253:9080/api/library/"
-    private const val BASE_URL: String = "http://185.201.9.17:9080/api/library/"
+//        private const val BASE_URL: String = "http://192.168.43.253:9080/api/library/"    //WIFI HP
+    private const val BASE_URL: String = "http://192.168.0.110:9080/api/library/"           //WIFI RUMAH
+//    private const val BASE_URL: String = "http://185.201.9.17:9080/api/library/"          // Hosting
     fun create(): Api {
         val logging = HttpLoggingInterceptor()
         logging.setLevel(HttpLoggingInterceptor.Level.BODY)

@@ -77,11 +77,17 @@ interface Api {
         @Body username: ModelUsername
     ):Call<LoanHistoryResponse>
 
-    @POST("transaction/detail")
+    @POST("book/detail")
     fun getDetailBook(
         @Header("Authorization") token: String,
         @Body bookId: ModelBookId
     ):Call<DetailBookResponse>
+
+    @POST("user/detail")
+    fun getDetailUser(
+        @Header("Authorization") token: String,
+        @Body officerUsername: ModelUsername
+    ):Call<DetailUserResponse>
 
 //    @POST("book/loan")
 //    fun loanBook(

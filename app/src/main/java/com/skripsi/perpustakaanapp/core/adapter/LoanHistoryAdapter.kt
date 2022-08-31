@@ -13,6 +13,7 @@ class LoanHistoryAdapter : RecyclerView.Adapter<LoanHistoryAdapter.LoanHistoryVi
 
     private val listLoanHistory = mutableListOf<LoanHistory>()
     var onBookTitleClick : ((String) -> Unit)? = null
+    var onOfficerUsernameClick : ((String) -> Unit)? = null
 
     fun setLoanHistoryList(loanHistoryData: List<LoanHistory>?) {
         if (loanHistoryData == null) return
@@ -37,7 +38,8 @@ class LoanHistoryAdapter : RecyclerView.Adapter<LoanHistoryAdapter.LoanHistoryVi
         private val binding = ItemListLoanHistoryBinding.bind(itemView)
         fun bind(loanHistory: LoanHistory) {
             with(binding) {
-                tvBookTitle.text = loanHistory.status
+                tvBookTitle.text = loanHistory.bookTitle
+                tvOfficer.text = loanHistory.managedBy
             }
         }
 
@@ -45,6 +47,11 @@ class LoanHistoryAdapter : RecyclerView.Adapter<LoanHistoryAdapter.LoanHistoryVi
             binding.tvBookTitle.setSingleClickListener {
                 listLoanHistory[adapterPosition].bookId?.let { bookId ->
                     onBookTitleClick?.invoke(bookId) }
+            }
+            binding.tvOfficer.setSingleClickListener {
+                listLoanHistory[adapterPosition].managedBy?.let { officerUsername ->
+                    onOfficerUsernameClick?.invoke(officerUsername)
+                }
             }
         }
     }

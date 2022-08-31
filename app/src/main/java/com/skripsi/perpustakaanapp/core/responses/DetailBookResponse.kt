@@ -14,3 +14,16 @@ data class DetailBookResponse(
     val title : String? = null
 
 )
+
+data class DetailUserResponse(
+
+    @SerializedName("code")
+    val code : Int? = null,
+
+    @SerializedName("message")
+    val message : String? = null,
+
+    @SerializedName("firstName")
+    val firstName : String? = null
+
+)

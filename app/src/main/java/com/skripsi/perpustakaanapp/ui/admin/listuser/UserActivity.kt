@@ -1,4 +1,4 @@
-package com.skripsi.perpustakaanapp.ui.admin.user.listuser
+package com.skripsi.perpustakaanapp.ui.admin.listuser
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

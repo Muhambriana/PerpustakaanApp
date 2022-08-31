@@ -31,4 +31,6 @@ class LibraryRepository constructor(private val retrofitClient: RetrofitClient) 
 
     fun getDetailBook(token: String, bookId: ModelBookId) = retrofitClient.create().getDetailBook(token, bookId)
 
+    fun getDetaiUser(token: String, officerUsername: ModelUsername) = retrofitClient.create().getDetailUser(token, officerUsername)
+
 }

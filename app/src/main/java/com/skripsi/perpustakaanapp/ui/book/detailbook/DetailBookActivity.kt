@@ -35,6 +35,7 @@ class DetailBookActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBookBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         //when still loading the data, action bar will show nothing
         supportActionBar?.title = ""
@@ -98,8 +99,8 @@ class DetailBookActivity : AppCompatActivity() {
         }
 
         viewModel.resourceDeleteBook.observe(this) { event ->
-            event.getContentIfNotHandled()?.let {
-                when (it) {
+            event.getContentIfNotHandled()?.let { resource ->
+                when (resource) {
                     is Resource.Loading -> {
                         binding.progressBar.visibility = View.VISIBLE
                     }
@@ -107,7 +108,7 @@ class DetailBookActivity : AppCompatActivity() {
                         binding.progressBar.visibility = View.GONE
                         MyAlertDialog.showAlertDialogEvent(context,
                             R.drawable.icon_checked,
-                            it.data.toString().uppercase(),
+                            resource.data.toString().uppercase(),
                             "Buku Berhasil Di Hapus")
                         { _, _ ->
                             setResult(RESULT_OK) //set return data is "RESULT_OK" after success deleted
@@ -119,7 +120,7 @@ class DetailBookActivity : AppCompatActivity() {
                         MyAlertDialog.showAlertDialog(context,
                             R.drawable.icon_cancel,
                             "FAILED",
-                            it.message.toString())
+                            resource.message.toString())
                     }
                 }
             }
