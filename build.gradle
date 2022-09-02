@@ -11,5 +11,5 @@ task clean(type: Delete) {
 
 ext{
     //depedencies version
-    glideVersion = '4.11.0'
+    glideVersion = '4.12.0'
 }

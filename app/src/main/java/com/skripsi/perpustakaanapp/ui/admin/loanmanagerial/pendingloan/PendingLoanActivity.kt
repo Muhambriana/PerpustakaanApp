@@ -1,5 +1,6 @@
 package com.skripsi.perpustakaanapp.ui.admin.loanmanagerial.pendingloan
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -14,6 +15,8 @@ import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.databinding.ActivityPendingLoanBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
+import com.skripsi.perpustakaanapp.ui.book.detailbook.DetailBookActivity
+import com.skripsi.perpustakaanapp.ui.userprofile.UserProfileActivity
 
 class PendingLoanActivity : AppCompatActivity() {
 
@@ -29,6 +32,7 @@ class PendingLoanActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPendingLoanBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         sessionManager = SessionManager(this)
 
@@ -38,9 +42,7 @@ class PendingLoanActivity : AppCompatActivity() {
 
         getPendingLoanData()
 
-        buttonApproveListener()
-
-        buttonRejectListener()
+        onClickListener()
     }
 
     private fun getPendingLoanData() {
@@ -75,6 +77,31 @@ class PendingLoanActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return super.onSupportNavigateUp()
+    }
+
+    private fun onClickListener() {
+
+        pendingLoanAdapter.onMemberUsernameClick = { memberUsername ->
+            val intent = Intent(context, UserProfileActivity::class.java)
+            intent.putExtra(UserProfileActivity.USERNAME, memberUsername)
+            startActivity(intent)
+        }
+
+        pendingLoanAdapter.onBookTitleClick = { bookId ->
+            val intent = Intent(context, DetailBookActivity::class.java)
+            intent.putExtra(DetailBookActivity.BOOK_ID, bookId)
+            startActivity(intent)
+        }
+
+
+        buttonApproveListener()
+
+        buttonRejectListener()
     }
 
     private fun buttonApproveListener() {

@@ -32,6 +32,9 @@ data class Book(
     val source: String? = null,
 
     @field:SerializedName("remark")
-    val remark: String? = null
+    val remark: String? = null,
+
+    @field:SerializedName("imageUrl")
+    val imageUrl: String? = null
 
 ) : Parcelable

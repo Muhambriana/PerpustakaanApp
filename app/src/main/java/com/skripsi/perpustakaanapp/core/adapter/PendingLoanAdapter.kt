@@ -15,6 +15,8 @@ class PendingLoanAdapter : RecyclerView.Adapter<PendingLoanAdapter.PendingLoanVi
     var onItemClick: ((PendingLoan) -> Unit)? = null
     var buttonApproveClick: ((Int) -> Unit)? = null
     var buttonRejectClick: ((Int) -> Unit)? = null
+    var onMemberUsernameClick: ((String) -> Unit)? = null
+    var onBookTitleClick: ((String) -> Unit)? = null
 
     fun setPendingLoanList(pendingLoanData: List<PendingLoan>?) {
         if (pendingLoanData == null) return
@@ -41,7 +43,7 @@ class PendingLoanAdapter : RecyclerView.Adapter<PendingLoanAdapter.PendingLoanVi
         fun bind(pendingLoan: PendingLoan) {
             with(binding){
                 tvBookTitle.text = pendingLoan.bookTitle
-//                tvUsername.text = pendingLoan.username
+                tvMember.text = pendingLoan.createdBy
             }
         }
 
@@ -54,6 +56,16 @@ class PendingLoanAdapter : RecyclerView.Adapter<PendingLoanAdapter.PendingLoanVi
             binding.btnReject.setSingleClickListener {
                 listPendingLoan[adapterPosition].pendingLoanId?.let { id ->
                     buttonRejectClick?.invoke(id)
+                }
+            }
+            binding.tvMember.setSingleClickListener {
+                listPendingLoan[adapterPosition].createdBy?.let { memberUsername ->
+                    onMemberUsernameClick?.invoke(memberUsername)
+                }
+            }
+            binding.tvBookTitle.setSingleClickListener {
+                listPendingLoan[adapterPosition].bookId?.let { bookId ->
+                    onBookTitleClick?.invoke(bookId)
                 }
             }
         }

@@ -1,6 +1,5 @@
 package com.skripsi.perpustakaanapp.ui.book.detailbook
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -8,6 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.MyViewModelFactory
 import com.skripsi.perpustakaanapp.core.SessionManager
@@ -15,10 +15,12 @@ import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.models.Book
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.core.resource.Resource
+import com.skripsi.perpustakaanapp.core.utils.NetworkInfo.IMAGE_URL
 import com.skripsi.perpustakaanapp.databinding.ActivityDetailBookBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.updatebook.UpdateBookActivity
 import com.skripsi.perpustakaanapp.ui.setSingleClickListener
+import java.io.File
 
 
 class DetailBookActivity : AppCompatActivity() {
@@ -161,6 +163,10 @@ class DetailBookActivity : AppCompatActivity() {
         binding.year.text = detailBook?.edition  //harusnya tahun terbit
         binding.publisher.text = detailBook?.publisher
 
+        Glide.with(context)
+            .load(IMAGE_URL + detailBook?.imageUrl)
+            .into(binding.imagePoster)
+        Log.i("$context", "url image : "+ IMAGE_URL + detailBook?.imageUrl)
     }
 
     private fun setEnableButton() {

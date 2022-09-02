@@ -16,6 +16,9 @@ data class PendingLoan(
     @field:SerializedName("status")
     val status: String? = null,
 
+    @field:SerializedName("bookId")
+    val bookId: String? = null,
+
     @field:SerializedName("createdBy")
     val createdBy: String? = null
 

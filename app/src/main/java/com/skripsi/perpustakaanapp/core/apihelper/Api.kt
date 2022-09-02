@@ -86,7 +86,7 @@ interface Api {
     @POST("user/detail")
     fun getDetailUser(
         @Header("Authorization") token: String,
-        @Body officerUsername: ModelUsername
+        @Body username: ModelUsername
     ):Call<DetailUserResponse>
 
 //    @POST("book/loan")

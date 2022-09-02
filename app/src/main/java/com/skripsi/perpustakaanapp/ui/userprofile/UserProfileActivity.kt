@@ -2,8 +2,11 @@ package com.skripsi.perpustakaanapp.ui.userprofile
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.MyViewModelFactory
 import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
@@ -19,6 +22,7 @@ class UserProfileActivity : AppCompatActivity() {
     private lateinit var viewModel: UserProfileViewModel
 
     private var detailUser: User? = null
+    private var username: String? = null
     private val client = RetrofitClient
     private val context = this@UserProfileActivity
 
@@ -37,9 +41,10 @@ class UserProfileActivity : AppCompatActivity() {
             UserProfileViewModel::class.java
         )
 
+        username = intent.getStringExtra(USERNAME)
         if (intent.extras != null){
-            if (intent.getStringExtra(OFFICER_USERNAME) != null) {
-                setDetailUser(intent.getStringExtra(OFFICER_USERNAME).toString())
+            if (username != null) {
+                setDetailUser()
             }
             else {
                 showDetailUser()
@@ -48,13 +53,25 @@ class UserProfileActivity : AppCompatActivity() {
         
     }
 
-    override fun onNavigateUp(): Boolean {
-        onBackPressed()
-        return super.onNavigateUp()
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        if (sessionManager.fetchUsername() == username){
+            menuInflater.inflate(R.menu.activity_book_menu, menu)
+        }
+        return super.onCreateOptionsMenu(menu)
     }
 
-    private fun setDetailUser(officerUsername: String) {
-        viewModel.getDetailUser(sessionManager.fetchAuthToken().toString(), officerUsername)
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> true
+        }
+    }
+
+    private fun setDetailUser() {
+        username?.let { viewModel.getDetailUser(sessionManager.fetchAuthToken().toString(), it) }
         
         viewModel.resourceDetailUser.observe(this) { event ->
             event.getContentIfNotHandled()?.let { resource ->
@@ -77,6 +94,6 @@ class UserProfileActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_DATA = "extra_data"
-        const val OFFICER_USERNAME = "officer_username"
+        const val USERNAME = "username"
     }
 }

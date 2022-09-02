@@ -32,7 +32,7 @@
         tools:text="@string/book_title" />
 
     <TextView
-        android:id="@+id/tv_username"
+        android:id="@+id/tv_member"
         android:layout_width="250dp"
         android:layout_height="32dp"
         android:layout_marginEnd="68dp"

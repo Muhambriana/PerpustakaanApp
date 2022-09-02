@@ -16,9 +16,9 @@ class UserProfileViewModel(private val repository: LibraryRepository): ViewModel
 
     val resourceDetailUser = MutableLiveData<Event<Resource<User>>>()
 
-    fun getDetailUser(token: String, officerUsername: String) {
+    fun getDetailUser(token: String, username: String) {
         resourceDetailUser.postValue(Event(Resource.Loading()))
-        val modelUsername = ModelUsername(officerUsername)
+        val modelUsername = ModelUsername(username)
         val response = repository.getDetaiUser(token, modelUsername)
         response.enqueue(object: Callback<DetailUserResponse> {
             override fun onResponse(

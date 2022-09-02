@@ -51,7 +51,7 @@ class LoanHistoryActivity : AppCompatActivity() {
         }
         loanHistoryAdapter.onOfficerUsernameClick = { officerUsername ->
             val intent = Intent(context, UserProfileActivity::class.java)
-            intent.putExtra(UserProfileActivity.OFFICER_USERNAME, officerUsername)
+            intent.putExtra(UserProfileActivity.USERNAME, officerUsername)
             startActivity(intent)
         }
     }
