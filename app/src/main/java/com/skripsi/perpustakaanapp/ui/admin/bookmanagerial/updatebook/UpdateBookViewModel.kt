@@ -7,6 +7,7 @@ import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.core.resource.Event
 import com.skripsi.perpustakaanapp.core.resource.Resource
 import com.skripsi.perpustakaanapp.core.responses.GeneralResponse
+import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -39,9 +40,27 @@ class UpdateBookViewModel(private val repository: LibraryRepository) : ViewModel
         })
     }
 
-    fun updateBookImage(token: String, bookId: RequestBody?, image: MultipartBody.Part?) {
+    fun updateBookImage(token: String, bookId: String, image: MultipartBody.Part?) {
         resourceUpdateImage.postValue(Event(Resource.Loading()))
+        val id = RequestBody.create(MediaType.parse("text/plain"), bookId)
+        val post = repository.updateImage(token, id, null, image)
+        post.enqueue(object: Callback<GeneralResponse> {
+            override fun onResponse(
+                call: Call<GeneralResponse>,
+                response: Response<GeneralResponse>
+            ) {
+                if (response.body()?.code == 0) {
+                    resourceUpdateImage.postValue(Event(Resource.Success(response.body()?.message)))
+                }
+                else {
+                    resourceUpdateImage.postValue(Event(Resource.Error(response.body()?.message)))
+                }
+            }
 
+            override fun onFailure(call: Call<GeneralResponse>, t: Throwable) {
+                resourceUpdateImage.postValue(Event(Resource.Error(t.message)))
+            }
+        })
     }
 
 }

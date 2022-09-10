@@ -63,20 +63,6 @@ class CreateBookActivity : AppCompatActivity() {
         }
     }
 
-    private fun getImageFileByUri(uri: Uri) {
-        val pathColumn = arrayOf(MediaStore.Images.Media.DATA)
-
-        val cursor =  contentResolver.query(uri, pathColumn, null, null, null)
-        assert(cursor != null )
-        cursor?.moveToFirst()
-
-        val columnIndex = cursor?.getColumnIndex(pathColumn[0])
-        val mediaPath = columnIndex?.let { cursor.getString(it) }
-        cursor?.close()
-
-        getImage(mediaPath)
-    }
-
     private fun permissionCheck() {
         if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
             ActivityCompat.requestPermissions(context, arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),
@@ -92,8 +78,22 @@ class CreateBookActivity : AppCompatActivity() {
         startActivityForResult(intent, REQUEST_CODE_IMAGE)
     }
 
-    private fun getImage(mediaPath: String?) {
-        val file = mediaPath?.let { File(it) }
+    private fun getImageFileByUri(uri: Uri) {
+        val pathColumn = arrayOf(MediaStore.Images.Media.DATA)
+
+        val cursor =  contentResolver.query(uri, pathColumn, null, null, null)
+        assert(cursor != null )
+        cursor?.moveToFirst()
+
+        val columnIndex = cursor?.getColumnIndex(pathColumn[0])
+        val imagePath = columnIndex?.let { cursor.getString(it) }
+        cursor?.close()
+
+        getImage(imagePath)
+    }
+
+    private fun getImage(imagePath: String?) {
+        val file = imagePath?.let { File(it) }
         val requestBody = file?.let { RequestBody.create(MediaType.parse("multipart/form-data"), it) }
         imageMultipartBody = requestBody?.let { MultipartBody.Part.createFormData("image", file.name, it) }
     }
@@ -124,7 +124,6 @@ class CreateBookActivity : AppCompatActivity() {
         viewModel.isLoading.observe(this) { boolean ->
             binding.progressBar.visibility = if (boolean) View.VISIBLE else View.GONE
         }
-
 
             viewModel.createBook(
                 token = sessionManager.fetchAuthToken().toString(),

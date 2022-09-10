@@ -35,6 +35,6 @@ class LibraryRepository constructor(private val retrofitClient: RetrofitClient) 
 
     fun getDetailUser(token: String, username: ModelUsername) = retrofitClient.create().getDetailUser(token, username)
 
-    fun updateImage(token: String, bookId: RequestBody, username: RequestBody, image: MultipartBody.Part?) = retrofitClient.create().updateImage(token, bookId, username, image)
+    fun updateImage(token: String, bookId: RequestBody?, username: RequestBody?, image: MultipartBody.Part?) = retrofitClient.create().updateImage(token, bookId, username, image)
 
 }

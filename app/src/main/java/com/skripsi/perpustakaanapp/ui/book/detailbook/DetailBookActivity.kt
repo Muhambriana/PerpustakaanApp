@@ -168,7 +168,7 @@ class DetailBookActivity : AppCompatActivity() {
         if (detailBook?.imageUrl != null) {
             Glide.with(context)
                 .load(IMAGE_URL + detailBook?.imageUrl)
-                .into(binding.imagePoster)
+                .into(binding.imageCoverBook)
             Log.i("$context", "url image : "+ IMAGE_URL + detailBook?.imageUrl)
         }
     }

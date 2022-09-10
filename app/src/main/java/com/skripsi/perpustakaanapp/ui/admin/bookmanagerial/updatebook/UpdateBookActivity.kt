@@ -1,8 +1,11 @@
 package com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.updatebook
 
+import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.*
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -17,6 +20,10 @@ import com.skripsi.perpustakaanapp.databinding.ActivityUpdateBookBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.book.detailbook.DetailBookActivity
 import com.skripsi.perpustakaanapp.ui.setSingleClickListener
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.File
 
 class UpdateBookActivity : BottomSheetDialogFragment() {
 
@@ -26,13 +33,15 @@ class UpdateBookActivity : BottomSheetDialogFragment() {
 
     private var dataBook: Book? = null
     private val client = RetrofitClient
+    private var imageMultipartBody: MultipartBody.Part? = null
 
 
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) : View {
         binding = ActivityUpdateBookBinding.inflate(LayoutInflater.from(inflater.context), container, false)
 
-
 //        setHasOptionsMenu(true)
+
+        sessionManager = SessionManager(requireActivity())
 
         viewModel = ViewModelProvider(this,MyViewModelFactory(LibraryRepository(client))).get(
             UpdateBookViewModel::class.java
@@ -51,11 +60,21 @@ class UpdateBookActivity : BottomSheetDialogFragment() {
             askAppointment()
         }
 
+        binding.buttonUploadImage.setSingleClickListener {
+            chooseImage()
+        }
+
         return binding.root
     }
 
-
-
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_IMAGE) {
+            val selectedImage = data?.data
+            binding.bookPoster.setImageURI(selectedImage)
+            selectedImage?.let { getImageFileByUri(it) }
+        }
+    }
 
 //    override fun onSupportNavigateUp(): Boolean {
 //        onBackPressed()
@@ -97,8 +116,6 @@ class UpdateBookActivity : BottomSheetDialogFragment() {
     }
 
     private fun postBookData() {
-        sessionManager = SessionManager(requireActivity())
-
         viewModel.updateBook(
             token = sessionManager.fetchAuthToken().toString(),
             binding.tvBookId.text.toString(),
@@ -119,6 +136,7 @@ class UpdateBookActivity : BottomSheetDialogFragment() {
                         binding.progressBar.visibility = View.VISIBLE
                     }
                     is Resource.Success -> {
+                        binding.progressBar.visibility = View.GONE
                         // Set value of result
                         activity?.setResult(RESULT_OK)
 
@@ -151,7 +169,57 @@ class UpdateBookActivity : BottomSheetDialogFragment() {
                         }
                     }
                     is Resource.Error -> {
+                        binding.progressBar.visibility = View.GONE
                         MyAlertDialog.showAlertDialog(context, R.drawable.icon_cancel, "FAILED", resource.message.toString())
+                    }
+                }
+            }
+        }
+    }
+
+    private fun chooseImage() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent, REQUEST_CODE_IMAGE)
+    }
+
+    private fun getImageFileByUri(uri: Uri) {
+        val pathColumn = arrayOf(MediaStore.Images.Media.DATA)
+
+        val cursor = activity?.contentResolver?.query(uri, pathColumn, null, null, null)
+        assert(cursor != null)
+        cursor?.moveToFirst()
+
+        val columnIndex = cursor?.getColumnIndex(pathColumn[0])
+        val imagePath = columnIndex?.let { cursor.getString(it) }
+        cursor?.close()
+
+        getImage(imagePath)
+    }
+
+    private fun getImage(imagePath: String?) {
+        val file = imagePath?.let { File(it) }
+        val requestBody = file?.let { RequestBody.create(MediaType.parse("multipart/form-data"), it) }
+        imageMultipartBody = requestBody?.let { MultipartBody.Part.createFormData("image", file.name, it) }
+        uploadImage()
+    }
+
+    private fun uploadImage() {
+        viewModel.updateBookImage(sessionManager.fetchAuthToken().toString(), dataBook?.bookId.toString(), imageMultipartBody)
+
+        viewModel.resourceUpdateBook.observe(this) { event ->
+            event.getContentIfNotHandled().let { resource ->
+                when (resource) {
+                    is Resource.Loading -> {
+                        binding.progressBar.visibility = View.VISIBLE
+                    }
+                    is Resource.Success -> {
+                        binding.progressBar.visibility = View.GONE
+                        MyAlertDialog.showAlertDialog(context, R.drawable.icon_checked, resource.data.toString().uppercase(), "Gambar Berhasil Diubah")
+                    }
+                    is Resource.Error -> {
+                        binding.progressBar.visibility = View.GONE
+                        MyAlertDialog.showAlertDialog(context, R.drawable.icon_cancel, "Failed", resource.message.toString())
                     }
                 }
             }
@@ -160,6 +228,7 @@ class UpdateBookActivity : BottomSheetDialogFragment() {
 
     companion object {
         const val EXTRA_DATA = "extra_data"
+        private const val REQUEST_CODE_IMAGE = 201
     }
 }
 
