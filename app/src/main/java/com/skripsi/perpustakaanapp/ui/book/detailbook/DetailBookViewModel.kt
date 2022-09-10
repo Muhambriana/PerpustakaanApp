@@ -75,7 +75,7 @@ class DetailBookViewModel(private val repository: LibraryRepository) : ViewModel
                 response: Response<DetailBookResponse>
             ) {
                 if (response.body()?.code == 0) {
-                    val book = Book(null, response.body()?.title)
+                    val book = Book(null, response.body()?.title, null, null,null,null,null,null,null, response.body()?.imageUrl)
                     resourceDetailBook.postValue(Event(Resource.Success(book)))
                 }
                 else {

@@ -12,23 +12,41 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:id="@+id/container_button_back"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
+        <ImageView
+            android:id="@+id/button_back"
+            android:layout_width="54dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="5dp"
+            android:contentDescription="back_button"
+            android:scaleType="fitStart"
+            android:src="@drawable/icon_back_arrow"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/button_back"
-                android:layout_width="99dp"
-                android:layout_height="42dp"
-                android:paddingStart="-40dp"
-                android:contentDescription="back_button"
-                android:src="@drawable/icon_back_arrow" />
-        </LinearLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="124dp"
+            android:layout_marginTop="92dp"
+            android:background="@color/transparent"
+            android:backgroundTint="@color/transparent"
+            android:scaleType="center"
+            android:src="@drawable/icon_edit_image"
+            app:layout_constraintStart_toStartOf="@+id/book_poster"
+            app:layout_constraintTop_toTopOf="@+id/book_poster" />
+
+        <ImageView
+            android:id="@+id/book_poster"
+            android:layout_width="159dp"
+            android:layout_height="148dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="100dp"
+            android:src="@color/teal_200"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.828"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button_back"
+            tools:ignore="ContentDescription" />
 
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/ed_book_title"
@@ -39,10 +57,10 @@
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/container_button_back"
+            app:layout_constraintTop_toBottomOf="@id/book_poster"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             app:met_floatingLabel="highlight" />
 
         <com.rengwuxian.materialedittext.MaterialEditText

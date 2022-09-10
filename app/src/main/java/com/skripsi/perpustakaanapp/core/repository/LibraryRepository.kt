@@ -2,12 +2,14 @@ package com.skripsi.perpustakaanapp.core.repository
 
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.models.*
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 
 class LibraryRepository constructor(private val retrofitClient: RetrofitClient) {
 
     fun getAllBooks(token: String) = retrofitClient.create().getAllBook(token)
 
-    fun createBook(token: String, book: Book) = retrofitClient.create().postCreateBook(token, book)
+    fun createBook(token: String, title: RequestBody, image: MultipartBody.Part?) = retrofitClient.create().postCreateBook(token, title, image)
 
     fun userLogin(nis: String, password: String) = retrofitClient.create().userLogin(nis, password)
 
@@ -31,6 +33,8 @@ class LibraryRepository constructor(private val retrofitClient: RetrofitClient) 
 
     fun getDetailBook(token: String, bookId: ModelBookId) = retrofitClient.create().getDetailBook(token, bookId)
 
-    fun getDetaiUser(token: String, username: ModelUsername) = retrofitClient.create().getDetailUser(token, username)
+    fun getDetailUser(token: String, username: ModelUsername) = retrofitClient.create().getDetailUser(token, username)
+
+    fun updateImage(token: String, bookId: RequestBody, username: RequestBody, image: MultipartBody.Part?) = retrofitClient.create().updateImage(token, bookId, username, image)
 
 }

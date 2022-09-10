@@ -11,7 +11,10 @@ data class DetailBookResponse(
     val message : String? = null,
 
     @SerializedName("title")
-    val title : String? = null
+    val title : String? = null,
+
+    @SerializedName("imageUrl")
+    val imageUrl : String? = null
 
 )
 

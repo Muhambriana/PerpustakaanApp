@@ -2,6 +2,8 @@ package com.skripsi.perpustakaanapp.core.apihelper
 
 import com.skripsi.perpustakaanapp.core.models.*
 import com.skripsi.perpustakaanapp.core.responses.*
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -31,10 +33,18 @@ interface Api {
         @Header("Authorization") token: String
     ): Call<BookResponse>
 
+//    @POST("book/create")
+//    fun postCreateBook(
+//        @Header("Authorization") token: String,
+//        @Body book: Book
+//    ):Call<GeneralResponse>
+
+    @Multipart
     @POST("book/create")
     fun postCreateBook(
         @Header("Authorization") token: String,
-        @Body book: Book
+        @Part ("data") data: RequestBody?,
+        @Part image: MultipartBody.Part?
     ):Call<GeneralResponse>
 
     @POST("book/update")
@@ -88,6 +98,15 @@ interface Api {
         @Header("Authorization") token: String,
         @Body username: ModelUsername
     ):Call<DetailUserResponse>
+
+    @Multipart
+    @POST("image/update")
+    fun updateImage(
+        @Header("Authorization") token: String,
+        @Part("bookId")  bookId: RequestBody?,
+        @Part("username") username: RequestBody?,
+        @Part image : MultipartBody.Part?
+    ):Call<GeneralResponse>
 
 //    @POST("book/loan")
 //    fun loanBook(

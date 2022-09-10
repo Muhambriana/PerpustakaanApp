@@ -49,9 +49,12 @@ class DetailBookActivity : AppCompatActivity() {
         )
 
         if(intent.extras != null) {
+            // Just receive book id
             if (intent.getStringExtra(BOOK_ID) != null) {
                 setDetailBook(intent.getStringExtra(BOOK_ID).toString())
             }
+
+            // Receive whole data from book
             else {
                 detailBook = intent.getParcelableExtra<Book>(EXTRA_DATA)
                 showDetailBook()
@@ -162,15 +165,16 @@ class DetailBookActivity : AppCompatActivity() {
         binding.author.text = detailBook?.author
         binding.year.text = detailBook?.edition  //harusnya tahun terbit
         binding.publisher.text = detailBook?.publisher
-
-        Glide.with(context)
-            .load(IMAGE_URL + detailBook?.imageUrl)
-            .into(binding.imagePoster)
-        Log.i("$context", "url image : "+ IMAGE_URL + detailBook?.imageUrl)
+        if (detailBook?.imageUrl != null) {
+            Glide.with(context)
+                .load(IMAGE_URL + detailBook?.imageUrl)
+                .into(binding.imagePoster)
+            Log.i("$context", "url image : "+ IMAGE_URL + detailBook?.imageUrl)
+        }
     }
 
     private fun setEnableButton() {
-        if (detailBook?.copies != "0") {
+        if (detailBook?.stock != "0") {
             doLoan()
         } else {
             binding.buttonLoan.isEnabled = false

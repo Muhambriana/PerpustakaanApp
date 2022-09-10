@@ -201,6 +201,7 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_upload_image"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_rowWeight="1"

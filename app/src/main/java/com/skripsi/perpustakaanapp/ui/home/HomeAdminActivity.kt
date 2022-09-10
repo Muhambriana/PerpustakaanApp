@@ -17,6 +17,7 @@ import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.databinding.ActivityHomeAdminBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
+import com.skripsi.perpustakaanapp.ui.SettingsActivity
 import com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.createbook.CreateBookActivity
 import com.skripsi.perpustakaanapp.ui.admin.createnewadmin.CreateNewAdminActivity
 import com.skripsi.perpustakaanapp.ui.admin.loanmanagerial.pendingloan.PendingLoanActivity
@@ -113,11 +114,16 @@ class HomeAdminActivity : AppCompatActivity() {
                     val intent = Intent(this@HomeAdminActivity, PendingLoanActivity::class.java)
                     startActivity(intent)
                 }
+                R.id.card_upload_image -> {
+                    val intent = Intent(this@HomeAdminActivity, SettingsActivity::class.java)
+                    startActivity(intent)
+                }
             }
         }
         binding.cardCreateBook.setOnClickListener(clickListener)
         binding.cardCreateAdmin.setOnClickListener(clickListener)
         binding.cardBookList.setOnClickListener(clickListener)
         binding.cardPendingLoanList.setOnClickListener(clickListener)
+        binding.cardUploadImage.setOnClickListener(clickListener)
     }
 }

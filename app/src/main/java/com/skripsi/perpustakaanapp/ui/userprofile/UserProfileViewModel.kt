@@ -19,7 +19,7 @@ class UserProfileViewModel(private val repository: LibraryRepository): ViewModel
     fun getDetailUser(token: String, username: String) {
         resourceDetailUser.postValue(Event(Resource.Loading()))
         val modelUsername = ModelUsername(username)
-        val response = repository.getDetaiUser(token, modelUsername)
+        val response = repository.getDetailUser(token, modelUsername)
         response.enqueue(object: Callback<DetailUserResponse> {
             override fun onResponse(
                 call: Call<DetailUserResponse>,

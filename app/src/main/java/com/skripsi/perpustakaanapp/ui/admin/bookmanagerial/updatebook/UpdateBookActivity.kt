@@ -12,6 +12,7 @@ import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.models.Book
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
+import com.skripsi.perpustakaanapp.core.resource.Resource
 import com.skripsi.perpustakaanapp.databinding.ActivityUpdateBookBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.book.detailbook.DetailBookActivity
@@ -74,7 +75,7 @@ class UpdateBookActivity : BottomSheetDialogFragment() {
         binding.edBookTitle.setText(dataBook?.title)
         binding.edEdition.setText(dataBook?.edition)
         binding.edAuthor.setText(dataBook?.author)
-        binding.edCopies.setText(dataBook?.copies)
+        binding.edCopies.setText(dataBook?.stock)
         binding.edPublisher.setText(dataBook?.publisher)
         binding.edPublisherDate.setText(dataBook?.publisherDate)
         binding.edSource.setText(dataBook?.source)
@@ -98,10 +99,6 @@ class UpdateBookActivity : BottomSheetDialogFragment() {
     private fun postBookData() {
         sessionManager = SessionManager(requireActivity())
 
-        viewModel.isLoading.observe(this) { boolean ->
-            binding.progressBar.visibility = if (boolean) View.VISIBLE else View.GONE
-        }
-
         viewModel.updateBook(
             token = sessionManager.fetchAuthToken().toString(),
             binding.tvBookId.text.toString(),
@@ -115,42 +112,48 @@ class UpdateBookActivity : BottomSheetDialogFragment() {
             binding.edRemark.text.toString()
         )
 
-        viewModel.responseMessage.observe(this) { message ->
-            if(message != null) {
-                //Reset status value at first to prevent multitriggering
-                //and to be available to trigger action again
-                viewModel.responseMessage.value = null
-                if(message == "success") {
-                    activity?.setResult(RESULT_OK) // //set return data is "RESULT_OK" after success updated
-                    dataBook = Book(
-                        binding.tvBookId.text.toString(),
-                        binding.edBookTitle.text.toString(),
-                        binding.edEdition.text.toString(),
-                        binding.edAuthor.text.toString(),
-                        binding.edPublisher.text.toString(),
-                        binding.edPublisherDate.text.toString(),
-                        binding.edCopies.text.toString(),
-                        binding.edSource.text.toString(),
-                        binding.edRemark.text.toString()
-                    )
-                    MyAlertDialog.showAlertDialogEvent(
-                        context, R.drawable.icon_checked, "SUCCESS", "Data Berhasil Di Update"){_, _ ->
-                        val intent = Intent(context, DetailBookActivity::class.java)
-                        intent.putExtra(DetailBookActivity.EXTRA_DATA, dataBook)
-                        startActivity(intent)
-                        activity?.finish()
+        viewModel.resourceUpdateBook.observe(this) { event ->
+            event.getContentIfNotHandled().let { resource ->
+                when(resource) {
+                    is Resource.Loading -> {
+                        binding.progressBar.visibility = View.VISIBLE
+                    }
+                    is Resource.Success -> {
+                        // Set value of result
+                        activity?.setResult(RESULT_OK)
+
+                        //The new data from book
+                        dataBook = Book(
+                            binding.tvBookId.text.toString(),
+                            binding.edBookTitle.text.toString(),
+                            binding.edEdition.text.toString(),
+                            binding.edAuthor.text.toString(),
+                            binding.edPublisher.text.toString(),
+                            binding.edPublisherDate.text.toString(),
+                            binding.edCopies.text.toString(),
+                            binding.edSource.text.toString(),
+                            binding.edRemark.text.toString()
+                        )
+
+                        // Show Alert Dialog
+                        MyAlertDialog.showAlertDialogEvent(
+                            context, R.drawable.icon_checked,
+                            resource.data.toString().uppercase(),
+                            "Data Buku Berhasil Diupdate") {_,_ ->
+
+                            // Star Intent to DetailActivity
+                            val intent = Intent(context, DetailBookActivity::class.java)
+                            intent.putExtra(DetailBookActivity.EXTRA_DATA, dataBook)
+                            startActivity(intent)
+
+                            // Finish this activity(include the fragment)
+                            activity?.finish()
+                        }
+                    }
+                    is Resource.Error -> {
+                        MyAlertDialog.showAlertDialog(context, R.drawable.icon_cancel, "FAILED", resource.message.toString())
                     }
                 }
-                else {
-                    MyAlertDialog.showAlertDialog(context, R.drawable.icon_cancel, "FAILED", message)
-                }
-            }
-        }
-
-        viewModel.errorMessage.observe(this) {
-            if (it != null) {
-                viewModel.errorMessage.value = null
-                MyAlertDialog.showAlertDialog(context, R.drawable.icon_cancel, "ERROR", it)
             }
         }
     }

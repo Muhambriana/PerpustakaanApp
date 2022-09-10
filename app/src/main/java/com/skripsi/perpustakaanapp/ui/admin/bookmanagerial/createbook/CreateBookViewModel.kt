@@ -2,9 +2,13 @@ package com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.createbook
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.gson.Gson
 import com.skripsi.perpustakaanapp.core.models.Book
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.core.responses.GeneralResponse
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -15,10 +19,12 @@ class CreateBookViewModel(private val repository: LibraryRepository) : ViewModel
     val isLoading = MutableLiveData<Boolean>()
     val responseMessage = MutableLiveData<String?>()
 
-    fun createBook(token: String, title: String, edition: String, author: String, publisher: String, publisherDate: String, copies: String, source: String, remark: String){
+    fun createBook(token: String, title: String, edition: String, author: String, publisher: String, publisherDate: String, copies: String, source: String, remark: String, image: MultipartBody.Part?){
         isLoading.value = true
-        val book = Book(null, title, edition, author, publisher, publisherDate, copies, source, remark)
-        val post = repository.createBook(token, book)
+        val book = Book(null, title, edition, author, publisher, publisherDate, copies, source, remark, null)
+        val jsonString = Gson().toJson(book)
+        val data = RequestBody.create(MediaType.parse("text/plain"), jsonString)
+        val post = repository.createBook(token, data, image)
         post.enqueue(object : Callback<GeneralResponse> {
             override fun onResponse(call: Call<GeneralResponse>, response: Response<GeneralResponse>) {
                 isLoading.value = false
