@@ -8,6 +8,8 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.Target
+import com.bumptech.glide.signature.ObjectKey
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.MyViewModelFactory
 import com.skripsi.perpustakaanapp.core.SessionManager
@@ -168,6 +170,10 @@ class DetailBookActivity : AppCompatActivity() {
         if (detailBook?.imageUrl != null) {
             Glide.with(context)
                 .load(IMAGE_URL + detailBook?.imageUrl)
+                // For reload image on glide from the same url
+                .signature(ObjectKey(System.currentTimeMillis().toString()))
+                // To show the original size of image
+                .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
                 .into(binding.imageCoverBook)
             Log.i("$context", "url image : "+ IMAGE_URL + detailBook?.imageUrl)
         }

@@ -8,6 +8,9 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.view.*
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.Target
+import com.bumptech.glide.signature.ObjectKey
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.MyViewModelFactory
@@ -16,6 +19,7 @@ import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.models.Book
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.core.resource.Resource
+import com.skripsi.perpustakaanapp.core.utils.NetworkInfo.IMAGE_URL
 import com.skripsi.perpustakaanapp.databinding.ActivityUpdateBookBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.book.detailbook.DetailBookActivity
@@ -39,8 +43,6 @@ class UpdateBookActivity : BottomSheetDialogFragment() {
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) : View {
         binding = ActivityUpdateBookBinding.inflate(LayoutInflater.from(inflater.context), container, false)
 
-//        setHasOptionsMenu(true)
-
         sessionManager = SessionManager(requireActivity())
 
         viewModel = ViewModelProvider(this,MyViewModelFactory(LibraryRepository(client))).get(
@@ -49,45 +51,24 @@ class UpdateBookActivity : BottomSheetDialogFragment() {
 
         binding.progressBar.visibility = View.GONE
 
-        dataBook = activity?.intent?.getParcelableExtra<Book>(EXTRA_DATA)
-        setEditText(dataBook)
+        setData()
 
-        binding.buttonBack.setSingleClickListener {
-            requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
-        }
-
-        binding.buttonSave.setSingleClickListener {
-            askAppointment()
-        }
-
-        binding.buttonUploadImage.setSingleClickListener {
-            chooseImage()
-        }
+        setButtonListener()
 
         return binding.root
     }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_IMAGE) {
             val selectedImage = data?.data
-            binding.bookPoster.setImageURI(selectedImage)
             selectedImage?.let { getImageFileByUri(it) }
         }
     }
 
-//    override fun onSupportNavigateUp(): Boolean {
-//        onBackPressed()
-//        return super.onSupportNavigateUp()
-//    }
-//
-//    override fun onBackPressed() {
-//        val intent = Intent(this@UpdateBookActivity, DetailBookActivity::class.java)
-//        intent.putExtra(DetailBookActivity.EXTRA_DATA, dataBook)
-//        startActivity(intent)
-//        finish()
-//        super.onBackPressed()
-//    }
+    private fun setData() {
+        dataBook = activity?.intent?.getParcelableExtra<Book>(EXTRA_DATA)
+        setEditText(dataBook)
+    }
 
     private fun setEditText(dataBook: Book?) {
         binding.tvBookId.text = dataBook?.bookId
@@ -99,11 +80,35 @@ class UpdateBookActivity : BottomSheetDialogFragment() {
         binding.edPublisherDate.setText(dataBook?.publisherDate)
         binding.edSource.setText(dataBook?.source)
         binding.edRemark.setText(dataBook?.remark)
+        setBookPoster(dataBook?.imageUrl)
+    }
+
+    private fun setBookPoster(imageName: String?) {
+        imageName?.let {
+            Glide.with(requireContext())
+                .load(IMAGE_URL + imageName)
+                .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                .signature(ObjectKey(System.currentTimeMillis().toString()))
+                .into(binding.bookPoster)
+        }
+    }
+
+    private fun setButtonListener() {
+        binding.buttonBack.setSingleClickListener {
+            requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
+        }
+
+        binding.buttonSave.setSingleClickListener {
+            askAppointment()
+        }
+
+        binding.buttonUploadImage.setSingleClickListener {
+            chooseImage()
+        }
     }
 
     private fun askAppointment() {
         val title = binding.edBookTitle.text.toString()
-//        val price = binding.edPrice.text.toString()
         when {
             title.isEmpty() -> {
                 binding.edBookTitle.error = "Judul Buku Tidak Boleh Kosong"
@@ -116,6 +121,7 @@ class UpdateBookActivity : BottomSheetDialogFragment() {
     }
 
     private fun postBookData() {
+        uploadImage()
         viewModel.updateBook(
             token = sessionManager.fetchAuthToken().toString(),
             binding.tvBookId.text.toString(),
@@ -126,7 +132,8 @@ class UpdateBookActivity : BottomSheetDialogFragment() {
             binding.edPublisherDate.text.toString(),
             binding.edCopies.text.toString(),
             binding.edSource.text.toString(),
-            binding.edRemark.text.toString()
+            binding.edRemark.text.toString(),
+            dataBook?.imageUrl.toString()
         )
 
         viewModel.resourceUpdateBook.observe(this) { event ->
@@ -150,9 +157,10 @@ class UpdateBookActivity : BottomSheetDialogFragment() {
                             binding.edPublisherDate.text.toString(),
                             binding.edCopies.text.toString(),
                             binding.edSource.text.toString(),
-                            binding.edRemark.text.toString()
+                            binding.edRemark.text.toString(),
+                            binding.edBookTitle.text.toString().replace("\\s".toRegex(),"_")+".png"
                         )
-
+                        println("setelah covert: "+binding.edBookTitle.text.toString().replace("\\s".toRegex(),"_")+".png")
                         // Show Alert Dialog
                         MyAlertDialog.showAlertDialogEvent(
                             context, R.drawable.icon_checked,
@@ -194,6 +202,11 @@ class UpdateBookActivity : BottomSheetDialogFragment() {
         val imagePath = columnIndex?.let { cursor.getString(it) }
         cursor?.close()
 
+        // Set poster with image which chooses
+        Glide.with(requireContext())
+            .load(uri)
+            .into(binding.bookPoster)
+
         getImage(imagePath)
     }
 
@@ -201,13 +214,13 @@ class UpdateBookActivity : BottomSheetDialogFragment() {
         val file = imagePath?.let { File(it) }
         val requestBody = file?.let { RequestBody.create(MediaType.parse("multipart/form-data"), it) }
         imageMultipartBody = requestBody?.let { MultipartBody.Part.createFormData("image", file.name, it) }
-        uploadImage()
     }
 
     private fun uploadImage() {
-        viewModel.updateBookImage(sessionManager.fetchAuthToken().toString(), dataBook?.bookId.toString(), imageMultipartBody)
 
-        viewModel.resourceUpdateBook.observe(this) { event ->
+        imageMultipartBody?.let { viewModel.updateBookImage(sessionManager.fetchAuthToken().toString(), dataBook?.bookId.toString(), it) }
+
+        viewModel.resourceUpdateImage.observe(this) { event ->
             event.getContentIfNotHandled().let { resource ->
                 when (resource) {
                     is Resource.Loading -> {

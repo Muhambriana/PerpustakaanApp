@@ -20,9 +20,9 @@ class UpdateBookViewModel(private val repository: LibraryRepository) : ViewModel
     var resourceUpdateBook = MutableLiveData<Event<Resource<String?>>>()
     val resourceUpdateImage = MutableLiveData<Event<Resource<String?>>>()
 
-    fun updateBook(token: String,bookId: String, title: String, edition: String, author: String, publisher: String, publisherDate: String, copies: String, source: String, remark: String){
+    fun updateBook(token: String,bookId: String, title: String, edition: String, author: String, publisher: String, publisherDate: String, copies: String, source: String, remark: String, imageUrl: String?){
         resourceUpdateBook.postValue(Event(Resource.Loading()))
-        val book = Book(bookId, title, edition, author, publisher, publisherDate, copies, source, remark)
+        val book = Book(bookId, title, edition, author, publisher, publisherDate, copies, source, remark, imageUrl)
         val post = repository.updateBook(token, book)
         post.enqueue(object : Callback<GeneralResponse>{
             override fun onResponse(call: Call<GeneralResponse>, response: Response<GeneralResponse>) {
