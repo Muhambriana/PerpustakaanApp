@@ -15,11 +15,13 @@ import com.skripsi.perpustakaanapp.core.MyViewModelFactory
 import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
+import com.skripsi.perpustakaanapp.core.resource.Resource
 import com.skripsi.perpustakaanapp.databinding.ActivityHomeUserBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.login.LoginActivity
 import com.skripsi.perpustakaanapp.ui.book.listbook.BookActivity
 import com.skripsi.perpustakaanapp.ui.member.loanhistory.LoanHistoryActivity
+import com.skripsi.perpustakaanapp.utils.WindowTouchableHelper
 
 
 class HomeUserActivity : AppCompatActivity() {
@@ -77,35 +79,15 @@ class HomeUserActivity : AppCompatActivity() {
         Handler(Looper.getMainLooper()).postDelayed(Runnable { doubleBackPressed = false }, 2000)
     }
 
-    private fun userLogout() {
-        sessionManager = SessionManager(this)
-        viewModel.userLogout(token = sessionManager.fetchAuthToken().toString())
-        viewModel.isSuccess.observe(this) {
-            viewModel.isSuccess.postValue(null)
-            if (it == true) {
-                val intent = Intent(this@HomeUserActivity, LoginActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-                startActivity(intent)
-                finish()
-            }
-        }
-        viewModel.errorMessage.observe(this) {
-            if (it != null) {
-                viewModel.errorMessage.value = null
-                MyAlertDialog.showAlertDialog(this@HomeUserActivity, R.drawable.icon_cancel, "ERROR", it)
-            }
-        }
-    }
-
     private fun cardListener() {
         val clickListener = View.OnClickListener {view ->
             when (view.id){
                 R.id.card_book_list -> {
-                    val intent = Intent(this@HomeUserActivity, BookActivity::class.java)
+                    val intent = Intent(this, BookActivity::class.java)
                     startActivity(intent)
                 }
                 R.id.card_loan_history_member -> {
-                    val intent = Intent(this@HomeUserActivity, LoanHistoryActivity::class.java)
+                    val intent = Intent(this, LoanHistoryActivity::class.java)
                     startActivity(intent)
                 }
 
@@ -117,26 +99,37 @@ class HomeUserActivity : AppCompatActivity() {
         binding.cardLoanHistoryMember.setOnClickListener(clickListener)
     }
 
-//    override fun onClick(v: View?) {
-//        println("masuk bos")
-//        when (v?.id) {
-//            R.id.book_list -> {
-//                val intent = Intent(this@HomeActivity, BookActivity::class.java)
-//                startActivity(intent)
-//            }
-//            R.id.loan_list -> {
-//                val intent = Intent(this@HomeActivity, LoanActivity::class.java)
-//                startActivity(intent)
-//            }
-//        }
-//    }
+    private fun userLogout() {
+        sessionManager = SessionManager(this)
+        
+        viewModel.userLogout(token = sessionManager.fetchAuthToken().toString())
 
-    private fun setUpRecyclerView() {
-//        binding.rvMenu.apply {
-//            layoutManager = GridLayoutManager(context, 2)
-//            adapter = menuAdapter
-//            setHasFixedSize(true)
-//            addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
-//        }
+        viewModel.resourceLogout.observe(this) { event ->
+            event.getContentIfNotHandled().let { resource ->
+                when (resource) {
+                    is Resource.Loading -> {
+                        WindowTouchableHelper.disable(this)
+                        binding.progressBar.visibility = View.VISIBLE
+                    }
+                    is Resource.Success -> {
+                        WindowTouchableHelper.enable(this)
+                        binding.progressBar.visibility = View.VISIBLE
+                        startIntentBackToLogin()
+                    }
+                    is Resource.Error -> {
+                        WindowTouchableHelper.enable(this)
+                        binding.progressBar.visibility = View.GONE
+                        MyAlertDialog.showAlertDialog(this, R.drawable.icon_cancel, "ERROR", resource.message.toString())
+                    }
+                }
+            }
+        }
+    }
+
+    private fun startIntentBackToLogin() {
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+        finish()
     }
 }

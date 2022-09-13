@@ -1,4 +1,4 @@
-package com.skripsi.perpustakaanapp.core.utils
+package com.skripsi.perpustakaanapp.utils
 
 object NetworkInfo {
 //    const val  BASE_URL = "http://185.201.9.17:9080/api/library/"

@@ -14,11 +14,13 @@ import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.databinding.ActivityLoginBinding
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
+import com.skripsi.perpustakaanapp.core.resource.Resource
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.home.HomeAdminActivity
 import com.skripsi.perpustakaanapp.ui.home.HomeUserActivity
 import com.skripsi.perpustakaanapp.ui.member.register.RegisterActivity
-import com.skripsi.perpustakaanapp.ui.setSingleClickListener
+import com.skripsi.perpustakaanapp.utils.WindowTouchableHelper
+import com.skripsi.perpustakaanapp.utils.setSingleClickListener
 
 
 class LoginActivity : AppCompatActivity() {
@@ -39,10 +41,8 @@ class LoginActivity : AppCompatActivity() {
             LoginViewModel::class.java
         )
 
-        binding.progressBar.visibility = View.INVISIBLE
-        binding.progressBar.visibility = View.INVISIBLE
         binding.txtSignUp.setSingleClickListener {
-            val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
+            val intent = Intent(this, RegisterActivity::class.java)
                 startActivity(intent)
         }
         //listener for login button
@@ -77,7 +77,7 @@ class LoginActivity : AppCompatActivity() {
             //post login data to API
             postLogin(username, password)
         } else {
-            MyAlertDialog.showAlertDialog(this@LoginActivity, R.drawable.icon_no_connection, "No Internet Connection", "Periksa Data Seluler Atau WIFI Anda")
+            MyAlertDialog.showAlertDialog(this, R.drawable.icon_no_connection, "No Internet Connection", "Periksa Data Seluler Atau WIFI Anda")
         }
     }
 
@@ -86,58 +86,46 @@ class LoginActivity : AppCompatActivity() {
 
         sessionManager = SessionManager(this)
 
-        viewModel.isLoading.observe(this) { boolean ->
-            binding.progressBar.visibility = if (boolean) View.VISIBLE else View.INVISIBLE
-        }
-
         viewModel.userLogin(username, password)
 
-        //failed handling, with message status
-        viewModel.responseMessage.observe(this) { message ->
-            //jika fail message ada isinya
-            if (message != null) {
-                //Reset status value at first to prevent multitriggering
-                //and to be available to trigger action again
-                viewModel.responseMessage.value = null
-                //if fail message is "" but not null
-                if (message == "success") {
-                    // for get role name
-                    viewModel.roleName.observe(this) { roleName ->
-                        if (roleName != null) {
-                            //for rolename
-                            sessionManager.saveUserRole(roleName)
-                            //for username
-                            sessionManager.saveUsername(binding.edtUsername.text.toString())
-                            if (roleName == "admin") {
-                                viewModel.firstName.observe(this){ firstName ->
-                                    startIntentExtraData(this@LoginActivity, HomeAdminActivity::class.java, firstName)
-                                }
-                            }
-                            else if (roleName == "student") {
-                                viewModel.firstName.observe(this){ firstName ->
-                                    startIntentExtraData(this@LoginActivity, HomeUserActivity::class.java, firstName)
-                                }
-                            }
-                        }
+        viewModel.resourceLogin.observe(this) { event ->
+            event.getContentIfNotHandled().let { resource ->
+                when (resource) {
+                    is Resource.Loading -> {
+                        WindowTouchableHelper.disable(this)
+                        binding.progressBar.visibility = View.VISIBLE
                     }
-                } else {
-                    MyAlertDialog.showAlertDialog(this@LoginActivity,R.drawable.icon_cancel,"Login Gagal",message)
+                    is Resource.Success -> {
+                        WindowTouchableHelper.enable(this)
+                        binding.progressBar.visibility = View.GONE
+                        startIntentDashboard(
+                            resource.data?.roleName.toString(),
+                            resource.data?.username.toString(),
+                            "Bearer ${resource.data?.token.toString()}",
+                            resource.data?.firstName.toString())
+                    }
+                    is Resource.Error ->  {
+                        WindowTouchableHelper.enable(this)
+                        binding.progressBar.visibility = View.GONE
+                        MyAlertDialog.showAlertDialog(this,R.drawable.icon_cancel,"Login Gagal", resource.message.toString())
+                    }
                 }
             }
         }
+    }
 
-        //error handling, if there is problem with connection or server
-        viewModel.errorMessage.observe(this) {
-            if (it != null) {
-                viewModel.errorMessage.value = null
-                MyAlertDialog.showAlertDialog(this@LoginActivity, R.drawable.icon_cancel, "ERROR", it)
-            }
+    private fun startIntentDashboard(roleName: String, username:String, token: String, firstName: String,) {
+        // Save to SharedPreferences
+        sessionManager.saveUserRole(roleName)
+        sessionManager.saveUsername(username)
+        sessionManager.saveAuthToken(token)
+
+        // Start Activity
+        if (roleName == "admin") {
+            startIntentExtraData(this, HomeAdminActivity::class.java, firstName)
         }
-
-        viewModel.token.observe(this) {
-            if (it != null) {
-                sessionManager.saveAuthToken("Bearer $it")
-            }
+        else if (roleName == "student") {
+            startIntentExtraData(this, HomeUserActivity::class.java, firstName)
         }
     }
 

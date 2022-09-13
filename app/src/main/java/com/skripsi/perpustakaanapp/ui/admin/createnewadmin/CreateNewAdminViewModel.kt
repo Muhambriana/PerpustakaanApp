@@ -4,6 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.skripsi.perpustakaanapp.core.models.User
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
+import com.skripsi.perpustakaanapp.core.resource.Event
+import com.skripsi.perpustakaanapp.core.resource.Resource
 import com.skripsi.perpustakaanapp.core.responses.GeneralResponse
 import retrofit2.Call
 import retrofit2.Callback
@@ -11,25 +13,24 @@ import retrofit2.Response
 
 class CreateNewAdminViewModel(private val repository: LibraryRepository) : ViewModel() {
 
-    val isLoading = MutableLiveData<Boolean>()
-    val errorMessage = MutableLiveData<String?>()
-    var responseMessage = MutableLiveData<String?>()
+    val resourceCreateAdmin = MutableLiveData<Event<Resource<String?>>>()
 
     fun createNewAdmin(username: String, password: String, fullName: String, roleName: String, email: String, phoneNo: String, address: String, gender: Int){
-        isLoading.value = true
+        resourceCreateAdmin.postValue(Event(Resource.Loading()))
         val user = User(username, password, fullName, roleName, email, phoneNo, address, gender)
         val post = repository.createUser(user)
         post.enqueue(object : Callback<GeneralResponse> {
             override fun onResponse(call: Call<GeneralResponse>, response: Response<GeneralResponse>
             ) {
-                isLoading.value = false
-                responseMessage.value = response.body()?.message
-
+                if(response.body()?.code == 0) {
+                    resourceCreateAdmin.postValue(Event(Resource.Success(response.body()?.message)))
+                } else {
+                    resourceCreateAdmin.postValue(Event(Resource.Error(response.body()?.message)))
+                }
             }
 
             override fun onFailure(call: Call<GeneralResponse>, t: Throwable) {
-                isLoading.value = false
-                errorMessage.postValue(t.message)
+                resourceCreateAdmin.postValue(Event(Resource.Error(t.message)))
             }
         })
     }

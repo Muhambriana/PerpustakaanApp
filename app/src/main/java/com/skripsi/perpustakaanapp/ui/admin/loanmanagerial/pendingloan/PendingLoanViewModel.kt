@@ -87,10 +87,7 @@ class PendingLoanViewModel(private val repository: LibraryRepository) : ViewMode
                 }
             }
 
-            override fun onFailure(
-                call: Call<GeneralResponse>,
-                t: Throwable
-            ) {
+            override fun onFailure( call: Call<GeneralResponse>, t: Throwable) {
                 resourceRejectLoan.postValue(Event(Resource.Error(t.message)))
             }
         })

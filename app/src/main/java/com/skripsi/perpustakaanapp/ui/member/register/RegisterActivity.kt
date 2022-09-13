@@ -12,7 +12,7 @@ import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.core.resource.Resource
 import com.skripsi.perpustakaanapp.databinding.ActivityRegisterBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
-import com.skripsi.perpustakaanapp.ui.setSingleClickListener
+import com.skripsi.perpustakaanapp.utils.setSingleClickListener
 
 class RegisterActivity : AppCompatActivity() {
 

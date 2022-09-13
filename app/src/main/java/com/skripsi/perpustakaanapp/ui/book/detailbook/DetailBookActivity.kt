@@ -17,12 +17,11 @@ import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.models.Book
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.core.resource.Resource
-import com.skripsi.perpustakaanapp.core.utils.NetworkInfo.IMAGE_URL
+import com.skripsi.perpustakaanapp.utils.NetworkInfo.IMAGE_URL
 import com.skripsi.perpustakaanapp.databinding.ActivityDetailBookBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.updatebook.UpdateBookActivity
-import com.skripsi.perpustakaanapp.ui.setSingleClickListener
-import java.io.File
+import com.skripsi.perpustakaanapp.utils.setSingleClickListener
 
 
 class DetailBookActivity : AppCompatActivity() {
@@ -33,7 +32,6 @@ class DetailBookActivity : AppCompatActivity() {
 
     private var detailBook: Book? = null
     private val client = RetrofitClient
-    private val context = this@DetailBookActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -113,7 +111,7 @@ class DetailBookActivity : AppCompatActivity() {
                     }
                     is Resource.Success -> {
                         binding.progressBar.visibility = View.GONE
-                        MyAlertDialog.showAlertDialogEvent(context,
+                        MyAlertDialog.showAlertDialogEvent(this,
                             R.drawable.icon_checked,
                             resource.data.toString().uppercase(),
                             "Buku Berhasil Di Hapus")
@@ -124,7 +122,7 @@ class DetailBookActivity : AppCompatActivity() {
                     }
                     is Resource.Error -> {
                         binding.progressBar.visibility = View.GONE
-                        MyAlertDialog.showAlertDialog(context,
+                        MyAlertDialog.showAlertDialog(this,
                             R.drawable.icon_cancel,
                             "FAILED",
                             resource.message.toString())
@@ -151,7 +149,7 @@ class DetailBookActivity : AppCompatActivity() {
                     }
                     is Resource.Error -> {
                         binding.progressBar.visibility = View.GONE
-                        MyAlertDialog.showAlertDialog(context, R.drawable.icon_cancel, "Failed", resource.message.toString())
+                        MyAlertDialog.showAlertDialog(this, R.drawable.icon_cancel, "Failed", resource.message.toString())
                     }
                 }
             }
@@ -161,21 +159,21 @@ class DetailBookActivity : AppCompatActivity() {
 
     private fun showDetailBook() {
         setEnableButton()
-        Log.d("DetailActivity", detailBook?.title.toString())
+
         binding.progressBar.visibility = View.GONE
         supportActionBar?.title = detailBook?.title
         binding.author.text = detailBook?.author
         binding.year.text = detailBook?.edition  //harusnya tahun terbit
         binding.publisher.text = detailBook?.publisher
         if (detailBook?.imageUrl != null) {
-            Glide.with(context)
+            Glide.with(this)
                 .load(IMAGE_URL + detailBook?.imageUrl)
                 // For reload image on glide from the same url
                 .signature(ObjectKey(System.currentTimeMillis().toString()))
                 // To show the original size of image
                 .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
                 .into(binding.imageCoverBook)
-            Log.i("$context", "url image : "+ IMAGE_URL + detailBook?.imageUrl)
+            Log.i("$this", "url image : "+ IMAGE_URL + detailBook?.imageUrl)
         }
     }
 

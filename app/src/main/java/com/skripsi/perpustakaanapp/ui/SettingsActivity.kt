@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.responses.GeneralResponse
 import com.skripsi.perpustakaanapp.databinding.ActivitySettingsBinding
+import com.skripsi.perpustakaanapp.utils.setSingleClickListener
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody

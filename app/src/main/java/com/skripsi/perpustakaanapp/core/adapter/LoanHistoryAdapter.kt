@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.models.LoanHistory
 import com.skripsi.perpustakaanapp.databinding.ItemListLoanHistoryBinding
-import com.skripsi.perpustakaanapp.ui.setSingleClickListener
+import com.skripsi.perpustakaanapp.utils.setSingleClickListener
 
 class LoanHistoryAdapter : RecyclerView.Adapter<LoanHistoryAdapter.LoanHistoryViewHolder>() {
 

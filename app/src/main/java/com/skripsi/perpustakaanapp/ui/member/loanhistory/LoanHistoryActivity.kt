@@ -26,7 +26,6 @@ class LoanHistoryActivity : AppCompatActivity() {
 
     private val client = RetrofitClient
     private val loanHistoryAdapter = LoanHistoryAdapter()
-    private val context = this@LoanHistoryActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,17 +39,16 @@ class LoanHistoryActivity : AppCompatActivity() {
         getHistoryLoanData()
 
         onClickListener()
-
     }
 
     private fun onClickListener() {
         loanHistoryAdapter.onBookTitleClick = { bookId ->
-            val intent = Intent(context, DetailBookActivity::class.java)
+            val intent = Intent(this, DetailBookActivity::class.java)
             intent.putExtra(DetailBookActivity.BOOK_ID, bookId)
             startActivity(intent)
         }
         loanHistoryAdapter.onOfficerUsernameClick = { officerUsername ->
-            val intent = Intent(context, UserProfileActivity::class.java)
+            val intent = Intent(this, UserProfileActivity::class.java)
             intent.putExtra(UserProfileActivity.USERNAME, officerUsername)
             startActivity(intent)
         }
@@ -74,7 +72,7 @@ class LoanHistoryActivity : AppCompatActivity() {
                     }
                     is Resource.Error -> {
                         binding.progressBar.visibility = View.GONE
-                        MyAlertDialog.showAlertDialog(context, R.drawable.icon_cancel, "Failed", resource.message.toString())
+                        MyAlertDialog.showAlertDialog(this, R.drawable.icon_cancel, "Failed", resource.message.toString())
                     }
                 }
             }

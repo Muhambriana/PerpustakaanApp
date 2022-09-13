@@ -17,6 +17,7 @@ import com.skripsi.perpustakaanapp.databinding.ActivityPendingLoanBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.book.detailbook.DetailBookActivity
 import com.skripsi.perpustakaanapp.ui.userprofile.UserProfileActivity
+import com.skripsi.perpustakaanapp.utils.WindowTouchableHelper
 
 class PendingLoanActivity : AppCompatActivity() {
 
@@ -26,7 +27,6 @@ class PendingLoanActivity : AppCompatActivity() {
 
     private val client=  RetrofitClient
     private val pendingLoanAdapter = PendingLoanAdapter()
-    private val context = this@PendingLoanActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +43,11 @@ class PendingLoanActivity : AppCompatActivity() {
         getPendingLoanData()
 
         onClickListener()
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return super.onSupportNavigateUp()
     }
 
     private fun getPendingLoanData() {
@@ -62,7 +67,7 @@ class PendingLoanActivity : AppCompatActivity() {
                     is Resource.Error -> {
                         binding.progressBar.visibility = View.GONE
                         MyAlertDialog.showAlertDialog2Event(
-                            context,
+                            this,
                             R.drawable.icon_cancel,
                             "ERROR",
                             resource.message.toString(),
@@ -79,21 +84,16 @@ class PendingLoanActivity : AppCompatActivity() {
         }
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return super.onSupportNavigateUp()
-    }
-
     private fun onClickListener() {
 
         pendingLoanAdapter.onMemberUsernameClick = { memberUsername ->
-            val intent = Intent(context, UserProfileActivity::class.java)
+            val intent = Intent(this, UserProfileActivity::class.java)
             intent.putExtra(UserProfileActivity.USERNAME, memberUsername)
             startActivity(intent)
         }
 
         pendingLoanAdapter.onBookTitleClick = { bookId ->
-            val intent = Intent(context, DetailBookActivity::class.java)
+            val intent = Intent(this, DetailBookActivity::class.java)
             intent.putExtra(DetailBookActivity.BOOK_ID, bookId)
             startActivity(intent)
         }
@@ -112,14 +112,14 @@ class PendingLoanActivity : AppCompatActivity() {
                 event.getContentIfNotHandled()?.let { resource ->
                     when (resource) {
                         is Resource.Loading -> {
-                            window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                            WindowTouchableHelper.disable(this)
                             binding.progressBar.visibility = View.VISIBLE
                         }
                         is Resource.Success -> {
-                            window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                            WindowTouchableHelper.enable(this)
                             binding.progressBar.visibility = View.GONE
                             MyAlertDialog.showAlertDialogEvent(
-                                context,
+                                this,
                                 R.drawable.icon_checked,
                                 resource.data.toString().uppercase(),
                                 "Peminjaman Disetujui, Serhakan Buku Kepada Siswa"
@@ -128,10 +128,10 @@ class PendingLoanActivity : AppCompatActivity() {
                             }
                         }
                         is Resource.Error -> {
-                            window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                            WindowTouchableHelper.enable(this)
                             binding.progressBar.visibility = View.GONE
                             MyAlertDialog.showAlertDialog(
-                                context,
+                                this,
                                 R.drawable.icon_cancel,
                                 "Failed",
                                 resource.message.toString()
@@ -159,7 +159,7 @@ class PendingLoanActivity : AppCompatActivity() {
                             window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                             binding.progressBar.visibility = View.GONE
                             MyAlertDialog.showAlertDialogEvent(
-                                context,
+                                this,
                                 R.drawable.icon_checked,
                                 resource.data.toString().uppercase(),
                                 "Peminjaman Ditolak"
@@ -170,7 +170,7 @@ class PendingLoanActivity : AppCompatActivity() {
                         is Resource.Error -> {
                             window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                             MyAlertDialog.showAlertDialog(
-                                context,
+                                this,
                                 R.drawable.icon_cancel,
                                 "Failed",
                                 resource.message.toString()

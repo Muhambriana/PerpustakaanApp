@@ -15,24 +15,15 @@ class RegisterViewModel(private val repository: LibraryRepository) : ViewModel()
 
     var resourceRegisterUser = MutableLiveData<Event<Resource<String?>>>()
 
-    fun registerUser(
-        nisn: String,
-        password: String,
-        fullName: String,
-        roleName: String,
-        email: String,
-        phoneNo: String,
-        address: String,
-        gender: Int,
-    ) {
+    fun registerUser(nisn: String, password: String, fullName: String, roleName: String, email: String, phoneNo: String, address: String, gender: Int, ) {
         resourceRegisterUser.postValue(Event(Resource.Loading()))
         val user = User(nisn, password, fullName, roleName, email, phoneNo, address, gender)
         val post = repository.createUser(user)
         post.enqueue(object : Callback<GeneralResponse> {
             override fun onResponse(
                 call: Call<GeneralResponse>,
-                response: Response<GeneralResponse>)
-            {
+                response: Response<GeneralResponse>
+            ) {
                 if (response.body()?.code == 0) {
                     resourceRegisterUser.postValue(Event(Resource.Success(response.body()?.message)))
                 } else {

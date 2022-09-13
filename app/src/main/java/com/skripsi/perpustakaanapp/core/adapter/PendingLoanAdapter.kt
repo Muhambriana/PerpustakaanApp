@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.models.PendingLoan
 import com.skripsi.perpustakaanapp.databinding.ItemListPendingLoanBinding
-import com.skripsi.perpustakaanapp.ui.setSingleClickListener
+import com.skripsi.perpustakaanapp.utils.setSingleClickListener
 
 class PendingLoanAdapter : RecyclerView.Adapter<PendingLoanAdapter.PendingLoanViewHolder>() {
 

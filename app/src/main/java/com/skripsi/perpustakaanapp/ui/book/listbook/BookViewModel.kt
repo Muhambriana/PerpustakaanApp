@@ -30,10 +30,7 @@ class BookViewModel(private val repository: LibraryRepository) : ViewModel() {
                 }
             }
 
-            override fun onFailure(
-                call: Call<BookResponse>,
-                t: Throwable)
-            {
+            override fun onFailure(call: Call<BookResponse>, t: Throwable) {
                 resourceBook.postValue(Event(Resource.Error(t.message)))
             }
         })

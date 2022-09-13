@@ -16,13 +16,13 @@ data class LoginResponse(
     @field:SerializedName("sessionId")
     val sessionId: String? = null,
 
-    @field:SerializedName("user")
-    val userName: String? = null,
+    @field:SerializedName("username")
+    val username: String? = null,
 
     @field:SerializedName("roleName")
     val roleName: String? = null,
 
     @field:SerializedName("firstName")
-    val fullName: String? = null,
+    val firstName: String? = null,
 
     )

@@ -27,3 +27,4 @@ data class ModelUsername(
     @SerializedName("username")
     val username: String? = null
 )
+

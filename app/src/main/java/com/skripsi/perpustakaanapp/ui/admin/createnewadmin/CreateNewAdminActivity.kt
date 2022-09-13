@@ -9,9 +9,10 @@ import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.MyViewModelFactory
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
+import com.skripsi.perpustakaanapp.core.resource.Resource
 import com.skripsi.perpustakaanapp.databinding.ActivityCreateNewAdminBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
-import com.skripsi.perpustakaanapp.ui.setSingleClickListener
+import com.skripsi.perpustakaanapp.utils.setSingleClickListener
 
 class CreateNewAdminActivity : AppCompatActivity() {
 
@@ -71,46 +72,35 @@ class CreateNewAdminActivity : AppCompatActivity() {
     }
 
     private fun postUserData() {
-        // handling loading visibility
-        viewModel.isLoading.observe(this) { boolean ->
-            binding.progressBar.visibility = if (boolean) View.VISIBLE else View.INVISIBLE
+        //pass data to view model
+        gender?.let {
+            viewModel.createNewAdmin(
+                binding.edUsername.text.toString(),
+                binding.edtPassword.text.toString(),
+                binding.edtName.text.toString(),
+                "admin",
+                binding.edEmail.text.toString(),
+                binding.edtTelNumber.text.toString(),
+                binding.edtAddress.text.toString(),
+                it
+            )
         }
 
-        //pass data to view model
-        viewModel.createNewAdmin(
-            binding.edUsername.text.toString(),
-            binding.edtPassword.text.toString(),
-            binding.edtName.text.toString(),
-            "admin",
-            binding.edEmail.text.toString(),
-            binding.edtTelNumber.text.toString(),
-            binding.edtAddress.text.toString(),
-            gender!!
-        )
-
-        // get fail message from view model
-        viewModel.responseMessage.observe(this) { message ->
-            if (message != null){
-                //Reset status value at first to prevent multitriggering
-                //and to be available to trigger action again
-                viewModel.responseMessage.value = null
-                if (message == "success"){
-                    MyAlertDialog.showAlertDialogEvent(this@CreateNewAdminActivity, R.drawable.icon_checked, "SUCCESS", "Berhasil Membuat Admin Baru")
-                    {_, _ ->
-//                        binding.edUsername.text?.clear()
+        viewModel.resourceCreateAdmin.observe(this) { event ->
+            event.getContentIfNotHandled().let { resource ->
+                when (resource) {
+                    is Resource.Loading -> {
+                        binding.progressBar.visibility = View.VISIBLE
+                    }
+                    is Resource.Success -> {
+                        binding.progressBar.visibility = View.GONE
+                        MyAlertDialog.showAlertDialog(this@CreateNewAdminActivity, R.drawable.icon_checked, "SUCCESS", "Berhasil Membuat Admin Baru")
+                    }
+                    is Resource.Error -> {
+                        binding.progressBar.visibility = View.GONE
+                        MyAlertDialog.showAlertDialog(this@CreateNewAdminActivity, R.drawable.icon_cancel, "ERROR", resource.message.toString())
                     }
                 }
-                else {
-                    MyAlertDialog.showAlertDialog(this@CreateNewAdminActivity, R.drawable.icon_cancel, "FAILED", message)
-                }
-            }
-        }
-        
-        // get error message from view model
-        viewModel.errorMessage.observe(this) {
-            if (it != null) {
-                viewModel.errorMessage.value  = null
-                MyAlertDialog.showAlertDialog(this@CreateNewAdminActivity, R.drawable.icon_cancel, "ERROR", it)
             }
         }
     }

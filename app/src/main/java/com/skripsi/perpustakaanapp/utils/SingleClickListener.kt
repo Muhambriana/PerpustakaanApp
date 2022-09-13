@@ -1,4 +1,4 @@
-package com.skripsi.perpustakaanapp.ui
+package com.skripsi.perpustakaanapp.utils
 
 import android.os.SystemClock
 import android.view.View

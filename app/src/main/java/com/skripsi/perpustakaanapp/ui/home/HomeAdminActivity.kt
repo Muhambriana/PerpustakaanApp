@@ -15,6 +15,7 @@ import com.skripsi.perpustakaanapp.core.MyViewModelFactory
 import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
+import com.skripsi.perpustakaanapp.core.resource.Resource
 import com.skripsi.perpustakaanapp.databinding.ActivityHomeAdminBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.SettingsActivity
@@ -75,47 +76,27 @@ class HomeAdminActivity : AppCompatActivity() {
         Handler(Looper.getMainLooper()).postDelayed(Runnable { doubleBackPressed = false }, 2000)
     }
 
-    private fun userLogout() {
-        sessionManager = SessionManager(this)
-        viewModel.userLogout(sessionManager.fetchAuthToken().toString())
-        viewModel.isSuccess.observe(this) {
-            viewModel.isSuccess.postValue(null)
-            if (it == true) {
-                val intent = Intent(this@HomeAdminActivity, LoginActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-                startActivity(intent)
-                finish()
-            }
-        }
-        viewModel.errorMessage.observe(this) {
-            if (it != null) {
-                viewModel.errorMessage.value = null
-                MyAlertDialog.showAlertDialog(this@HomeAdminActivity, R.drawable.icon_cancel, "ERROR", it)
-            }
-        }
-    }
-
     private fun cardListener() {
         val clickListener = View.OnClickListener { view ->
             when (view.id){
                 R.id.card_create_book -> {
-                    val intent = Intent(this@HomeAdminActivity, CreateBookActivity::class.java)
+                    val intent = Intent(this, CreateBookActivity::class.java)
                     startActivity(intent)
                 }
                 R.id.card_create_admin -> {
-                    val intent = Intent(this@HomeAdminActivity, CreateNewAdminActivity::class.java)
+                    val intent = Intent(this, CreateNewAdminActivity::class.java)
                     startActivity(intent)
                 }
                 R.id.card_book_list -> {
-                    val intent = Intent(this@HomeAdminActivity, BookActivity::class.java)
+                    val intent = Intent(this, BookActivity::class.java)
                     startActivity(intent)
                 }
                 R.id.card_pending_loan_list -> {
-                    val intent = Intent(this@HomeAdminActivity, PendingLoanActivity::class.java)
+                    val intent = Intent(this, PendingLoanActivity::class.java)
                     startActivity(intent)
                 }
                 R.id.card_upload_image -> {
-                    val intent = Intent(this@HomeAdminActivity, SettingsActivity::class.java)
+                    val intent = Intent(this, SettingsActivity::class.java)
                     startActivity(intent)
                 }
             }
@@ -125,5 +106,36 @@ class HomeAdminActivity : AppCompatActivity() {
         binding.cardBookList.setOnClickListener(clickListener)
         binding.cardPendingLoanList.setOnClickListener(clickListener)
         binding.cardUploadImage.setOnClickListener(clickListener)
+    }
+
+    private fun userLogout() {
+        sessionManager = SessionManager(this)
+
+        viewModel.userLogout(sessionManager.fetchAuthToken().toString())
+
+        viewModel.resourceLogout.observe(this) { event ->
+            event.getContentIfNotHandled().let { resource ->
+                when(resource) {
+                    is Resource.Loading -> {
+                        binding.progressBar.visibility = View.VISIBLE
+                    }
+                    is Resource.Success -> {
+                        binding.progressBar.visibility = View.GONE
+                        startIntentBackToLogin()
+                    }
+                    is Resource.Error -> {
+                        binding.progressBar.visibility = View.GONE
+                        MyAlertDialog.showAlertDialog(this, R.drawable.icon_cancel, "ERROR", resource.message.toString())
+                    }
+                }
+            }
+        }
+    }
+
+    private fun startIntentBackToLogin() {
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+        finish()
     }
 }

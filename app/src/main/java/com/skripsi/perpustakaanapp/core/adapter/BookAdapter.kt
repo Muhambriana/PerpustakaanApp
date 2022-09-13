@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.models.Book
 import com.skripsi.perpustakaanapp.databinding.ItemListBookBinding
-import com.skripsi.perpustakaanapp.ui.setSingleClickListener
+import com.skripsi.perpustakaanapp.utils.setSingleClickListener
 
 class BookAdapter : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
 

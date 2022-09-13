@@ -106,7 +106,7 @@ class BookActivity : AppCompatActivity() {
                     }
                     is Resource.Error -> {
                         binding.progressBar.visibility = View.GONE
-                        MyAlertDialog.showAlertDialog2Event(this@BookActivity, R.drawable.icon_cancel, "FAILED", resource.message.toString(),
+                        MyAlertDialog.showAlertDialog2Event(this, R.drawable.icon_cancel, "FAILED", resource.message.toString(),
                             { _, _ ->
                                 getBookData()
                             },

@@ -19,11 +19,13 @@ import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.models.Book
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.core.resource.Resource
-import com.skripsi.perpustakaanapp.core.utils.NetworkInfo.IMAGE_URL
+import com.skripsi.perpustakaanapp.utils.NetworkInfo.IMAGE_URL
 import com.skripsi.perpustakaanapp.databinding.ActivityUpdateBookBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.book.detailbook.DetailBookActivity
-import com.skripsi.perpustakaanapp.ui.setSingleClickListener
+import com.skripsi.perpustakaanapp.utils.ImageHelper
+import com.skripsi.perpustakaanapp.utils.PermissionCheck
+import com.skripsi.perpustakaanapp.utils.setSingleClickListener
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -61,7 +63,10 @@ class UpdateBookActivity : BottomSheetDialogFragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_IMAGE) {
             val selectedImage = data?.data
-            selectedImage?.let { getImageFileByUri(it) }
+            Glide.with(requireContext())
+                .load(selectedImage)
+                .into(binding.bookPoster)
+            imageMultipartBody = selectedImage?.let { ImageHelper.getImagePathByUri(activity, it) }
         }
     }
 
@@ -103,7 +108,9 @@ class UpdateBookActivity : BottomSheetDialogFragment() {
         }
 
         binding.buttonUploadImage.setSingleClickListener {
-            chooseImage()
+            if (PermissionCheck.readExternalStorage(activity)) {
+                chooseImage()
+            }
         }
     }
 
@@ -189,31 +196,6 @@ class UpdateBookActivity : BottomSheetDialogFragment() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         startActivityForResult(intent, REQUEST_CODE_IMAGE)
-    }
-
-    private fun getImageFileByUri(uri: Uri) {
-        val pathColumn = arrayOf(MediaStore.Images.Media.DATA)
-
-        val cursor = activity?.contentResolver?.query(uri, pathColumn, null, null, null)
-        assert(cursor != null)
-        cursor?.moveToFirst()
-
-        val columnIndex = cursor?.getColumnIndex(pathColumn[0])
-        val imagePath = columnIndex?.let { cursor.getString(it) }
-        cursor?.close()
-
-        // Set poster with image which chooses
-        Glide.with(requireContext())
-            .load(uri)
-            .into(binding.bookPoster)
-
-        getImage(imagePath)
-    }
-
-    private fun getImage(imagePath: String?) {
-        val file = imagePath?.let { File(it) }
-        val requestBody = file?.let { RequestBody.create(MediaType.parse("multipart/form-data"), it) }
-        imageMultipartBody = requestBody?.let { MultipartBody.Part.createFormData("image", file.name, it) }
     }
 
     private fun uploadImage() {
