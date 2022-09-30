@@ -8,7 +8,7 @@ import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.core.resource.Event
 import com.skripsi.perpustakaanapp.core.resource.Resource
 import com.skripsi.perpustakaanapp.core.responses.GeneralResponse
-import com.skripsi.perpustakaanapp.core.responses.PendingLoanResponse
+import com.skripsi.perpustakaanapp.core.responses.ListPendingLoanResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,10 +22,10 @@ class PendingLoanViewModel(private val repository: LibraryRepository) : ViewMode
     fun getAllPendingLoans(token: String) {
         resourcePendingLoan.postValue(Event(Resource.Loading()))
         val response = repository.getAllPendingLoan(token)
-        response.enqueue(object : Callback<PendingLoanResponse> {
+        response.enqueue(object : Callback<ListPendingLoanResponse> {
             override fun onResponse(
-                call: Call<PendingLoanResponse>,
-                response: Response<PendingLoanResponse>
+                call: Call<ListPendingLoanResponse>,
+                response: Response<ListPendingLoanResponse>
             ) {
                 if (response.body()?.code == 0) {
                     resourcePendingLoan.postValue(Event(Resource.Success(response.body()?.pendingLoanItems)))
@@ -36,7 +36,7 @@ class PendingLoanViewModel(private val repository: LibraryRepository) : ViewMode
             }
 
             override fun onFailure(
-                call: Call<PendingLoanResponse>,
+                call: Call<ListPendingLoanResponse>,
                 t: Throwable
             ) {
                 resourcePendingLoan.postValue((Event(Resource.Error(t.message))))

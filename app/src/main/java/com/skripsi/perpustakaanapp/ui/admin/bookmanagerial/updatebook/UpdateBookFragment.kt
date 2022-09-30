@@ -3,9 +3,7 @@ package com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.updatebook
 import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.view.*
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -19,22 +17,19 @@ import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.models.Book
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.core.resource.Resource
-import com.skripsi.perpustakaanapp.utils.NetworkInfo.IMAGE_URL
-import com.skripsi.perpustakaanapp.databinding.ActivityUpdateBookBinding
+import com.skripsi.perpustakaanapp.utils.NetworkInfo.BOOK_IMAGE_BASE_URL
+import com.skripsi.perpustakaanapp.databinding.FragmentUpdateBookBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.book.detailbook.DetailBookActivity
 import com.skripsi.perpustakaanapp.utils.ImageHelper
 import com.skripsi.perpustakaanapp.utils.PermissionCheck
 import com.skripsi.perpustakaanapp.utils.setSingleClickListener
-import okhttp3.MediaType
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import java.io.File
 
-class UpdateBookActivity : BottomSheetDialogFragment() {
+class UpdateBookFragment : BottomSheetDialogFragment() {
 
     private lateinit var sessionManager: SessionManager
-    private lateinit var binding: ActivityUpdateBookBinding
+    private lateinit var binding: FragmentUpdateBookBinding
     private lateinit var viewModel: UpdateBookViewModel
 
     private var dataBook: Book? = null
@@ -43,7 +38,7 @@ class UpdateBookActivity : BottomSheetDialogFragment() {
 
 
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) : View {
-        binding = ActivityUpdateBookBinding.inflate(LayoutInflater.from(inflater.context), container, false)
+        binding = FragmentUpdateBookBinding.inflate(LayoutInflater.from(inflater.context), container, false)
 
         sessionManager = SessionManager(requireActivity())
 
@@ -59,6 +54,7 @@ class UpdateBookActivity : BottomSheetDialogFragment() {
 
         return binding.root
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_IMAGE) {
@@ -91,7 +87,7 @@ class UpdateBookActivity : BottomSheetDialogFragment() {
     private fun setBookPoster(imageName: String?) {
         imageName?.let {
             Glide.with(requireContext())
-                .load(IMAGE_URL + imageName)
+                .load(BOOK_IMAGE_BASE_URL + imageName)
                 .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
                 .signature(ObjectKey(System.currentTimeMillis().toString()))
                 .into(binding.bookPoster)

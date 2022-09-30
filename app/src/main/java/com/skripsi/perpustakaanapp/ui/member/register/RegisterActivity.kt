@@ -81,7 +81,8 @@ class RegisterActivity : AppCompatActivity() {
         viewModel.registerUser(
             binding.edtUsername.text.toString(),
             binding.edtPassword.text.toString(),
-            binding.edtName.text.toString(),
+            binding.edtFirstName.text.toString(),
+            binding.edtLastName.text.toString(),
             "student",
             binding.edEmail.text.toString(),
             binding.edtTelNumber.text.toString(),

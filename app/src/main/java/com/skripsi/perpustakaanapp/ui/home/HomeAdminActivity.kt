@@ -18,9 +18,9 @@ import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.core.resource.Resource
 import com.skripsi.perpustakaanapp.databinding.ActivityHomeAdminBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
-import com.skripsi.perpustakaanapp.ui.SettingsActivity
 import com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.createbook.CreateBookActivity
-import com.skripsi.perpustakaanapp.ui.admin.createnewadmin.CreateNewAdminActivity
+import com.skripsi.perpustakaanapp.ui.admin.usermanagerial.createnewadmin.CreateNewAdminActivity
+import com.skripsi.perpustakaanapp.ui.admin.listuser.UserActivity
 import com.skripsi.perpustakaanapp.ui.admin.loanmanagerial.pendingloan.PendingLoanActivity
 import com.skripsi.perpustakaanapp.ui.login.LoginActivity
 import com.skripsi.perpustakaanapp.ui.book.listbook.BookActivity
@@ -95,8 +95,8 @@ class HomeAdminActivity : AppCompatActivity() {
                     val intent = Intent(this, PendingLoanActivity::class.java)
                     startActivity(intent)
                 }
-                R.id.card_upload_image -> {
-                    val intent = Intent(this, SettingsActivity::class.java)
+                R.id.card_user_list -> {
+                    val intent = Intent(this, UserActivity::class.java)
                     startActivity(intent)
                 }
             }
@@ -105,7 +105,7 @@ class HomeAdminActivity : AppCompatActivity() {
         binding.cardCreateAdmin.setOnClickListener(clickListener)
         binding.cardBookList.setOnClickListener(clickListener)
         binding.cardPendingLoanList.setOnClickListener(clickListener)
-        binding.cardUploadImage.setOnClickListener(clickListener)
+        binding.cardUserList.setOnClickListener(clickListener)
     }
 
     private fun userLogout() {

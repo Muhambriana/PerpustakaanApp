@@ -2,6 +2,8 @@ package com.skripsi.perpustakaanapp.ui.book.listbook
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +19,9 @@ import com.skripsi.perpustakaanapp.databinding.ActivityBookBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.book.detailbook.DetailBookActivity
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
+import androidx.appcompat.widget.SearchView
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.skripsi.perpustakaanapp.core.models.Book
 
 
 class BookActivity : AppCompatActivity() {
@@ -28,46 +33,62 @@ class BookActivity : AppCompatActivity() {
 
     private val client = RetrofitClient
     private val bookAdapter = BookAdapter()
+    private var bookData: List<Book>? = null
+//    private var rvState: Parcelable? = null
+//    private var recyclerView: RecyclerView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityBookBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel = ViewModelProvider(this, MyViewModelFactory(LibraryRepository(client))).get(
-                BookViewModel::class.java
-            )
-
+        firstInitialization()
         setLauncher()
-
         getBookData()
     }
 
-//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-//        menuInflater.inflate(R.menu.activity_detail_menu, menu)
-//
-//        // below line is to get our menu item.
-//        val searchItem: MenuItem? = menu?.findItem(R.id.search_menu)
-//
-//        // getting search view of our item.
-//        val searchView: SearchView = searchItem?.actionView as SearchView
-//
-//        // below line is to call set on query text listener method.
-//        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-//            override fun onQueryTextSubmit(p0: String?): Boolean {
-//                return false
-//            }
-//
-//            override fun onQueryTextChange(msg: String): Boolean {
-//                // inside on query text change method we are
-//                // calling a method to filter our recycler view.
-//                filter(msg)
-//                return false
-//            }
-//        })
-//        return true
-////        return super.onCreateOptionsMenu(menu)
-//    }
+    private fun firstInitialization() {
+        sessionManager = SessionManager(this)
+
+        viewModel = ViewModelProvider(this, MyViewModelFactory(LibraryRepository(client))).get(
+            BookViewModel::class.java
+        )
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.activity_book_menu, menu)
+
+        // below line is to get our menu item.
+        val searchItem: MenuItem? = menu?.findItem(R.id.search_menu)
+
+        // getting search view of our item.
+        val searchView: SearchView = searchItem?.actionView as SearchView
+
+        // below line is to call set on query text listener method.
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(title: String?): Boolean {
+                searchBook(title)
+                return false
+            }
+
+            override fun onQueryTextChange(msg: String): Boolean {
+                return false
+            }
+        })
+
+        searchItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
+            override fun onMenuItemActionExpand(p0: MenuItem?): Boolean {
+                hideRecycleList()
+                return true
+            }
+
+            override fun onMenuItemActionCollapse(p0: MenuItem?): Boolean {
+                showRecycleList(null)
+                return true
+            }
+        })
+        return true
+    }
 
 
     private fun setLauncher() {
@@ -83,14 +104,7 @@ class BookActivity : AppCompatActivity() {
     }
 
     private fun getBookData() {
-        sessionManager = SessionManager(this)
-
         viewModel.getAllBooks(token = sessionManager.fetchAuthToken().toString())
-
-//        viewModel.resourceBook.observe(this) {
-//            binding.progressBar.visibility = View.GONE
-//
-//        }
 
         viewModel.resourceBook.observe(this) { event ->
             event.getContentIfNotHandled()?.let { resource ->
@@ -100,9 +114,9 @@ class BookActivity : AppCompatActivity() {
                     }
                     is Resource.Success -> {
                         //set recyclerview adapter
-                        binding.rvBook.adapter = bookAdapter
                         binding.progressBar.visibility = View.GONE
-                        bookAdapter.setBookList(resource.data)
+                        bookData = resource.data
+                        showRecycleList(null)
                     }
                     is Resource.Error -> {
                         binding.progressBar.visibility = View.GONE
@@ -118,12 +132,63 @@ class BookActivity : AppCompatActivity() {
                 }
             }
         }
+    }
 
+    private fun hideRecycleList() {
+//        rvState = recyclerView?.layoutManager?.onSaveInstanceState()
+        binding.rvBook.layoutManager = null
+        binding.rvBook.adapter = null
+    }
+
+    private fun showRecycleList(dataSearch: List<Book>?) {
+//        recyclerView?.layoutManager?.onRestoreInstanceState(rvState)
+        binding.rvBook.layoutManager = LinearLayoutManager(this)
+        binding.rvBook.adapter = bookAdapter
+        if (dataSearch == null) {
+            bookAdapter.setBookList(bookData)
+        } else {
+            bookAdapter .setBookList(dataSearch)
+        }
+
+        // On book item click
+        bookItemClick()
+    }
+
+    private fun bookItemClick() {
         //untuk mengirim data ke serta membuka activity detail
         bookAdapter.onItemClick = {
             val intent = Intent(this, DetailBookActivity::class.java)
             intent.putExtra(DetailBookActivity.EXTRA_DATA, it)
             resultLauncher.launch(intent) //Launch Activity and return something
+        }
+    }
+
+    private fun searchBook(title: String?) {
+        viewModel.searchBook(sessionManager.fetchAuthToken().toString(), title)
+
+        viewModel.resourceSearchBook.observe(this) { event ->
+            event.getContentIfNotHandled().let { resource ->
+                when(resource) {
+                    is Resource.Loading -> {
+                        binding.progressBar.visibility = View.VISIBLE
+                    }
+                    is Resource.Success -> {
+                        binding.progressBar.visibility = View.GONE
+                        showRecycleList(resource.data)
+                    }
+                    is Resource.Error -> {
+                        binding.progressBar.visibility = View.GONE
+                        MyAlertDialog.showAlertDialog2Event(this, R.drawable.icon_cancel, "FAILED", resource.message.toString(),
+                            { _, _ ->
+                                searchBook(title)
+                            },
+                            { _,_ ->
+                                finish()
+                            }
+                        )
+                    }
+                }
+            }
         }
     }
 

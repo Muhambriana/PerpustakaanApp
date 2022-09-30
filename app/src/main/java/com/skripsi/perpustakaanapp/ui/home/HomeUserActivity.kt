@@ -20,7 +20,9 @@ import com.skripsi.perpustakaanapp.databinding.ActivityHomeUserBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.login.LoginActivity
 import com.skripsi.perpustakaanapp.ui.book.listbook.BookActivity
+import com.skripsi.perpustakaanapp.ui.member.favoritebook.FavoriteBookActivity
 import com.skripsi.perpustakaanapp.ui.member.loanhistory.LoanHistoryActivity
+import com.skripsi.perpustakaanapp.ui.userprofile.UserProfileActivity
 import com.skripsi.perpustakaanapp.utils.WindowTouchableHelper
 
 
@@ -90,13 +92,22 @@ class HomeUserActivity : AppCompatActivity() {
                     val intent = Intent(this, LoanHistoryActivity::class.java)
                     startActivity(intent)
                 }
-
+                R.id.card_user_profile -> {
+                    val intent = Intent(this, UserProfileActivity::class.java)
+                    startActivity(intent)
+                }
+                R.id.card_favorite_book -> {
+                    val intent = Intent(this, FavoriteBookActivity::class.java)
+                    startActivity(intent)
+                }
             }
 
         }
 
         binding.cardBookList.setOnClickListener(clickListener)
         binding.cardLoanHistoryMember.setOnClickListener(clickListener)
+        binding.cardUserProfile.setOnClickListener(clickListener)
+        binding.cardFavoriteBook.setOnClickListener(clickListener)
     }
 
     private fun userLogout() {

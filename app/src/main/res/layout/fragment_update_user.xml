@@ -5,155 +5,176 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.admin.usermanagerial.createnewadmin.CreateNewAdminActivity"
-    android:fitsSystemWindows="true">
+    tools:context=".ui.admin.usermanagerial.updateuser.UpdateUserFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <ImageView
+            android:id="@+id/button_back"
+            android:layout_width="54dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="5dp"
+            android:contentDescription="back_button"
+            android:scaleType="fitStart"
+            android:src="@drawable/icon_back_arrow"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/button_upload_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="124dp"
+            android:layout_marginTop="92dp"
+            android:background="@color/transparent"
+            android:backgroundTint="@color/transparent"
+            android:scaleType="center"
+            android:src="@drawable/icon_edit_image"
+            app:layout_constraintStart_toStartOf="@+id/book_poster"
+            app:layout_constraintTop_toTopOf="@+id/book_poster"
+            android:contentDescription="Ganti Cover Buku" />
+
+
+
         <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/ed_username"
+            android:id="@+id/ed_book_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Username"
-            android:inputType="number"
+            android:hint="Judul Buku"
+            android:inputType="text"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button_back"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             app:met_floatingLabel="highlight" />
 
         <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/edt_password"
+            android:id="@+id/ed_edition"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:textSize="16sp"
-            app:met_floatingLabel="highlight"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ed_username"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp" />
-
-        <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/edt_first_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:hint="Nama Depan"
-            android:inputType="textPersonName"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edt_password"
-            app:met_floatingLabel="highlight" />
-
-        <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/edt_last_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:hint="Nama Belakang"
-            android:inputType="textPersonName"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edt_first_name"
-            app:met_floatingLabel="highlight" />
-
-        <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/ed_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Email"
-            android:inputType="textEmailAddress"
-            android:textSize="16sp"
-            app:met_floatingLabel="highlight"
-            app:met_maxCharacters="2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edt_last_name"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp" />
-
-        <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/edt_tel_number"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Nomor Handphone"
-            android:inputType="number"
-            android:textSize="16sp"
-            app:met_floatingLabel="highlight"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ed_email"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp" />
-
-        <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/edt_address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Alamat"
+            android:hint="Edisi Buku"
             android:inputType="text"
             android:textSize="16sp"
             app:met_floatingLabel="highlight"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edt_tel_number"
+            app:layout_constraintTop_toBottomOf="@id/ed_book_title"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp" />
 
-
-        <RadioGroup
-            android:id="@+id/rb_gender"
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/ed_author"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:hint="Penulis"
+            android:inputType="textPersonName"
+            android:textSize="16sp"
+            app:met_floatingLabel="highlight"
+            app:met_maxCharacters="2"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ed_edition"
             android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            app:layout_constraintTop_toBottomOf="@+id/edt_address">
+            android:layout_marginEnd="10dp" />
 
-            <RadioButton
-                android:id="@+id/rb_gender_male"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/male"
-                android:layout_gravity="center"/>
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/ed_publisher"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Penerbit"
+            android:inputType="text"
+            android:textSize="16sp"
+            app:met_floatingLabel="highlight"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ed_author"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp" />
 
-            <RadioButton
-                android:id="@+id/rb_gender_female"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/female"
-                android:layout_marginStart="20dp" />
-        </RadioGroup>
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/ed_publisher_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Tahun Terbit"
+            android:inputType="date"
+            android:textSize="16sp"
+            app:met_floatingLabel="highlight"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ed_publisher"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp" />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/ed_copies"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Jumlah Examplar"
+            android:inputType="number"
+            android:textSize="16sp"
+            app:met_floatingLabel="highlight"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ed_publisher_date"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp" />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/ed_source"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Sumber"
+            android:inputType="text"
+            android:textSize="16sp"
+            app:met_floatingLabel="highlight"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ed_copies"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp" />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/ed_remark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Remark"
+            android:inputType="text"
+            android:textSize="16sp"
+            app:met_floatingLabel="highlight"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ed_source"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp" />
+
+        <TextView
+            android:id="@+id/tv_book_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            tools:text="100"
+            android:visibility="invisible"
+            app:layout_constraintTop_toBottomOf="@id/button_save"
+            app:layout_constraintLeft_toLeftOf="parent"
+            tools:layout_editor_absoluteX="193dp" />
 
         <Button
             android:id="@+id/button_save"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="10dp"
             android:text="SIMPAN"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rb_gender" />
+            app:layout_constraintTop_toBottomOf="@id/ed_remark"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="20dp"/>
 
         <ProgressBar
             android:id="@+id/progress_bar"

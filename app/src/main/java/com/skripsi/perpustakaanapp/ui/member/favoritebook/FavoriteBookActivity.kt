@@ -1,71 +1,63 @@
-package com.skripsi.perpustakaanapp.ui.admin.listuser
+package com.skripsi.perpustakaanapp.ui.member.favoritebook
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.MyViewModelFactory
 import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.core.adapter.BookAdapter
-import com.skripsi.perpustakaanapp.core.adapter.UserAdapter
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
-import com.skripsi.perpustakaanapp.core.models.User
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.core.resource.Resource
-import com.skripsi.perpustakaanapp.databinding.ActivityUserBinding
+import com.skripsi.perpustakaanapp.databinding.ActivityFavoriteBookBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
-import com.skripsi.perpustakaanapp.ui.userprofile.UserProfileActivity
+import com.skripsi.perpustakaanapp.ui.book.detailbook.DetailBookActivity
 
-class UserActivity : AppCompatActivity() {
+class FavoriteBookActivity : AppCompatActivity() {
 
-    private lateinit var binding : ActivityUserBinding
+    private lateinit var binding: ActivityFavoriteBookBinding
     private lateinit var sessionManager: SessionManager
-    private lateinit var viewModel: UserViewModel
+    private lateinit var viewModel: FavoriteBookViewModel
 
-    private val client = RetrofitClient
-    private val userAdapter = UserAdapter()
-    private var userData : List<User>? = null
+    private val  client = RetrofitClient
+    private val favBookAdapter = BookAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityUserBinding.inflate(layoutInflater)
+        binding = ActivityFavoriteBookBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        firstInitialization()
-        getUserData()
+        viewModel = ViewModelProvider(this, MyViewModelFactory(LibraryRepository(client))).get(
+            FavoriteBookViewModel::class.java
+        )
+
+        getFavoriteBookData()
     }
 
-    private fun firstInitialization() {
+    private fun getFavoriteBookData() {
         sessionManager = SessionManager(this)
 
-        viewModel = ViewModelProvider(this, MyViewModelFactory(LibraryRepository(client))).get(
-            UserViewModel::class.java
-        )
-    }
+        viewModel.getAllFavorites(token = sessionManager.fetchAuthToken().toString())
 
-    private fun getUserData() {
-        viewModel.getAllMember(sessionManager.fetchAuthToken().toString())
-
-        viewModel.resourceMember.observe(this) { event ->
+        viewModel.resourceFavorite.observe(this) { event ->
             event.getContentIfNotHandled().let { resource ->
-                when(resource) {
+                when (resource) {
                     is Resource.Loading -> {
                         binding.progressBar.visibility = View.VISIBLE
                     }
                     is Resource.Success -> {
-                        println("sukses nih")
+                        binding.rvBook.adapter = favBookAdapter
                         binding.progressBar.visibility = View.GONE
-                        userData = resource.data
-                        showRecycleList()
+                        favBookAdapter.setBookList(resource.data)
                     }
                     is Resource.Error -> {
                         binding.progressBar.visibility = View.GONE
                         MyAlertDialog.showAlertDialog2Event(this, R.drawable.icon_cancel, "FAILED", resource.message.toString(),
                             { _, _ ->
-                                getUserData()
+                                getFavoriteBookData()
                             },
                             { _,_ ->
                                 finish()
@@ -76,21 +68,9 @@ class UserActivity : AppCompatActivity() {
             }
         }
 
-    }
-
-    private fun showRecycleList() {
-        binding.rvUser.layoutManager = LinearLayoutManager(this)
-        binding.rvUser.adapter = userAdapter
-        userAdapter.setUserList(userData)
-
-        // On user item click
-        userItemClick()
-    }
-
-    private fun userItemClick() {
-        userAdapter.onItemClick = {
-            val intent = Intent(this, UserProfileActivity::class.java)
-            intent.putExtra(UserProfileActivity.EXTRA_DATA, it)
+        favBookAdapter.onItemClick = {
+            val intent = Intent(this, DetailBookActivity::class.java)
+            intent.putExtra(DetailBookActivity.EXTRA_DATA, it)
             startActivity(intent)
         }
     }

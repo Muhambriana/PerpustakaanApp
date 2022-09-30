@@ -41,12 +41,6 @@ class BookAdapter : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
         fun bind(book: Book){
             with(binding){
                 tvBookTitle.text = book.title
-//                positionAdapter = adapterPosition
-//                Glide.with(holder.itemView.context)
-//                    .load(book.poster)
-//                    .placeholder(R.drawable.placeholder)
-//                    .into(holder.binding.moviePoster)
-
             }
         }
 
@@ -54,10 +48,6 @@ class BookAdapter : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
             binding.root.setSingleClickListener {
                 onItemClick?.invoke(listBook[adapterPosition])
             }
-
-//            binding.buttonMore.setOnClickListener{
-//                onItemClick?.invoke(books[adapterPosition])
-//            }
         }
     }
 }

@@ -40,16 +40,30 @@
         android:layout_marginEnd="10dp" />
 
     <EditText
-        android:id="@+id/edt_name"
+        android:id="@+id/edt_first_name"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:hint="Nama"
+        android:hint="Nama Depan"
         android:backgroundTint="@color/green_400"
         android:inputType="textPersonName"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/edt_password"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp" />
+
+    <EditText
+        android:id="@+id/edt_last_name"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:hint="Nama Belakang"
+        android:backgroundTint="@color/green_400"
+        android:inputType="textPersonName"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edt_first_name"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp" />
 
@@ -65,7 +79,7 @@
         app:met_maxCharacters="2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edt_name"
+        app:layout_constraintTop_toBottomOf="@id/edt_last_name"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp" />
 
@@ -194,7 +208,7 @@
         android:layout_marginEnd="4dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/ic_wave_top_1"
-        app:layout_constraintBottom_toTopOf="@+id/edt_nisn"
+        app:layout_constraintBottom_toTopOf="@+id/edt_username"
         app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

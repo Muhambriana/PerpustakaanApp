@@ -1,7 +1,10 @@
 package com.skripsi.perpustakaanapp.core.models
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class User(
 
     @field:SerializedName("username")
@@ -12,6 +15,9 @@ data class User(
 
     @field:SerializedName("firstName")
     val firstName: String? = null,
+
+    @field:SerializedName("lastName")
+    val lastName: String? = null,
 
     @field:SerializedName("roleName")
     val roleName: String? = null,
@@ -26,6 +32,9 @@ data class User(
     val address: String? = null,
 
     @field:SerializedName("gender")
-    val gender: Int? = null
+    val gender: Int? = null,
 
-)
+    @field:SerializedName("avatar")
+    val avatar: String? = null
+
+):Parcelable

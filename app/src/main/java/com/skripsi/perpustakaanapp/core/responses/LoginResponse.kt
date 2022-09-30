@@ -23,6 +23,6 @@ data class LoginResponse(
     val roleName: String? = null,
 
     @field:SerializedName("firstName")
-    val firstName: String? = null,
+    val firstName: String? = null
 
-    )
+)

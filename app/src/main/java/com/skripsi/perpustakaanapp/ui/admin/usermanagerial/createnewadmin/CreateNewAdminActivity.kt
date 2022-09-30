@@ -1,4 +1,4 @@
-package com.skripsi.perpustakaanapp.ui.admin.createnewadmin
+package com.skripsi.perpustakaanapp.ui.admin.usermanagerial.createnewadmin
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -77,7 +77,8 @@ class CreateNewAdminActivity : AppCompatActivity() {
             viewModel.createNewAdmin(
                 binding.edUsername.text.toString(),
                 binding.edtPassword.text.toString(),
-                binding.edtName.text.toString(),
+                binding.edtFirstName.text.toString(),
+                binding.edtLastName.text.toString(),
                 "admin",
                 binding.edEmail.text.toString(),
                 binding.edtTelNumber.text.toString(),

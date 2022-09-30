@@ -31,7 +31,7 @@ interface Api {
     @POST("book/list")
     fun getAllBook(
         @Header("Authorization") token: String
-    ): Call<BookResponse>
+    ): Call<ListBookResponse>
 
 //    @POST("book/create")
 //    fun postCreateBook(
@@ -67,7 +67,7 @@ interface Api {
     @POST("pendingtask/list")
     fun getAllPendingLoan(
         @Header("Authorization") token: String
-    ):Call<PendingLoanResponse>
+    ):Call<ListPendingLoanResponse>
 
     @POST("pendingtask/approve")
     fun postApproveLoan(
@@ -85,7 +85,7 @@ interface Api {
     fun getAllLoanHistoryMember(
         @Header("Authorization") token: String,
         @Body username: ModelUsername
-    ):Call<LoanHistoryResponse>
+    ):Call<ListLoanHistoryResponse>
 
     @POST("book/detail")
     fun getDetailBook(
@@ -108,6 +108,45 @@ interface Api {
         @Part image : MultipartBody.Part?
     ):Call<GeneralResponse>
 
+    @POST("favorite/status")
+    fun statusFavorite(
+        @Header("Authorization") token: String,
+        @Body data: ModelForCreateTransaction
+    ):Call<StatusFavoriteResponse>
+
+    @POST("favorite/change")
+    fun changeStatusFavorite(
+        @Header("Authorization") token: String,
+        @Body data: ModelForChangeStatusFavorite
+    ):Call<GeneralResponse>
+
+    @POST("favorite/list")
+    fun getAllFavorite(
+        @Header("Authorization") token: String
+    ):Call<ListFavoriteResponse>
+
+    @POST("book/findBookByTitle")
+    fun searchBook(
+        @Header("Authorization") token: String,
+        @Body title: ModelForSearchBook
+    ):Call<ListBookResponse>
+
+    @POST("user/list")
+    fun getAllMember(
+        @Header("Authorization") token: String
+    ):Call<ListUserResponse>
+
+    @POST("user/delete")
+    fun deleteMember(
+        @Header("Authorization") token: String,
+        @Body username: ModelUsername
+    ):Call<GeneralResponse>
+
+    @POST("user/update")
+    fun updateUser(
+        @Header("Authorization") token: String,
+        @Body data: User
+    ):Call<GeneralResponse>
 //    @POST("book/loan")
 //    fun loanBook(
 //

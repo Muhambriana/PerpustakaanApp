@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.HomeUserActivity" >
+    tools:context=".ui.home.HomeUserActivity"
+    android:background="#faf7ee">
 
     <View
         android:id="@+id/bg_top_header"
@@ -74,6 +75,7 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_favorite_book"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_rowWeight="1"
@@ -103,7 +105,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Course Schedule"
+                    android:text="Buku Favorit"
                     android:textColor="@color/textcardColor"
                     android:textSize="14sp"
                     android:layout_marginTop="3dp"
@@ -158,6 +160,7 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_user_profile"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_rowWeight="1"
@@ -187,7 +190,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Attendance Recap"
+                    android:text="Profile"
                     android:layout_marginTop="8dp"
                     android:textColor="@color/textcardColor"
                     android:textSize="14sp"

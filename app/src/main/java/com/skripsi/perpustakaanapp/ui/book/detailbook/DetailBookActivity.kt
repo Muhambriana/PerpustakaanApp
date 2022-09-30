@@ -1,15 +1,16 @@
 package com.skripsi.perpustakaanapp.ui.book.detailbook
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.signature.ObjectKey
+import com.google.android.material.snackbar.Snackbar
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.MyViewModelFactory
 import com.skripsi.perpustakaanapp.core.SessionManager
@@ -17,10 +18,10 @@ import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.models.Book
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.core.resource.Resource
-import com.skripsi.perpustakaanapp.utils.NetworkInfo.IMAGE_URL
+import com.skripsi.perpustakaanapp.utils.NetworkInfo.BOOK_IMAGE_BASE_URL
 import com.skripsi.perpustakaanapp.databinding.ActivityDetailBookBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
-import com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.updatebook.UpdateBookActivity
+import com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.updatebook.UpdateBookFragment
 import com.skripsi.perpustakaanapp.utils.setSingleClickListener
 
 
@@ -38,26 +39,39 @@ class DetailBookActivity : AppCompatActivity() {
         binding = ActivityDetailBookBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        firstInitialization()
+        setDataToModels()
+    }
+
+    private fun firstInitialization() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         //when still loading the data, action bar will show nothing
         supportActionBar?.title = ""
+
+        //when still loading the data, fab will invisible will show nothing
+        binding.fabFavorite.visibility = View.INVISIBLE
 
         sessionManager = SessionManager(this)
 
         viewModel = ViewModelProvider(this, MyViewModelFactory(LibraryRepository(client))).get(
             DetailBookViewModel::class.java
         )
+    }
 
+    private fun setDataToModels() {
         if(intent.extras != null) {
             // Just receive book id
             if (intent.getStringExtra(BOOK_ID) != null) {
                 setDetailBook(intent.getStringExtra(BOOK_ID).toString())
+                observeStatusFavorite(intent.getStringExtra(BOOK_ID).toString())
             }
 
-            // Receive whole data from book
+            // Receive whole data book from previous activity
             else {
-                detailBook = intent.getParcelableExtra<Book>(EXTRA_DATA)
+                detailBook = intent.getParcelableExtra(EXTRA_DATA)
                 showDetailBook()
+                observeStatusFavorite(detailBook?.bookId)
             }
         }
     }
@@ -87,14 +101,8 @@ class DetailBookActivity : AppCompatActivity() {
         }
     }
 
-
-    override fun onBackPressed() {
-        Log.i("DetailActivity", "pencet kembali")
-        super.onBackPressed()
-    }
-
     private fun updateBook() {
-        val bottomDialogFragment = UpdateBookActivity()
+        val bottomDialogFragment = UpdateBookFragment()
         bottomDialogFragment.show(supportFragmentManager, "UpdateBookActivity")
     }
 
@@ -143,7 +151,6 @@ class DetailBookActivity : AppCompatActivity() {
                     }
                     is Resource.Success -> {
                         detailBook = resource.data
-                        Log.d("isi detailbook",detailBook.toString())
                         showDetailBook()
                         binding.progressBar.visibility = View.GONE
                     }
@@ -156,7 +163,6 @@ class DetailBookActivity : AppCompatActivity() {
         }
     }
 
-
     private fun showDetailBook() {
         setEnableButton()
 
@@ -165,15 +171,32 @@ class DetailBookActivity : AppCompatActivity() {
         binding.author.text = detailBook?.author
         binding.year.text = detailBook?.edition  //harusnya tahun terbit
         binding.publisher.text = detailBook?.publisher
+        setBookCover()
+    }
+
+    private fun setBookCover() {
         if (detailBook?.imageUrl != null) {
             Glide.with(this)
-                .load(IMAGE_URL + detailBook?.imageUrl)
+                .load(BOOK_IMAGE_BASE_URL + detailBook?.imageUrl)
                 // For reload image on glide from the same url
                 .signature(ObjectKey(System.currentTimeMillis().toString()))
                 // To show the original size of image
                 .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                .fitCenter()
                 .into(binding.imageCoverBook)
-            Log.i("$this", "url image : "+ IMAGE_URL + detailBook?.imageUrl)
+
+            // set click listener for image when clicked
+            openFullImage(detailBook?.imageUrl)
+        }
+    }
+
+    private fun openFullImage(imageUrl: String?) {
+        binding.imageCoverBook.setSingleClickListener {
+            val bundle = Bundle()
+            bundle.putString("imageUrl", imageUrl)
+            val viewImageFull = ViewImageFragment()
+            viewImageFull.arguments =  bundle
+            viewImageFull.show(supportFragmentManager, "ViewImageFragment")
         }
     }
 
@@ -214,6 +237,68 @@ class DetailBookActivity : AppCompatActivity() {
                                 "FAILED",
                                 it.message.toString())
                         }
+                    }
+                }
+            }
+        }
+    }
+
+    private  fun observeStatusFavorite(bookId: String?) {
+        viewModel.statusFavorite(sessionManager.fetchAuthToken().toString(), sessionManager.fetchUsername().toString(), bookId)
+
+        viewModel.isFavorite.observe(this) { event ->
+            event.getContentIfNotHandled().let {
+                setStatusFavorite(it)
+            }
+        }
+    }
+
+    private fun setStatusFavorite(isFavorite: Boolean?) {
+        if (isFavorite == true) {
+            binding.fabFavorite.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_icon_favorite_true))
+            binding.fabFavorite.visibility = View.VISIBLE
+            fabListener(isFavorite)
+        } else if (isFavorite == false){
+            binding.fabFavorite.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_icon_favorite_false))
+            binding.fabFavorite.visibility = View.VISIBLE
+            fabListener(isFavorite)
+        }
+    }
+
+    private fun fabListener(isFavorite: Boolean) {
+        binding.fabFavorite.setOnClickListener {
+            favoriteViewModel(isFavorite)
+            setStatusFavorite(!isFavorite)
+        }
+    }
+
+    private fun favoriteViewModel(isFavorite: Boolean) {
+        val bookId: String?
+        if (detailBook?.bookId == null) {
+            bookId = intent.getStringExtra(BOOK_ID)
+        }
+        else {
+            bookId = detailBook?.bookId
+        }
+        viewModel.changeStatusFavorite(sessionManager.fetchAuthToken().toString(), sessionManager.fetchUsername(), bookId, isFavorite)
+
+        viewModel.resourceChangeStatusFavorite.observe(this) { event ->
+            event.getContentIfNotHandled().let { resource ->
+                when(resource) {
+                    is Resource.Loading -> {
+                        binding.progressBar.visibility = View.VISIBLE
+                    }
+                    is Resource.Success -> {
+                        binding.progressBar.visibility = View.GONE
+                        Snackbar
+                            .make(binding.root, resource.data.toString(), Snackbar.LENGTH_LONG)
+                            .show()
+                    }
+                    is Resource.Error -> {
+                        binding.progressBar.visibility = View.GONE
+                        Snackbar
+                            .make(binding.root, resource.message.toString(), Snackbar.LENGTH_LONG)
+                            .show()
                     }
                 }
             }

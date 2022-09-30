@@ -2,6 +2,8 @@ package com.skripsi.perpustakaanapp.core.repository
 
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.models.*
+import com.skripsi.perpustakaanapp.core.models.Book
+import com.skripsi.perpustakaanapp.core.models.User
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
@@ -37,4 +39,17 @@ class LibraryRepository constructor(private val retrofitClient: RetrofitClient) 
 
     fun updateImage(token: String, bookId: RequestBody?, username: RequestBody?, image: MultipartBody.Part?) = retrofitClient.create().updateImage(token, bookId, username, image)
 
+    fun getStatusFavorite(token: String, data: ModelForCreateTransaction) = retrofitClient.create().statusFavorite(token, data)
+
+    fun changeStatusFavorite(token: String, data: ModelForChangeStatusFavorite) = retrofitClient.create().changeStatusFavorite(token, data)
+
+    fun getAllFavorite(token: String) = retrofitClient.create().getAllFavorite(token)
+
+    fun searchBook(token: String, title: ModelForSearchBook) = retrofitClient.create().searchBook(token, title)
+
+    fun getAllMember(token: String) = retrofitClient.create().getAllMember(token)
+
+    fun deleteMember(token: String, username: ModelUsername) = retrofitClient.create().deleteMember(token, username)
+
+    fun updateUser(token: String, member: User) = retrofitClient.create().updateUser(token, member)
 }

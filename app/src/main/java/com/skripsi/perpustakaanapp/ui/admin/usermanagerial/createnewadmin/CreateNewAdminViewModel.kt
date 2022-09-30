@@ -1,4 +1,4 @@
-package com.skripsi.perpustakaanapp.ui.admin.createnewadmin
+package com.skripsi.perpustakaanapp.ui.admin.usermanagerial.createnewadmin
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,9 +15,9 @@ class CreateNewAdminViewModel(private val repository: LibraryRepository) : ViewM
 
     val resourceCreateAdmin = MutableLiveData<Event<Resource<String?>>>()
 
-    fun createNewAdmin(username: String, password: String, fullName: String, roleName: String, email: String, phoneNo: String, address: String, gender: Int){
+    fun createNewAdmin(username: String, password: String, firstName: String, lastName: String, roleName: String, email: String, phoneNo: String, address: String, gender: Int){
         resourceCreateAdmin.postValue(Event(Resource.Loading()))
-        val user = User(username, password, fullName, roleName, email, phoneNo, address, gender)
+        val user = User(username, password, firstName, lastName, roleName, email, phoneNo, address, gender)
         val post = repository.createUser(user)
         post.enqueue(object : Callback<GeneralResponse> {
             override fun onResponse(call: Call<GeneralResponse>, response: Response<GeneralResponse>

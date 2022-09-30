@@ -13,7 +13,6 @@ import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.http.Multipart
 
 class UpdateBookViewModel(private val repository: LibraryRepository) : ViewModel(){
 

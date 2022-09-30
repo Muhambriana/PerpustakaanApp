@@ -9,7 +9,7 @@ data class ModelBookId(
 
 data class ModelForCreateTransaction(
     @SerializedName("username")
-    val userName : String? = null,
+    val username : String? = null,
 
     @SerializedName("bookId")
     val bookId: String? = null
@@ -26,5 +26,23 @@ data class ModelForApproveAndRejectLoan(
 data class ModelUsername(
     @SerializedName("username")
     val username: String? = null
+)
+
+data class ModelForChangeStatusFavorite(
+
+    @field:SerializedName("username")
+    val username: String? = null,
+
+    @field:SerializedName("bookId")
+    val bookId: String? = null,
+
+    @field:SerializedName("isFavorite")
+    val isFavorite: Boolean? = null
+)
+
+data class ModelForSearchBook(
+
+    @field:SerializedName("title")
+    val title: String? = null
 )
 
