@@ -103,7 +103,7 @@ class DetailBookActivity : AppCompatActivity() {
 
     private fun updateBook() {
         val bottomDialogFragment = UpdateBookFragment()
-        bottomDialogFragment.show(supportFragmentManager, "UpdateBookActivity")
+        bottomDialogFragment.show(supportFragmentManager, "UpdateBookFragment")
     }
 
     private fun deleteBook() {

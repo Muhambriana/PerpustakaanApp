@@ -20,7 +20,6 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var viewModel: RegisterViewModel
 
     private val client = RetrofitClient
-
     private var gender: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,21 +29,13 @@ class RegisterActivity : AppCompatActivity() {
         supportActionBar?.title = "Register"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        binding.rbGender.setOnCheckedChangeListener { _, i ->
-            gender =
-                when (i) {
-                    R.id.rb_gender_male -> 1
-                    R.id.rb_gender_female -> 0
-                    else -> -1
-                }
-        }
-
-
         viewModel = ViewModelProvider(this, MyViewModelFactory(LibraryRepository(client))).get(
             RegisterViewModel::class.java
         )
 
         binding.progressBar.visibility = View.INVISIBLE
+
+        gender = getGender()
 
         binding.buttonSave.setSingleClickListener {
             askAppointment()
@@ -65,10 +56,10 @@ class RegisterActivity : AppCompatActivity() {
                 binding.edtUsername.requestFocus()
             }
             binding.rbGender.checkedRadioButtonId == -1 -> {
-                MyAlertDialog.showAlertDialog(this@RegisterActivity,
+                MyAlertDialog.showAlertDialog(this,
                     R.drawable.icon_warning,
                     "WARNING",
-                    "Pilih Gender Terlebih Dahulu")
+                    "Pilih Jenis Kelamin Terlebih Dahulu")
             }
             else -> {
                 postUserData()
@@ -115,6 +106,18 @@ class RegisterActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun getGender(): Int? {
+        binding.rbGender.setOnCheckedChangeListener { _, i ->
+            gender =
+                when (i) {
+                    R.id.rb_gender_male -> 1
+                    R.id.rb_gender_female -> 2
+                    else -> -1
+                }
+        }
+        return gender
     }
 }
 

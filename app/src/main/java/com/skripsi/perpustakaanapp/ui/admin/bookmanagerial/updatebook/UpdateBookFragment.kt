@@ -48,8 +48,7 @@ class UpdateBookFragment : BottomSheetDialogFragment() {
 
         binding.progressBar.visibility = View.GONE
 
-        setData()
-
+        getData()
         setButtonListener()
 
         return binding.root
@@ -66,12 +65,12 @@ class UpdateBookFragment : BottomSheetDialogFragment() {
         }
     }
 
-    private fun setData() {
+    private fun getData() {
         dataBook = activity?.intent?.getParcelableExtra<Book>(EXTRA_DATA)
-        setEditText(dataBook)
+        setEditText()
     }
 
-    private fun setEditText(dataBook: Book?) {
+    private fun setEditText() {
         binding.tvBookId.text = dataBook?.bookId
         binding.edBookTitle.setText(dataBook?.title)
         binding.edEdition.setText(dataBook?.edition)
@@ -163,7 +162,7 @@ class UpdateBookFragment : BottomSheetDialogFragment() {
                             binding.edRemark.text.toString(),
                             binding.edBookTitle.text.toString().replace("\\s".toRegex(),"_")+".png"
                         )
-                        println("setelah covert: "+binding.edBookTitle.text.toString().replace("\\s".toRegex(),"_")+".png")
+
                         // Show Alert Dialog
                         MyAlertDialog.showAlertDialogEvent(
                             context, R.drawable.icon_checked,
