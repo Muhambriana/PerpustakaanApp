@@ -21,7 +21,6 @@ class SessionManager (context: Context) {
     }
 
     fun saveUserRole(roleName: String) {
-//        val editor = prefs.edit()
         editor.putString(USER_ROLE, roleName)
         editor.apply()
     }
@@ -39,9 +38,19 @@ class SessionManager (context: Context) {
         return prefs.getString(USERNAME, null)
     }
 
+    fun saveQRCode(qrCode: String) {
+        editor.putString(QR_CODE, qrCode)
+        editor.apply()
+    }
+
+    fun fetchQRCode(): String? {
+        return prefs.getString(QR_CODE, null)
+    }
+
     companion object{
         const val USER_TOKEN = "user_token"
         const val USER_ROLE = "user_role"
         const val USERNAME = "username"
+        const val QR_CODE = "qr_code"
     }
 }

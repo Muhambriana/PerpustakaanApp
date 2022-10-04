@@ -8,6 +8,7 @@ import com.skripsi.perpustakaanapp.ui.admin.usermanagerial.createnewadmin.Create
 import com.skripsi.perpustakaanapp.ui.admin.loanmanagerial.pendingloan.PendingLoanViewModel
 import com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.updatebook.UpdateBookViewModel
 import com.skripsi.perpustakaanapp.ui.admin.listuser.UserViewModel
+import com.skripsi.perpustakaanapp.ui.admin.usermanagerial.scanattendance.ScannerViewModel
 import com.skripsi.perpustakaanapp.ui.admin.usermanagerial.updateuser.UpdateUserViewModel
 import com.skripsi.perpustakaanapp.ui.home.HomeViewModel
 import com.skripsi.perpustakaanapp.ui.login.LoginViewModel
@@ -69,6 +70,9 @@ class MyViewModelFactory constructor(private val libraryRepository: LibraryRepos
             }
             modelClass.isAssignableFrom(UpdateUserViewModel::class.java) -> {
                 return UpdateUserViewModel(this.libraryRepository)  as T
+            }
+            modelClass.isAssignableFrom(ScannerViewModel::class.java) -> {
+                return ScannerViewModel(this.libraryRepository) as T
             }
             else -> throw IllegalArgumentException("ViewModel Not Found")
         }

@@ -56,7 +56,7 @@ class UserActivity : AppCompatActivity() {
                         binding.progressBar.visibility = View.VISIBLE
                     }
                     is Resource.Success -> {
-                        println("sukses nih")
+                        println("sukses nih ")
                         binding.progressBar.visibility = View.GONE
                         userData = resource.data
                         showRecycleList()

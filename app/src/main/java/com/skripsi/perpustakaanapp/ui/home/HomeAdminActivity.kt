@@ -22,6 +22,7 @@ import com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.createbook.CreateBook
 import com.skripsi.perpustakaanapp.ui.admin.usermanagerial.createnewadmin.CreateNewAdminActivity
 import com.skripsi.perpustakaanapp.ui.admin.listuser.UserActivity
 import com.skripsi.perpustakaanapp.ui.admin.loanmanagerial.pendingloan.PendingLoanActivity
+import com.skripsi.perpustakaanapp.ui.admin.usermanagerial.scanattendance.ScannerActivity
 import com.skripsi.perpustakaanapp.ui.login.LoginActivity
 import com.skripsi.perpustakaanapp.ui.book.listbook.BookActivity
 
@@ -40,7 +41,7 @@ class HomeAdminActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         if (intent.extras!=null){
-            supportActionBar?.title = "Hi, ${intent.getStringExtra("first_name")}"
+            supportActionBar?.title = "Hi, ${intent.getStringExtra("FIRST_NAME")}"
         }
 
         viewModel = ViewModelProvider(this, MyViewModelFactory(LibraryRepository(client))).get(
@@ -79,24 +80,28 @@ class HomeAdminActivity : AppCompatActivity() {
     private fun cardListener() {
         val clickListener = View.OnClickListener { view ->
             when (view.id){
-                R.id.card_create_book -> {
+                binding.cardCreateBook.id -> {
                     val intent = Intent(this, CreateBookActivity::class.java)
                     startActivity(intent)
                 }
-                R.id.card_create_admin -> {
+                binding.cardCreateAdmin.id -> {
                     val intent = Intent(this, CreateNewAdminActivity::class.java)
                     startActivity(intent)
                 }
-                R.id.card_book_list -> {
+                binding.cardBookList.id -> {
                     val intent = Intent(this, BookActivity::class.java)
                     startActivity(intent)
                 }
-                R.id.card_pending_loan_list -> {
+                binding.cardPendingLoanList.id -> {
                     val intent = Intent(this, PendingLoanActivity::class.java)
                     startActivity(intent)
                 }
-                R.id.card_user_list -> {
+                binding.cardUserList.id -> {
                     val intent = Intent(this, UserActivity::class.java)
+                    startActivity(intent)
+                }
+                binding.cardScanVisitors.id -> {
+                    val intent = Intent(this, ScannerActivity::class.java)
                     startActivity(intent)
                 }
             }
@@ -106,6 +111,7 @@ class HomeAdminActivity : AppCompatActivity() {
         binding.cardBookList.setOnClickListener(clickListener)
         binding.cardPendingLoanList.setOnClickListener(clickListener)
         binding.cardUserList.setOnClickListener(clickListener)
+        binding.cardScanVisitors.setOnClickListener(clickListener)
     }
 
     private fun userLogout() {

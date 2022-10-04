@@ -243,6 +243,7 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_scan_visitors"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_rowWeight="1"
@@ -272,7 +273,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Course Plan"
+                    android:text="Scan Pengunjung"
                     android:layout_marginTop="8dp"
                     android:textColor="@color/textcardColor"
                     android:textSize="14sp"

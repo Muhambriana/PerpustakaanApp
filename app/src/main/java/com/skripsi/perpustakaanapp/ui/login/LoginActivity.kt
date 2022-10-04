@@ -15,6 +15,7 @@ import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.databinding.ActivityLoginBinding
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.core.resource.Resource
+import com.skripsi.perpustakaanapp.core.responses.LoginResponse
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.home.HomeAdminActivity
 import com.skripsi.perpustakaanapp.ui.home.HomeUserActivity
@@ -30,6 +31,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var viewModel: LoginViewModel
 
     private val client = RetrofitClient
+    private var dataLogin: LoginResponse? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -98,11 +100,8 @@ class LoginActivity : AppCompatActivity() {
                     is Resource.Success -> {
                         WindowTouchableHelper.enable(this)
                         binding.progressBar.visibility = View.GONE
-                        startIntentDashboard(
-                            resource.data?.roleName.toString(),
-                            resource.data?.username.toString(),
-                            "Bearer ${resource.data?.token.toString()}",
-                            resource.data?.firstName.toString())
+                        dataLogin = resource.data
+                        startIntentDashboard()
                     }
                     is Resource.Error ->  {
                         WindowTouchableHelper.enable(this)
@@ -114,11 +113,19 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun startIntentDashboard(roleName: String, username:String, token: String, firstName: String,) {
+    private fun startIntentDashboard() {
+
+        val roleName: String? = dataLogin?.roleName
+        val firstName: String? = dataLogin?.firstName
+        val token: String = "Bearer ${dataLogin?.token}"
+
         // Save to SharedPreferences
-        sessionManager.saveUserRole(roleName)
-        sessionManager.saveUsername(username)
+        if (roleName != null) {
+            sessionManager.saveUserRole(roleName)
+        }
+        sessionManager.saveUsername(dataLogin?.username.toString())
         sessionManager.saveAuthToken(token)
+        sessionManager.saveQRCode(dataLogin?.qrCode.toString())
 
         // Start Activity
         if (roleName == "admin") {
@@ -131,7 +138,8 @@ class LoginActivity : AppCompatActivity() {
 
     private fun startIntentExtraData(activity: Activity, cls: Class<*>, firstname: String?) {
         val home = Intent(activity, cls)
-        home.putExtra("first_name", firstname)
+        home.putExtra("FIRST_NAME", firstname)
+        home.putExtra("AVATAR", dataLogin?.avatar)
         startActivity(home)
         finish()
     }

@@ -68,8 +68,8 @@ class UpdateUserFragment : BottomSheetDialogFragment() {
         binding?.rbGender?.setOnCheckedChangeListener { _, i ->
             gender =
                 when (i) {
-                    R.id.rb_gender_male -> 1
-                    R.id.rb_gender_female -> 2
+                    binding?.rbGenderMale?.id -> 1
+                    binding?.rbGenderFemale?.id -> 2
                     else -> -1
                 }
         }

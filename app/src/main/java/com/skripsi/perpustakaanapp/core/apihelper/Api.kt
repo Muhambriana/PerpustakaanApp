@@ -5,6 +5,7 @@ import com.skripsi.perpustakaanapp.core.responses.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.http.*
 
 @JvmSuppressWildcards
@@ -148,16 +149,17 @@ interface Api {
         @Body data: User
     ):Call<GeneralResponse>
 
+    @POST("attendance/in")
+    fun attendanceIn(
+        @Header("Authorization") token: String,
+        @Body qrCode: ModelForAttendance
+    ):Call<GeneralResponse>
 
-//    @POST("book/loan")
-//    fun loanBook(
-//
-//    ):Call<>
-
-//    @POST(book/pendingtask)
-//    fun pendingTaskList(
-//
-//    ):Call<>
+    @POST("attendance/out")
+    fun attendanceOut(
+        @Header("Authorization") token: String,
+        @Body qrCode: ModelForAttendance
+    ):Call<GeneralResponse>
 
 }
 

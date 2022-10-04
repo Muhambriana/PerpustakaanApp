@@ -23,6 +23,12 @@ data class LoginResponse(
     val roleName: String? = null,
 
     @field:SerializedName("firstName")
-    val firstName: String? = null
+    val firstName: String? = null,
+
+    @field:SerializedName("avatar")
+    val avatar: String? = null,
+
+    @field:SerializedName("qrCode")
+    val qrCode: String? = null
 
 )

@@ -18,6 +18,7 @@ import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.core.resource.Resource
 import com.skripsi.perpustakaanapp.databinding.ActivityHomeUserBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
+import com.skripsi.perpustakaanapp.ui.SettingsActivity
 import com.skripsi.perpustakaanapp.ui.login.LoginActivity
 import com.skripsi.perpustakaanapp.ui.book.listbook.BookActivity
 import com.skripsi.perpustakaanapp.ui.member.favoritebook.FavoriteBookActivity
@@ -41,7 +42,8 @@ class HomeUserActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         if (intent.extras!=null){
-            supportActionBar?.title = " Hi,${intent.getStringExtra("first_name")}"
+            supportActionBar?.title = "Hi,${intent.getStringExtra("FIRST_NAME")}"
+            // set avatar
         }
 
         viewModel = ViewModelProvider(this, MyViewModelFactory(LibraryRepository(client))).get(
@@ -100,6 +102,10 @@ class HomeUserActivity : AppCompatActivity() {
                     val intent = Intent(this, FavoriteBookActivity::class.java)
                     startActivity(intent)
                 }
+                binding.cardAttendance.id -> {
+                    val intent = Intent(this, SettingsActivity::class.java)
+                    startActivity(intent)
+                }
             }
 
         }
@@ -108,6 +114,7 @@ class HomeUserActivity : AppCompatActivity() {
         binding.cardLoanHistoryMember.setOnClickListener(clickListener)
         binding.cardUserProfile.setOnClickListener(clickListener)
         binding.cardFavoriteBook.setOnClickListener(clickListener)
+        binding.cardAttendance.setOnClickListener(clickListener)
     }
 
     private fun userLogout() {

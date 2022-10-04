@@ -104,8 +104,7 @@ class BookActivity : AppCompatActivity() {
     }
 
     private fun getBookData() {
-        viewModel.getAllBooks(token = sessionManager.fetchAuthToken().toString())
-
+        viewModel.getAllBooks(sessionManager.fetchAuthToken().toString())
         viewModel.resourceBook.observe(this) { event ->
             event.getContentIfNotHandled()?.let { resource ->
                 when (resource) {
