@@ -15,15 +15,10 @@ class ScannerViewModel(private val repository: LibraryRepository): ViewModel() {
 
     val resourceScanner = MutableLiveData<Event<Resource<String?>>>()
 
-    fun scannerAttendance(token: String, qrCode: String, purpose: Int?) {
+    fun scannerAttendance(token: String, qrCode: String) {
         resourceScanner.postValue(Event(Resource.Loading()))
         val data = ModelForAttendance(qrCode)
-        val post =
-            if (purpose == 0) {
-                repository.attendanceIn(token, data)
-            } else {
-                repository.attendanceOut(token, data)
-            }
+        val post = repository.attendanceScan(token, data)
         post.enqueue(object : Callback<GeneralResponse> {
             override fun onResponse(
                 call: Call<GeneralResponse>,

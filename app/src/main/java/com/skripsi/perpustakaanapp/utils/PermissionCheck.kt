@@ -22,4 +22,14 @@ object PermissionCheck {
         }
         return true
     }
+
+    fun camera(context: Activity?): Boolean {
+        if (context != null) {
+            if(ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED) {
+                ActivityCompat.requestPermissions(context, arrayOf(Manifest.permission.CAMERA), REQUEST_CODE_PERMISSION)
+                return false
+            }
+        }
+        return true
+    }
 }

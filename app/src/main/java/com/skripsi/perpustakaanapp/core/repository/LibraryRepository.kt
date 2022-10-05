@@ -53,7 +53,5 @@ class LibraryRepository constructor(private val retrofitClient: RetrofitClient) 
 
     fun updateUser(token: String, member: User) = retrofitClient.create().updateUser(token, member)
 
-    fun attendanceIn(token: String, qrCode: ModelForAttendance) = retrofitClient.create().attendanceIn(token, qrCode)
-
-    fun attendanceOut(token: String, qrCode: ModelForAttendance) = retrofitClient.create().attendanceOut(token, qrCode)
+    fun attendanceScan(token: String, qrCode: ModelForAttendance) = retrofitClient.create().attendanceScan(token, qrCode)
 }

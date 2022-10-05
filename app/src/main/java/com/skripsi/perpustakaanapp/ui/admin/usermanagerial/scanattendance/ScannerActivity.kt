@@ -2,6 +2,8 @@ package com.skripsi.perpustakaanapp.ui.admin.usermanagerial.scanattendance
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.google.zxing.Result
@@ -13,6 +15,8 @@ import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.core.resource.Resource
 import com.skripsi.perpustakaanapp.databinding.ActivityScannerBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
+import com.skripsi.perpustakaanapp.ui.MySnackbar
+import com.skripsi.perpustakaanapp.utils.PermissionCheck
 import me.dm7.barcodescanner.zxing.ZXingScannerView
 
 class ScannerActivity : AppCompatActivity(), ZXingScannerView.ResultHandler {
@@ -23,16 +27,19 @@ class ScannerActivity : AppCompatActivity(), ZXingScannerView.ResultHandler {
 
     private val client = RetrofitClient
     private var zXingScannerView: ZXingScannerView? = null
-    private var purpose: Int? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityScannerBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        if (PermissionCheck.camera(this)) {
+            zXingScannerView = ZXingScannerView(this)
+            setContentView(zXingScannerView)
+            readQR()
+        }
 
         firstInitialization()
-        purpose = getPurpose()
-        openScanner()
+//        openScanner()
     }
 
     private fun firstInitialization() {
@@ -44,9 +51,13 @@ class ScannerActivity : AppCompatActivity(), ZXingScannerView.ResultHandler {
     }
 
     private fun openScanner() {
-        zXingScannerView = ZXingScannerView(this)
-        binding.cameraView.addView(zXingScannerView)
-        readQR()
+        if (PermissionCheck.camera(this)) {
+            zXingScannerView = ZXingScannerView(this)
+            setContentView(zXingScannerView)
+            readQR()
+        } else {
+            openScanner()
+        }
     }
 
     private fun readQR() {
@@ -55,34 +66,15 @@ class ScannerActivity : AppCompatActivity(), ZXingScannerView.ResultHandler {
         zXingScannerView?.setAutoFocus(true)
     }
 
-    private fun getPurpose(): Int? {
-        binding.rbAttendance.setOnCheckedChangeListener { _, i ->
-            purpose =
-                when(i) {
-                    binding.rbAttendanceIn.id -> 0
-                    binding.rbAttendanceOut.id -> 1
-                    else -> -1
-                }
-        }
-        return purpose
-    }
-
     override fun handleResult (result: Result) {
-
         postAttendance(result.text)
-        binding.textview.text = result.text
+        Handler(Looper.getMainLooper()).postDelayed(Runnable { zXingScannerView?.resumeCameraPreview(this) }, 3000)
     }
 
     private fun postAttendance(qrCode: String) {
         zXingScannerView?.stopCameraPreview()
-        if (purpose == null ) {
-            MyAlertDialog.showAlertDialogEvent(this, R.drawable.icon_checked, "Pilih Tujuan Terlebih Dahulu", ""){ _, _ ->
-                zXingScannerView?.resumeCameraPreview(this)
-            }
 
-        } else {
-            viewModel.scannerAttendance(sessionManager.fetchAuthToken().toString(), qrCode, purpose)
-        }
+        viewModel.scannerAttendance(sessionManager.fetchAuthToken().toString(), qrCode)
 
         viewModel.resourceScanner.observe(this) { event ->
             event.getContentIfNotHandled().let { resource ->
@@ -92,29 +84,15 @@ class ScannerActivity : AppCompatActivity(), ZXingScannerView.ResultHandler {
                     }
                     is Resource.Success -> {
                         binding.progressBar.visibility = View.GONE
-                        MyAlertDialog.showAlertDialogEvent(this,
-                            R.drawable.icon_checked,
-                            "Success",
-                            resource.data.toString()) { _, _ ->
-                            askUser()
-                        }
+                        MySnackbar.showSnackBar(binding.root, resource.data.toString())
                     }
                     is Resource.Error -> {
                         binding.progressBar.visibility = View.GONE
-                        MyAlertDialog.showAlertDialogEvent(this, R.drawable.icon_cancel, "Failed", resource.message.toString()){ _, _ -> }
+                        MySnackbar.showSnackBar(binding.root, resource.message.toString())
                     }
                 }
             }
         }
-
-    }
-
-    private fun askUser() {
-        MyAlertDialog.showAlertDialog2Event(this, R.drawable.icon_cancel, "??", "Lanjutkan Scan?", { _, _ ->
-          zXingScannerView?.resumeCameraPreview(this)
-        }, {_,_ ->
-            finish()
-        })
 
     }
 

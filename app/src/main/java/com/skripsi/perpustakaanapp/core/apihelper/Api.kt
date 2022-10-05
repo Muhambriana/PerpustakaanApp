@@ -149,14 +149,8 @@ interface Api {
         @Body data: User
     ):Call<GeneralResponse>
 
-    @POST("attendance/in")
-    fun attendanceIn(
-        @Header("Authorization") token: String,
-        @Body qrCode: ModelForAttendance
-    ):Call<GeneralResponse>
-
-    @POST("attendance/out")
-    fun attendanceOut(
+    @POST("attendance/scan")
+    fun attendanceScan(
         @Header("Authorization") token: String,
         @Body qrCode: ModelForAttendance
     ):Call<GeneralResponse>
