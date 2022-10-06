@@ -2,8 +2,6 @@ package com.skripsi.perpustakaanapp.core.repository
 
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.models.*
-import com.skripsi.perpustakaanapp.core.models.Book
-import com.skripsi.perpustakaanapp.core.models.User
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 

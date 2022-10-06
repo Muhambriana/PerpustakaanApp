@@ -7,6 +7,17 @@
     <string name="dont_have_an_account">Don\'t have an account?</string>
     <string name="sign_up">Sign Up</string>
     <string name="text_nisn">*User Id Siswa Adalah NISN</string>
+
+    <!-- String Resource For Alert User -->
+    <string name="refresh">Muat Ulang</string>
+    <string name="back_to_dashboard">Kembali Ke DashBoard</string>
+    <string name="data_confirmation">Apakah Anda Yakin Data Sudah Benar?</string>
+    <string name="confirmation_yes">Saya Yakin</string>
+    <string name="confirmation_no">Periksa Kembali</string>
+    <string name="delete_confirmation">Apakah Anda Yakin Akan Menghapusnya?</string>
+    <string name="loan_approval_confirmation">Yakin Dengan Keputusan Anda?</string>
+    <string name="change_image_confirmation">Apakah Anda Yakin Mengubah Gambar?</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="required">Required</string>

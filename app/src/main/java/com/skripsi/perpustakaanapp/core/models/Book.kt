@@ -3,7 +3,6 @@ package com.skripsi.perpustakaanapp.core.models
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
-import okhttp3.MultipartBody
 
 @Parcelize
 data class Book(

@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
 import com.skripsi.perpustakaanapp.core.models.Book
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
-import com.skripsi.perpustakaanapp.core.resource.Event
-import com.skripsi.perpustakaanapp.core.resource.Resource
+import com.skripsi.perpustakaanapp.core.resource.MyEvent
+import com.skripsi.perpustakaanapp.core.resource.MyResource
 import com.skripsi.perpustakaanapp.core.responses.GeneralResponse
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -17,10 +17,10 @@ import retrofit2.Response
 
 class CreateBookViewModel(private val repository: LibraryRepository) : ViewModel() {
 
-    val resourceUpdateBook = MutableLiveData<Event<Resource<String?>>>()
+    val resourceUpdateBook = MutableLiveData<MyEvent<MyResource<String?>>>()
 
     fun createBook(token: String, title: String, edition: String, author: String, publisher: String, publisherDate: String, copies: String, source: String, remark: String, image: MultipartBody.Part?){
-        resourceUpdateBook.postValue(Event(Resource.Loading()))
+        resourceUpdateBook.postValue(MyEvent(MyResource.Loading()))
         val book = Book(null, title, edition, author, publisher, publisherDate, copies, source, remark, null)
         val jsonString = Gson().toJson(book)
         val data = RequestBody.create(MediaType.parse("text/plain"), jsonString)
@@ -31,14 +31,14 @@ class CreateBookViewModel(private val repository: LibraryRepository) : ViewModel
                 response: Response<GeneralResponse>
             ) {
                 if (response.body()?.code == 0) {
-                    resourceUpdateBook.postValue(Event(Resource.Success(response.body()?.message)))
+                    resourceUpdateBook.postValue(MyEvent(MyResource.Success(response.body()?.message)))
                 }
                 else {
-                    resourceUpdateBook.postValue(Event(Resource.Error(response.body()?.message)))
+                    resourceUpdateBook.postValue(MyEvent(MyResource.Error(response.body()?.message)))
                 }
             }
             override fun onFailure(call: Call<GeneralResponse>, t: Throwable) {
-                resourceUpdateBook.postValue(Event(Resource.Error(t.message)))
+                resourceUpdateBook.postValue(MyEvent(MyResource.Error(t.message)))
             }
         })
     }

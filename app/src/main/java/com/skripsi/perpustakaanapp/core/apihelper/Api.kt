@@ -5,7 +5,6 @@ import com.skripsi.perpustakaanapp.core.responses.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.http.*
 
 @JvmSuppressWildcards
@@ -33,12 +32,6 @@ interface Api {
     fun getAllBook(
         @Header("Authorization") token: String
     ): Call<ListBookResponse>
-
-//    @POST("book/create")
-//    fun postCreateBook(
-//        @Header("Authorization") token: String,
-//        @Body book: Book
-//    ):Call<GeneralResponse>
 
     @Multipart
     @POST("book/create")

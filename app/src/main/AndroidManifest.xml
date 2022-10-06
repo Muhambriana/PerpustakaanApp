@@ -33,7 +33,7 @@
             android:name=".ui.SettingsActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.admin.loanmanagerial.pendingloan.PendingLoanActivity"
+            android:name=".ui.admin.pendingloan.PendingLoanActivity"
             android:exported="false" />
         <activity
             android:name=".ui.admin.usermanagerial.createnewadmin.CreateNewAdminActivity"

@@ -4,19 +4,19 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.createbook.CreateBookViewModel
-import com.skripsi.perpustakaanapp.ui.admin.usermanagerial.createnewadmin.CreateNewAdminViewModel
-import com.skripsi.perpustakaanapp.ui.admin.loanmanagerial.pendingloan.PendingLoanViewModel
 import com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.updatebook.UpdateBookViewModel
 import com.skripsi.perpustakaanapp.ui.admin.listuser.UserViewModel
+import com.skripsi.perpustakaanapp.ui.admin.pendingloan.PendingLoanViewModel
+import com.skripsi.perpustakaanapp.ui.admin.usermanagerial.createnewadmin.CreateNewAdminViewModel
 import com.skripsi.perpustakaanapp.ui.admin.usermanagerial.scanattendance.ScannerViewModel
 import com.skripsi.perpustakaanapp.ui.admin.usermanagerial.updateuser.UpdateUserViewModel
+import com.skripsi.perpustakaanapp.ui.book.detailbook.DetailBookViewModel
+import com.skripsi.perpustakaanapp.ui.book.listbook.BookViewModel
 import com.skripsi.perpustakaanapp.ui.home.HomeViewModel
 import com.skripsi.perpustakaanapp.ui.login.LoginViewModel
-import com.skripsi.perpustakaanapp.ui.member.register.RegisterViewModel
-import com.skripsi.perpustakaanapp.ui.book.listbook.BookViewModel
-import com.skripsi.perpustakaanapp.ui.book.detailbook.DetailBookViewModel
 import com.skripsi.perpustakaanapp.ui.member.favoritebook.FavoriteBookViewModel
 import com.skripsi.perpustakaanapp.ui.member.loanhistory.LoanHistoryViewModel
+import com.skripsi.perpustakaanapp.ui.member.register.RegisterViewModel
 import com.skripsi.perpustakaanapp.ui.userprofile.UserProfileViewModel
 
 class MyViewModelFactory constructor(private val libraryRepository: LibraryRepository) :

@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel
 import com.skripsi.perpustakaanapp.core.models.LoanHistory
 import com.skripsi.perpustakaanapp.core.models.ModelUsername
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
-import com.skripsi.perpustakaanapp.core.resource.Event
-import com.skripsi.perpustakaanapp.core.resource.Resource
+import com.skripsi.perpustakaanapp.core.resource.MyEvent
+import com.skripsi.perpustakaanapp.core.resource.MyResource
 import com.skripsi.perpustakaanapp.core.responses.ListLoanHistoryResponse
 import retrofit2.Call
 import retrofit2.Callback
@@ -14,10 +14,10 @@ import retrofit2.Response
 
 class LoanHistoryViewModel(private val repository: LibraryRepository) : ViewModel() {
 
-    val resourceHistoryLoan = MutableLiveData<Event<Resource<List<LoanHistory>>>>()
+    val resourceHistoryLoan = MutableLiveData<MyEvent<MyResource<List<LoanHistory>>>>()
 
     fun getAllLoanHistories(token: String, username: String) {
-        resourceHistoryLoan.postValue(Event(Resource.Loading()))
+        resourceHistoryLoan.postValue(MyEvent(MyResource.Loading()))
         val modelUsername = ModelUsername(username)
         val response = repository.getAllLoanHistoryMember(token, modelUsername)
         response.enqueue(object : Callback<ListLoanHistoryResponse> {
@@ -26,10 +26,10 @@ class LoanHistoryViewModel(private val repository: LibraryRepository) : ViewMode
                 response: Response<ListLoanHistoryResponse>
             ) {
                 if (response.body()?.code == 0) {
-                    resourceHistoryLoan.postValue(Event(Resource.Success(response.body()?.loanHistoryItems)))
+                    resourceHistoryLoan.postValue(MyEvent(MyResource.Success(response.body()?.loanHistoryItems)))
                 }
                 else {
-                    resourceHistoryLoan.postValue(Event(Resource.Error(response.body()?.message)))
+                    resourceHistoryLoan.postValue(MyEvent(MyResource.Error(response.body()?.message)))
                 }
             }
 
@@ -37,7 +37,7 @@ class LoanHistoryViewModel(private val repository: LibraryRepository) : ViewMode
                 call: Call<ListLoanHistoryResponse>,
                 t: Throwable
             ) {
-                resourceHistoryLoan.postValue(Event(Resource.Error(t.message)))
+                resourceHistoryLoan.postValue(MyEvent(MyResource.Error(t.message)))
             }
         })
     }

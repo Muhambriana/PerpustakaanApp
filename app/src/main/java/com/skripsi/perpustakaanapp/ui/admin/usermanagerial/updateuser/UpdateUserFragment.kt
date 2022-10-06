@@ -1,5 +1,6 @@
 package com.skripsi.perpustakaanapp.ui.admin.usermanagerial.updateuser
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,11 +13,12 @@ import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.models.User
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
-import com.skripsi.perpustakaanapp.core.resource.Resource
+import com.skripsi.perpustakaanapp.core.resource.MyResource
 import com.skripsi.perpustakaanapp.databinding.FragmentUpdateUserBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
+import com.skripsi.perpustakaanapp.ui.MySnackBar
+import com.skripsi.perpustakaanapp.ui.userprofile.UserProfileActivity
 import com.skripsi.perpustakaanapp.utils.setSingleClickListener
-import okhttp3.MultipartBody
 
 class UpdateUserFragment : BottomSheetDialogFragment() {
 
@@ -54,7 +56,6 @@ class UpdateUserFragment : BottomSheetDialogFragment() {
         }
     }
 
-
     private fun setGender(): Int? {
         gender = dataUser?.gender
         when(gender) {
@@ -77,7 +78,8 @@ class UpdateUserFragment : BottomSheetDialogFragment() {
     }
 
     private fun getData() {
-        dataUser = activity?.intent?.getParcelableExtra(EXTRA_DATA)
+        val bundle: Bundle? = this.arguments
+        dataUser = bundle?.getParcelable(FRAGMENT_EXTRA_DATA)
         setEditText()
     }
 
@@ -97,7 +99,17 @@ class UpdateUserFragment : BottomSheetDialogFragment() {
             binding?.edtUsername?.error = "NISN Tidak Boleh Kosong"
             binding?.edtUsername?.requestFocus()
         } else {
-            postUpdateData()
+            MyAlertDialog.showWith2Event(
+                requireContext(),
+                null,
+                resources.getString(R.string.data_confirmation),
+                resources.getString(R.string.confirmation_yes),
+                resources.getString(R.string.confirmation_no),
+                {_,_ ->
+                    postUpdateData()
+                }, {_,_ ->
+
+                })
         }
     }
 
@@ -116,24 +128,22 @@ class UpdateUserFragment : BottomSheetDialogFragment() {
         viewModel.resourceUpdateUser.observe(this) { event ->
             event.getContentIfNotHandled().let { resource ->
                 when(resource) {
-                    is Resource.Loading -> {
+                    is MyResource.Loading -> {
                         binding?.progressBar?.visibility = View.VISIBLE
                     }
-                    is Resource.Success -> {
+                    is MyResource.Success -> {
                         binding?.progressBar?.visibility = View.GONE
-                        MyAlertDialog.showAlertDialogEvent(context,
-                            R.drawable.icon_checked,
-                            resource.data.toString().uppercase(),
-                            "Data Berhasil DiUpdate") { _, _ ->
-//                            finish()
-                        }
+                        MySnackBar.showBlack(binding?.root, resource.data.toString())
+
+                        val intent = Intent(context, UserProfileActivity::class.java)
+                        intent.putExtra(UserProfileActivity.USERNAME, dataUser?.username)
+                        startActivity(intent)
+
+                        activity?.finish()
                     }
-                    is Resource.Error -> {
+                    is MyResource.Error -> {
                         binding?.progressBar?.visibility = View.GONE
-                        MyAlertDialog.showAlertDialog(context,
-                            R.drawable.icon_cancel,
-                            "FAILED",
-                            resource.message.toString())
+                        MySnackBar.showRed(binding?.root, resource.message.toString())
                     }
                 }
             }
@@ -141,7 +151,7 @@ class UpdateUserFragment : BottomSheetDialogFragment() {
     }
 
     companion object{
-        const val EXTRA_DATA = "extra_data"
+        const val FRAGMENT_EXTRA_DATA = "extra_data"
         const val REQUEST_CODE_IMAGE = "request_code_image"
     }
 

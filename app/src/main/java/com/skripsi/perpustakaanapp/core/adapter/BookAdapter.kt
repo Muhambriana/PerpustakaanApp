@@ -21,17 +21,17 @@ class BookAdapter : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
         notifyDataSetChanged()
     }
 
-    // untuk membuat setiap item recyclerview
+    // For create every item in recyclerview
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         BookViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_list_book, parent, false))
 
-    // untuk memasukkan atau set data ke dalam view
+    // For set data to view
     override fun onBindViewHolder(holder: BookViewHolder, position: Int) {
         val book = listBook[position]
         holder.bind(book)
     }
 
-    // untuk mendapatkan jumlah data buku yang dimasukkan ke dalam adapter
+    // To get size of book inside adapter
     override fun getItemCount(): Int {
         return listBook.size
     }

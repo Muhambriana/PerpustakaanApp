@@ -1,20 +1,13 @@
 package com.skripsi.perpustakaanapp.ui
 
-import android.R.attr
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.zxing.BarcodeFormat
-import com.google.zxing.Result
-import com.google.zxing.common.BitMatrix
 import com.google.zxing.qrcode.QRCodeWriter
-import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.databinding.ActivitySettingsBinding
-import com.skripsi.perpustakaanapp.ui.home.HomeUserActivity
-import me.dm7.barcodescanner.zxing.ZXingScannerView
-import java.lang.Exception
 
 
 class SettingsActivity : AppCompatActivity() {
@@ -33,7 +26,6 @@ class SettingsActivity : AppCompatActivity() {
 
     private fun generateQRCode(): Bitmap? {
         sessionManager = SessionManager(this)
-        println("isi qr code: "+sessionManager.fetchQRCode())
         var bitmap: Bitmap? = null
         if (sessionManager.fetchQRCode() != null) {
             val writer = QRCodeWriter()

@@ -1,17 +1,10 @@
 package com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.createbook
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.MediaStore
-import android.util.Log
 import android.view.View
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.skripsi.perpustakaanapp.R
@@ -19,17 +12,14 @@ import com.skripsi.perpustakaanapp.core.MyViewModelFactory
 import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
-import com.skripsi.perpustakaanapp.core.resource.Resource
+import com.skripsi.perpustakaanapp.core.resource.MyResource
 import com.skripsi.perpustakaanapp.databinding.ActivityCreateBookBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
+import com.skripsi.perpustakaanapp.ui.MySnackBar
 import com.skripsi.perpustakaanapp.utils.ImageHelper
 import com.skripsi.perpustakaanapp.utils.PermissionCheck
 import com.skripsi.perpustakaanapp.utils.setSingleClickListener
-
-import okhttp3.MediaType
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import java.io.File
 
 class CreateBookActivity : AppCompatActivity() {
 
@@ -45,11 +35,22 @@ class CreateBookActivity : AppCompatActivity() {
         binding = ActivityCreateBookBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        firstInitialization()
+        clickListener()
+    }
+
+    private fun firstInitialization() {
+        supportActionBar?.title = "Tambah Buku Baru"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         viewModel = ViewModelProvider(this, MyViewModelFactory(LibraryRepository(client))).get(
             CreateBookViewModel::class.java
         )
-        binding.progressBar.visibility = View.INVISIBLE
 
+        binding.progressBar.visibility = View.INVISIBLE
+    }
+
+    private fun clickListener() {
         binding.buttonImage.setSingleClickListener {
             if(PermissionCheck.readExternalStorage(this)) {
                 chooseImage()
@@ -58,8 +59,8 @@ class CreateBookActivity : AppCompatActivity() {
         binding.buttonSave.setSingleClickListener {
             askAppointment()
         }
-
     }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -70,6 +71,11 @@ class CreateBookActivity : AppCompatActivity() {
                 .into(binding.imageView)
             imageMultipartBody = selectedImage?.let { ImageHelper.getImagePathByUri(this, it) }
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return super.onSupportNavigateUp()
     }
 
     private fun chooseImage() {
@@ -86,7 +92,17 @@ class CreateBookActivity : AppCompatActivity() {
                 binding.edBookTitle.requestFocus()
             }
             else -> {
-                postBookData()
+                MyAlertDialog.showWith2Event(
+                    this,
+                    null,
+                    resources.getString(R.string.data_confirmation),
+                    resources.getString(R.string.confirmation_yes),
+                    resources.getString(R.string.confirmation_no),
+                    {_,_ ->
+                        postBookData()
+                    }, {_,_ ->
+
+                    })
             }
         }
     }
@@ -104,7 +120,6 @@ class CreateBookActivity : AppCompatActivity() {
             binding.edCopies.text.toString(),
             binding.edSource.text.toString(),
             binding.edRemark.text.toString(),
-    //      binding.edPrice.text.toString().toDouble()
             (if (imageMultipartBody != null) {
                 imageMultipartBody
             }else {
@@ -115,26 +130,29 @@ class CreateBookActivity : AppCompatActivity() {
         viewModel.resourceUpdateBook.observe(this) { event ->
             event.getContentIfNotHandled().let { resource ->
                 when (resource) {
-                    is Resource.Loading -> {
+                    is MyResource.Loading -> {
                         binding.progressBar.visibility = View.VISIBLE
                     }
-                    is Resource.Success -> {
+                    is MyResource.Success -> {
                         binding.progressBar.visibility = View.GONE
-                        MyAlertDialog.showAlertDialogEvent(this, R.drawable.icon_checked, resource.data.toString().uppercase(), "Buku Berhasil Ditambahkan") { _, _  ->
-                            //clear edit text
-//                       binding.edBookTitle.text?.clear()
-                        }
+                        MySnackBar.showBlack(binding.root, resource.data.toString().uppercase())
+                        clearEditText()
                     }
-                    is Resource.Error -> {
+                    is MyResource.Error -> {
                         binding.progressBar.visibility = View.GONE
-                        MyAlertDialog.showAlertDialog(this, R.drawable.icon_cancel, "Failed", resource.message.toString())
+                        MySnackBar.showRed(binding.root, resource.message.toString())
                     }
                 }
             }
         }
     }
 
+    private fun clearEditText() {
+        binding.edBookTitle.text?.clear()
+    }
+
     companion object {
         private const val REQUEST_CODE_IMAGE = 201
+        private const val TYPE_TEXT_FLAG_CAP_CHARACTERS = 4096
     }
 }

@@ -1,17 +1,18 @@
 package com.skripsi.perpustakaanapp.ui.admin.usermanagerial.createnewadmin
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.MyViewModelFactory
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
-import com.skripsi.perpustakaanapp.core.resource.Resource
+import com.skripsi.perpustakaanapp.core.resource.MyResource
 import com.skripsi.perpustakaanapp.databinding.ActivityCreateNewAdminBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
+import com.skripsi.perpustakaanapp.ui.MySnackBar
 import com.skripsi.perpustakaanapp.utils.setSingleClickListener
 
 class CreateNewAdminActivity : AppCompatActivity() {
@@ -28,6 +29,19 @@ class CreateNewAdminActivity : AppCompatActivity() {
         binding = ActivityCreateNewAdminBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        firstInitialization()
+        clickListener()
+    }
+
+    override fun supportNavigateUpTo(upIntent: Intent) {
+        onBackPressed()
+        super.supportNavigateUpTo(upIntent)
+    }
+
+    private fun firstInitialization() {
+        supportActionBar?.title = "Tambah Admin"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         binding.rbGender.setOnCheckedChangeListener { _, i ->
             gender =
                 when(i){
@@ -43,7 +57,9 @@ class CreateNewAdminActivity : AppCompatActivity() {
         )
 
         binding.progressBar.visibility = View.INVISIBLE
+    }
 
+    private fun clickListener() {
         binding.buttonSave.setSingleClickListener {
             askAppointment()
         }
@@ -51,22 +67,30 @@ class CreateNewAdminActivity : AppCompatActivity() {
 
     private fun askAppointment() {
         val username = binding.edUsername.text.toString()
+        val password = binding.edtPassword.text.toString()
         when {
             username.isEmpty() -> {
                 binding.edUsername.error = "NISN Tidak Boleh Kosong"
                 binding.edUsername.requestFocus()
             }
-            binding.rbGender.checkedRadioButtonId.equals(-1) -> {
-                AlertDialog.Builder(this@CreateNewAdminActivity)
-                    .setTitle("Warning")
-                    .setMessage("Pilih Gender Terlebih Dahulu")
-                    .setPositiveButton("Tutup") { _, _ ->
-                        // do nothing
-                    }
-                    .show()
+            password.isEmpty() -> {
+                binding.edtPassword.error = "Password Tidak Boleh Kosong"
+            }
+            binding.rbGender.checkedRadioButtonId == -1 -> {
+                MySnackBar.showRed(binding.root, "Pilih Gender Terlbih Dahulu")
             }
             else -> {
-                postUserData()
+                MyAlertDialog.showWith2Event(
+                    this,
+                    null,
+                    resources.getString(R.string.data_confirmation),
+                    resources.getString(R.string.confirmation_yes),
+                    resources.getString(R.string.confirmation_no),
+                    {_,_ ->
+                        postUserData()
+                    }, {_,_ ->
+
+                    })
             }
         }
     }
@@ -90,16 +114,16 @@ class CreateNewAdminActivity : AppCompatActivity() {
         viewModel.resourceCreateAdmin.observe(this) { event ->
             event.getContentIfNotHandled().let { resource ->
                 when (resource) {
-                    is Resource.Loading -> {
+                    is MyResource.Loading -> {
                         binding.progressBar.visibility = View.VISIBLE
                     }
-                    is Resource.Success -> {
+                    is MyResource.Success -> {
                         binding.progressBar.visibility = View.GONE
-                        MyAlertDialog.showAlertDialog(this@CreateNewAdminActivity, R.drawable.icon_checked, "SUCCESS", "Berhasil Membuat Admin Baru")
+                        MySnackBar.showBlack(binding.root, resource.data.toString())
                     }
-                    is Resource.Error -> {
+                    is MyResource.Error -> {
                         binding.progressBar.visibility = View.GONE
-                        MyAlertDialog.showAlertDialog(this@CreateNewAdminActivity, R.drawable.icon_cancel, "ERROR", resource.message.toString())
+                        MySnackBar.showRed(binding.root, resource.message.toString())
                     }
                 }
             }

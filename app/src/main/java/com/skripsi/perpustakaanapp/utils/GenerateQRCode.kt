@@ -4,7 +4,6 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.qrcode.QRCodeWriter
-import com.skripsi.perpustakaanapp.utils.GenerateQRCode.getQRCode
 
 object GenerateQRCode {
     private fun getQRCode(text: String?): Bitmap {

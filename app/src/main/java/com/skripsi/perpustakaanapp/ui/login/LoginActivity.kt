@@ -4,18 +4,18 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.MyViewModelFactory
 import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
-import com.skripsi.perpustakaanapp.databinding.ActivityLoginBinding
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
-import com.skripsi.perpustakaanapp.core.resource.Resource
+import com.skripsi.perpustakaanapp.core.resource.MyResource
 import com.skripsi.perpustakaanapp.core.responses.LoginResponse
+import com.skripsi.perpustakaanapp.databinding.ActivityLoginBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.home.HomeAdminActivity
 import com.skripsi.perpustakaanapp.ui.home.HomeUserActivity
@@ -37,15 +37,24 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
+        firstInitialization()
+        clickListener()
+    }
+
+    private fun firstInitialization() {
         supportActionBar?.hide()
 
         viewModel = ViewModelProvider(this, MyViewModelFactory(LibraryRepository(client))).get(
             LoginViewModel::class.java
         )
+    }
 
+    private fun clickListener() {
         binding.txtSignUp.setSingleClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
-                startActivity(intent)
+            startActivity(intent)
         }
         //listener for login button
         binding.btnLogin.setSingleClickListener {
@@ -79,7 +88,7 @@ class LoginActivity : AppCompatActivity() {
             //post login data to API
             postLogin(username, password)
         } else {
-            MyAlertDialog.showAlertDialog(this, R.drawable.icon_no_connection, "No Internet Connection", "Periksa Data Seluler Atau WIFI Anda")
+            MyAlertDialog.show(this, R.drawable.icon_no_connection, "No Internet Connection", "Periksa Data Seluler Atau WIFI Anda")
         }
     }
 
@@ -93,20 +102,20 @@ class LoginActivity : AppCompatActivity() {
         viewModel.resourceLogin.observe(this) { event ->
             event.getContentIfNotHandled().let { resource ->
                 when (resource) {
-                    is Resource.Loading -> {
+                    is MyResource.Loading -> {
                         WindowTouchableHelper.disable(this)
                         binding.progressBar.visibility = View.VISIBLE
                     }
-                    is Resource.Success -> {
+                    is MyResource.Success -> {
                         WindowTouchableHelper.enable(this)
                         binding.progressBar.visibility = View.GONE
                         dataLogin = resource.data
                         startIntentDashboard()
                     }
-                    is Resource.Error ->  {
+                    is MyResource.Error ->  {
                         WindowTouchableHelper.enable(this)
                         binding.progressBar.visibility = View.GONE
-                        MyAlertDialog.showAlertDialog(this,R.drawable.icon_cancel,"Login Gagal", resource.message.toString())
+                        MyAlertDialog.show(this,R.drawable.icon_cancel,"Login Gagal", resource.message.toString())
                     }
                 }
             }
@@ -117,7 +126,7 @@ class LoginActivity : AppCompatActivity() {
 
         val roleName: String? = dataLogin?.roleName
         val firstName: String? = dataLogin?.firstName
-        val token: String = "Bearer ${dataLogin?.token}"
+        val token = "Bearer ${dataLogin?.token}"
 
         // Save to SharedPreferences
         if (roleName != null) {

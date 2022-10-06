@@ -2,7 +2,6 @@ package com.skripsi.perpustakaanapp.core.responses
 
 import com.google.gson.annotations.SerializedName
 import com.skripsi.perpustakaanapp.core.models.Book
-import com.skripsi.perpustakaanapp.core.models.FavoriteBook
 
 data class ListBookResponse(
 

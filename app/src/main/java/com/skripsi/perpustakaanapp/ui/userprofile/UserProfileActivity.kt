@@ -1,12 +1,12 @@
 package com.skripsi.perpustakaanapp.ui.userprofile
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.signature.ObjectKey
@@ -16,9 +16,10 @@ import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.models.User
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
-import com.skripsi.perpustakaanapp.core.resource.Resource
+import com.skripsi.perpustakaanapp.core.resource.MyResource
 import com.skripsi.perpustakaanapp.databinding.ActivityUserProfileBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
+import com.skripsi.perpustakaanapp.ui.MySnackBar
 import com.skripsi.perpustakaanapp.ui.admin.usermanagerial.updateuser.UpdateUserFragment
 import com.skripsi.perpustakaanapp.utils.ImageHelper
 import com.skripsi.perpustakaanapp.utils.NetworkInfo.AVATAR_IMAGE_BASE_URL
@@ -42,19 +43,46 @@ class UserProfileActivity : AppCompatActivity() {
         binding = ActivityUserProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
         firstInitialization()
         setDataToModels()
         setButtonListener()
+    }
+
+    private fun firstInitialization() {
+        //when still loading the data, action bar will show nothing
+        supportActionBar?.title = ""
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        binding.progressBar.visibility = View.GONE
+
+        sessionManager = SessionManager(this)
+
+        viewModel = ViewModelProvider(this, MyViewModelFactory(LibraryRepository(client))).get(
+            UserProfileViewModel::class.java
+        )
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return super.onSupportNavigateUp()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_IMAGE) {
             val selectedImage = data?.data
-            imageMultipartBody = selectedImage?.let { ImageHelper.getImagePathByUri(this, it) }
-            uploadImage()
+            MyAlertDialog.showWith2Event(
+                this,
+                null,
+                resources.getString(R.string.change_image_confirmation),
+                resources.getString(R.string.confirmation_yes),
+                resources.getString(R.string.confirmation_no),
+                {_,_ ->
+                    imageMultipartBody = selectedImage?.let { ImageHelper.getImagePathByUri(this, it) }
+                    uploadImage()
+                }, {_,_ ->
+
+                })
         }
     }
 
@@ -64,15 +92,16 @@ class UserProfileActivity : AppCompatActivity() {
         viewModel.resourceUpdateImage.observe(this) { event ->
             event.getContentIfNotHandled().let { resource ->
                 when(resource) {
-                    is Resource.Loading -> {
+                    is MyResource.Loading -> {
                         binding.progressBar.visibility = View.VISIBLE
                     }
-                    is Resource.Success -> {
+                    is MyResource.Success -> {
                         binding.progressBar.visibility = View.GONE
                         restartActivity()
                     }
-                    is Resource.Error -> {
+                    is MyResource.Error -> {
                         binding.progressBar.visibility = View.GONE
+                        MySnackBar.showRed(binding.root, resource.message.toString())
                     }
                 }
             }
@@ -84,9 +113,9 @@ class UserProfileActivity : AppCompatActivity() {
         detailUser?.avatar = "${detailUser?.username}.png"
 
         val intent = Intent(this, UserProfileActivity::class.java)
-        intent.putExtra(UserProfileActivity.EXTRA_DATA, detailUser)
+        intent.putExtra(EXTRA_DATA, detailUser)
 
-        // Finish this activity before restrat
+        // Finish this activity before restart
         finish()
 
         // Restart
@@ -121,7 +150,17 @@ class UserProfileActivity : AppCompatActivity() {
                 true
             }
             R.id.delete_menu -> {
-                deleteMember()
+                MyAlertDialog.showWith2Event(
+                    this,
+                    null,
+                    resources.getString(R.string.delete_confirmation),
+                    resources.getString(R.string.confirmation_yes),
+                    resources.getString(R.string.confirmation_no),
+                    {_,_ ->
+                        deleteMember()
+                    }, {_,_ ->
+
+                    })
                 true
             }
             android.R.id.home -> {
@@ -130,19 +169,6 @@ class UserProfileActivity : AppCompatActivity() {
             }
             else -> true
         }
-    }
-
-    private fun firstInitialization() {
-        //when still loading the data, action bar will show nothing
-        supportActionBar?.title = ""
-
-        binding.progressBar.visibility = View.GONE
-
-        sessionManager = SessionManager(this)
-
-        viewModel = ViewModelProvider(this, MyViewModelFactory(LibraryRepository(client))).get(
-            UserProfileViewModel::class.java
-        )
     }
 
     private fun setDataToModels() {
@@ -164,26 +190,19 @@ class UserProfileActivity : AppCompatActivity() {
         viewModel.resourceDeleteMember.observe(this) { event ->
             event.getContentIfNotHandled().let { resource ->
                 when(resource) {
-                    is Resource.Loading -> {
+                    is MyResource.Loading -> {
                         binding.progressBar.visibility = View.VISIBLE
                     }
-                    is Resource.Success -> {
+                    is MyResource.Success -> {
                         binding.progressBar.visibility = View.GONE
-                        MyAlertDialog.showAlertDialogEvent(this,
-                            R.drawable.icon_checked,
-                            resource.data.toString().uppercase(),
-                            "Buku Berhasil Di Hapus")
-                        { _, _ ->
-                            setResult(RESULT_OK) //set return data is "RESULT_OK" after success deleted
-                            finish()
-                        }
+                        MySnackBar.showBlack(binding.root, resource.data.toString())
+                        setResult(RESULT_OK) //set return data is "RESULT_OK" after success deleted
+                        finish()
+
                     }
-                    is Resource.Error -> {
+                    is MyResource.Error -> {
                         binding.progressBar.visibility = View.GONE
-                        MyAlertDialog.showAlertDialog(this,
-                            R.drawable.icon_cancel,
-                            "FAILED",
-                            resource.message.toString())
+                        MySnackBar.showRed(binding.root, resource.message.toString())
                     }
                 }
             }
@@ -191,7 +210,11 @@ class UserProfileActivity : AppCompatActivity() {
     }
 
     private fun updateMember(){
+        val bundle = Bundle()
+        bundle.putParcelable(UpdateUserFragment.FRAGMENT_EXTRA_DATA, detailUser)
+
         val bottomDialogFragment = UpdateUserFragment()
+        bottomDialogFragment.arguments = bundle
         bottomDialogFragment.show(supportFragmentManager, "UpdateUserFragment")
     }
 
@@ -201,10 +224,10 @@ class UserProfileActivity : AppCompatActivity() {
         viewModel.resourceDetailUser.observe(this) { event ->
             event.getContentIfNotHandled()?.let { resource ->
                 when (resource) {
-                    is Resource.Loading -> {
+                    is MyResource.Loading -> {
                         //progress bar
                     }
-                    is Resource.Success -> {
+                    is MyResource.Success -> {
                         detailUser = resource.data
                         showDetailUser()
                     }
@@ -232,7 +255,7 @@ class UserProfileActivity : AppCompatActivity() {
         binding.tvFirstName.text = detailUser?.firstName
         binding.tvLastName.text = detailUser?.lastName
         binding.tvEmail.text = detailUser?.email
-        binding.textPhoneNo.text = detailUser?.phoneNo
+        binding.tvPhoneNo.text = detailUser?.phoneNo
         binding.tvAddress.text = detailUser?.address
         binding.tvGender.text = recognizeGender()
     }
@@ -242,7 +265,7 @@ class UserProfileActivity : AppCompatActivity() {
             Glide.with(this)
                 .load(AVATAR_IMAGE_BASE_URL+detailUser?.avatar)
                 .signature(ObjectKey(System.currentTimeMillis().toString()))
-                .fitCenter()
+                .centerCrop()
                 .into(imageView)
         }
     }

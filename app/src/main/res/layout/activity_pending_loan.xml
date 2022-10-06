@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.admin.loanmanagerial.pendingloan.PendingLoanActivity"
+    tools:context=".ui.admin.pendingloan.PendingLoanActivity"
     android:fitsSystemWindows="true">
 
     <androidx.recyclerview.widget.RecyclerView

@@ -1,10 +1,9 @@
 package com.skripsi.perpustakaanapp.ui.member.loanhistory
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.MyViewModelFactory
@@ -12,7 +11,7 @@ import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.core.adapter.LoanHistoryAdapter
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
-import com.skripsi.perpustakaanapp.core.resource.Resource
+import com.skripsi.perpustakaanapp.core.resource.MyResource
 import com.skripsi.perpustakaanapp.databinding.ActivityLoanHistoryBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.book.detailbook.DetailBookActivity
@@ -32,13 +31,23 @@ class LoanHistoryActivity : AppCompatActivity() {
         binding = ActivityLoanHistoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        firstInitialization()
+        getHistoryLoanData()
+        onClickListener()
+    }
+
+    private fun firstInitialization() {
+        supportActionBar?.title = "History Peminjaman"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         viewModel = ViewModelProvider(this, MyViewModelFactory(LibraryRepository(client))).get(
             LoanHistoryViewModel::class.java
         )
+    }
 
-        getHistoryLoanData()
-
-        onClickListener()
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return super.onSupportNavigateUp()
     }
 
     private fun onClickListener() {
@@ -62,17 +71,17 @@ class LoanHistoryActivity : AppCompatActivity() {
         viewModel.resourceHistoryLoan.observe(this) { event ->
             event.getContentIfNotHandled()?.let { resource ->
                 when (resource) {
-                    is Resource.Loading -> {
+                    is MyResource.Loading -> {
                         binding.progressBar.visibility = View.VISIBLE
                     }
-                    is Resource.Success -> {
+                    is MyResource.Success -> {
                         binding.rvHistoryLoan.adapter = loanHistoryAdapter
                         binding.progressBar.visibility = View.GONE
                         loanHistoryAdapter.setLoanHistoryList(resource.data)
                     }
-                    is Resource.Error -> {
+                    is MyResource.Error -> {
                         binding.progressBar.visibility = View.GONE
-                        MyAlertDialog.showAlertDialog(this, R.drawable.icon_cancel, "Failed", resource.message.toString())
+                        MyAlertDialog.show(this, R.drawable.icon_cancel, "Failed", resource.message.toString())
                     }
                 }
             }

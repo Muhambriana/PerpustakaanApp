@@ -12,7 +12,6 @@ import com.skripsi.perpustakaanapp.utils.setSingleClickListener
 class PendingLoanAdapter : RecyclerView.Adapter<PendingLoanAdapter.PendingLoanViewHolder>() {
 
     private var listPendingLoan = mutableListOf<PendingLoan>()
-    var onItemClick: ((PendingLoan) -> Unit)? = null
     var buttonApproveClick: ((Int) -> Unit)? = null
     var buttonRejectClick: ((Int) -> Unit)? = null
     var onMemberUsernameClick: ((String) -> Unit)? = null

@@ -4,12 +4,12 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.skripsi.perpustakaanapp.core.models.Book
-import com.skripsi.perpustakaanapp.core.models.ModelForCreateTransaction
 import com.skripsi.perpustakaanapp.core.models.ModelBookId
 import com.skripsi.perpustakaanapp.core.models.ModelForChangeStatusFavorite
+import com.skripsi.perpustakaanapp.core.models.ModelForCreateTransaction
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
-import com.skripsi.perpustakaanapp.core.resource.Event
-import com.skripsi.perpustakaanapp.core.resource.Resource
+import com.skripsi.perpustakaanapp.core.resource.MyEvent
+import com.skripsi.perpustakaanapp.core.resource.MyResource
 import com.skripsi.perpustakaanapp.core.responses.DetailBookResponse
 import com.skripsi.perpustakaanapp.core.responses.GeneralResponse
 import com.skripsi.perpustakaanapp.core.responses.StatusFavoriteResponse
@@ -19,15 +19,15 @@ import retrofit2.Response
 
 class DetailBookViewModel(private val repository: LibraryRepository) : ViewModel() {
 
-    val resourceDeleteBook = MutableLiveData<Event<Resource<String?>>>()
-    val resourceLoanBook = MutableLiveData<Event<Resource<String?>>>()
-    val resourceDetailBook = MutableLiveData<Event<Resource<Book?>>>()
-    val resourceChangeStatusFavorite = MutableLiveData<Event<Resource<String?>>>()
-    val isFavorite = MutableLiveData<Event<Boolean?>>()
+    val resourceDeleteBook = MutableLiveData<MyEvent<MyResource<String?>>>()
+    val resourceLoanBook = MutableLiveData<MyEvent<MyResource<String?>>>()
+    val resourceDetailBook = MutableLiveData<MyEvent<MyResource<Book?>>>()
+    val resourceChangeStatusFavorite = MutableLiveData<MyEvent<MyResource<String?>>>()
+    val isFavorite = MutableLiveData<MyEvent<Boolean?>>()
 
 
     fun deleteBook(token: String, bookId: String) {
-        resourceDeleteBook.postValue(Event(Resource.Loading()))
+        resourceDeleteBook.postValue(MyEvent(MyResource.Loading()))
         val modelBookId = ModelBookId(bookId)
         val post = repository.deleteBook(token, modelBookId)
         post.enqueue(object : Callback<GeneralResponse> {
@@ -36,20 +36,20 @@ class DetailBookViewModel(private val repository: LibraryRepository) : ViewModel
                 response: Response<GeneralResponse>,
             ) {
                 if (response.body()?.code == 0) {
-                    resourceDeleteBook.postValue(Event(Resource.Success(response.body()?.message)))
+                    resourceDeleteBook.postValue(MyEvent(MyResource.Success(response.body()?.message)))
                 } else {
-                    resourceDeleteBook.postValue(Event(Resource.Error(response.body()?.message)))
+                    resourceDeleteBook.postValue(MyEvent(MyResource.Error(response.body()?.message)))
                 }
             }
 
             override fun onFailure(call: Call<GeneralResponse>, t: Throwable) {
-                resourceDeleteBook.postValue(Event(Resource.Error(t.message)))
+                resourceDeleteBook.postValue(MyEvent(MyResource.Error(t.message)))
             }
         })
     }
 
     fun createTransaction(userName: String?, bookId: String?) {
-        resourceLoanBook.postValue(Event(Resource.Loading()))
+        resourceLoanBook.postValue(MyEvent(MyResource.Loading()))
         val modelForCreateTransaction = ModelForCreateTransaction(userName, bookId)
         val post = repository.createTransaction(modelForCreateTransaction)
         post.enqueue(object : Callback<GeneralResponse> {
@@ -58,20 +58,20 @@ class DetailBookViewModel(private val repository: LibraryRepository) : ViewModel
                 response: Response<GeneralResponse>,
             ) {
                 if (response.body()?.code == 0) {
-                    resourceLoanBook.postValue(Event(Resource.Success(response.body()?.message)))
+                    resourceLoanBook.postValue(MyEvent(MyResource.Success(response.body()?.message)))
                 } else {
-                    resourceLoanBook.postValue(Event(Resource.Error(response.message())))
+                    resourceLoanBook.postValue(MyEvent(MyResource.Error(response.message())))
                 }
             }
 
             override fun onFailure(call: Call<GeneralResponse>, t: Throwable) {
-                resourceLoanBook.postValue(Event(Resource.Error(t.message)))
+                resourceLoanBook.postValue(MyEvent(MyResource.Error(t.message)))
             }
         })
     }
 
     fun getDetailBook(token: String, bookId: String?) {
-        resourceDetailBook.postValue(Event(Resource.Loading()))
+        resourceDetailBook.postValue(MyEvent(MyResource.Loading()))
         val modelBookId = ModelBookId(bookId)
         val response = repository.getDetailBook(token, modelBookId)
         response.enqueue(object : Callback<DetailBookResponse> {
@@ -81,21 +81,21 @@ class DetailBookViewModel(private val repository: LibraryRepository) : ViewModel
             ) {
                 if (response.body()?.code == 0) {
                     val book = Book(null, response.body()?.title, null, null,null,null,null,null,null, response.body()?.imageUrl)
-                    resourceDetailBook.postValue(Event(Resource.Success(book)))
+                    resourceDetailBook.postValue(MyEvent(MyResource.Success(book)))
                 }
                 else {
-                    resourceDetailBook.postValue((Event(Resource.Error(response.body()?.message))))
+                    resourceDetailBook.postValue((MyEvent(MyResource.Error(response.body()?.message))))
                 }
             }
 
             override fun onFailure( call: Call<DetailBookResponse>, t: Throwable) {
-                resourceDetailBook.postValue(Event(Resource.Error(t.message)))
+                resourceDetailBook.postValue(MyEvent(MyResource.Error(t.message)))
             }
         })
     }
 
     fun changeStatusFavorite(token: String, username: String?, bookId: String?, isFavorite: Boolean?) {
-        resourceChangeStatusFavorite.postValue(Event(Resource.Loading()))
+        resourceChangeStatusFavorite.postValue(MyEvent(MyResource.Loading()))
         val data = ModelForChangeStatusFavorite(username, bookId, isFavorite)
         val response = repository.changeStatusFavorite(token, data)
         response.enqueue(object : Callback<GeneralResponse> {
@@ -104,15 +104,15 @@ class DetailBookViewModel(private val repository: LibraryRepository) : ViewModel
                 response: Response<GeneralResponse>
             ) {
                 if (response.body()?.code == 0) {
-                    resourceChangeStatusFavorite.postValue(Event(Resource.Success(response.body()?.message)))
+                    resourceChangeStatusFavorite.postValue(MyEvent(MyResource.Success(response.body()?.message)))
                 }
                 else {
-                    resourceChangeStatusFavorite.postValue(Event(Resource.Error(response.body()?.message)))
+                    resourceChangeStatusFavorite.postValue(MyEvent(MyResource.Error(response.body()?.message)))
                 }
             }
 
             override fun onFailure(call: Call<GeneralResponse>, t: Throwable) {
-                resourceChangeStatusFavorite.postValue(Event(Resource.Error(t.message)))
+                resourceChangeStatusFavorite.postValue(MyEvent(MyResource.Error(t.message)))
             }
         })
     }
@@ -126,7 +126,7 @@ class DetailBookViewModel(private val repository: LibraryRepository) : ViewModel
                 response: Response<StatusFavoriteResponse>
             ) {
                 if (response.body()?.code == 0) {
-                    isFavorite.postValue(Event(response.body()?.isFavorite))
+                    isFavorite.postValue(MyEvent(response.body()?.isFavorite))
                 }
             }
 

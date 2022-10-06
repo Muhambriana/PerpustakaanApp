@@ -1,9 +1,7 @@
 package com.skripsi.perpustakaanapp.utils
 
 import android.app.Activity
-import android.view.Window
 import android.view.WindowManager
-import com.skripsi.perpustakaanapp.ui.home.HomeUserActivity
 
 object WindowTouchableHelper {
     fun disable(activity: Activity?) {

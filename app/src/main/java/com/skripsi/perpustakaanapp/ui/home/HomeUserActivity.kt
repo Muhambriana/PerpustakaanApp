@@ -1,13 +1,13 @@
 package com.skripsi.perpustakaanapp.ui.home
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import com.skripsi.perpustakaanapp.R
@@ -15,12 +15,12 @@ import com.skripsi.perpustakaanapp.core.MyViewModelFactory
 import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
-import com.skripsi.perpustakaanapp.core.resource.Resource
+import com.skripsi.perpustakaanapp.core.resource.MyResource
 import com.skripsi.perpustakaanapp.databinding.ActivityHomeUserBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.SettingsActivity
-import com.skripsi.perpustakaanapp.ui.login.LoginActivity
 import com.skripsi.perpustakaanapp.ui.book.listbook.BookActivity
+import com.skripsi.perpustakaanapp.ui.login.LoginActivity
 import com.skripsi.perpustakaanapp.ui.member.favoritebook.FavoriteBookActivity
 import com.skripsi.perpustakaanapp.ui.member.loanhistory.LoanHistoryActivity
 import com.skripsi.perpustakaanapp.ui.userprofile.UserProfileActivity
@@ -41,6 +41,12 @@ class HomeUserActivity : AppCompatActivity() {
         binding = ActivityHomeUserBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        firstInitialization()
+        cardListener()
+
+    }
+
+    private fun firstInitialization() {
         if (intent.extras!=null){
             supportActionBar?.title = "Hi,${intent.getStringExtra("FIRST_NAME")}"
             // set avatar
@@ -49,11 +55,6 @@ class HomeUserActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, MyViewModelFactory(LibraryRepository(client))).get(
             HomeViewModel::class.java
         )
-
-        cardListener()
-//        list.addAll(MenuResource.listResource)
-//        menuAdapter =MenuAdapter(list)
-//        setUpRecyclerView()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -80,7 +81,7 @@ class HomeUserActivity : AppCompatActivity() {
         Snackbar
             .make(binding.root, "Tekan Sekali Lagi Untuk Keluar", Snackbar.LENGTH_LONG)
             .show()
-        Handler(Looper.getMainLooper()).postDelayed(Runnable { doubleBackPressed = false }, 2000)
+        Handler(Looper.getMainLooper()).postDelayed({ doubleBackPressed = false }, 2000)
     }
 
     private fun cardListener() {
@@ -125,19 +126,19 @@ class HomeUserActivity : AppCompatActivity() {
         viewModel.resourceLogout.observe(this) { event ->
             event.getContentIfNotHandled().let { resource ->
                 when (resource) {
-                    is Resource.Loading -> {
+                    is MyResource.Loading -> {
                         WindowTouchableHelper.disable(this)
                         binding.progressBar.visibility = View.VISIBLE
                     }
-                    is Resource.Success -> {
+                    is MyResource.Success -> {
                         WindowTouchableHelper.enable(this)
                         binding.progressBar.visibility = View.VISIBLE
                         startIntentBackToLogin()
                     }
-                    is Resource.Error -> {
+                    is MyResource.Error -> {
                         WindowTouchableHelper.enable(this)
                         binding.progressBar.visibility = View.GONE
-                        MyAlertDialog.showAlertDialog(this, R.drawable.icon_cancel, "ERROR", resource.message.toString())
+                        MyAlertDialog.show(this, R.drawable.icon_cancel, "ERROR", resource.message.toString())
                     }
                 }
             }
