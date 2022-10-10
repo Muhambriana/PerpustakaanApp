@@ -23,6 +23,7 @@ import com.skripsi.perpustakaanapp.databinding.ActivityBookBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.MySnackBar
 import com.skripsi.perpustakaanapp.ui.book.detailbook.DetailBookActivity
+import com.skripsi.perpustakaanapp.ui.member.favoritebook.FavoriteBookActivity
 
 
 class BookActivity : AppCompatActivity() {
@@ -54,6 +55,7 @@ class BookActivity : AppCompatActivity() {
     private fun firstInitialization() {
         supportActionBar?.title = "Daftar Buku"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+//        supportActionBar?.setIc
 
         sessionManager = SessionManager(this)
 
@@ -64,12 +66,39 @@ class BookActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.activity_book_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
 
-        // below line is to get our menu item.
-        val searchItem: MenuItem? = menu?.findItem(R.id.search_menu)
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        if (sessionManager.fetchUserRole() == "admin") {
+            val favoriteMenu = menu?.findItem(R.id.favorite_menu)
+            favoriteMenu?.isVisible = false
+        }
+        return super.onPrepareOptionsMenu(menu)
+    }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.search_menu -> {
+                searchViewListener(item)
+                true
+            }
+            R.id.favorite_menu -> {
+                val intent = Intent(this, FavoriteBookActivity::class.java)
+                startActivity(intent)
+                true
+            }
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> true
+        }
+    }
+
+    private fun searchViewListener(item: MenuItem) {
         // getting search view of our item.
-        val searchView: SearchView = searchItem?.actionView as SearchView
+        val searchView: SearchView = item.actionView as SearchView
 
         // below line is to call set on query text listener method.
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -83,7 +112,7 @@ class BookActivity : AppCompatActivity() {
             }
         })
 
-        searchItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
+        item.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
             override fun onMenuItemActionExpand(p0: MenuItem?): Boolean {
                 hideRecycleList()
                 return true
@@ -94,7 +123,6 @@ class BookActivity : AppCompatActivity() {
                 return true
             }
         })
-        return true
     }
 
 

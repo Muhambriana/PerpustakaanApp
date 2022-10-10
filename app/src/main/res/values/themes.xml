@@ -11,7 +11,7 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
-        <!-- Customize your theme here. -->
+        <!-- Customize your theme here. -->+
         <item name="actionBarStyle">@style/ActionBarStyle</item>
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
@@ -19,11 +19,13 @@
         <item name="bottomSheetDialogTheme">@style/CustomBottomSheetDialog</item>
         <item name="snackbarStyle">@style/CustomSnackBar</item>
         <item name="snackbarTextViewStyle">@style/CustomSnackBar.Text</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_back</item>
     </style>
 
     <!--Custom Style For Home Activity-->
     <style name="HomeActivityStyle" parent="Theme.PerpustakaanApp">
         <item name="actionBarStyle">@style/ActionBarStyle.Padding</item>
+        <item name="navigationIcon">@drawable/icon_user</item>
     </style>
 
     <!--Custom Action Bar Logo with Title-->
@@ -40,7 +42,7 @@
         <item name="android:paddingTop">20dp</item>
         <item name="android:gravity">left</item>
         <item name="android:layout_gravity">left</item>
-        <item name="logo">@drawable/actionbar_space</item>
+<!--        <item name="logo">@drawable/actionbar_space</item>-->
     </style>
 
     <!--Custom AllTextToWhite Color-->
@@ -104,6 +106,7 @@
         <item name="android:windowAnimationStyle">@null</item>
     </style>
 
+    <!--Custom Snack Bar-->
     <style name="CustomSnackBar" parent="Widget.MaterialComponents.Snackbar">
         <item name="android:layout_margin">45dp</item>
         <item name="animationMode">slide</item>
@@ -116,6 +119,11 @@
         <item name="android:textColor">@color/black</item>
         <item name="android:textStyle">bold</item>
     </style>
+
+    <!--Custom Navigation Up Icon-->
+<!--    <style name="NavigationUp" parent="Widge">-->
+
+<!--    </style>-->
     
     <style name="DialogTheme" parent="Theme.PerpustakaanApp">
         <item name="android:windowNoTitle">true</item>

@@ -1,62 +1,62 @@
-package com.skripsi.perpustakaanapp.ui.admin.listuser
+package com.skripsi.perpustakaanapp.ui.member.listattendance
 
-import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.MyViewModelFactory
 import com.skripsi.perpustakaanapp.core.SessionManager
+import com.skripsi.perpustakaanapp.core.adapter.AttendanceAdapter
 import com.skripsi.perpustakaanapp.core.adapter.UserAdapter
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
+import com.skripsi.perpustakaanapp.core.models.Attendance
 import com.skripsi.perpustakaanapp.core.models.User
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.core.resource.MyResource
-import com.skripsi.perpustakaanapp.databinding.ActivityUserBinding
+import com.skripsi.perpustakaanapp.databinding.ActivityAttendanceBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
-import com.skripsi.perpustakaanapp.ui.userprofile.UserProfileActivity
+import com.skripsi.perpustakaanapp.ui.home.HomeViewModel
 
-class UserActivity : AppCompatActivity() {
+class AttendanceActivity : AppCompatActivity() {
 
-    private lateinit var binding : ActivityUserBinding
+    private lateinit var binding: ActivityAttendanceBinding
     private lateinit var sessionManager: SessionManager
-    private lateinit var viewModel: UserViewModel
+    private lateinit var viewModel: AttendanceViewModel
 
     private val client = RetrofitClient
-    private val userAdapter = UserAdapter()
-    private var userData : List<User>? = null
+    private val attendanceAdapter = AttendanceAdapter()
+    private var attendanceData : List<Attendance>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityUserBinding.inflate(layoutInflater)
+        binding = ActivityAttendanceBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         firstInitialization()
-        getUserData()
+        getAttendanceData()
     }
 
     private fun firstInitialization() {
-        supportActionBar?.title = "Anggota Perpustakaan"
+        supportActionBar?.title = "Attendance"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         sessionManager = SessionManager(this)
-
         viewModel = ViewModelProvider(this, MyViewModelFactory(LibraryRepository(client))).get(
-            UserViewModel::class.java
+            AttendanceViewModel::class.java
         )
     }
 
-    override fun supportNavigateUpTo(upIntent: Intent) {
+    override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
-        super.supportNavigateUpTo(upIntent)
+        return super.onSupportNavigateUp()
     }
+    
+    private fun getAttendanceData() {
+        viewModel.getAllAttendances(sessionManager.fetchAuthToken().toString())
 
-    private fun getUserData() {
-        viewModel.getAllMember(sessionManager.fetchAuthToken().toString())
-
-        viewModel.resourceMember.observe(this) { event ->
+        viewModel.resourceAttendance.observe(this) { event ->
             event.getContentIfNotHandled().let { resource ->
                 when(resource) {
                     is MyResource.Loading -> {
@@ -64,14 +64,15 @@ class UserActivity : AppCompatActivity() {
                     }
                     is MyResource.Success -> {
                         binding.progressBar.visibility = View.GONE
-                        userData = resource.data
+                        attendanceData = resource.data
                         showRecycleList()
                     }
                     is MyResource.Error -> {
                         binding.progressBar.visibility = View.GONE
-                        MyAlertDialog.showWith2Event(this, R.drawable.icon_cancel, resource.message.toString(), resources.getString(R.string.refresh), resources.getString(R.string.back_to_dashboard),
+                        MyAlertDialog.showWith2Event(this, R.drawable.icon_cancel, resource.message.toString(), resources.getString(
+                            R.string.refresh), resources.getString(R.string.back_to_dashboard),
                             { _, _ ->
-                                getUserData()
+                                getAttendanceData()
                             },
                             { _,_ ->
                                 finish()
@@ -81,23 +82,13 @@ class UserActivity : AppCompatActivity() {
                 }
             }
         }
-
     }
 
     private fun showRecycleList() {
-        binding.rvUser.layoutManager = LinearLayoutManager(this)
-        binding.rvUser.adapter = userAdapter
-        userAdapter.setUserList(userData)
+        binding.rvHistoryLoan.layoutManager = LinearLayoutManager(this)
+        binding.rvHistoryLoan.adapter = attendanceAdapter
+        attendanceAdapter.setAttendanceList(attendanceData)
 
         // On user item click
-        userItemClick()
-    }
-
-    private fun userItemClick() {
-        userAdapter.onItemClick = {
-            val intent = Intent(this, UserProfileActivity::class.java)
-            intent.putExtra(UserProfileActivity.EXTRA_DATA, it)
-            startActivity(intent)
-        }
     }
 }

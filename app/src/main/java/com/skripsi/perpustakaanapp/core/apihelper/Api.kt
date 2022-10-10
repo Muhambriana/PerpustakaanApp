@@ -148,5 +148,9 @@ interface Api {
         @Body qrCode: ModelForAttendance
     ):Call<GeneralResponse>
 
+    @POST("attendance/list")
+    fun getAllAttendance(
+        @Header("Authorization") token: String
+    ):Call<ListAttendanceResponse>
 }
 

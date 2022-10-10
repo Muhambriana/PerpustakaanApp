@@ -7,6 +7,7 @@ import android.os.Looper
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
@@ -26,6 +27,7 @@ import com.skripsi.perpustakaanapp.ui.admin.usermanagerial.scanattendance.Scanne
 import com.skripsi.perpustakaanapp.ui.book.listbook.BookActivity
 import com.skripsi.perpustakaanapp.ui.login.LoginActivity
 
+
 class HomeAdminActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeAdminBinding
@@ -39,7 +41,13 @@ class HomeAdminActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeAdminBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+//        // Set the custom section of the ActionBar with Browse and Search.
+//        val mActionBarView = layoutInflater.inflate(R.layout.custom_action_bar, null)
+//        supportActionBar?.customView = mActionBarView
+//
+//        supportActionBar?.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
+//
+//        supportActionBar?.title = " Hi, Kamu"
         firstInitialization()
         cardListener()
     }

@@ -22,6 +22,7 @@ import com.skripsi.perpustakaanapp.ui.SettingsActivity
 import com.skripsi.perpustakaanapp.ui.book.listbook.BookActivity
 import com.skripsi.perpustakaanapp.ui.login.LoginActivity
 import com.skripsi.perpustakaanapp.ui.member.favoritebook.FavoriteBookActivity
+import com.skripsi.perpustakaanapp.ui.member.listattendance.AttendanceActivity
 import com.skripsi.perpustakaanapp.ui.member.loanhistory.LoanHistoryActivity
 import com.skripsi.perpustakaanapp.ui.userprofile.UserProfileActivity
 import com.skripsi.perpustakaanapp.utils.WindowTouchableHelper
@@ -87,20 +88,20 @@ class HomeUserActivity : AppCompatActivity() {
     private fun cardListener() {
         val clickListener = View.OnClickListener {view ->
             when (view.id){
-                R.id.card_book_list -> {
+                binding.cardBookList.id -> {
                     val intent = Intent(this, BookActivity::class.java)
                     startActivity(intent)
                 }
-                R.id.card_loan_history_member -> {
+                binding.cardLoanHistoryMember.id -> {
                     val intent = Intent(this, LoanHistoryActivity::class.java)
                     startActivity(intent)
                 }
-                R.id.card_user_profile -> {
+                binding.cardUserProfile.id -> {
                     val intent = Intent(this, UserProfileActivity::class.java)
                     startActivity(intent)
                 }
-                R.id.card_favorite_book -> {
-                    val intent = Intent(this, FavoriteBookActivity::class.java)
+                binding.cardAttendanceList.id -> {
+                    val intent = Intent(this, AttendanceActivity::class.java)
                     startActivity(intent)
                 }
                 binding.cardAttendance.id -> {
@@ -114,7 +115,7 @@ class HomeUserActivity : AppCompatActivity() {
         binding.cardBookList.setOnClickListener(clickListener)
         binding.cardLoanHistoryMember.setOnClickListener(clickListener)
         binding.cardUserProfile.setOnClickListener(clickListener)
-        binding.cardFavoriteBook.setOnClickListener(clickListener)
+        binding.cardAttendanceList.setOnClickListener(clickListener)
         binding.cardAttendance.setOnClickListener(clickListener)
     }
 

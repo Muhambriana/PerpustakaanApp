@@ -36,15 +36,9 @@ class FavoriteBookActivity : AppCompatActivity() {
 
     private fun firstInitialization() {
         supportActionBar?.title = "Buku Favorite"
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         viewModel = ViewModelProvider(this, MyViewModelFactory(LibraryRepository(client))).get(
             FavoriteBookViewModel::class.java
         )
-    }
-
-    override fun supportNavigateUpTo(upIntent: Intent) {
-        onBackPressed()
-        super.supportNavigateUpTo(upIntent)
     }
 
     private fun getFavoriteBookData() {
