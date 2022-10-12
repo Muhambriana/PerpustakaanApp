@@ -17,6 +17,7 @@ import com.skripsi.perpustakaanapp.core.resource.MyResource
 import com.skripsi.perpustakaanapp.core.responses.LoginResponse
 import com.skripsi.perpustakaanapp.databinding.ActivityLoginBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
+import com.skripsi.perpustakaanapp.ui.home.HomeActivity
 import com.skripsi.perpustakaanapp.ui.home.HomeAdminActivity
 import com.skripsi.perpustakaanapp.ui.home.HomeUserActivity
 import com.skripsi.perpustakaanapp.ui.member.register.RegisterActivity
@@ -138,10 +139,10 @@ class LoginActivity : AppCompatActivity() {
 
         // Start Activity
         if (roleName == "admin") {
-            startIntentExtraData(this, HomeAdminActivity::class.java, firstName)
+            startIntentExtraData(this, HomeActivity::class.java, firstName)
         }
         else if (roleName == "student") {
-            startIntentExtraData(this, HomeUserActivity::class.java, firstName)
+            startIntentExtraData(this, HomeActivity::class.java, firstName)
         }
     }
 

@@ -244,10 +244,18 @@ class UserProfileActivity : AppCompatActivity() {
     private fun inMemberCard() {
         setProfilePhoto(binding.imageAvatarInCard)
         binding.tvUsernameInCard.text = detailUser?.username
-        binding.tvFullNameInCard.text = "${detailUser?.firstName} ${detailUser?.lastName}"
+        binding.tvFullNameInCard.text = fullName(detailUser?.firstName, detailUser?.lastName)
         binding.tvGenderInCard.text = recognizeGender()
         binding.tvPhoneNoInCard.text = detailUser?.phoneNo
         binding.tvAddressInCard.text = detailUser?.address
+    }
+
+    private fun fullName(firstName: String?, lastName: String?): String {
+        var first = ""
+        var last = ""
+        firstName?.let { first = firstName }
+        lastName?.let { last = lastName }
+        return "$first $last"
     }
 
     private fun inUserInformation() {

@@ -1,6 +1,10 @@
 package com.skripsi.perpustakaanapp.ui.book.listbook
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -24,6 +28,13 @@ import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.MySnackBar
 import com.skripsi.perpustakaanapp.ui.book.detailbook.DetailBookActivity
 import com.skripsi.perpustakaanapp.ui.member.favoritebook.FavoriteBookActivity
+import com.skripsi.perpustakaanapp.ui.userprofile.UserProfileActivity
+import com.skripsi.perpustakaanapp.utils.NetworkInfo
+import java.io.IOException
+import java.io.InputStream
+import java.net.HttpURLConnection
+import java.net.MalformedURLException
+import java.net.URL
 
 
 class BookActivity : AppCompatActivity() {
@@ -55,7 +66,6 @@ class BookActivity : AppCompatActivity() {
     private fun firstInitialization() {
         supportActionBar?.title = "Daftar Buku"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-//        supportActionBar?.setIc
 
         sessionManager = SessionManager(this)
 
@@ -85,6 +95,7 @@ class BookActivity : AppCompatActivity() {
             }
             R.id.favorite_menu -> {
                 val intent = Intent(this, FavoriteBookActivity::class.java)
+                intent.putExtra(UserProfileActivity.USERNAME, sessionManager.fetchUsername())
                 startActivity(intent)
                 true
             }

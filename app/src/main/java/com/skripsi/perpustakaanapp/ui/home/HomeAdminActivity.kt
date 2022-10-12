@@ -4,12 +4,17 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
+import com.bumptech.glide.signature.ObjectKey
+import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.MyViewModelFactory
@@ -26,6 +31,8 @@ import com.skripsi.perpustakaanapp.ui.admin.usermanagerial.createnewadmin.Create
 import com.skripsi.perpustakaanapp.ui.admin.usermanagerial.scanattendance.ScannerActivity
 import com.skripsi.perpustakaanapp.ui.book.listbook.BookActivity
 import com.skripsi.perpustakaanapp.ui.login.LoginActivity
+import com.skripsi.perpustakaanapp.ui.userprofile.UserProfileActivity
+import com.skripsi.perpustakaanapp.utils.NetworkInfo
 
 
 class HomeAdminActivity : AppCompatActivity() {
@@ -37,24 +44,68 @@ class HomeAdminActivity : AppCompatActivity() {
 
     private val client = RetrofitClient
 
+    var drawerLayout: DrawerLayout? = null
+    var navigationView: NavigationView? = null
+    var slideState: Boolean = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeAdminBinding.inflate(layoutInflater)
         setContentView(binding.root)
-//        // Set the custom section of the ActionBar with Browse and Search.
-//        val mActionBarView = layoutInflater.inflate(R.layout.custom_action_bar, null)
-//        supportActionBar?.customView = mActionBarView
-//
-//        supportActionBar?.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
-//
-//        supportActionBar?.title = " Hi, Kamu"
+
+        setSideNavigation()
         firstInitialization()
         cardListener()
     }
 
+    private fun setSideNavigation() {
+        drawerLayout = findViewById<View>(R.id.drawer_layout) as DrawerLayout
+        drawerLayout?.setDrawerListener(object : ActionBarDrawerToggle(this,
+            drawerLayout,
+            null,
+            0,
+            0) {
+            override fun onDrawerClosed(drawerView: View) {
+                super.onDrawerClosed(drawerView)
+                slideState = false //is Closed
+            }
+
+            override fun onDrawerOpened(drawerView: View) {
+                super.onDrawerOpened(drawerView)
+                slideState = true //is Opened
+            }
+        })
+
+        navigationView = findViewById<View>(R.id.nav_view) as NavigationView
+
+        // if user select item from the navigation view it will be detected here
+
+        // if user select item from the navigation view it will be detected here
+        navigationView?.setNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.item1 -> {
+                    val intent = Intent(this, BookActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                R.id.item2 -> {
+                    println("item 2 selected")
+                    true
+                } else -> false
+            }
+
+        }
+    }
+
     private fun firstInitialization() {
+        supportActionBar?.hide()
+        setSupportActionBar(binding.myToolbar)
+
+        sessionManager = SessionManager(this)
+
         if (intent.extras!=null){
-            supportActionBar?.title = "Hi, ${intent.getStringExtra("FIRST_NAME")}"
+            binding.toolbarTitle.text = "Hi, ${intent.getStringExtra("FIRST_NAME")}"
+            userProfile()
         }
 
         viewModel = ViewModelProvider(this, MyViewModelFactory(LibraryRepository(client))).get(
@@ -71,6 +122,14 @@ class HomeAdminActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.logout_menu -> {
                 userLogout()
+                true
+            }
+            R.id.side_bar_nav -> {
+                if(slideState){
+                    drawerLayout?.closeDrawer(Gravity.RIGHT)
+                }else {
+                    drawerLayout?.openDrawer(Gravity.RIGHT)
+                }
                 true
             }
             else -> true
@@ -126,7 +185,6 @@ class HomeAdminActivity : AppCompatActivity() {
     }
 
     private fun userLogout() {
-        sessionManager = SessionManager(this)
 
         viewModel.userLogout(sessionManager.fetchAuthToken().toString())
 
@@ -149,10 +207,25 @@ class HomeAdminActivity : AppCompatActivity() {
         }
     }
 
+    private fun userProfile() {
+        Glide.with(this)
+            .load(NetworkInfo.AVATAR_IMAGE_BASE_URL+intent.getStringExtra("AVATAR"))
+            .signature(ObjectKey(System.currentTimeMillis().toString()))
+            .centerCrop()
+            .into(binding.toolbarIcon)
+        binding.toolbarIcon.setOnClickListener {
+            val intent = Intent(this, UserProfileActivity::class.java)
+            intent.putExtra(UserProfileActivity.USERNAME, sessionManager.fetchUsername())
+            startActivity(intent)
+        }
+    }
+
     private fun startIntentBackToLogin() {
         val intent = Intent(this, LoginActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
         finish()
     }
+
+
 }

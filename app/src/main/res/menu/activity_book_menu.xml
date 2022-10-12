@@ -6,7 +6,7 @@
         android:id="@+id/search_menu"
         android:textCursorDrawable="@null"
         android:title="@string/search"
-        android:icon="@drawable/icon_search"
+        android:icon="@drawable/ic_search"
         app:iconifiedByDefault="false"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="collapseActionView|always"
@@ -16,5 +16,8 @@
     <item
         android:id="@+id/favorite_menu"
         android:icon="@drawable/ic_icon_favorite_true"
-        app:showAsAction="always"/>
+        android:textCursorDrawable="@null"
+        android:title="Favorite"
+        app:iconifiedByDefault="false"
+        app:showAsAction="collapseActionView|always" />
 </menu>

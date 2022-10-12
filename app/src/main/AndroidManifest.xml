@@ -18,6 +18,10 @@
         android:theme="@style/Theme.PerpustakaanApp"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.home.HomeActivity"
+            android:exported="false"
+            android:theme="@style/Theme.PerpustakaanApp.NoActionBar"/>
+        <activity
             android:name=".ui.member.listattendance.AttendanceActivity"
             android:exported="false" />
         <activity
@@ -44,11 +48,11 @@
         <activity
             android:name=".ui.home.HomeUserActivity"
             android:exported="false"
-            android:theme="@style/HomeActivityStyle"></activity>
+            android:theme="@style/HomeActivityStyle" />
         <activity
             android:name=".ui.home.HomeAdminActivity"
             android:exported="false"
-            android:theme="@style/HomeActivityStyle"></activity>
+            android:theme="@style/HomeActivityStyle" />
         <activity
             android:name=".ui.member.register.RegisterActivity"
             android:exported="false"
