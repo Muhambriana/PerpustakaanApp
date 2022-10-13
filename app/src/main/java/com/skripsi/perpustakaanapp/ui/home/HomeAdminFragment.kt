@@ -39,10 +39,6 @@ class HomeAdminFragment : Fragment() {
     private val binding get() = fragmentHomeAdminBinding
     private val client = RetrofitClient
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -71,24 +67,6 @@ class HomeAdminFragment : Fragment() {
         viewModel = ViewModelProvider(this, MyViewModelFactory(LibraryRepository(client))).get(
             HomeViewModel::class.java
         )
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.activity_home_menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.logout_menu -> {
-                userLogout()
-                true
-            }
-            R.id.side_bar_nav -> {
-                true
-            }
-            else -> true
-        }
     }
 
     private fun cardListener() {
@@ -128,29 +106,6 @@ class HomeAdminFragment : Fragment() {
         binding?.cardScanVisitors?.setOnClickListener(clickListener)
     }
 
-    private fun userLogout() {
-
-        viewModel.userLogout(sessionManager.fetchAuthToken().toString())
-
-        viewModel.resourceLogout.observe(this) { event ->
-            event.getContentIfNotHandled().let { resource ->
-                when(resource) {
-                    is MyResource.Loading -> {
-                        binding?.progressBar?.visibility = View.VISIBLE
-                    }
-                    is MyResource.Success -> {
-                        binding?.progressBar?.visibility = View.GONE
-                        startIntentBackToLogin()
-                    }
-                    is MyResource.Error -> {
-                        binding?.progressBar?.visibility = View.GONE
-                        MyAlertDialog.show(activity, R.drawable.icon_cancel, "ERROR", resource.message.toString())
-                    }
-                }
-            }
-        }
-    }
-
     private fun userProfile() {
         binding?.toolbarIcon?.let {
             Glide.with(this)
@@ -164,12 +119,5 @@ class HomeAdminFragment : Fragment() {
             intent.putExtra(UserProfileActivity.USERNAME, sessionManager.fetchUsername())
             startActivity(intent)
         }
-    }
-
-    private fun startIntentBackToLogin() {
-        val intent = Intent(activity, LoginActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-        startActivity(intent)
-        activity?.finish()
     }
 }

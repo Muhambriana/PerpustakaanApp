@@ -229,6 +229,7 @@ class UserProfileActivity : AppCompatActivity() {
                     }
                     is MyResource.Success -> {
                         detailUser = resource.data
+                        println("ini isi avatar ${detailUser?.avatar}")
                         showDetailUser()
                     }
                 }

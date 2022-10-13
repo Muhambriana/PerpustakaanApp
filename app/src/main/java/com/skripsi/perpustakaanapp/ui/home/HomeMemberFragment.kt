@@ -38,11 +38,6 @@ class HomeMemberFragment : Fragment() {
     private val binding get() = fragmentHomMemberFragment
     private val client = RetrofitClient
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -55,7 +50,6 @@ class HomeMemberFragment : Fragment() {
         firstInitialization()
         cardListener()
     }
-
 
     private fun firstInitialization() {
         activity?.actionBar?.hide()
@@ -85,21 +79,6 @@ class HomeMemberFragment : Fragment() {
             val intent = Intent(activity, UserProfileActivity::class.java)
             intent.putExtra(UserProfileActivity.USERNAME, sessionManager.fetchUsername())
             startActivity(intent)
-        }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.activity_home_menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.logout_menu -> {
-                userLogout()
-                true
-            }
-            else -> true
         }
     }
 
@@ -135,40 +114,6 @@ class HomeMemberFragment : Fragment() {
         binding?.cardUserProfile?.setOnClickListener(clickListener)
         binding?.cardAttendanceList?.setOnClickListener(clickListener)
         binding?.cardAttendance?.setOnClickListener(clickListener)
-    }
-
-    private fun userLogout() {
-        sessionManager = SessionManager(requireContext())
-
-        viewModel.userLogout(token = sessionManager.fetchAuthToken().toString())
-
-        viewModel.resourceLogout.observe(this) { event ->
-            event.getContentIfNotHandled().let { resource ->
-                when (resource) {
-                    is MyResource.Loading -> {
-                        WindowTouchableHelper.disable(activity)
-                        binding?.progressBar?.visibility = View.VISIBLE
-                    }
-                    is MyResource.Success -> {
-                        WindowTouchableHelper.enable(activity)
-                        binding?.progressBar?.visibility = View.VISIBLE
-                        startIntentBackToLogin()
-                    }
-                    is MyResource.Error -> {
-                        WindowTouchableHelper.enable(activity)
-                        binding?.progressBar?.visibility = View.GONE
-                        MyAlertDialog.show(context, R.drawable.icon_cancel, "ERROR", resource.message.toString())
-                    }
-                }
-            }
-        }
-    }
-
-    private fun startIntentBackToLogin() {
-        val intent = Intent(activity, LoginActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-        startActivity(intent)
-        activity?.finish()
     }
 
 }

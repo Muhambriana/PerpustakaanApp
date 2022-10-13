@@ -10,11 +10,35 @@ data class DetailBookResponse(
     @SerializedName("message")
     val message : String? = null,
 
-    @SerializedName("title")
-    val title : String? = null,
+    @field:SerializedName("id")
+    val bookId: String? = null,
 
-    @SerializedName("imageUrl")
-    val imageUrl : String? = null
+    @field:SerializedName("title")
+    val title: String? = null,
+
+    @field:SerializedName("edition")
+    val edition: String? = null,
+
+    @field:SerializedName("author")
+    val author: String? = null,
+
+    @field:SerializedName("publisher")
+    val publisher: String? = null,
+
+    @field:SerializedName("publisherDate")
+    val publisherDate: String? = null,
+
+    @field:SerializedName("stock")
+    val stock: String? = null,
+
+    @field:SerializedName("source")
+    val source: String? = null,
+
+    @field:SerializedName("remark")
+    val remark: String? = null,
+
+    @field:SerializedName("imageUrl")
+    val imageUrl: String? = null,
 
 )
 
@@ -26,7 +50,31 @@ data class DetailUserResponse(
     @SerializedName("message")
     val message : String? = null,
 
-    @SerializedName("firstName")
-    val firstName : String? = null
+    @field:SerializedName("username")
+    val username: String? = null,
+
+    @field:SerializedName("firstName")
+    val firstName: String? = null,
+
+    @field:SerializedName("lastName")
+    val lastName: String? = null,
+
+    @field:SerializedName("roleName")
+    val roleName: String? = null,
+
+    @field:SerializedName("email")
+    val email: String? = null,
+
+    @field:SerializedName("phoneNo")
+    val phoneNo: String? = null,
+
+    @field:SerializedName("address")
+    val address: String? = null,
+
+    @field:SerializedName("gender")
+    val gender: Int? = null,
+
+    @field:SerializedName("avatar")
+    var avatar: String? = null
 
 )

@@ -5,8 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.HomeAdminFragment"
-    android:fitsSystemWindows="true">
+    tools:context=".ui.home.HomeAdminFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/my_toolbar"
@@ -57,7 +56,6 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="110dp"
-            android:layout_marginBottom="60dp"
             android:alignmentMode="alignMargins"
             android:columnCount="2"
             android:columnOrderPreserved="false"
