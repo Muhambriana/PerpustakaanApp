@@ -46,14 +46,6 @@
             android:name=".ui.admin.usermanagerial.createnewadmin.CreateNewAdminActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.home.HomeUserActivity"
-            android:exported="false"
-            android:theme="@style/HomeActivityStyle" />
-        <activity
-            android:name=".ui.home.HomeAdminActivity"
-            android:exported="false"
-            android:theme="@style/HomeActivityStyle" />
-        <activity
             android:name=".ui.member.register.RegisterActivity"
             android:exported="false"
             android:theme="@style/TextColorWhite" />

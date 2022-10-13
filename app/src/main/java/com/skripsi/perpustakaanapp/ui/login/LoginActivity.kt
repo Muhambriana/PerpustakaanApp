@@ -18,8 +18,6 @@ import com.skripsi.perpustakaanapp.core.responses.LoginResponse
 import com.skripsi.perpustakaanapp.databinding.ActivityLoginBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.home.HomeActivity
-import com.skripsi.perpustakaanapp.ui.home.HomeAdminActivity
-import com.skripsi.perpustakaanapp.ui.home.HomeUserActivity
 import com.skripsi.perpustakaanapp.ui.member.register.RegisterActivity
 import com.skripsi.perpustakaanapp.utils.WindowTouchableHelper
 import com.skripsi.perpustakaanapp.utils.setSingleClickListener

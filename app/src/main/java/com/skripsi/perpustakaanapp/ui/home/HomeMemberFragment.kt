@@ -52,34 +52,11 @@ class HomeMemberFragment : Fragment() {
     }
 
     private fun firstInitialization() {
-        activity?.actionBar?.hide()
-        (activity as AppCompatActivity?)?.setSupportActionBar(binding?.myToolbar)
-
         sessionManager = SessionManager(requireContext())
-
-        if (activity?.intent?.extras!=null){
-            binding?.toolbarTitle?.text = "Hi, ${activity?.intent?.getStringExtra("FIRST_NAME")}"
-            userProfile()
-        }
 
         viewModel = ViewModelProvider(this, MyViewModelFactory(LibraryRepository(client))).get(
             HomeViewModel::class.java
         )
-    }
-
-    private fun userProfile() {
-        binding?.toolbarIcon?.let {
-            Glide.with(this)
-                .load(NetworkInfo.AVATAR_IMAGE_BASE_URL+activity?.intent?.getStringExtra("AVATAR"))
-                .signature(ObjectKey(System.currentTimeMillis().toString()))
-                .centerCrop()
-                .into(it)
-        }
-        binding?.toolbarIcon?.setOnClickListener {
-            val intent = Intent(activity, UserProfileActivity::class.java)
-            intent.putExtra(UserProfileActivity.USERNAME, sessionManager.fetchUsername())
-            startActivity(intent)
-        }
     }
 
     private fun cardListener() {

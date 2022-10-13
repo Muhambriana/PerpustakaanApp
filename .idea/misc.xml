@@ -7,11 +7,13 @@
         <entry key="..\:/BACKUP/AndroidStudioProjectSkripsi/PerpustakaanApp/app/src/main/res/layout/activity_home.xml" value="0.22826086956521738" />
         <entry key="..\:/BACKUP/AndroidStudioProjectSkripsi/PerpustakaanApp/app/src/main/res/layout/item_book.xml" value="0.22826086956521738" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/drawable-v24/card_bg.xml" value="0.1285" />
+        <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/drawable-v24/card_item_menu.xml" value="0.2395" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/drawable-v24/card_selector.xml" value="0.1285" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/drawable-v24/card_state.xml" value="0.2395" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/drawable/actionbar_space.xml" value="0.2395" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/drawable/button_custom.xml" value="0.2395" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/drawable/card_item.xml" value="0.2395" />
+        <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/drawable/card_item_menu.xml" value="0.2395" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/drawable/edit_text_corner.xml" value="0.2395" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/drawable/home_gradient_1.xml" value="0.2395" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/drawable/home_gradient_4.xml" value="0.2395" />
@@ -32,8 +34,8 @@
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/activity_detail_book.xml" value="0.4" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/activity_favorite_book.xml" value="0.23333333333333334" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/activity_history_loan.xml" value="0.12817028985507245" />
-        <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/activity_home.xml" value="0.1203125" />
-        <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/activity_home_admin.xml" value="0.264" />
+        <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/activity_home.xml" value="0.264" />
+        <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/activity_home_admin.xml" value="0.14414414414414414" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/activity_home_user.xml" value="0.264" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/activity_loan.xml" value="0.22271714922049" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/activity_login.xml" value="0.264" />
@@ -47,6 +49,7 @@
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/activity_user.xml" value="0.23333333333333334" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/activity_user_profile.xml" value="0.264" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/app_bar_side_nav.xml" value="0.24635416666666668" />
+        <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/content_main.xml" value="0.22509057971014493" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/content_side_nav.xml" value="0.1203125" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/custom_action_bar.xml" value="0.23333333333333334" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/detail_menu.xml" value="0.19153484395040615" />
@@ -67,6 +70,8 @@
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/item_list_pendingloan.xml" value="0.536" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/item_list_user.xml" value="0.1" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/item_menu.xml" value="0.1" />
+        <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/main_navigation.xml" value="0.23333333333333334" />
+        <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/my_toolbar_main.xml" value="0.23333333333333334" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/nav_header.xml" value="0.13541666666666666" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/nav_header_side_nav.xml" value="0.13541666666666666" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/menu-v26/activity_book_menu.xml" value="0.23333333333333334" />
@@ -82,6 +87,7 @@
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/menu/option_menu.xml" value="0.2" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/menu/s_ide_nav.xml" value="0.264" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/menu/side_nav.xml" value="0.23333333333333334" />
+        <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/menu/side_nav_menu.xml" value="0.23333333333333334" />
       </map>
     </option>
   </component>

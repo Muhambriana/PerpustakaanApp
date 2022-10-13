@@ -5,12 +5,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.text.format.DateFormat
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
+import com.bumptech.glide.signature.ObjectKey
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.skripsi.perpustakaanapp.R
@@ -19,14 +21,17 @@ import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.core.resource.MyResource
-import com.skripsi.perpustakaanapp.databinding.ActivityHomeAdminBinding
 import com.skripsi.perpustakaanapp.databinding.ActivityHomeBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.MySnackBar
 import com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.updatebook.UpdateBookFragment
 import com.skripsi.perpustakaanapp.ui.book.detailbook.ViewImageFragment
 import com.skripsi.perpustakaanapp.ui.login.LoginActivity
+import com.skripsi.perpustakaanapp.ui.userprofile.UserProfileActivity
+import com.skripsi.perpustakaanapp.utils.NetworkInfo
 import com.skripsi.perpustakaanapp.utils.WindowTouchableHelper
+import java.text.SimpleDateFormat
+import java.util.*
 
 class HomeActivity : AppCompatActivity() {
 
@@ -45,7 +50,44 @@ class HomeActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, MyViewModelFactory(LibraryRepository(RetrofitClient))).get(
             HomeViewModel::class.java
         )
+
+        getDateNow()
+        firstInitialization()
         setBottomNav()
+    }
+
+    private fun getDateNow() {
+        val date = Calendar.getInstance().time
+        val dateFormat = DateFormat.format("d MMMM yyyy", date) as String
+        val today = DateFormat.format("EEEE", date) as String
+        val dateNow = "$today, $dateFormat"
+
+        binding.tvDate.text = dateNow
+    }
+
+    private fun firstInitialization() {
+        supportActionBar?.hide()
+        setSupportActionBar(binding.myToolbar)
+
+        sessionManager = SessionManager(this)
+
+        if (intent?.extras!=null){
+            binding.toolbarTitle.text = "Hi, ${intent?.getStringExtra("FIRST_NAME")}"
+            userProfile()
+        }
+    }
+
+    private fun userProfile() {
+        Glide.with(this)
+            .load(NetworkInfo.AVATAR_IMAGE_BASE_URL+intent.getStringExtra("AVATAR"))
+            .signature(ObjectKey(System.currentTimeMillis().toString()))
+            .centerCrop()
+            .into(binding.toolbarIcon)
+        binding.toolbarIcon.setOnClickListener {
+            val intent = Intent(this, UserProfileActivity::class.java)
+            intent.putExtra(UserProfileActivity.USERNAME, sessionManager.fetchUsername())
+            startActivity(intent)
+        }
     }
 
     private fun setBottomNav() {

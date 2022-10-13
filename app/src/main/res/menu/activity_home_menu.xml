@@ -15,7 +15,7 @@
         android:id="@+id/side_bar_nav"
         android:textCursorDrawable="@null"
         android:title="@string/search"
-        android:icon="@drawable/ic_burger"
+        android:icon="@drawable/ic_three_dots"
         app:iconifiedByDefault="false"
         app:showAsAction="collapseActionView|always"
         app:queryBackground="@null"
