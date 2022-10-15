@@ -19,7 +19,6 @@ class LoanHistoryAdapter : RecyclerView.Adapter<LoanHistoryAdapter.LoanHistoryVi
         if (loanHistoryData == null) return
         listLoanHistory.clear()
         listLoanHistory.addAll(loanHistoryData)
-        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =

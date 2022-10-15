@@ -79,7 +79,7 @@
         android:layout_marginTop="80dp"
         android:layout_above="@+id/bottomNav"
         android:layout_below="@+id/my_toolbar"
-        android:background="@drawable/custom_corner_fargment" />
+        android:background="@drawable/custom_fragment_cover" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"

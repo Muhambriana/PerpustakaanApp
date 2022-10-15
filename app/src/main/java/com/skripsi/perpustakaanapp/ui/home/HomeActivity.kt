@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.signature.ObjectKey
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.MyViewModelFactory
@@ -30,13 +29,11 @@ import com.skripsi.perpustakaanapp.ui.login.LoginActivity
 import com.skripsi.perpustakaanapp.ui.userprofile.UserProfileActivity
 import com.skripsi.perpustakaanapp.utils.NetworkInfo
 import com.skripsi.perpustakaanapp.utils.WindowTouchableHelper
-import java.text.SimpleDateFormat
 import java.util.*
 
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
-    private lateinit var bottomNav : BottomNavigationView
     private lateinit var sessionManager: SessionManager
     private lateinit var viewModel: HomeViewModel
 
@@ -51,18 +48,8 @@ class HomeActivity : AppCompatActivity() {
             HomeViewModel::class.java
         )
 
-        getDateNow()
         firstInitialization()
         setBottomNav()
-    }
-
-    private fun getDateNow() {
-        val date = Calendar.getInstance().time
-        val dateFormat = DateFormat.format("d MMMM yyyy", date) as String
-        val today = DateFormat.format("EEEE", date) as String
-        val dateNow = "$today, $dateFormat"
-
-        binding.tvDate.text = dateNow
     }
 
     private fun firstInitialization() {
@@ -74,6 +61,7 @@ class HomeActivity : AppCompatActivity() {
         if (intent?.extras!=null){
             binding.toolbarTitle.text = "Hi, ${intent?.getStringExtra("FIRST_NAME")}"
             userProfile()
+            getDateNow()
         }
     }
 
@@ -90,18 +78,26 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
+    private fun getDateNow() {
+        val date = Calendar.getInstance().time
+        val dateFormat = DateFormat.format("d MMMM yyyy", date) as String
+        val today = DateFormat.format("EEEE", date) as String
+        val dateNow = "$today, $dateFormat"
+
+        binding.tvDate.text = dateNow
+    }
+
     private fun setBottomNav() {
         showUserFragment()
-        bottomNav = binding.bottomNav
-        bottomNav.setOnItemSelectedListener{
+        binding.bottomNav.menu.findItem(R.id.home).isChecked = true
+        binding.bottomNav.setOnItemSelectedListener{
             when (it.itemId) {
-
-                R.id.home -> {
-                    showUserFragment()
+                R.id.message -> {
+                    loadFragment(CardMenuFragment())
                     true
                 }
-                R.id.message -> {
-                    loadFragment(ViewImageFragment())
+                R.id.home -> {
+                    showUserFragment()
                     true
                 }
                 R.id.settings -> {

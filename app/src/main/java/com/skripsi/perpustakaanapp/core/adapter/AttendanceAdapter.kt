@@ -17,7 +17,6 @@ class AttendanceAdapter: RecyclerView.Adapter<AttendanceAdapter.AttendanceViewHo
         if (attendances == null) return
         listAttendance.clear()
         listAttendance.addAll(attendances)
-        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =

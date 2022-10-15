@@ -18,7 +18,6 @@ class BookAdapter : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
         if (books == null) return
         listBook.clear()
         listBook.addAll(books)
-        notifyDataSetChanged()
     }
 
     // For create every item in recyclerview

@@ -21,7 +21,6 @@ class PendingLoanAdapter : RecyclerView.Adapter<PendingLoanAdapter.PendingLoanVi
         if (pendingLoanData == null) return
         listPendingLoan.clear()
         listPendingLoan.addAll(pendingLoanData)
-        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
