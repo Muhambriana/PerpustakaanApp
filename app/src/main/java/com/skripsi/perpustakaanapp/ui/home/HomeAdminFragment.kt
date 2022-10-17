@@ -6,15 +6,19 @@ import android.os.Handler
 import android.os.Looper
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.signature.ObjectKey
 import com.google.android.material.snackbar.Snackbar
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.MyViewModelFactory
 import com.skripsi.perpustakaanapp.core.SessionManager
+import com.skripsi.perpustakaanapp.core.adapter.CardMenuAdapter
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
+import com.skripsi.perpustakaanapp.core.models.CardMenu
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.core.resource.MyResource
 import com.skripsi.perpustakaanapp.databinding.FragmentHomeAdminBinding
@@ -26,18 +30,19 @@ import com.skripsi.perpustakaanapp.ui.admin.usermanagerial.createnewadmin.Create
 import com.skripsi.perpustakaanapp.ui.admin.usermanagerial.scanattendance.ScannerActivity
 import com.skripsi.perpustakaanapp.ui.book.listbook.BookActivity
 import com.skripsi.perpustakaanapp.ui.login.LoginActivity
+import com.skripsi.perpustakaanapp.ui.member.listattendance.AttendanceActivity
 import com.skripsi.perpustakaanapp.ui.userprofile.UserProfileActivity
 import com.skripsi.perpustakaanapp.utils.NetworkInfo
 
 
 class HomeAdminFragment : Fragment() {
 
-    private lateinit var sessionManager: SessionManager
-    private lateinit var viewModel: HomeViewModel
-
     private var fragmentHomeAdminBinding: FragmentHomeAdminBinding? = null
     private val binding get() = fragmentHomeAdminBinding
-    private val client = RetrofitClient
+
+    private var models: MutableList<CardMenu>? = null
+    private var adapter: CardMenuAdapter? = null
+    private var viewPager: ViewPager? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,76 +53,69 @@ class HomeAdminFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        firstInitialization()
-        firstInitialization()
-        cardListener()
+        setDefaultMenuListener()
+        setModels()
+        setAdapter()
+        setMenu()
     }
 
-    private fun firstInitialization() {
-//        activity?.actionBar?.hide()
-//        (activity as AppCompatActivity?)?.setSupportActionBar(binding?.myToolbar)
-
-        sessionManager = SessionManager(requireContext())
-
-        if (activity?.intent?.extras!=null){
-//            binding?.toolbarTitle?.text = "Hi, ${activity?.intent?.getStringExtra("FIRST_NAME")}"
-//            userProfile()
-        }
-
-        viewModel = ViewModelProvider(this, MyViewModelFactory(LibraryRepository(client))).get(
-            HomeViewModel::class.java
-        )
-    }
-
-    private fun cardListener() {
+    private fun setDefaultMenuListener() {
         val clickListener = View.OnClickListener { view ->
             when (view.id){
-                binding?.cardCreateBook?.id -> {
+                binding?.cardMenuCreateBook?.id -> {
                     val intent = Intent(activity, CreateBookActivity::class.java)
                     startActivity(intent)
                 }
-                binding?.cardCreateAdmin?.id -> {
+                binding?.cardMenuCreateAdmin?.id -> {
                     val intent = Intent(activity, CreateNewAdminActivity::class.java)
                     startActivity(intent)
                 }
-                binding?.cardBookList?.id -> {
+                binding?.cardMenuListBook?.id -> {
                     val intent = Intent(activity, BookActivity::class.java)
                     startActivity(intent)
                 }
-                binding?.cardPendingLoanList?.id -> {
-                    val intent = Intent(activity, PendingLoanActivity::class.java)
-                    startActivity(intent)
-                }
-                binding?.cardUserList?.id -> {
+                binding?.cardMenuListUser?.id -> {
                     val intent = Intent(activity, UserActivity::class.java)
-                    startActivity(intent)
-                }
-                binding?.cardScanVisitors?.id -> {
-                    val intent = Intent(activity, ScannerActivity::class.java)
                     startActivity(intent)
                 }
             }
         }
-        binding?.cardCreateBook?.setOnClickListener(clickListener)
-        binding?.cardCreateAdmin?.setOnClickListener(clickListener)
-        binding?.cardBookList?.setOnClickListener(clickListener)
-        binding?.cardPendingLoanList?.setOnClickListener(clickListener)
-        binding?.cardUserList?.setOnClickListener(clickListener)
-        binding?.cardScanVisitors?.setOnClickListener(clickListener)
+        binding?.cardMenuCreateBook?.setOnClickListener(clickListener)
+        binding?.cardMenuCreateAdmin?.setOnClickListener(clickListener)
+        binding?.cardMenuListBook?.setOnClickListener(clickListener)
+        binding?.cardMenuListUser?.setOnClickListener(clickListener)
     }
 
-    private fun userProfile() {
-//        binding?.toolbarIcon?.let {
-//            Glide.with(this)
-//                .load(NetworkInfo.AVATAR_IMAGE_BASE_URL+activity?.intent?.getStringExtra("AVATAR"))
-//                .signature(ObjectKey(System.currentTimeMillis().toString()))
-//                .centerCrop()
-//                .into(it)
-//        }
-//        binding?.toolbarIcon?.setOnClickListener {
-//            val intent = Intent(activity, UserProfileActivity::class.java)
-//            intent.putExtra(UserProfileActivity.USERNAME, sessionManager.fetchUsername())
-//            startActivity(intent)
-//        }
+    private fun setModels() {
+        models = mutableListOf()
+        models?.add(
+            CardMenu(
+                R.drawable.ic_profile, "Menunggu Persetujuan", null, PendingLoanActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_1)))
+        models?.add(
+            CardMenu(
+                R.drawable.ic_course_book, "Sedang Dipinjam", null, UserProfileActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_2)))
+        models?.add(
+            CardMenu(
+                R.drawable.ic_course_plan, "Daftar Absen", null, AttendanceActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_3)))
+        models?.add(
+            CardMenu(
+                R.drawable.ic_attendance_recap, "Scan Pengunjung", null, ScannerActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_4)))
+        models?.add(
+            CardMenu(
+                R.drawable.ic_gpa_reult, "Scan Pengembalian Buku", null, ScannerActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_5)))
     }
+
+    private fun setAdapter() {
+        adapter = models?.let { CardMenuAdapter(it, requireContext()) }
+    }
+
+    private fun setMenu() {
+        viewPager = binding?.viewPager
+
+        viewPager?.adapter = adapter
+
+        viewPager?.setPadding(10, 0, 340, 0)
+        viewPager?.pageMargin = 20
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.skripsi.perpustakaanapp.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,8 +13,13 @@ import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.adapter.CardMenuAdapter
 import com.skripsi.perpustakaanapp.core.models.CardMenu
 import com.skripsi.perpustakaanapp.databinding.FragmentCardMenuBinding
+import com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.createbook.CreateBookActivity
+import com.skripsi.perpustakaanapp.ui.admin.listuser.UserActivity
 import com.skripsi.perpustakaanapp.ui.admin.pendingloan.PendingLoanActivity
+import com.skripsi.perpustakaanapp.ui.admin.usermanagerial.createnewadmin.CreateNewAdminActivity
+import com.skripsi.perpustakaanapp.ui.admin.usermanagerial.scanattendance.ScannerActivity
 import com.skripsi.perpustakaanapp.ui.book.listbook.BookActivity
+import com.skripsi.perpustakaanapp.ui.member.listattendance.AttendanceActivity
 import com.skripsi.perpustakaanapp.ui.userprofile.UserProfileActivity
 
 
@@ -25,7 +31,6 @@ class CardMenuFragment : Fragment() {
     private var models: MutableList<CardMenu>? = null
     private var adapter: CardMenuAdapter? = null
     private var viewPager: ViewPager? = null
-    private var viewPager2: ViewPager? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,72 +41,69 @@ class CardMenuFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        setModels1()
+        setDefaultMenuListener()
+        setModels()
         setAdapter()
-        setMenu1()
-//        models = null
-//        adapter = null
-//        setModels2()
-//        setAdapter()
-//        setMenu2()
+        setMenu()
     }
 
-    private fun setModels1() {
+    private fun setDefaultMenuListener() {
+        val clickListener = View.OnClickListener { view ->
+            when (view.id){
+                binding?.cardMenuCreateBook?.id -> {
+                    val intent = Intent(activity, CreateBookActivity::class.java)
+                    startActivity(intent)
+                }
+                binding?.cardMenuCreateAdmin?.id -> {
+                    val intent = Intent(activity, CreateNewAdminActivity::class.java)
+                    startActivity(intent)
+                }
+                binding?.cardMenuListBook?.id -> {
+                    val intent = Intent(activity, BookActivity::class.java)
+                    startActivity(intent)
+                }
+                binding?.cardMenuListUser?.id -> {
+                    val intent = Intent(activity, UserActivity::class.java)
+                    startActivity(intent)
+                }
+            }
+        }
+        binding?.cardMenuCreateBook?.setOnClickListener(clickListener)
+        binding?.cardMenuCreateAdmin?.setOnClickListener(clickListener)
+        binding?.cardMenuListBook?.setOnClickListener(clickListener)
+        binding?.cardMenuListUser?.setOnClickListener(clickListener)
+    }
+
+    private fun setModels() {
         models = mutableListOf()
         models?.add(
             CardMenu(
-                R.drawable.icon_edit_image,
-                "Item 1",
-                "Brochure is an informative paper document (often also used for advertising) that can be folded into a template",
-                BookActivity::class.java,
-                ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_1)))
-        models?.add(CardMenu(R.drawable.icon_checked, "Item 2", "Kocak", UserProfileActivity::class.java))
-        models?.add(CardMenu(R.drawable.icon_cancel, "Item 3", "R.drawable.icon_checked, \"Item 2\", \"Kocak\"", PendingLoanActivity::class.java))
+                R.drawable.ic_profile, "Menunggu Persetujuan", null, PendingLoanActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_1)))
+        models?.add(
+            CardMenu(
+                R.drawable.ic_course_book, "Sedang Dipinjam", null, UserProfileActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_2)))
+        models?.add(
+            CardMenu(
+                R.drawable.ic_course_plan, "Daftar Absen", null, AttendanceActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_3)))
+        models?.add(
+            CardMenu(
+                R.drawable.ic_attendance_recap, "Scan Pengunjung", null, ScannerActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_4)))
+        models?.add(
+            CardMenu(
+                R.drawable.ic_gpa_reult, "Scan Pengembalian Buku", null, ScannerActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_5)))
     }
 
     private fun setAdapter() {
         adapter = models?.let { CardMenuAdapter(it, requireContext()) }
     }
 
-    private fun setMenu1() {
-       setAdapter()
-
+    private fun setMenu() {
         viewPager = binding?.viewPager
 
         viewPager?.adapter = adapter
 
         viewPager?.setPadding(10, 0, 340, 0)
         viewPager?.pageMargin = 20
-
-        viewPager?.setOnPageChangeListener(object : OnPageChangeListener{
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
-            override fun onPageSelected(position: Int) {}
-            override fun onPageScrollStateChanged(state: Int) {}
-        })
     }
-
-//    private fun setModels2() {
-//        models = mutableListOf()
-//        models?.add(
-//            CardMenu(
-//                R.drawable.icon_warning,
-//                "Item 1",
-//                "Brochure is an informative paper document (often also used for advertising) that can be folded into a template",
-//                BookActivity::class.java,
-//                ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_1)))
-//        models?.add(CardMenu(R.drawable.icon_no_connection, "Item 2", "Kocak", UserProfileActivity::class.java))
-//        models?.add(CardMenu(R.drawable.icon_logout, "Item 3", "R.drawable.icon_checked, \"Item 2\", \"Kocak\"", PendingLoanActivity::class.java))
-//    }
-//
-//    private fun setMenu2() {
-//        setAdapter()
-//
-//        viewPager2 = binding?.viewPager2
-//
-//        viewPager2?.adapter = adapter
-//
-//        viewPager2?.setPadding(180, 0, 180, 0)
-//        viewPager2?.pageMargin = 20
-//    }
 
 }

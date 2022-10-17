@@ -19,14 +19,8 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".ui.home.HomeActivity"
-            android:exported="true"
-            android:theme="@style/Theme.PerpustakaanApp.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="false"
+            android:theme="@style/Theme.PerpustakaanApp.NoActionBar"/>
         <activity
             android:name=".ui.member.listattendance.AttendanceActivity"
             android:exported="false" />
@@ -69,9 +63,13 @@
             android:exported="false" />
         <activity
             android:name=".ui.login.LoginActivity"
-            android:exported="false"
+            android:exported="true"
             android:theme="@style/TextColorWhite">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <meta-data
