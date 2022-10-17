@@ -1,6 +1,6 @@
 package com.skripsi.perpustakaanapp.core.adapter
 
-import android.R
+import com.skripsi.perpustakaanapp.R
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -19,6 +19,13 @@ import java.util.*
 
 class CardMenuAdapter(private val models: List<CardMenu>, private val context: Context): PagerAdapter(){
 
+    private lateinit var view: View
+    private lateinit var  binding: ItemCardMenuBinding
+
+    private val layoutInflater: LayoutInflater = LayoutInflater.from(context)
+    private var indexPosition: Int = 0
+    private lateinit var backgroundColor: MutableList<Drawable>
+
     override fun getCount(): Int {
         return models.size
     }
@@ -28,24 +35,47 @@ class CardMenuAdapter(private val models: List<CardMenu>, private val context: C
     }
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
-        val layoutInflater = LayoutInflater.from(context)
-        val view: View = layoutInflater.inflate(com.skripsi.perpustakaanapp.R.layout.item_card_menu, container, false)
-        val binding = ItemCardMenuBinding.bind(view)
+        view = layoutInflater.inflate(R.layout.item_card_menu, container, false)
+        binding = ItemCardMenuBinding.bind(view)
 
-        binding.menu.background = ContextCompat.getDrawable(context, com.skripsi.perpustakaanapp.R.drawable.home_gradient_1);
-
-        models[position].image?.let { binding.image.setImageResource(it) }
-        binding.title.text = models[position].title
-        binding.desc.text = models[position].desc
+        indexPosition = position
+        setBackground()
+        setCardData()
 
         view.setOnClickListener {
-            val intent = Intent(context, DetailBookActivity::class.java)
+            val intent = Intent(context, models[position].destination)
             context.startActivity(intent)
         }
 
         container.addView(view, 0)
         return view
 
+    }
+
+    private fun setBackground() {
+        models[indexPosition].backgroundColor?.let { binding.menu.background = it }
+    }
+
+//    private fun setColorList() {
+//        backgroundColor = ContextCompat.getDrawable(context, R.drawable.home_gradient_1)?.let { it1 ->
+//            ContextCompat.getDrawable(context, R.drawable.home_gradient_2)?.let { it2 ->
+//                ContextCompat.getDrawable(context, R.drawable.home_gradient_3)?.let { it3 ->
+//                    ContextCompat.getDrawable(context, R.drawable.home_gradient_4)?.let { it4 ->
+//                        ContextCompat.getDrawable(context, R.drawable.home_gradient_5)?.let { it5 ->
+//                            ContextCompat.getDrawable(context, R.drawable.home_gradient_6)?.let { it6 ->
+//                                arrayListOf(it1, it2, it3, it4, it5, it6)
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }!!
+//    }
+
+    private fun setCardData() {
+        models[indexPosition].image?.let { binding.image.setImageResource(it) }
+        binding.title.text = models[indexPosition].title
+//        binding.desc.text = models[indexPosition].desc
     }
 
     override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
