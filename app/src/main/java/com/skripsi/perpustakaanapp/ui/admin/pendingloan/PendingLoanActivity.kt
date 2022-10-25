@@ -120,7 +120,7 @@ class PendingLoanActivity : AppCompatActivity() {
                 null,
                 resources.getString(R.string.loan_approval_confirmation),
                 resources.getString(R.string.confirmation_yes),
-                resources.getString(R.string.confirmation_no),
+                resources.getString(R.string.confirmation_recheck),
                 {_,_ ->
                     postApproveLoan(id)
                 }, {_,_ ->
@@ -163,7 +163,7 @@ class PendingLoanActivity : AppCompatActivity() {
                 null,
                 resources.getString(R.string.loan_approval_confirmation),
                 resources.getString(R.string.confirmation_yes),
-                resources.getString(R.string.confirmation_no),
+                resources.getString(R.string.confirmation_recheck),
                 {_,_ ->
                     postRejectLoan(id)
                 }, {_,_ ->

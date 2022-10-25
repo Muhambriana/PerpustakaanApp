@@ -12,6 +12,7 @@ import com.skripsi.perpustakaanapp.utils.setSingleClickListener
 class LoanHistoryAdapter : RecyclerView.Adapter<LoanHistoryAdapter.LoanHistoryViewHolder>() {
 
     private val listLoanHistory = mutableListOf<LoanHistory>()
+    var onItemClick: ((LoanHistory) -> Unit)? = null
     var onBookTitleClick : ((String) -> Unit)? = null
     var onOfficerUsernameClick : ((String) -> Unit)? = null
 
@@ -43,6 +44,9 @@ class LoanHistoryAdapter : RecyclerView.Adapter<LoanHistoryAdapter.LoanHistoryVi
         }
 
         init {
+            binding.root.setSingleClickListener {
+                onItemClick?.invoke(listLoanHistory[adapterPosition])
+            }
             binding.tvBookTitle.setSingleClickListener {
                 listLoanHistory[adapterPosition].bookId?.let { bookId ->
                     onBookTitleClick?.invoke(bookId) }

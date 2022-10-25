@@ -21,7 +21,7 @@ class UpdateBookViewModel(private val repository: LibraryRepository) : ViewModel
 
     fun updateBook(token: String,bookId: String, title: String, edition: String, author: String, publisher: String, publisherDate: String, copies: String, source: String, remark: String, imageUrl: String?){
         resourceUpdateBook.postValue(MyEvent(MyResource.Loading()))
-        val book = Book(bookId, title, edition, author, publisher, publisherDate, copies, source, remark, imageUrl)
+        val book = Book(bookId, title, edition, author, publisher, publisherDate, copies)
         val post = repository.updateBook(token, book)
         post.enqueue(object : Callback<GeneralResponse>{
             override fun onResponse(

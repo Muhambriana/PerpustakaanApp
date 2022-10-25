@@ -13,10 +13,12 @@
     <string name="back_to_dashboard">Kembali Ke DashBoard</string>
     <string name="data_confirmation">Apakah Anda Yakin Data Sudah Benar?</string>
     <string name="confirmation_yes">Saya Yakin</string>
-    <string name="confirmation_no">Periksa Kembali</string>
+    <string name="confirmation_recheck">Periksa Kembali</string>
+    <string name="confirmation_no">Tidak</string>
     <string name="delete_confirmation">Apakah Anda Yakin Akan Menghapusnya?</string>
     <string name="loan_approval_confirmation">Yakin Dengan Keputusan Anda?</string>
     <string name="change_image_confirmation">Apakah Anda Yakin Mengubah Gambar?</string>
+    <string name="log_out_confirmation">Apakah Anda Yakin Ingin Keluar?</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

@@ -10,7 +10,7 @@ class MySnackBar {
         fun showBlack(view: View?, message: String) {
             if (view != null) {
                 Snackbar
-                    .make(view, message, 7000)
+                    .make(view, message, 5000)
                     .setBackgroundTint(Color.BLACK)
                     .setTextColor(Color.WHITE)
                     .show()
@@ -21,7 +21,7 @@ class MySnackBar {
         fun showWhite(view: View?, message: String) {
             if (view != null) {
                 Snackbar
-                    .make(view, message, 7000)
+                    .make(view, message, 5000)
                     .show()
             }
         }
@@ -30,7 +30,7 @@ class MySnackBar {
         fun showRed(view: View?, message: String) {
             if (view != null) {
                 Snackbar
-                    .make(view, message, 7000)
+                    .make(view, message, 5000)
                     .setBackgroundTint(Color.RED)
                     .setTextColor(Color.WHITE)
                     .show()

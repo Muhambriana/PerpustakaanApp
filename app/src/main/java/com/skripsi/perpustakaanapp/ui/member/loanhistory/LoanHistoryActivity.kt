@@ -15,6 +15,7 @@ import com.skripsi.perpustakaanapp.core.resource.MyResource
 import com.skripsi.perpustakaanapp.databinding.ActivityLoanHistoryBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.book.detailbook.DetailBookActivity
+import com.skripsi.perpustakaanapp.ui.book.detailloanhistory.DetailLoanHistoryActivity
 import com.skripsi.perpustakaanapp.ui.userprofile.UserProfileActivity
 
 class LoanHistoryActivity : AppCompatActivity() {
@@ -51,6 +52,11 @@ class LoanHistoryActivity : AppCompatActivity() {
     }
 
     private fun onClickListener() {
+        loanHistoryAdapter.onItemClick =  {
+            val intent = Intent(this, DetailLoanHistoryActivity::class.java)
+            intent.putExtra(DetailLoanHistoryActivity.EXTRA_DATA, it)
+            startActivity(intent)
+        }
         loanHistoryAdapter.onBookTitleClick = { bookId ->
             val intent = Intent(this, DetailBookActivity::class.java)
             intent.putExtra(DetailBookActivity.BOOK_ID, bookId)

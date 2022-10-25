@@ -80,13 +80,10 @@ class UpdateBookFragment : BottomSheetDialogFragment() {
     private fun setEditText() {
         binding.tvBookId.text = dataBook?.bookId
         binding.edBookTitle.setText(dataBook?.title)
-        binding.edEdition.setText(dataBook?.edition)
         binding.edAuthor.setText(dataBook?.author)
         binding.edCopies.setText(dataBook?.stock)
         binding.edPublisher.setText(dataBook?.publisher)
         binding.edPublisherDate.setText(dataBook?.publisherDate)
-        binding.edSource.setText(dataBook?.source)
-        binding.edRemark.setText(dataBook?.remark)
         setBookPoster(dataBook?.imageUrl)
     }
 
@@ -129,7 +126,7 @@ class UpdateBookFragment : BottomSheetDialogFragment() {
                     null,
                     resources.getString(R.string.data_confirmation),
                     resources.getString(R.string.confirmation_yes),
-                    resources.getString(R.string.confirmation_no),
+                    resources.getString(R.string.confirmation_recheck),
                     {_,_ ->
                         postBookData()
                     }, {_,_ ->

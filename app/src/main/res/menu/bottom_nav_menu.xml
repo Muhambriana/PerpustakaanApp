@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
     <item
-        android:id="@+id/message"
-        android:icon="@drawable/ic_search"
-        android:title="Message" />
+        android:id="@+id/bottom_nav_menu1"
+        android:icon="@drawable/ic_scan_qr"
+        android:title="ScanQR" />
     <item
         android:id="@+id/home"
-        android:icon="@drawable/ic_profile"
+        android:icon="@drawable/ic_home"
         android:title="Home"  />
     <item
-        android:id="@+id/settings"
-        android:icon="@drawable/ic_icon_favorite_true"
-        android:title="Setting" />
+        android:id="@+id/bottom_nav_menu2"
+        android:icon="@drawable/ic_profile"
+        android:title="Profile" />
 </menu>

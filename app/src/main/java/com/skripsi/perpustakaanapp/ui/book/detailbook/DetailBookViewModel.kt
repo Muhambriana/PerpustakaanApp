@@ -60,7 +60,7 @@ class DetailBookViewModel(private val repository: LibraryRepository) : ViewModel
                 if (response.body()?.code == 0) {
                     resourceLoanBook.postValue(MyEvent(MyResource.Success(response.body()?.message)))
                 } else {
-                    resourceLoanBook.postValue(MyEvent(MyResource.Error(response.message())))
+                    resourceLoanBook.postValue(MyEvent(MyResource.Error(response.body()?.message)))
                 }
             }
 
@@ -80,7 +80,7 @@ class DetailBookViewModel(private val repository: LibraryRepository) : ViewModel
                 response: Response<DetailBookResponse>
             ) {
                 if (response.body()?.code == 0) {
-                    val book = Book(null, response.body()?.title, response.body()?.edition, response.body()?.author,response.body()?.publisher,response.body()?.publisherDate,response.body()?.stock,response.body()?.source,response.body()?.remark, response.body()?.imageUrl)
+                    val book = Book(null, response.body()?.title, response.body()?.author,response.body()?.publisher,response.body()?.publisherDate,response.body()?.stock, response.body()?.imageUrl)
                     resourceDetailBook.postValue(MyEvent(MyResource.Success(book)))
                 }
                 else {

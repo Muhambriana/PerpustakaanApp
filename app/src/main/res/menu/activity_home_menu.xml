@@ -14,11 +14,22 @@
     <item
         android:id="@+id/side_bar_nav"
         android:textCursorDrawable="@null"
-        android:title="@string/search"
+        android:title="More"
         android:icon="@drawable/ic_three_dots"
         app:iconifiedByDefault="false"
         app:showAsAction="collapseActionView|always"
         app:queryBackground="@null"
-        app:queryHint="Username" />
+        app:queryHint="Username" >
+        <menu>
+            <item
+                android:id="@+id/about_menu"
+                android:icon="@drawable/ic_about"
+                android:title="About" />
+            <item
+                android:id="@+id/swap_menu"
+                android:icon="@drawable/ic_swap"
+                android:title="Sebagai Anggota" />
+        </menu>
+    </item>
 
 </menu>

@@ -85,7 +85,7 @@ class CreateNewAdminActivity : AppCompatActivity() {
                     null,
                     resources.getString(R.string.data_confirmation),
                     resources.getString(R.string.confirmation_yes),
-                    resources.getString(R.string.confirmation_no),
+                    resources.getString(R.string.confirmation_recheck),
                     {_,_ ->
                         postUserData()
                     }, {_,_ ->

@@ -1,8 +1,8 @@
-package com.skripsi.perpustakaanapp.ui.admin.usermanagerial.scanattendance
+package com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.scanbookreturn
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.skripsi.perpustakaanapp.core.models.ModelForAttendance
+import com.skripsi.perpustakaanapp.core.models.ModelForReturnBook
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.core.resource.MyEvent
 import com.skripsi.perpustakaanapp.core.resource.MyResource
@@ -11,14 +11,14 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ScannerViewModel(private val repository: LibraryRepository): ViewModel() {
+class ScannerReturnBookViewModel(private val repository: LibraryRepository): ViewModel() {
 
     val resourceScanner = MutableLiveData<MyEvent<MyResource<String?>>>()
 
-    fun scannerAttendance(token: String, qrCode: String, admin: String) {
+    fun scannerReturning(token: String, qrCode: String) {
         resourceScanner.postValue(MyEvent(MyResource.Loading()))
-        val data = ModelForAttendance(qrCode, admin)
-        val post = repository.attendanceScan(token, data)
+        val model = ModelForReturnBook(qrCode)
+        val post = repository.returningScan(token, model)
         post.enqueue(object : Callback<GeneralResponse> {
             override fun onResponse(
                 call: Call<GeneralResponse>,
@@ -35,6 +35,5 @@ class ScannerViewModel(private val repository: LibraryRepository): ViewModel() {
                 resourceScanner.postValue(MyEvent(MyResource.Error(t.message)))
             }
         })
-
     }
 }

@@ -1,11 +1,11 @@
-package com.skripsi.perpustakaanapp.ui.admin.usermanagerial.scanattendance
+package com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.scanbookreturn
 
 import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.google.zxing.Result
 import com.skripsi.perpustakaanapp.core.MyViewModelFactory
@@ -14,24 +14,26 @@ import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.core.resource.MyResource
 import com.skripsi.perpustakaanapp.databinding.ActivityScannerBinding
+import com.skripsi.perpustakaanapp.databinding.ActivityScannerReturnBookBinding
 import com.skripsi.perpustakaanapp.ui.MySnackBar
+import com.skripsi.perpustakaanapp.ui.admin.usermanagerial.scanattendance.ScannerViewModel
 import com.skripsi.perpustakaanapp.utils.PermissionCheck
 import me.dm7.barcodescanner.zxing.ZXingScannerView
 
-class ScannerActivity : AppCompatActivity(), ZXingScannerView.ResultHandler {
+class ScannerReturnBookActivity : AppCompatActivity(), ZXingScannerView.ResultHandler {
 
-    private lateinit var binding: ActivityScannerBinding
+    private lateinit var binding: ActivityScannerReturnBookBinding
     private lateinit var sessionManager: SessionManager
-    private lateinit var viewModel: ScannerViewModel
+    private lateinit var viewModel: ScannerReturnBookViewModel
 
     private val client = RetrofitClient
     private var zXingScannerView: ZXingScannerView? = null
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityScannerBinding.inflate(layoutInflater)
+        binding = ActivityScannerReturnBookBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         if (PermissionCheck.camera(this)) {
             zXingScannerView = ZXingScannerView(this)
             binding.cameraView.addView(zXingScannerView)
@@ -50,7 +52,7 @@ class ScannerActivity : AppCompatActivity(), ZXingScannerView.ResultHandler {
         sessionManager = SessionManager(this)
 
         viewModel = ViewModelProvider(this, MyViewModelFactory(LibraryRepository(client))).get(
-            ScannerViewModel::class.java
+            ScannerReturnBookViewModel::class.java
         )
     }
 
@@ -73,7 +75,7 @@ class ScannerActivity : AppCompatActivity(), ZXingScannerView.ResultHandler {
     private fun postAttendance(qrCode: String) {
         zXingScannerView?.stopCameraPreview()
 
-        viewModel.scannerAttendance(sessionManager.fetchAuthToken().toString(), qrCode, sessionManager.fetchUsername().toString())
+        viewModel.scannerReturning(sessionManager.fetchAuthToken().toString(), qrCode)
 
         viewModel.resourceScanner.observe(this) { event ->
             event.getContentIfNotHandled().let { resource ->

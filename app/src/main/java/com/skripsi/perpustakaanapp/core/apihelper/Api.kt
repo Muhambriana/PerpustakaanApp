@@ -152,5 +152,11 @@ interface Api {
     fun getAllAttendance(
         @Header("Authorization") token: String
     ):Call<ListAttendanceResponse>
+
+    @POST("transaction/return")
+    fun returningScan(
+        @Header("Authorization") token: String,
+        @Body data: ModelForReturnBook
+    ):Call<GeneralResponse>
 }
 

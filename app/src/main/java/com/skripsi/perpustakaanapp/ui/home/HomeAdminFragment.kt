@@ -2,37 +2,23 @@ package com.skripsi.perpustakaanapp.ui.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.*
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
-import com.bumptech.glide.Glide
-import com.bumptech.glide.signature.ObjectKey
-import com.google.android.material.snackbar.Snackbar
 import com.skripsi.perpustakaanapp.R
-import com.skripsi.perpustakaanapp.core.MyViewModelFactory
-import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.core.adapter.CardMenuAdapter
-import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.models.CardMenu
-import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
-import com.skripsi.perpustakaanapp.core.resource.MyResource
 import com.skripsi.perpustakaanapp.databinding.FragmentHomeAdminBinding
-import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.createbook.CreateBookActivity
+import com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.scanbookreturn.ScannerReturnBookActivity
 import com.skripsi.perpustakaanapp.ui.admin.listuser.UserActivity
 import com.skripsi.perpustakaanapp.ui.admin.pendingloan.PendingLoanActivity
 import com.skripsi.perpustakaanapp.ui.admin.usermanagerial.createnewadmin.CreateNewAdminActivity
 import com.skripsi.perpustakaanapp.ui.admin.usermanagerial.scanattendance.ScannerActivity
 import com.skripsi.perpustakaanapp.ui.book.listbook.BookActivity
-import com.skripsi.perpustakaanapp.ui.login.LoginActivity
 import com.skripsi.perpustakaanapp.ui.member.listattendance.AttendanceActivity
 import com.skripsi.perpustakaanapp.ui.userprofile.UserProfileActivity
-import com.skripsi.perpustakaanapp.utils.NetworkInfo
 
 
 class HomeAdminFragment : Fragment() {
@@ -102,7 +88,7 @@ class HomeAdminFragment : Fragment() {
                 R.drawable.ic_attendance_recap, "Scan Pengunjung", null, ScannerActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_4)))
         models?.add(
             CardMenu(
-                R.drawable.ic_gpa_reult, "Scan Pengembalian Buku", null, ScannerActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_5)))
+                R.drawable.ic_gpa_reult, "Scan Pengembalian Buku", null, ScannerReturnBookActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_5)))
     }
 
     private fun setAdapter() {

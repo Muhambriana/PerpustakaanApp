@@ -18,9 +18,15 @@
         android:theme="@style/Theme.PerpustakaanApp"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.book.detailloanhistory.DetailLoanHistoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.admin.bookmanagerial.scanbookreturn.ScannerReturnBookActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.home.HomeActivity"
             android:exported="false"
-            android:theme="@style/Theme.PerpustakaanApp.NoActionBar"/>
+            android:theme="@style/Theme.PerpustakaanApp.NoActionBar" />
         <activity
             android:name=".ui.member.listattendance.AttendanceActivity"
             android:exported="false" />

@@ -21,7 +21,7 @@ class CreateBookViewModel(private val repository: LibraryRepository) : ViewModel
 
     fun createBook(token: String, title: String, edition: String, author: String, publisher: String, publisherDate: String, copies: String, source: String, remark: String, image: MultipartBody.Part?){
         resourceUpdateBook.postValue(MyEvent(MyResource.Loading()))
-        val book = Book(null, title, edition, author, publisher, publisherDate, copies, source, remark, null)
+        val book = Book(null, title, edition, author, publisher, publisherDate, copies)
         val jsonString = Gson().toJson(book)
         val data = RequestBody.create(MediaType.parse("text/plain"), jsonString)
         val post = repository.createBook(token, data, image)

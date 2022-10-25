@@ -96,7 +96,7 @@ class DetailBookActivity : AppCompatActivity() {
                     null,
                     resources.getString(R.string.delete_confirmation),
                     resources.getString(R.string.confirmation_yes),
-                    resources.getString(R.string.confirmation_no),
+                    resources.getString(R.string.confirmation_recheck),
                     {_,_ ->
                         deleteBook()
                     }, {_,_ ->
@@ -176,7 +176,7 @@ class DetailBookActivity : AppCompatActivity() {
         binding.progressBar.visibility = View.GONE
         supportActionBar?.title = detailBook?.title
         binding.author.text = detailBook?.author
-        binding.year.text = detailBook?.edition  //harusnya tahun terbit
+        binding.year.text = detailBook?.publisherDate //harusnya tahun terbit
         binding.publisher.text = detailBook?.publisher
         setBookCover()
     }
@@ -224,29 +224,18 @@ class DetailBookActivity : AppCompatActivity() {
             viewModel.createTransaction(sessionManager.fetchUsername(), detailBook?.bookId)
 
             viewModel.resourceLoanBook.observe(this) { event ->
-                event.getContentIfNotHandled()?.let {
-                    when (it) {
+                event.getContentIfNotHandled()?.let { resource ->
+                    when (resource) {
                         is MyResource.Loading -> {
                             binding.progressBar.visibility = View.VISIBLE
                         }
-
                         is MyResource.Success -> {
                             binding.progressBar.visibility = View.GONE
-                            MyAlertDialog.showWithEvent(this@DetailBookActivity,
-                                R.drawable.icon_checked,
-                                it.data.toString().uppercase(),
-                                "Menunggu Admin")
-                            { _, _ ->
-                                binding.buttonLoan.isEnabled = false
-                            }
+                            MySnackBar.showBlack(binding.root, resource.data.toString())
                         }
-
                         is MyResource.Error -> {
                             binding.progressBar.visibility = View.GONE
-                            MyAlertDialog.show(this@DetailBookActivity,
-                                R.drawable.icon_cancel,
-                                "FAILED",
-                                it.message.toString())
+                            MySnackBar.showRed(binding.root, resource.message.toString())
                         }
                     }
                 }

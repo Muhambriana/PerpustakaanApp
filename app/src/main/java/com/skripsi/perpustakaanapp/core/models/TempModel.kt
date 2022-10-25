@@ -48,6 +48,15 @@ data class ModelForSearchBook(
 
 data class ModelForAttendance(
     @field:SerializedName("qrCode")
+    val qrCode: String? = null,
+
+    @field:SerializedName("adminBy")
+    val admin: String? = null
+)
+
+data class ModelForReturnBook(
+
+    @field:SerializedName("qrCode")
     val qrCode: String? = null
 )
 
