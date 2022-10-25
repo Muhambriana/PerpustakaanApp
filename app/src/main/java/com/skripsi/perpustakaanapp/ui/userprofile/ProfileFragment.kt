@@ -167,18 +167,10 @@ class ProfileFragment : BottomSheetDialogFragment() {
     }
 
     private fun showDetailUser() {
-        inMemberCard()
         inUserInformation()
     }
 
-    private fun inMemberCard() {
-        binding?.imageAvatarInCard?.let { setProfilePhoto(it) }
-        binding?.tvUsernameInCard?.text = detailUser?.username
-        binding?.tvFullNameInCard?.text = fullName(detailUser?.firstName, detailUser?.lastName)
-        binding?.tvGenderInCard?.text = recognizeGender()
-        binding?.tvPhoneNoInCard?.text = detailUser?.phoneNo
-        binding?.tvAddressInCard?.text = detailUser?.address
-    }
+
 
     private fun fullName(firstName: String?, lastName: String?): String {
         var first = ""

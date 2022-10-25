@@ -22,6 +22,7 @@ import com.skripsi.perpustakaanapp.core.resource.MyResource
 import com.skripsi.perpustakaanapp.databinding.ActivityHomeBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.MySnackBar
+import com.skripsi.perpustakaanapp.ui.SettingsActivity
 import com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.updatebook.UpdateBookFragment
 import com.skripsi.perpustakaanapp.ui.login.LoginActivity
 import com.skripsi.perpustakaanapp.ui.member.qrcode.QRCodeFragment
@@ -72,8 +73,8 @@ class HomeActivity : AppCompatActivity() {
             .centerCrop()
             .into(binding.toolbarIcon)
         binding.toolbarIcon.setOnClickListener {
-            val intent = Intent(this, UserProfileActivity::class.java)
-            intent.putExtra(UserProfileActivity.USERNAME, sessionManager.fetchUsername())
+            val intent = Intent(this, SettingsActivity::class.java)
+            intent.putExtra(SettingsActivity.USERNAME, sessionManager.fetchUsername())
             startActivity(intent)
         }
     }

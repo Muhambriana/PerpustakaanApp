@@ -1,58 +1,302 @@
 package com.skripsi.perpustakaanapp.ui
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
+import com.bumptech.glide.signature.ObjectKey
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.qrcode.QRCodeWriter
 import com.skripsi.perpustakaanapp.R
+import com.skripsi.perpustakaanapp.core.MyViewModelFactory
 import com.skripsi.perpustakaanapp.core.SessionManager
+import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
+import com.skripsi.perpustakaanapp.core.models.User
+import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
+import com.skripsi.perpustakaanapp.core.resource.MyResource
 import com.skripsi.perpustakaanapp.databinding.ActivitySettingsBinding
+import com.skripsi.perpustakaanapp.databinding.ActivityUserProfileBinding
 import com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.updatebook.UpdateBookFragment
+import com.skripsi.perpustakaanapp.ui.admin.usermanagerial.updateuser.UpdateUserFragment
 import com.skripsi.perpustakaanapp.ui.book.detailbook.ViewImageFragment
+import com.skripsi.perpustakaanapp.ui.userprofile.UserProfileActivity
+import com.skripsi.perpustakaanapp.ui.userprofile.UserProfileViewModel
+import com.skripsi.perpustakaanapp.utils.ImageHelper
+import com.skripsi.perpustakaanapp.utils.NetworkInfo
+import com.skripsi.perpustakaanapp.utils.PermissionCheck
+import com.skripsi.perpustakaanapp.utils.setSingleClickListener
+import okhttp3.MultipartBody
 
 
 class SettingsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySettingsBinding
-    private lateinit var sessionManager: SessionManager
 
-    lateinit var bottomNav : BottomNavigationView
+    private lateinit var sessionManager: SessionManager
+    private lateinit var viewModel: UserProfileViewModel
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<RelativeLayout>
+
+    private val client = RetrofitClient
+    private var detailUser: User? = null
+    private var username: String? = null
+    private var imageMultipartBody: MultipartBody.Part? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySettingsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.qrCodeImage.setImageBitmap(generateQRCode())
+        firstInitialization()
+        setDataToModels()
+
     }
 
-    private fun generateQRCode(): Bitmap? {
-        sessionManager = SessionManager(this)
-        var bitmap: Bitmap? = null
-        if (sessionManager.fetchQRCode() != null) {
-            val writer = QRCodeWriter()
-            val bitMatrix = writer.encode(sessionManager.fetchQRCode(), BarcodeFormat.QR_CODE, 400, 400)
+    private fun firstInitialization() {
+        //when still loading the data, action bar will show nothing
+        supportActionBar?.title = ""
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-            val w = bitMatrix.width
-            val h = bitMatrix.height
-            val pixels = IntArray(w * h)
-            for (y in 0 until h ) {
-                for (x in 0 until w){
-                    pixels[y * w + x] = if (bitMatrix[x, y]) Color.BLACK else Color.WHITE
+        binding.progressBar.visibility = View.GONE
+
+        sessionManager = SessionManager(this)
+
+        viewModel = ViewModelProvider(this, MyViewModelFactory(LibraryRepository(client))).get(
+            UserProfileViewModel::class.java
+        )
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return super.onSupportNavigateUp()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_IMAGE) {
+            val selectedImage = data?.data
+            MyAlertDialog.showWith2Event(
+                this,
+                null,
+                resources.getString(R.string.change_image_confirmation),
+                resources.getString(R.string.confirmation_yes),
+                resources.getString(R.string.confirmation_recheck),
+                {_,_ ->
+                    imageMultipartBody = selectedImage?.let { ImageHelper.getImagePathByUri(this, it) }
+                    uploadImage()
+                }, {_,_ ->
+
+                })
+        }
+    }
+
+    private fun uploadImage() {
+        viewModel.updateImage(sessionManager.fetchAuthToken().toString(), detailUser?.username.toString(), imageMultipartBody)
+
+        viewModel.resourceUpdateImage.observe(this) { event ->
+            event.getContentIfNotHandled().let { resource ->
+                when(resource) {
+                    is MyResource.Loading -> {
+                        binding.progressBar.visibility = View.VISIBLE
+                    }
+                    is MyResource.Success -> {
+                        binding.progressBar.visibility = View.GONE
+                        restartActivity()
+                    }
+                    is MyResource.Error -> {
+                        binding.progressBar.visibility = View.GONE
+                        MySnackBar.showRed(binding.root, resource.message.toString())
+                    }
                 }
             }
-
-            bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
-            bitmap.setPixels(pixels, 0, w, 0, 0, w, h)
         }
-        return bitmap
+    }
+
+    private fun restartActivity() {
+        // Set avatar link if user update profile for the first time
+        detailUser?.avatar = "${detailUser?.username}.png"
+
+        val intent = Intent(this, UserProfileActivity::class.java)
+        intent.putExtra(EXTRA_DATA, detailUser)
+
+        // Finish this activity before restart
+        finish()
+
+        // Restart
+        startActivity(intent)
     }
 
 
 
+    private fun chooseImage() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = ("image/*")
+        startActivityForResult(intent, REQUEST_CODE_IMAGE)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        if (sessionManager.fetchUserRole() == "admin"){
+            menuInflater.inflate(R.menu.activity_detail_menu, menu)
+        }
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.edit_menu -> {
+                updateMember()
+                true
+            }
+            R.id.delete_menu -> {
+                MyAlertDialog.showWith2Event(
+                    this,
+                    null,
+                    resources.getString(R.string.delete_confirmation),
+                    resources.getString(R.string.confirmation_yes),
+                    resources.getString(R.string.confirmation_recheck),
+                    {_,_ ->
+                        deleteMember()
+                    }, {_,_ ->
+
+                    })
+                true
+            }
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> true
+        }
+    }
+
+    private fun setDataToModels() {
+        username = intent.getStringExtra(USERNAME)
+        if (intent.extras != null){
+            if (username != null) {
+                setDetailUser()
+            }
+            else {
+                detailUser = intent.getParcelableExtra(EXTRA_DATA)
+                showDetailUser()
+            }
+        }
+    }
+
+    private fun deleteMember(){
+        viewModel.deleteMember(sessionManager.fetchAuthToken().toString(), detailUser?.username.toString())
+
+        viewModel.resourceDeleteMember.observe(this) { event ->
+            event.getContentIfNotHandled().let { resource ->
+                when(resource) {
+                    is MyResource.Loading -> {
+                        binding.progressBar.visibility = View.VISIBLE
+                    }
+                    is MyResource.Success -> {
+                        binding.progressBar.visibility = View.GONE
+                        MySnackBar.showBlack(binding.root, resource.data.toString())
+                        setResult(RESULT_OK) //set return data is "RESULT_OK" after success deleted
+                        finish()
+
+                    }
+                    is MyResource.Error -> {
+                        binding.progressBar.visibility = View.GONE
+                        MySnackBar.showRed(binding.root, resource.message.toString())
+                    }
+                }
+            }
+        }
+    }
+
+    private fun updateMember(){
+        val bundle = Bundle()
+        bundle.putParcelable(UpdateUserFragment.FRAGMENT_EXTRA_DATA, detailUser)
+
+        val bottomDialogFragment = UpdateUserFragment()
+        bottomDialogFragment.arguments = bundle
+        bottomDialogFragment.show(supportFragmentManager, "UpdateUserFragment")
+    }
+
+    private fun setDetailUser() {
+        username?.let { viewModel.getDetailUser(sessionManager.fetchAuthToken().toString(), it) }
+
+        viewModel.resourceDetailUser.observe(this) { event ->
+            event.getContentIfNotHandled()?.let { resource ->
+                when (resource) {
+                    is MyResource.Loading -> {
+                        //progress bar
+                    }
+                    is MyResource.Success -> {
+                        detailUser = resource.data
+                        println("ini isi avatar ${detailUser?.avatar}")
+                        showDetailUser()
+                    }
+                }
+            }
+        }
+    }
+
+    private fun showDetailUser() {
+        inMemberCard()
+    }
+
+    private fun inMemberCard() {
+        setProfilePhoto(binding.imageAvatarInCard)
+        binding.tvUsernameInCard.text = detailUser?.username
+        binding.tvFullNameInCard.text = fullName(detailUser?.firstName, detailUser?.lastName)
+        binding.tvGenderInCard.text = recognizeGender()
+        binding.tvPhoneNoInCard.text = detailUser?.phoneNo
+        binding.tvAddressInCard.text = detailUser?.address
+    }
+
+    private fun fullName(firstName: String?, lastName: String?): String {
+        var first = ""
+        var last = ""
+        firstName?.let { first = firstName }
+        lastName?.let { last = lastName }
+        return "$first $last"
+    }
+
+
+    private fun setProfilePhoto(imageView: ImageView) {
+        if (detailUser?.avatar != null) {
+            Glide.with(this)
+                .load(NetworkInfo.AVATAR_IMAGE_BASE_URL +detailUser?.avatar)
+                .signature(ObjectKey(System.currentTimeMillis().toString()))
+                .centerCrop()
+                .into(imageView)
+        }
+    }
+
+    private fun recognizeGender(): String? {
+        var result: String? = null
+        when (detailUser?.gender) {
+            null -> {
+                result = "-"
+            }
+            1 -> {
+                result = "Laki-Laki"
+            }
+            2 -> {
+                result = "Perempuan"
+            }
+        }
+        return result
+    }
+
+    companion object {
+        const val EXTRA_DATA = "extra_data"
+        const val USERNAME = "username"
+        const val REQUEST_CODE_IMAGE = 201
+    }
 }
