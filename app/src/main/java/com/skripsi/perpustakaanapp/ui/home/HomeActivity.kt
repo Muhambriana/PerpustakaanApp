@@ -22,7 +22,6 @@ import com.skripsi.perpustakaanapp.core.resource.MyResource
 import com.skripsi.perpustakaanapp.databinding.ActivityHomeBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.MySnackBar
-import com.skripsi.perpustakaanapp.ui.SettingsActivity
 import com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.updatebook.UpdateBookFragment
 import com.skripsi.perpustakaanapp.ui.login.LoginActivity
 import com.skripsi.perpustakaanapp.ui.member.qrcode.QRCodeFragment
@@ -67,14 +66,17 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun userProfile() {
-        Glide.with(this)
-            .load(NetworkInfo.AVATAR_IMAGE_BASE_URL+intent.getStringExtra("AVATAR"))
-            .signature(ObjectKey(System.currentTimeMillis().toString()))
-            .centerCrop()
-            .into(binding.toolbarIcon)
+        val avatar = intent.getStringExtra("AVATAR")
+        if (avatar != null) {
+            Glide.with(this)
+                .load(NetworkInfo.AVATAR_IMAGE_BASE_URL+avatar)
+                .signature(ObjectKey(System.currentTimeMillis().toString()))
+                .centerCrop()
+                .into(binding.toolbarIcon)
+        }
         binding.toolbarIcon.setOnClickListener {
-            val intent = Intent(this, SettingsActivity::class.java)
-            intent.putExtra(SettingsActivity.USERNAME, sessionManager.fetchUsername())
+            val intent = Intent(this, UserProfileActivity::class.java)
+            intent.putExtra(UserProfileActivity.USERNAME, sessionManager.fetchUsername())
             startActivity(intent)
         }
     }

@@ -38,7 +38,7 @@
                 android:layout_height="35dp"
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="9dp"
-                android:src="@drawable/ic_photo_user" />
+                android:src="@drawable/icon_user" />
 
             <TextView
                 android:id="@+id/toolbar_title"
