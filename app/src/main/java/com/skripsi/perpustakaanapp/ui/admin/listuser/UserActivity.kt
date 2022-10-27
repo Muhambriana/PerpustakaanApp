@@ -3,6 +3,8 @@ package com.skripsi.perpustakaanapp.ui.admin.listuser
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,10 +25,12 @@ class UserActivity : AppCompatActivity() {
     private lateinit var binding : ActivityUserBinding
     private lateinit var sessionManager: SessionManager
     private lateinit var viewModel: UserViewModel
+    private lateinit var resultLauncher: ActivityResultLauncher<Intent>
 
     private val client = RetrofitClient
     private val userAdapter = UserAdapter()
     private var userData : List<User>? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +38,7 @@ class UserActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         firstInitialization()
+        setLauncher()
         getUserData()
     }
 
@@ -46,6 +51,18 @@ class UserActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, MyViewModelFactory(LibraryRepository(client))).get(
             UserViewModel::class.java
         )
+    }
+
+    private fun setLauncher() {
+        //For get return data after launch activity
+        resultLauncher =  registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ){ result ->
+            if (result.resultCode == RESULT_OK) {
+                //Re-run getBookData and update with the latest
+                getUserData()
+            }
+        }
     }
 
     override fun supportNavigateUpTo(upIntent: Intent) {
@@ -97,7 +114,7 @@ class UserActivity : AppCompatActivity() {
         userAdapter.onItemClick = {
             val intent = Intent(this, UserProfileActivity::class.java)
             intent.putExtra(UserProfileActivity.EXTRA_DATA, it)
-            startActivity(intent)
+            resultLauncher.launch(intent)
         }
     }
 }

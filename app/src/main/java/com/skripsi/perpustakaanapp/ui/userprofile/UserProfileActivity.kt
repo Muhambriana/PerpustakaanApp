@@ -34,7 +34,6 @@ class UserProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUserProfileBinding
     private lateinit var sessionManager: SessionManager
     private lateinit var viewModel: UserProfileViewModel
-    private lateinit var bottomSheetBehavior: BottomSheetBehavior<RelativeLayout>
 
     private val client = RetrofitClient
     private var detailUser: User? = null
@@ -82,15 +81,21 @@ class UserProfileActivity : AppCompatActivity() {
                 resources.getString(R.string.confirmation_recheck),
                 {_,_ ->
                     imageMultipartBody = selectedImage?.let { ImageHelper.getImagePathByUri(this, it) }
-                    uploadImage()
+                    if (detailUser?.username != null) {
+                        uploadImage(detailUser?.username.toString())
+                    } else if (username != null) {
+                        uploadImage(username.toString())
+                    }
                 }, {_,_ ->
 
                 })
         }
     }
 
-    private fun uploadImage() {
-        viewModel.updateImage(sessionManager.fetchAuthToken().toString(), detailUser?.username.toString(), imageMultipartBody)
+    private fun uploadImage(user: String) {
+        viewModel.updateImage(sessionManager.fetchAuthToken().toString(), user, imageMultipartBody)
+
+        println("kocak username: ${detailUser?.username}")
 
         viewModel.resourceUpdateImage.observe(this) { event ->
             event.getContentIfNotHandled().let { resource ->
@@ -100,6 +105,7 @@ class UserProfileActivity : AppCompatActivity() {
                     }
                     is MyResource.Success -> {
                         binding.progressBar.visibility = View.GONE
+                        setResult(RESULT_OK)
                         restartActivity()
                     }
                     is MyResource.Error -> {

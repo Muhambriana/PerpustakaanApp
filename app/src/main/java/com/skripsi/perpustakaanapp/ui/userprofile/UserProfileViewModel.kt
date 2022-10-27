@@ -70,6 +70,7 @@ class UserProfileViewModel(private val repository: LibraryRepository): ViewModel
     fun updateImage(token: String, username: String, image: MultipartBody.Part?) {
         resourceUpdateImage.postValue(MyEvent(MyResource.Loading()))
         val id = RequestBody.create(MediaType.parse("text/plain"), username)
+        println("kocak id: $id")
         val post = repository.updateImage(token, null, id, image)
         post.enqueue(object : Callback<GeneralResponse> {
             override fun onResponse(

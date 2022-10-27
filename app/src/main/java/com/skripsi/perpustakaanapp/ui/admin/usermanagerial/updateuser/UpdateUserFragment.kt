@@ -1,5 +1,6 @@
 package com.skripsi.perpustakaanapp.ui.admin.usermanagerial.updateuser
 
+import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -133,6 +134,7 @@ class UpdateUserFragment : BottomSheetDialogFragment() {
                     }
                     is MyResource.Success -> {
                         binding?.progressBar?.visibility = View.GONE
+                        activity?.setResult(RESULT_OK)
                         MySnackBar.showBlack(binding?.root, resource.data.toString())
 
                         val intent = Intent(context, UserProfileActivity::class.java)

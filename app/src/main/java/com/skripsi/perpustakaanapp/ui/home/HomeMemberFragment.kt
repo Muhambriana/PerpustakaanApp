@@ -21,6 +21,7 @@ import com.skripsi.perpustakaanapp.databinding.FragmentHomeAdminBinding
 import com.skripsi.perpustakaanapp.databinding.FragmentHomeMemberBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.SettingsActivity
+import com.skripsi.perpustakaanapp.ui.book.ebook.EbookActivity
 import com.skripsi.perpustakaanapp.ui.book.listbook.BookActivity
 import com.skripsi.perpustakaanapp.ui.login.LoginActivity
 import com.skripsi.perpustakaanapp.ui.member.listattendance.AttendanceActivity
@@ -82,6 +83,10 @@ class HomeMemberFragment : Fragment() {
                     val intent = Intent(activity, SettingsActivity::class.java)
                     startActivity(intent)
                 }
+                binding?.cardPdf?.id -> {
+                    val intent = Intent(activity, EbookActivity::class.java)
+                    startActivity(intent)
+                }
             }
 
         }
@@ -91,6 +96,7 @@ class HomeMemberFragment : Fragment() {
         binding?.cardUserProfile?.setOnClickListener(clickListener)
         binding?.cardAttendanceList?.setOnClickListener(clickListener)
         binding?.cardAttendance?.setOnClickListener(clickListener)
+        binding?.cardPdf?.setOnClickListener(clickListener)
     }
 
 }

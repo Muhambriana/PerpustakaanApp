@@ -2,13 +2,10 @@ package com.skripsi.perpustakaanapp.ui.book.detailloanhistory
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.FragmentTransaction
-import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.models.LoanHistory
 import com.skripsi.perpustakaanapp.databinding.ActivityDetailTransactionBinding
-import com.skripsi.perpustakaanapp.ui.book.detailbook.ViewImageFragment
 import com.skripsi.perpustakaanapp.ui.member.qrcode.QRCodeFragment
 
 class DetailLoanHistoryActivity : AppCompatActivity() {
@@ -33,8 +30,12 @@ class DetailLoanHistoryActivity : AppCompatActivity() {
             bundle.putString("qr_code", detailLoanHistory?.qrCode)
             val fragment = QRCodeFragment()
             fragment.arguments =  bundle
-            val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
-            transaction.replace(binding.containerQr.id, fragment).commit()
+            supportFragmentManager
+                .beginTransaction()
+                .replace(binding.containerQr.id, fragment)
+                .commit()
+//            val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
+//            transaction.replace(binding.containerQr.id, fragment).commit()
         }
     }
 

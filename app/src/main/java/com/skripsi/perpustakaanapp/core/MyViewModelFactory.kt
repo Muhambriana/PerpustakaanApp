@@ -12,6 +12,7 @@ import com.skripsi.perpustakaanapp.ui.admin.usermanagerial.createnewadmin.Create
 import com.skripsi.perpustakaanapp.ui.admin.usermanagerial.scanattendance.ScannerViewModel
 import com.skripsi.perpustakaanapp.ui.admin.usermanagerial.updateuser.UpdateUserViewModel
 import com.skripsi.perpustakaanapp.ui.book.detailbook.DetailBookViewModel
+import com.skripsi.perpustakaanapp.ui.book.ebook.EbookViewModel
 import com.skripsi.perpustakaanapp.ui.book.listbook.BookViewModel
 import com.skripsi.perpustakaanapp.ui.home.HomeViewModel
 import com.skripsi.perpustakaanapp.ui.login.LoginViewModel
@@ -81,6 +82,9 @@ class MyViewModelFactory constructor(private val libraryRepository: LibraryRepos
             }
             modelClass.isAssignableFrom(ScannerReturnBookViewModel::class.java) -> {
                 return ScannerReturnBookViewModel(this.libraryRepository) as T
+            }
+            modelClass.isAssignableFrom(EbookViewModel::class.java) -> {
+                return EbookViewModel(this.libraryRepository) as T
             }
             else -> throw IllegalArgumentException("ViewModel Not Found")
         }

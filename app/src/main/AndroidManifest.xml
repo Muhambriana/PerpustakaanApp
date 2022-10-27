@@ -18,6 +18,9 @@
         android:theme="@style/Theme.PerpustakaanApp"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.book.ebook.EbookActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.book.detailloanhistory.DetailLoanHistoryActivity"
             android:exported="false" />
         <activity

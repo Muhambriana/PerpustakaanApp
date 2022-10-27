@@ -246,6 +246,7 @@
             app:cardElevation="6dp">
 
             <LinearLayout
+                android:id="@+id/card_pdf"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal|center_vertical"
@@ -262,13 +263,13 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Course Plan"
                     android:layout_marginTop="8dp"
+                    android:fontFamily="@font/mo_re"
+                    android:gravity="center"
+                    android:text="PDF View"
                     android:textColor="@color/textcardColor"
                     android:textSize="14sp"
-                    android:fontFamily="@font/mo_re"
-                    android:textStyle="bold"
-                    android:gravity="center"/>
+                    android:textStyle="bold" />
             </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>

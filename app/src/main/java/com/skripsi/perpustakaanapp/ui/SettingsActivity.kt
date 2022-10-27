@@ -3,17 +3,12 @@ package com.skripsi.perpustakaanapp.ui
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.qrcode.QRCodeWriter
-import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.databinding.ActivitySettingsBinding
-import com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.updatebook.UpdateBookFragment
-import com.skripsi.perpustakaanapp.ui.book.detailbook.ViewImageFragment
 
 
 class SettingsActivity : AppCompatActivity() {

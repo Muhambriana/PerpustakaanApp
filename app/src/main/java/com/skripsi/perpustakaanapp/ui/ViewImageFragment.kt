@@ -1,4 +1,4 @@
-package com.skripsi.perpustakaanapp.ui.book.detailbook
+package com.skripsi.perpustakaanapp.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater

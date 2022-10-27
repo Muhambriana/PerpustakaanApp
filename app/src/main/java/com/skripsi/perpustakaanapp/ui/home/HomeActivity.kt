@@ -26,6 +26,7 @@ import com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.updatebook.UpdateBook
 import com.skripsi.perpustakaanapp.ui.login.LoginActivity
 import com.skripsi.perpustakaanapp.ui.member.qrcode.QRCodeFragment
 import com.skripsi.perpustakaanapp.ui.userprofile.UserProfileActivity
+import com.skripsi.perpustakaanapp.ui.userprofile.UserProfileFragment
 import com.skripsi.perpustakaanapp.utils.NetworkInfo
 import com.skripsi.perpustakaanapp.utils.WindowTouchableHelper
 import java.util.*
@@ -104,7 +105,14 @@ class HomeActivity : AppCompatActivity() {
                     true
                 }
                 R.id.bottom_nav_menu2 -> {
-                    bottomMenu2Listener()
+                    val bundle = Bundle()
+                    bundle.putString("USERNAME", sessionManager.fetchUsername())
+                    val fragment = UserProfileFragment()
+                    fragment.arguments = bundle
+                    supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.container, fragment)
+                        .commit()
                     true
                 }
                 else -> false
