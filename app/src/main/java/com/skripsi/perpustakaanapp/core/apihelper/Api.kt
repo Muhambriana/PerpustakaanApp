@@ -2,10 +2,13 @@ package com.skripsi.perpustakaanapp.core.apihelper
 
 import com.skripsi.perpustakaanapp.core.models.*
 import com.skripsi.perpustakaanapp.core.responses.*
+import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
+import java.io.InputStream
 
 @JvmSuppressWildcards
 interface Api {
@@ -158,5 +161,11 @@ interface Api {
         @Header("Authorization") token: String,
         @Body data: ModelForReturnBook
     ):Call<GeneralResponse>
+
+    @GET("image/eBook/show/{name}")
+    fun showPDF(
+        @Header("Authorization") token: String,
+        @Path("name") fileName: String
+    ):Call<ResponseBody>
 }
 

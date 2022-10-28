@@ -3,12 +3,10 @@ package com.skripsi.perpustakaanapp.ui.member.listattendance
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.skripsi.perpustakaanapp.core.models.Attendance
-import com.skripsi.perpustakaanapp.core.models.Book
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.core.resource.MyEvent
 import com.skripsi.perpustakaanapp.core.resource.MyResource
 import com.skripsi.perpustakaanapp.core.responses.ListAttendanceResponse
-import com.skripsi.perpustakaanapp.core.responses.ListBookResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

@@ -1,69 +1,64 @@
 package com.skripsi.perpustakaanapp.ui.book.ebook
 
-import android.app.ProgressDialog
-import android.content.Context
-import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.View
 import android.view.WindowManager
-import com.github.barteksc.pdfviewer.PDFView
+import androidx.lifecycle.ViewModelProvider
+import com.skripsi.perpustakaanapp.core.MyViewModelFactory
 import com.skripsi.perpustakaanapp.core.SessionManager
+import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
+import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
+import com.skripsi.perpustakaanapp.core.resource.MyResource
 import com.skripsi.perpustakaanapp.databinding.ActivityEbookBinding
-import java.io.BufferedInputStream
-import java.io.InputStream
-import java.net.HttpURLConnection
-import java.net.URL
-import javax.net.ssl.HttpsURLConnection
+import com.skripsi.perpustakaanapp.ui.MySnackBar
 
 class EbookActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityEbookBinding
-//    private lateinit var pdfView: PDFView
+    private lateinit var sessionManager: SessionManager
+    private lateinit var viewModel: EbookViewModel
 
-    private lateinit var context: Context
+    private val client = RetrofitClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityEbookBinding.inflate(layoutInflater)
+
+        // Prevent user to screen capture
+        window.setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE)
+
         setContentView(binding.root)
-        context = this@EbookActivity
-//        pdfView = binding.viewPdf
-        GetPDFromURl().execute("http://192.168.0.108:9080/api/library/image/eBook/show/EBook.pdf")
+
+        firstInitialization()
     }
 
+    private fun firstInitialization() {
+        sessionManager = SessionManager(this)
+        viewModel = ViewModelProvider(this, MyViewModelFactory(LibraryRepository(client))).get(
+            EbookViewModel::class.java
+        )
 
-    inner class GetPDFromURl(): AsyncTask<String, Void, InputStream>() {
-        override fun onPreExecute() {
-            super.onPreExecute()
-            binding.progressBar.visibility = View.VISIBLE
-            window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-        }
-        override fun doInBackground(vararg p0: String?): InputStream? {
-            var inputStream: InputStream? = null
+        streamPDF()
+    }
 
-            try {
-                val url = URL(p0.get(0))
-
-                val urlConnection: HttpURLConnection = url.openConnection() as HttpURLConnection
-                if (urlConnection.responseCode == 200) {
-                    inputStream = BufferedInputStream(urlConnection.inputStream)
+    private fun streamPDF() {
+        viewModel.showPDF(sessionManager.fetchAuthToken().toString(),"EBook.pdf")
+        viewModel.resourcePDF.observe(this) {event ->
+            event.getContentIfNotHandled().let { resource ->
+                when(resource) {
+                    is MyResource.Loading -> {
+                        binding.progressBar.visibility = View.VISIBLE
+                    }
+                    is MyResource.Success -> {
+                        binding.viewPdf.fromStream(resource.data).load()
+                        binding.progressBar.visibility = View.GONE
+                    }
+                    is MyResource.Error -> {
+                        MySnackBar.showRed(binding.root, resource.message.toString())
+                    }
                 }
-            } catch (e: Exception) {
-                println("kocak error $e")
-                e.printStackTrace()
-                return null
             }
-            return inputStream
         }
-
-        override fun onPostExecute(result: InputStream?) {
-            binding.viewPdf.fromStream(result).load()
-            Handler(Looper.getMainLooper()).postDelayed({ binding.progressBar.visibility = View.GONE; window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);  }, 13000)
-        }
-
     }
 }
