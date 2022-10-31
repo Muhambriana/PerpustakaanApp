@@ -19,8 +19,7 @@ import com.skripsi.perpustakaanapp.core.resource.MyResource
 import com.skripsi.perpustakaanapp.databinding.FragmentUserProfileBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.MySnackBar
-import com.skripsi.perpustakaanapp.ui.admin.usermanagerial.updateuser.UpdateUserFragment
-import com.skripsi.perpustakaanapp.utils.ImageHelper
+import com.skripsi.perpustakaanapp.utils.FilePathHelper
 import com.skripsi.perpustakaanapp.utils.NetworkInfo
 import com.skripsi.perpustakaanapp.utils.PermissionCheck
 import com.skripsi.perpustakaanapp.utils.setSingleClickListener
@@ -76,7 +75,7 @@ class UserProfileFragment : Fragment() {
                 resources.getString(R.string.confirmation_yes),
                 resources.getString(R.string.confirmation_recheck),
                 {_,_ ->
-                    imageMultipartBody = selectedImage?.let { ImageHelper.getImagePathByUri(requireActivity(), it) }
+                    imageMultipartBody = selectedImage?.let { FilePathHelper.getImage(requireContext(), it) }
                     uploadImage()
                 }, {_,_ ->
 

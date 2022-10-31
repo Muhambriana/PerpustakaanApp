@@ -22,7 +22,7 @@ import com.skripsi.perpustakaanapp.databinding.FragmentUpdateBookBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.MySnackBar
 import com.skripsi.perpustakaanapp.ui.book.detailbook.DetailBookActivity
-import com.skripsi.perpustakaanapp.utils.ImageHelper
+import com.skripsi.perpustakaanapp.utils.FilePathHelper
 import com.skripsi.perpustakaanapp.utils.NetworkInfo.BOOK_IMAGE_BASE_URL
 import com.skripsi.perpustakaanapp.utils.PermissionCheck
 import com.skripsi.perpustakaanapp.utils.setSingleClickListener
@@ -67,7 +67,7 @@ class UpdateBookFragment : BottomSheetDialogFragment() {
             Glide.with(requireContext())
                 .load(selectedImage)
                 .into(binding.bookPoster)
-            imageMultipartBody = selectedImage?.let { ImageHelper.getImagePathByUri(activity, it) }
+            imageMultipartBody = selectedImage?.let { FilePathHelper.getImage(requireContext(), it) }
         }
     }
 

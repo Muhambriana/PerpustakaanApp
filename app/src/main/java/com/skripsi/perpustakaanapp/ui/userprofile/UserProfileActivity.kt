@@ -6,12 +6,10 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
-import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.signature.ObjectKey
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.MyViewModelFactory
 import com.skripsi.perpustakaanapp.core.SessionManager
@@ -23,7 +21,7 @@ import com.skripsi.perpustakaanapp.databinding.ActivityUserProfileBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.MySnackBar
 import com.skripsi.perpustakaanapp.ui.admin.usermanagerial.updateuser.UpdateUserFragment
-import com.skripsi.perpustakaanapp.utils.ImageHelper
+import com.skripsi.perpustakaanapp.utils.FilePathHelper
 import com.skripsi.perpustakaanapp.utils.NetworkInfo.AVATAR_IMAGE_BASE_URL
 import com.skripsi.perpustakaanapp.utils.PermissionCheck
 import com.skripsi.perpustakaanapp.utils.setSingleClickListener
@@ -80,7 +78,7 @@ class UserProfileActivity : AppCompatActivity() {
                 resources.getString(R.string.confirmation_yes),
                 resources.getString(R.string.confirmation_recheck),
                 {_,_ ->
-                    imageMultipartBody = selectedImage?.let { ImageHelper.getImagePathByUri(this, it) }
+                    imageMultipartBody = selectedImage?.let { FilePathHelper.getImage(this, it) }
                     if (detailUser?.username != null) {
                         uploadImage(detailUser?.username.toString())
                     } else if (username != null) {

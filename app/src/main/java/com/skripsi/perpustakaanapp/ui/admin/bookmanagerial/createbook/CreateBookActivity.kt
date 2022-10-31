@@ -2,6 +2,7 @@ package com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.createbook
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -16,10 +17,13 @@ import com.skripsi.perpustakaanapp.core.resource.MyResource
 import com.skripsi.perpustakaanapp.databinding.ActivityCreateBookBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.MySnackBar
-import com.skripsi.perpustakaanapp.utils.ImageHelper
+import com.skripsi.perpustakaanapp.utils.FilePathHelper
 import com.skripsi.perpustakaanapp.utils.PermissionCheck
 import com.skripsi.perpustakaanapp.utils.setSingleClickListener
+import okhttp3.MediaType
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.File
 
 class CreateBookActivity : AppCompatActivity() {
 
@@ -29,6 +33,7 @@ class CreateBookActivity : AppCompatActivity() {
 
     private val client = RetrofitClient
     private var imageMultipartBody: MultipartBody.Part? = null
+    private var pdfMultiPartBody: MultipartBody.Part? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,26 +61,14 @@ class CreateBookActivity : AppCompatActivity() {
                 chooseImage()
             }
         }
+        binding.buttonPdf.setSingleClickListener {
+            if(PermissionCheck.readExternalStorage(this)) {
+                choosePDFFIle()
+            }
+        }
         binding.buttonSave.setSingleClickListener {
             askAppointment()
         }
-    }
-
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_IMAGE) {
-            val selectedImage = data?.data
-            Glide.with(this)
-                .load(selectedImage)
-                .into(binding.imageView)
-            imageMultipartBody = selectedImage?.let { ImageHelper.getImagePathByUri(this, it) }
-        }
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return super.onSupportNavigateUp()
     }
 
     private fun chooseImage() {
@@ -83,6 +76,49 @@ class CreateBookActivity : AppCompatActivity() {
         intent.type = "image/*"
         startActivityForResult(intent, REQUEST_CODE_IMAGE)
     }
+
+    private fun choosePDFFIle() {
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.type = "application/pdf"
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
+        startActivityForResult(intent, REQUEST_CODE_FILE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_IMAGE) {
+            val selectedImage: Uri? = data?.data
+            Glide.with(this)
+                .load(selectedImage)
+                .into(binding.imageView)
+            imageMultipartBody = selectedImage?.let { FilePathHelper.getImage(this, it) }
+        } else if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_FILE) {
+            val selectedPdf:Uri? = data?.data
+            binding.textPdf.text = selectedPdf?.let { FilePathHelper.getFileName(this, it) }
+            pdfMultiPartBody = selectedPdf?.let { FilePathHelper.getPDF(this, it) }
+        }
+    }
+
+//    private fun getPDFPathByUri(activity: Activity?, uri: Uri): MultipartBody.Part? {
+//        val cursor = activity?.contentResolver?.query(uri, null, null, null, null)
+//        assert(cursor != null)
+//        cursor?.moveToFirst()
+//
+//        val columnIndex = cursor?.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+//        val imagePath = columnIndex?.let { cursor.getString(it) }
+//
+//        cursor?.close()
+//
+//        return getPDF(imagePath)
+//    }
+//
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return super.onSupportNavigateUp()
+    }
+
+
 
     private fun askAppointment() {
         val title = binding.edBookTitle.text.toString()
@@ -124,10 +160,16 @@ class CreateBookActivity : AppCompatActivity() {
                 imageMultipartBody
             }else {
                 null
+            }),
+            (if (pdfMultiPartBody != null) {
+                pdfMultiPartBody
+            } else {
+                null
             })
+
         )
 
-        viewModel.resourceUpdateBook.observe(this) { event ->
+        viewModel.resourceCreateBook.observe(this) { event ->
             event.getContentIfNotHandled().let { resource ->
                 when (resource) {
                     is MyResource.Loading -> {
@@ -140,6 +182,7 @@ class CreateBookActivity : AppCompatActivity() {
                     }
                     is MyResource.Error -> {
                         binding.progressBar.visibility = View.GONE
+                        println("kocak error: "+resource.message)
                         MySnackBar.showRed(binding.root, resource.message.toString())
                     }
                 }
@@ -153,6 +196,7 @@ class CreateBookActivity : AppCompatActivity() {
 
     companion object {
         private const val REQUEST_CODE_IMAGE = 201
+        private const val REQUEST_CODE_FILE = 202
         private const val TYPE_TEXT_FLAG_CAP_CHARACTERS = 4096
     }
 }

@@ -41,7 +41,8 @@ interface Api {
     fun postCreateBook(
         @Header("Authorization") token: String,
         @Part ("data") data: RequestBody?,
-        @Part image: MultipartBody.Part?
+        @Part image: MultipartBody.Part?,
+        @Part pdfFile: MultipartBody.Part?
     ):Call<GeneralResponse>
 
     @POST("book/update")
