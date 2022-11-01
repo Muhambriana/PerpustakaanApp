@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Environment
 import android.provider.DocumentsContract
 import android.provider.MediaStore
+import android.provider.OpenableColumns
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -15,21 +16,33 @@ import java.io.File
 
 object FilePathHelper {
     fun getImage(context: Context, uri: Uri): MultipartBody.Part? {
-        val imagePath = getPath(context, uri)
-        val file = imagePath?.let { File(it) }
+        val file = getFile(context, uri)
         val requestBody = file?.let { RequestBody.create(MediaType.parse("multipart/form-data"), it) }
         return requestBody?.let { MultipartBody.Part.createFormData("image", file.name, it) }
     }
 
     fun getPDF(context: Context, uri: Uri): MultipartBody.Part? {
-        val pdfPath = getPath(context, uri)
-        val file = pdfPath?.let { File(it) }
+        val file = getFile(context, uri)
         val requestBody = file?.let { RequestBody.create(MediaType.parse("multipart/form-data"), it) }
         return requestBody?.let { MultipartBody.Part.createFormData("pdf", file.name, it) }
     }
 
+    fun getFile(context: Context, uri: Uri): File? {
+        val imagePath = getPath(context, uri)
+        return imagePath?.let { File(it) }
+    }
+
     fun getFileName(context: Context, uri: Uri): String? {
-        return getPath(context, uri)
+        uri.let { returnUri ->
+            context.contentResolver.query(returnUri, null, null, null, null)
+        }?.use { cursor ->
+
+            val nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+//            val sizeIndex = cursor.getColumnIndex(OpenableColumns.SIZE)
+            cursor.moveToFirst()
+            return cursor.getString(nameIndex)
+        }
+        return null
     }
 
     private fun getPath(context: Context, uri:Uri): String? {

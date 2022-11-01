@@ -33,8 +33,7 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/icon_more"
-                />
+                android:src="@drawable/icon_add" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -77,7 +76,7 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/icon_more"
+                android:src="@drawable/icon_add_user"
                 />
 
             <TextView
@@ -122,7 +121,7 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/icon_more"
+                android:src="@drawable/icon_list"
                 />
 
             <TextView
@@ -167,7 +166,7 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/icon_more"
+                android:src="@drawable/icon_list_user"
                 />
 
             <TextView

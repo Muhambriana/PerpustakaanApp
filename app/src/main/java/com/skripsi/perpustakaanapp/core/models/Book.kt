@@ -28,6 +28,9 @@ data class Book(
     @field:SerializedName("imageUrl")
     val imageUrl: String? = null,
 
+    @field:SerializedName("ebook")
+    val eBook: String? = null
+
 ) : Parcelable
 
 //data class BookRequestAndImage(

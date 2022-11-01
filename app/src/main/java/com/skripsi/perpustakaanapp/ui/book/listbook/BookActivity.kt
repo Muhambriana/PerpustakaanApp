@@ -74,6 +74,18 @@ class BookActivity : AppCompatActivity() {
         )
     }
 
+    private fun setLauncher() {
+        //For get return data after launch activity
+        resultLauncher =  registerForActivityResult(
+            StartActivityForResult()
+        ){ result ->
+            if (result.resultCode == RESULT_OK) {
+                //Re-run getBookData and update with the latest
+                getBookData()
+            }
+        }
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.activity_book_menu, menu)
         return super.onCreateOptionsMenu(menu)
@@ -134,19 +146,6 @@ class BookActivity : AppCompatActivity() {
                 return true
             }
         })
-    }
-
-
-    private fun setLauncher() {
-        //For get return data after launch activity
-        resultLauncher =  registerForActivityResult(
-            StartActivityForResult()
-        ){ result ->
-            if (result.resultCode == RESULT_OK) {
-                //Re-run getBookData and update with the latest
-                getBookData()
-            }
-        }
     }
 
     private fun getBookData() {

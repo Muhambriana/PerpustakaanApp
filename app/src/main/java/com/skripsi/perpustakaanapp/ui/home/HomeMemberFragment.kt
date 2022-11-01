@@ -6,21 +6,28 @@ import android.os.Handler
 import android.os.Looper
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.signature.ObjectKey
 import com.google.android.material.snackbar.Snackbar
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.MyViewModelFactory
 import com.skripsi.perpustakaanapp.core.SessionManager
+import com.skripsi.perpustakaanapp.core.adapter.CardMenuAdapter
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
+import com.skripsi.perpustakaanapp.core.models.CardMenu
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.core.resource.MyResource
+import com.skripsi.perpustakaanapp.databinding.FragmentCardMenuBinding
 import com.skripsi.perpustakaanapp.databinding.FragmentHomeAdminBinding
 import com.skripsi.perpustakaanapp.databinding.FragmentHomeMemberBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.SettingsActivity
+import com.skripsi.perpustakaanapp.ui.admin.pendingloan.PendingLoanActivity
+import com.skripsi.perpustakaanapp.ui.admin.usermanagerial.scanattendance.ScannerActivity
 import com.skripsi.perpustakaanapp.ui.book.ebook.EbookActivity
 import com.skripsi.perpustakaanapp.ui.book.listbook.BookActivity
 import com.skripsi.perpustakaanapp.ui.login.LoginActivity
@@ -37,7 +44,10 @@ class HomeMemberFragment : Fragment() {
 
     private var fragmentHomMemberFragment: FragmentHomeMemberBinding? = null
     private val binding get() = fragmentHomMemberFragment
-    private val client = RetrofitClient
+
+    private var models: MutableList<CardMenu>? = null
+    private var adapter: CardMenuAdapter? = null
+    private var viewPager: ViewPager? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,55 +58,65 @@ class HomeMemberFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        firstInitialization()
-        cardListener()
+        setDefaultMenuListener()
+        setModels()
+        setAdapter()
+        setMenu()
     }
 
-    private fun firstInitialization() {
-        sessionManager = SessionManager(requireContext())
-
-        viewModel = ViewModelProvider(this, MyViewModelFactory(LibraryRepository(client))).get(
-            HomeViewModel::class.java
-        )
-    }
-
-    private fun cardListener() {
+    private fun setDefaultMenuListener() {
         val clickListener = View.OnClickListener {view ->
             when (view.id){
-                binding?.cardBookList?.id -> {
+                binding?.cardMenuListBook?.id -> {
                     val intent = Intent(activity, BookActivity::class.java)
                     startActivity(intent)
                 }
-                binding?.cardLoanHistoryMember?.id -> {
+                binding?.cardMenuPendingLoan?.id -> {
+                    val intent = Intent(activity, PendingLoanActivity::class.java)
+                    startActivity(intent)
+                }
+                binding?.cardMenuOnLoan?.id -> {
                     val intent = Intent(activity, LoanHistoryActivity::class.java)
                     startActivity(intent)
                 }
-                binding?.cardUserProfile?.id -> {
-                    val intent = Intent(activity, UserProfileActivity::class.java)
-                    startActivity(intent)
-                }
-                binding?.cardAttendanceList?.id -> {
-                    val intent = Intent(activity, AttendanceActivity::class.java)
-                    startActivity(intent)
-                }
-                binding?.cardAttendance?.id -> {
-                    val intent = Intent(activity, SettingsActivity::class.java)
-                    startActivity(intent)
-                }
-                binding?.cardPdf?.id -> {
-                    val intent = Intent(activity, EbookActivity::class.java)
+                binding?.cardMenuLoanHistory?.id -> {
+                    val intent = Intent(activity, LoanHistoryActivity::class.java)
                     startActivity(intent)
                 }
             }
 
         }
 
-        binding?.cardBookList?.setOnClickListener(clickListener)
-        binding?.cardLoanHistoryMember?.setOnClickListener(clickListener)
-        binding?.cardUserProfile?.setOnClickListener(clickListener)
-        binding?.cardAttendanceList?.setOnClickListener(clickListener)
-        binding?.cardAttendance?.setOnClickListener(clickListener)
-        binding?.cardPdf?.setOnClickListener(clickListener)
+        binding?.cardMenuListBook?.setOnClickListener(clickListener)
+        binding?.cardMenuPendingLoan?.setOnClickListener(clickListener)
+        binding?.cardMenuOnLoan?.setOnClickListener(clickListener)
+        binding?.cardMenuLoanHistory?.setOnClickListener(clickListener)
+    }
+
+    private fun setModels() {
+        models = mutableListOf()
+        models?.add(
+            CardMenu(
+                R.drawable.icon_attendant_list, "History Kunjungan", null, AttendanceActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_2)))
+        models?.add(
+            CardMenu(
+                R.drawable.icon_overdue, "Telat Dikembalikan", null, UserProfileActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_4)))
+        models?.add(
+            CardMenu(
+                R.drawable.icon_rejected, "Peminjaman Ditolak", null, AttendanceActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_1)))
+    }
+
+    private fun setAdapter() {
+        adapter = models?.let { CardMenuAdapter(it, requireContext()) }
+    }
+
+    private fun setMenu() {
+        viewPager = binding?.viewPager
+
+        viewPager?.adapter = adapter
+
+        viewPager?.setPadding(10, 0, 340, 0)
+        viewPager?.pageMargin = 20
     }
 
 }

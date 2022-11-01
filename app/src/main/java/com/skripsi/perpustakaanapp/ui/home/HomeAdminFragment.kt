@@ -76,19 +76,19 @@ class HomeAdminFragment : Fragment() {
         models = mutableListOf()
         models?.add(
             CardMenu(
-                R.drawable.ic_profile, "Menunggu Persetujuan", null, PendingLoanActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_1)))
+                R.drawable.icon_pending_loan, "Menunggu Persetujuan", null, PendingLoanActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_1)))
         models?.add(
             CardMenu(
-                R.drawable.ic_course_book, "Sedang Dipinjam", null, UserProfileActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_2)))
+                R.drawable.icon_loan, "Sedang Dipinjam", null, UserProfileActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_2)))
         models?.add(
             CardMenu(
-                R.drawable.ic_course_plan, "Daftar Absen", null, AttendanceActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_3)))
+                R.drawable.icon_attendant_list, "Daftar Absen", null, AttendanceActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_3)))
         models?.add(
             CardMenu(
-                R.drawable.ic_attendance_recap, "Scan Pengunjung", null, ScannerActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_4)))
+                R.drawable.icon_scanner, "Scan Pengunjung", null, ScannerActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_4)))
         models?.add(
             CardMenu(
-                R.drawable.ic_gpa_reult, "Scan Pengembalian Buku", null, ScannerReturnBookActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_5)))
+                R.drawable.icon_scanner, "Scan Pengembalian Buku", null, ScannerReturnBookActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_5)))
     }
 
     private fun setAdapter() {

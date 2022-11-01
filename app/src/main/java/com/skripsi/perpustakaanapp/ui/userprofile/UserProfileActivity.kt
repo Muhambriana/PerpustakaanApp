@@ -20,6 +20,7 @@ import com.skripsi.perpustakaanapp.core.resource.MyResource
 import com.skripsi.perpustakaanapp.databinding.ActivityUserProfileBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.MySnackBar
+import com.skripsi.perpustakaanapp.ui.ViewImageFragment
 import com.skripsi.perpustakaanapp.ui.admin.usermanagerial.updateuser.UpdateUserFragment
 import com.skripsi.perpustakaanapp.utils.FilePathHelper
 import com.skripsi.perpustakaanapp.utils.NetworkInfo.AVATAR_IMAGE_BASE_URL
@@ -104,7 +105,7 @@ class UserProfileActivity : AppCompatActivity() {
                     is MyResource.Success -> {
                         binding.progressBar.visibility = View.GONE
                         setResult(RESULT_OK)
-                        restartActivity()
+                        restartActivity(user)
                     }
                     is MyResource.Error -> {
                         binding.progressBar.visibility = View.GONE
@@ -115,12 +116,10 @@ class UserProfileActivity : AppCompatActivity() {
         }
     }
 
-    private fun restartActivity() {
-        // Set avatar link if user update profile for the first time
-        detailUser?.avatar = "${detailUser?.username}.png"
-
+    private fun restartActivity(u: String) {
+        println("kocak isi usewrname: $u")
         val intent = Intent(this, UserProfileActivity::class.java)
-        intent.putExtra(EXTRA_DATA, detailUser)
+        intent.putExtra(USERNAME, u)
 
         // Finish this activity before restart
         finish()
@@ -283,6 +282,18 @@ class UserProfileActivity : AppCompatActivity() {
                 .signature(ObjectKey(System.currentTimeMillis().toString()))
                 .centerCrop()
                 .into(imageView)
+
+            openFullImage(detailUser?.avatar)
+        }
+    }
+
+    private fun openFullImage(imageUrl: String?) {
+        binding.imageAvatarInCard.setSingleClickListener {
+            val bundle = Bundle()
+            bundle.putString("avatar", imageUrl)
+            val viewImageFull = ViewImageFragment()
+            viewImageFull.arguments =  bundle
+            viewImageFull.show(supportFragmentManager, "ViewImageFragment")
         }
     }
 

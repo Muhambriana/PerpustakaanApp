@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.provider.OpenableColumns
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -94,31 +95,24 @@ class CreateBookActivity : AppCompatActivity() {
             imageMultipartBody = selectedImage?.let { FilePathHelper.getImage(this, it) }
         } else if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_FILE) {
             val selectedPdf:Uri? = data?.data
+            if (selectedPdf!= null) {
+                val file: File? = FilePathHelper.getFile(this, selectedPdf)
+                binding.previewPdf.fromFile(file)
+                    .pages(0)
+                    .spacing(0)
+                    .swipeHorizontal(false)
+                    .enableSwipe(false)
+                    .load()
+            }
             binding.textPdf.text = selectedPdf?.let { FilePathHelper.getFileName(this, it) }
             pdfMultiPartBody = selectedPdf?.let { FilePathHelper.getPDF(this, it) }
         }
     }
 
-//    private fun getPDFPathByUri(activity: Activity?, uri: Uri): MultipartBody.Part? {
-//        val cursor = activity?.contentResolver?.query(uri, null, null, null, null)
-//        assert(cursor != null)
-//        cursor?.moveToFirst()
-//
-//        val columnIndex = cursor?.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-//        val imagePath = columnIndex?.let { cursor.getString(it) }
-//
-//        cursor?.close()
-//
-//        return getPDF(imagePath)
-//    }
-//
-
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return super.onSupportNavigateUp()
     }
-
-
 
     private fun askAppointment() {
         val title = binding.edBookTitle.text.toString()
@@ -154,8 +148,6 @@ class CreateBookActivity : AppCompatActivity() {
             binding.edPublisher.text.toString(),
             binding.edPublisherDate.text.toString(),
             binding.edCopies.text.toString(),
-            binding.edSource.text.toString(),
-            binding.edRemark.text.toString(),
             (if (imageMultipartBody != null) {
                 imageMultipartBody
             }else {

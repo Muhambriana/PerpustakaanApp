@@ -142,6 +142,30 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <!--=====================Custom card radius==========================-->
+    <style name="CustomCardLeftRadius" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="shapeAppearanceOverlay">@style/LeftRadius</item>
+    </style>
+    <style name="LeftRadius" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">0dp</item>
+        <item name="cornerSizeTopLeft">20dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeBottomLeft">20dp</item>
+    </style>
+
+    <style name="CustomCardRightRadius" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="shapeAppearanceOverlay">@style/RightRadius</item>
+    </style>
+    <style name="RightRadius" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">20dp</item>
+        <item name="cornerSizeTopLeft">0dp</item>
+        <item name="cornerSizeBottomRight">20dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+    </style>
+    <!--=================================================================-->
+
     <!--Custom Navigation Up Icon-->
     <!--    <style name="NavigationUp" parent="Widge">-->
 

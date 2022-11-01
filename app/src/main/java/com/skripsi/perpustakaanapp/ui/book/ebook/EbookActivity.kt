@@ -29,7 +29,6 @@ class EbookActivity : AppCompatActivity() {
         window.setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE)
 
         setContentView(binding.root)
-
         firstInitialization()
     }
 
@@ -38,12 +37,14 @@ class EbookActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, MyViewModelFactory(LibraryRepository(client))).get(
             EbookViewModel::class.java
         )
-
-        streamPDF()
+        val linkEBook = intent.getStringExtra(EXTRA_LINK)
+        linkEBook?.let { streamPDF(it) }
     }
 
-    private fun streamPDF() {
-        viewModel.showPDF(sessionManager.fetchAuthToken().toString(),"EBook.pdf")
+    private fun streamPDF(eBook: String) {
+
+        viewModel.showPDF(sessionManager.fetchAuthToken().toString(),eBook)
+
         viewModel.resourcePDF.observe(this) {event ->
             event.getContentIfNotHandled().let { resource ->
                 when(resource) {
@@ -60,5 +61,9 @@ class EbookActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    companion object{
+        const val EXTRA_LINK= "extra_link"
     }
 }

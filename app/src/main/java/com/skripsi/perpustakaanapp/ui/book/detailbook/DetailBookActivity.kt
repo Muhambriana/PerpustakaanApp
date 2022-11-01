@@ -1,5 +1,6 @@
 package com.skripsi.perpustakaanapp.ui.book.detailbook
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -23,6 +24,7 @@ import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.MySnackBar
 import com.skripsi.perpustakaanapp.ui.ViewImageFragment
 import com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.updatebook.UpdateBookFragment
+import com.skripsi.perpustakaanapp.ui.book.ebook.EbookActivity
 import com.skripsi.perpustakaanapp.utils.NetworkInfo.BOOK_IMAGE_BASE_URL
 import com.skripsi.perpustakaanapp.utils.setSingleClickListener
 
@@ -177,9 +179,18 @@ class DetailBookActivity : AppCompatActivity() {
         binding.progressBar.visibility = View.GONE
         supportActionBar?.title = detailBook?.title
         binding.author.text = detailBook?.author
-        binding.year.text = detailBook?.publisherDate //harusnya tahun terbit
+        binding.year.text = detailBook?.publisherDate
         binding.publisher.text = detailBook?.publisher
         setBookCover()
+        setEBookLink()
+    }
+
+    private fun setEBookLink() {
+        binding.textLinkEbook.setOnClickListener {
+            val intent = Intent(this@DetailBookActivity, EbookActivity::class.java)
+            intent.putExtra(EbookActivity.EXTRA_LINK, detailBook?.eBook)
+            startActivity(intent)
+        }
     }
 
     private fun setBookCover() {
@@ -201,7 +212,7 @@ class DetailBookActivity : AppCompatActivity() {
     private fun openFullImage(imageUrl: String?) {
         binding.imageCoverBook.setSingleClickListener {
             val bundle = Bundle()
-            bundle.putString("imageUrl", imageUrl)
+            bundle.putString("poster", imageUrl)
             val viewImageFull = ViewImageFragment()
             viewImageFull.arguments =  bundle
             viewImageFull.show(supportFragmentManager, "ViewImageFragment")

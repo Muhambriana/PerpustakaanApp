@@ -9,6 +9,8 @@ import android.text.format.DateFormat
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -25,6 +27,7 @@ import com.skripsi.perpustakaanapp.ui.MySnackBar
 import com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.updatebook.UpdateBookFragment
 import com.skripsi.perpustakaanapp.ui.login.LoginActivity
 import com.skripsi.perpustakaanapp.ui.member.qrcode.QRCodeFragment
+import com.skripsi.perpustakaanapp.ui.statistik.MemberStatisticFragment
 import com.skripsi.perpustakaanapp.ui.userprofile.UserProfileActivity
 import com.skripsi.perpustakaanapp.ui.userprofile.UserProfileFragment
 import com.skripsi.perpustakaanapp.utils.NetworkInfo
@@ -36,6 +39,7 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
     private lateinit var sessionManager: SessionManager
     private lateinit var viewModel: HomeViewModel
+    private lateinit var resultLauncher: ActivityResultLauncher<Intent>
 
     private var doubleBackPressed = false
     private var tempRole: String? = null
@@ -50,6 +54,7 @@ class HomeActivity : AppCompatActivity() {
         )
 
         firstInitialization()
+        setLauncher()
         setBottomNav()
     }
 
@@ -61,12 +66,24 @@ class HomeActivity : AppCompatActivity() {
 
         if (intent?.extras!=null){
             binding.toolbarTitle.text = "Hi, ${intent?.getStringExtra("FIRST_NAME")}"
-            userProfile()
+            userAvatar()
             getDateNow()
         }
     }
 
-    private fun userProfile() {
+    private fun setLauncher() {
+        //For get return data after launch activity
+        resultLauncher =  registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ){ result ->
+            if (result.resultCode == RESULT_OK) {
+                //Re-run getBookData and update with the latest
+                userAvatar()
+            }
+        }
+    }
+
+    private fun userAvatar() {
         val avatar = intent.getStringExtra("AVATAR")
         if (avatar != null) {
             Glide.with(this)
@@ -78,7 +95,7 @@ class HomeActivity : AppCompatActivity() {
         binding.toolbarIcon.setOnClickListener {
             val intent = Intent(this, UserProfileActivity::class.java)
             intent.putExtra(UserProfileActivity.USERNAME, sessionManager.fetchUsername())
-            startActivity(intent)
+            resultLauncher.launch(intent)
         }
     }
 
@@ -105,14 +122,15 @@ class HomeActivity : AppCompatActivity() {
                     true
                 }
                 R.id.bottom_nav_menu2 -> {
-                    val bundle = Bundle()
-                    bundle.putString("USERNAME", sessionManager.fetchUsername())
-                    val fragment = UserProfileFragment()
-                    fragment.arguments = bundle
-                    supportFragmentManager
-                        .beginTransaction()
-                        .replace(R.id.container, fragment)
-                        .commit()
+//                    val bundle = Bundle()
+//                    bundle.putString("USERNAME", sessionManager.fetchUsername())
+//                    val fragment = UserProfileFragment()
+//                    fragment.arguments = bundle
+//                    supportFragmentManager
+//                        .beginTransaction()
+//                        .replace(R.id.container, fragment)
+//                        .commit()
+                    bottomMenu2Listener()
                     true
                 }
                 else -> false
@@ -132,7 +150,7 @@ class HomeActivity : AppCompatActivity() {
         if (sessionManager.fetchUserRole() == "student") {
             loadFragment(UpdateBookFragment())
         } else if (sessionManager.fetchUserRole() == "admin") {
-            loadFragment(UpdateBookFragment())
+            loadFragment(MemberStatisticFragment())
         }
     }
 

@@ -13,13 +13,16 @@ import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.adapter.CardMenuAdapter
 import com.skripsi.perpustakaanapp.core.models.CardMenu
 import com.skripsi.perpustakaanapp.databinding.FragmentCardMenuBinding
+import com.skripsi.perpustakaanapp.ui.SettingsActivity
 import com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.createbook.CreateBookActivity
 import com.skripsi.perpustakaanapp.ui.admin.listuser.UserActivity
 import com.skripsi.perpustakaanapp.ui.admin.pendingloan.PendingLoanActivity
 import com.skripsi.perpustakaanapp.ui.admin.usermanagerial.createnewadmin.CreateNewAdminActivity
 import com.skripsi.perpustakaanapp.ui.admin.usermanagerial.scanattendance.ScannerActivity
+import com.skripsi.perpustakaanapp.ui.book.ebook.EbookActivity
 import com.skripsi.perpustakaanapp.ui.book.listbook.BookActivity
 import com.skripsi.perpustakaanapp.ui.member.listattendance.AttendanceActivity
+import com.skripsi.perpustakaanapp.ui.member.loanhistory.LoanHistoryActivity
 import com.skripsi.perpustakaanapp.ui.userprofile.UserProfileActivity
 
 
@@ -48,30 +51,32 @@ class CardMenuFragment : Fragment() {
     }
 
     private fun setDefaultMenuListener() {
-        val clickListener = View.OnClickListener { view ->
+        val clickListener = View.OnClickListener {view ->
             when (view.id){
-                binding?.cardMenuCreateBook?.id -> {
-                    val intent = Intent(activity, CreateBookActivity::class.java)
-                    startActivity(intent)
-                }
-                binding?.cardMenuCreateAdmin?.id -> {
-                    val intent = Intent(activity, CreateNewAdminActivity::class.java)
-                    startActivity(intent)
-                }
                 binding?.cardMenuListBook?.id -> {
                     val intent = Intent(activity, BookActivity::class.java)
                     startActivity(intent)
                 }
-                binding?.cardMenuListUser?.id -> {
-                    val intent = Intent(activity, UserActivity::class.java)
+                binding?.cardMenuPendingLoan?.id -> {
+                    val intent = Intent(activity, PendingLoanActivity::class.java)
+                    startActivity(intent)
+                }
+                binding?.cardMenuOnLoan?.id -> {
+                    val intent = Intent(activity, LoanHistoryActivity::class.java)
+                    startActivity(intent)
+                }
+                binding?.cardMenuLoanHistory?.id -> {
+                    val intent = Intent(activity, LoanHistoryActivity::class.java)
                     startActivity(intent)
                 }
             }
+
         }
-        binding?.cardMenuCreateBook?.setOnClickListener(clickListener)
-        binding?.cardMenuCreateAdmin?.setOnClickListener(clickListener)
+
         binding?.cardMenuListBook?.setOnClickListener(clickListener)
-        binding?.cardMenuListUser?.setOnClickListener(clickListener)
+        binding?.cardMenuPendingLoan?.setOnClickListener(clickListener)
+        binding?.cardMenuOnLoan?.setOnClickListener(clickListener)
+        binding?.cardMenuLoanHistory?.setOnClickListener(clickListener)
     }
 
     private fun setModels() {

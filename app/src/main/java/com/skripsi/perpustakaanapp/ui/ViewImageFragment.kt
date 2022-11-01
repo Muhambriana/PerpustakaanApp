@@ -40,13 +40,26 @@ class ViewImageFragment : DialogFragment() {
     }
 
     private fun setImageToView() {
-        val imageUrl = arguments?.getString("imageUrl")
-        binding?.let {
-            Glide.with(this)
-                .load(NetworkInfo.BOOK_IMAGE_BASE_URL + imageUrl)
-                .signature(ObjectKey(System.currentTimeMillis().toString()))
-                .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
-                .into(it.imageView)
+        val avatar = arguments?.getString("avatar")
+        avatar?.let {
+            binding?.let {
+                Glide.with(this)
+                    .load(NetworkInfo.AVATAR_IMAGE_BASE_URL + avatar)
+                    .signature(ObjectKey(System.currentTimeMillis().toString()))
+                    .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                    .into(it.imageView)
+            }
+        }
+
+        val bookPoster = arguments?.getString("poster")
+        bookPoster?.let {
+            binding?.let {
+                Glide.with(this)
+                    .load(NetworkInfo.BOOK_IMAGE_BASE_URL + bookPoster)
+                    .signature(ObjectKey(System.currentTimeMillis().toString()))
+                    .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                    .into(it.imageView)
+            }
         }
     }
 

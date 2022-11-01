@@ -8,101 +8,12 @@
     tools:context=".ui.home.CardMenuFragment">
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/card_menu_create_book"
-        android:layout_width="150dp"
-        android:layout_height="180dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
-        android:layout_rowWeight="1"
-        android:layout_columnWeight="1"
-        android:background="@color/cardColor"
-        app:cardCornerRadius="30dp"
-        app:cardElevation="6dp"
-        app:cardPreventCornerOverlap="true">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal|center_vertical"
-            android:background="@color/white"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/icon_more"
-                />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/mo_re"
-                android:gravity="center"
-                android:text="Tambah Buku"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/card_menu_create_admin"
-        android:layout_width="150dp"
-        android:layout_height="180dp"
-        android:layout_toRightOf="@id/card_menu_create_book"
-        android:layout_marginTop="10dp"
-        android:layout_rowWeight="1"
-        android:layout_columnWeight="1"
-        android:layout_marginStart="10dp"
-        android:background="@color/cardColor"
-        app:cardCornerRadius="30dp"
-        app:cardElevation="6dp"
-        app:cardPreventCornerOverlap="true">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal|center_vertical"
-            android:background="@color/white"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/icon_more"
-                />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/mo_re"
-                android:gravity="center"
-                android:text="Tambah Admin"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_menu_list_book"
         android:layout_width="150dp"
         android:layout_height="180dp"
-        android:layout_below="@id/card_menu_create_book"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
         android:layout_rowWeight="1"
         android:layout_columnWeight="1"
         android:background="@color/cardColor"
@@ -122,8 +33,7 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/icon_more"
-                />
+                android:src="@drawable/icon_list" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -141,12 +51,11 @@
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/card_menu_list_user"
+        android:id="@+id/card_menu_pending_loan"
         android:layout_width="150dp"
         android:layout_height="180dp"
-        android:layout_below="@id/card_menu_create_admin"
+        android:layout_toRightOf="@id/card_menu_list_book"
         android:layout_marginTop="10dp"
-        android:layout_toEndOf="@id/card_menu_list_book"
         android:layout_rowWeight="1"
         android:layout_columnWeight="1"
         android:layout_marginStart="10dp"
@@ -167,7 +76,95 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/icon_more"
+                android:src="@drawable/icon_waiting" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/mo_re"
+                android:gravity="center"
+                android:text="Menunggu Persetujuan"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_menu_on_loan"
+        android:layout_width="150dp"
+        android:layout_height="180dp"
+        android:layout_below="@id/card_menu_list_book"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:background="@color/cardColor"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="6dp"
+        app:cardPreventCornerOverlap="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/icon_on_loan" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/mo_re"
+                android:gravity="center"
+                android:text="Sedang Dipinjam"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_menu_loan_history"
+        android:layout_width="150dp"
+        android:layout_height="180dp"
+        android:layout_below="@id/card_menu_pending_loan"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@id/card_menu_on_loan"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_marginStart="10dp"
+        android:background="@color/cardColor"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="6dp"
+        app:cardPreventCornerOverlap="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/icon_history"
                 />
 
             <TextView
@@ -176,7 +173,7 @@
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/mo_re"
                 android:gravity="center"
-                android:text="Daftar Member"
+                android:text="History Peminjaman"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -190,7 +187,7 @@
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:layout_below="@id/card_menu_list_book"
+        android:layout_below="@id/card_menu_on_loan"
         android:layout_marginTop="20dp"
         android:clipToPadding="false"
         android:foregroundGravity="center"
