@@ -97,13 +97,16 @@ class HomeMemberFragment : Fragment() {
         models = mutableListOf()
         models?.add(
             CardMenu(
-                R.drawable.icon_attendant_list, "History Kunjungan", null, AttendanceActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_2)))
+                R.drawable.icon_ebook, "Baca e-Book", null, AttendanceActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_1)))
         models?.add(
             CardMenu(
                 R.drawable.icon_overdue, "Telat Dikembalikan", null, UserProfileActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_4)))
         models?.add(
             CardMenu(
-                R.drawable.icon_rejected, "Peminjaman Ditolak", null, AttendanceActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_1)))
+                R.drawable.icon_attendant_list, "History Kunjungan", null, AttendanceActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_3)))
+        models?.add(
+            CardMenu(
+                R.drawable.icon_rejected, "Peminjaman Ditolak", null, AttendanceActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_2)))
     }
 
     private fun setAdapter() {
