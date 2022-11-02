@@ -15,7 +15,7 @@ import com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.scanbookreturn.Scanne
 import com.skripsi.perpustakaanapp.ui.admin.listuser.UserActivity
 import com.skripsi.perpustakaanapp.ui.admin.pendingloan.PendingLoanActivity
 import com.skripsi.perpustakaanapp.ui.admin.usermanagerial.createnewadmin.CreateNewAdminActivity
-import com.skripsi.perpustakaanapp.ui.admin.usermanagerial.scanattendance.ScannerActivity
+import com.skripsi.perpustakaanapp.ui.admin.scanner.ScannerActivity
 import com.skripsi.perpustakaanapp.ui.book.listbook.BookActivity
 import com.skripsi.perpustakaanapp.ui.member.listattendance.AttendanceActivity
 import com.skripsi.perpustakaanapp.ui.userprofile.UserProfileActivity
@@ -85,10 +85,10 @@ class HomeAdminFragment : Fragment() {
                 R.drawable.icon_attendant_list, "Daftar Absen", null, AttendanceActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_3)))
         models?.add(
             CardMenu(
-                R.drawable.icon_scanner, "Scan Pengunjung", null, ScannerActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_4)))
+                R.drawable.icon_scanner, "Scan Pengunjung", null, ScannerActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_4), "attendance"))
         models?.add(
             CardMenu(
-                R.drawable.icon_scanner, "Scan Pengembalian Buku", null, ScannerReturnBookActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_5)))
+                R.drawable.icon_scanner, "Scan Pengembalian Buku", null, ScannerReturnBookActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_5), "returning_book"))
     }
 
     private fun setAdapter() {

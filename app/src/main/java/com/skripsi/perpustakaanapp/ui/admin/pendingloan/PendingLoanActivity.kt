@@ -96,7 +96,6 @@ class PendingLoanActivity : AppCompatActivity() {
     }
 
     private fun onClickListener() {
-
         pendingLoanAdapter.onMemberUsernameClick = { memberUsername ->
             val intent = Intent(this, UserProfileActivity::class.java)
             intent.putExtra(UserProfileActivity.USERNAME, memberUsername)
@@ -109,8 +108,10 @@ class PendingLoanActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        approveLoanListener()
-        rejectLoanListener()
+        if (sessionManager.fetchUserRole() == "admin") {
+            approveLoanListener()
+            rejectLoanListener()
+        }
     }
 
     private fun approveLoanListener() {

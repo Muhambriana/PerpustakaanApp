@@ -10,6 +10,7 @@ data class CardMenu(
     val title: String? = null,
     val desc: String? = null,
     val destination: Class<*>? = null,
-    val backgroundColor: Drawable? = null
+    val backgroundColor: Drawable? = null,
+    val string_extra: String? = null
 
 )

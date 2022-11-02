@@ -19,6 +19,7 @@ class PendingLoanViewModel(private val repository: LibraryRepository) : ViewMode
     val resourceApproveLoan = MutableLiveData<MyEvent<MyResource<String?>>>()
     val resourceRejectLoan = MutableLiveData<MyEvent<MyResource<String?>>>()
 
+
     fun getAllPendingLoans(token: String) {
         resourcePendingLoan.postValue(MyEvent(MyResource.Loading()))
         val response = repository.getAllPendingLoan(token)

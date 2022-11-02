@@ -1,4 +1,4 @@
-package com.skripsi.perpustakaanapp.ui.admin.usermanagerial.scanattendance
+package com.skripsi.perpustakaanapp.ui.admin.scanner
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

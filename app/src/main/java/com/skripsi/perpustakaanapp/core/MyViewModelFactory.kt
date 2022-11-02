@@ -9,7 +9,7 @@ import com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.updatebook.UpdateBook
 import com.skripsi.perpustakaanapp.ui.admin.listuser.UserViewModel
 import com.skripsi.perpustakaanapp.ui.admin.pendingloan.PendingLoanViewModel
 import com.skripsi.perpustakaanapp.ui.admin.usermanagerial.createnewadmin.CreateNewAdminViewModel
-import com.skripsi.perpustakaanapp.ui.admin.usermanagerial.scanattendance.ScannerViewModel
+import com.skripsi.perpustakaanapp.ui.admin.scanner.ScannerViewModel
 import com.skripsi.perpustakaanapp.ui.admin.usermanagerial.updateuser.UpdateUserViewModel
 import com.skripsi.perpustakaanapp.ui.book.detailbook.DetailBookViewModel
 import com.skripsi.perpustakaanapp.ui.book.ebook.EbookViewModel

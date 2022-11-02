@@ -1,15 +1,20 @@
 package com.skripsi.perpustakaanapp.core.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.skripsi.perpustakaanapp.R
+import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.core.models.PendingLoan
 import com.skripsi.perpustakaanapp.databinding.ItemListPendingLoanBinding
 import com.skripsi.perpustakaanapp.utils.setSingleClickListener
 
 class PendingLoanAdapter : RecyclerView.Adapter<PendingLoanAdapter.PendingLoanViewHolder>() {
+
+    private lateinit var sessionManager: SessionManager
+    private lateinit var context: Context
 
     private var listPendingLoan = mutableListOf<PendingLoan>()
     var buttonApproveClick: ((Int) -> Unit)? = null
@@ -21,6 +26,11 @@ class PendingLoanAdapter : RecyclerView.Adapter<PendingLoanAdapter.PendingLoanVi
         if (pendingLoanData == null) return
         listPendingLoan.clear()
         listPendingLoan.addAll(pendingLoanData)
+    }
+
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+        sessionManager = SessionManager(recyclerView.context)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
@@ -46,16 +56,6 @@ class PendingLoanAdapter : RecyclerView.Adapter<PendingLoanAdapter.PendingLoanVi
         }
 
         init {
-            binding.btnApprove.setSingleClickListener {
-                listPendingLoan[adapterPosition].pendingLoanId?.let { id ->
-                    buttonApproveClick?.invoke(id)
-                }
-            }
-            binding.btnReject.setSingleClickListener {
-                listPendingLoan[adapterPosition].pendingLoanId?.let { id ->
-                    buttonRejectClick?.invoke(id)
-                }
-            }
             binding.tvMember.setSingleClickListener {
                 listPendingLoan[adapterPosition].createdBy?.let { memberUsername ->
                     onMemberUsernameClick?.invoke(memberUsername)
@@ -65,6 +65,23 @@ class PendingLoanAdapter : RecyclerView.Adapter<PendingLoanAdapter.PendingLoanVi
                 listPendingLoan[adapterPosition].bookId?.let { bookId ->
                     onBookTitleClick?.invoke(bookId)
                 }
+            }
+            if (sessionManager.fetchUserRole() == "admin") {
+                binding.btnApprove.setSingleClickListener {
+                    listPendingLoan[adapterPosition].pendingLoanId?.let { id ->
+                        buttonApproveClick?.invoke(id)
+                    }
+                }
+                binding.btnReject.setSingleClickListener {
+                    listPendingLoan[adapterPosition].pendingLoanId?.let { id ->
+                        buttonRejectClick?.invoke(id)
+                    }
+                }
+            } else {
+                binding.btnApprove.isEnabled = false
+                binding.btnReject.isEnabled = false
+                binding.btnApprove.visibility = View.INVISIBLE
+                binding.btnReject.visibility = View.INVISIBLE
             }
         }
     }

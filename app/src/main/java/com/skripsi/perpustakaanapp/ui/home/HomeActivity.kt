@@ -25,6 +25,7 @@ import com.skripsi.perpustakaanapp.databinding.ActivityHomeBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.MySnackBar
 import com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.updatebook.UpdateBookFragment
+import com.skripsi.perpustakaanapp.ui.admin.scanner.ScannerAttendanceFragment
 import com.skripsi.perpustakaanapp.ui.login.LoginActivity
 import com.skripsi.perpustakaanapp.ui.member.qrcode.QRCodeFragment
 import com.skripsi.perpustakaanapp.ui.statistik.MemberStatisticFragment
@@ -142,7 +143,7 @@ class HomeActivity : AppCompatActivity() {
         if (sessionManager.fetchUserRole() == "student") {
             loadFragment(QRCodeFragment())
         } else if (sessionManager.fetchUserRole() == "admin") {
-            loadFragment(CardMenuFragment())
+            loadFragment(ScannerAttendanceFragment())
         }
     }
 
@@ -169,7 +170,6 @@ class HomeActivity : AppCompatActivity() {
     private  fun loadFragment(fragment: Fragment){
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.container,fragment)
-        transaction.addToBackStack(null)
         transaction.commit()
     }
 

@@ -52,6 +52,7 @@
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/activity_register.xml" value="0.1" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/activity_return_book_scanner.xml" value="0.23333333333333334" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/activity_scanner.xml" value="0.23333333333333334" />
+        <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/activity_scanner_return_book.xml" value="0.14682539682539683" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/activity_settings.xml" value="0.1791044776119403" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/activity_side_nav.xml" value="0.2223731884057971" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/activity_test.xml" value="0.23333333333333334" />
@@ -74,6 +75,8 @@
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/fragment_member_statistic.xml" value="0.4" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/fragment_profile.xml" value="0.176" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/fragment_q_r_code.xml" value="0.23333333333333334" />
+        <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/fragment_scanner_attendance.xml" value="0.21822916666666667" />
+        <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/fragment_scanner_returning_book.xml" value="0.23333333333333334" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/fragment_sign_up.xml" value="0.23333333333333334" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/fragment_update_book.xml" value="0.21046373365041618" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/fragment_update_user.xml" value="0.23333333333333334" />

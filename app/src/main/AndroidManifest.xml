@@ -29,19 +29,15 @@
             android:exported="false" />
         <activity
             android:name=".ui.home.HomeActivity"
-            android:exported="true"
+            android:exported="false"
             android:theme="@style/Theme.PerpustakaanApp.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".ui.member.listattendance.AttendanceActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.admin.usermanagerial.scanattendance.ScannerActivity"
+            android:name=".ui.admin.scanner.ScannerActivity"
             android:exported="false" />
         <activity
             android:name=".ui.member.favoritebook.FavoriteBookActivity"
@@ -79,9 +75,13 @@
             android:exported="false" />
         <activity
             android:name=".ui.login.LoginActivity"
-            android:exported="false"
+            android:exported="true"
             android:theme="@style/TextColorWhite">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <meta-data

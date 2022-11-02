@@ -13,10 +13,8 @@ import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.core.resource.MyResource
-import com.skripsi.perpustakaanapp.databinding.ActivityScannerBinding
 import com.skripsi.perpustakaanapp.databinding.ActivityScannerReturnBookBinding
 import com.skripsi.perpustakaanapp.ui.MySnackBar
-import com.skripsi.perpustakaanapp.ui.admin.usermanagerial.scanattendance.ScannerViewModel
 import com.skripsi.perpustakaanapp.utils.PermissionCheck
 import me.dm7.barcodescanner.zxing.ZXingScannerView
 

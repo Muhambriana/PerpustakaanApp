@@ -43,6 +43,7 @@ class CardMenuAdapter(private val models: List<CardMenu>, private val context: C
 
         view.setOnClickListener {
             val intent = Intent(context, models[position].destination)
+            intent.putExtra("menu_extra_data", models[position].string_extra)
             context.startActivity(intent)
         }
 
