@@ -1,4 +1,4 @@
-package com.skripsi.perpustakaanapp.ui.member.listattendance
+package com.skripsi.perpustakaanapp.ui.listattendance
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -25,6 +25,36 @@ class AttendanceViewModel(private val repository: LibraryRepository) : ViewModel
             )
             {
                 if (response.body()?.code == 0) {
+                    if (response.body()?.attendanceItems?.isEmpty() == true) {
+                        resourceAttendance.postValue(MyEvent(MyResource.Empty()))
+                        return
+                    }
+                    resourceAttendance.postValue(MyEvent(MyResource.Success(response.body()?.attendanceItems)))
+                } else {
+                    resourceAttendance.postValue(MyEvent(MyResource.Error(response.body()?.message)))
+                }
+            }
+
+            override fun onFailure(call: Call<ListAttendanceResponse>, t: Throwable) {
+                resourceAttendance.postValue(MyEvent(MyResource.Error(t.message)))
+            }
+        })
+    }
+
+    fun getAllAttendanceMember(token: String) {
+        resourceAttendance.postValue(MyEvent(MyResource.Loading()))
+        val response = repository.getAllAttendanceMember(token)
+        response.enqueue(object : Callback<ListAttendanceResponse> {
+            override fun onResponse(
+                call: Call<ListAttendanceResponse>,
+                response: Response<ListAttendanceResponse>
+            )
+            {
+                if (response.body()?.code == 0) {
+                    if (response.body()?.attendanceItems?.isEmpty() == true) {
+                        resourceAttendance.postValue(MyEvent(MyResource.Empty()))
+                        return
+                    }
                     resourceAttendance.postValue(MyEvent(MyResource.Success(response.body()?.attendanceItems)))
                 } else {
                     resourceAttendance.postValue(MyEvent(MyResource.Error(response.body()?.message)))

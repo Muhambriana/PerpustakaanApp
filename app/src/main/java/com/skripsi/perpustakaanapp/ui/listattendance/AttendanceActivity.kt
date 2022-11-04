@@ -1,4 +1,4 @@
-package com.skripsi.perpustakaanapp.ui.member.listattendance
+package com.skripsi.perpustakaanapp.ui.listattendance
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,15 +9,12 @@ import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.MyViewModelFactory
 import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.core.adapter.AttendanceAdapter
-import com.skripsi.perpustakaanapp.core.adapter.UserAdapter
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.models.Attendance
-import com.skripsi.perpustakaanapp.core.models.User
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.core.resource.MyResource
 import com.skripsi.perpustakaanapp.databinding.ActivityAttendanceBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
-import com.skripsi.perpustakaanapp.ui.home.HomeViewModel
 
 class AttendanceActivity : AppCompatActivity() {
 
@@ -39,7 +36,7 @@ class AttendanceActivity : AppCompatActivity() {
     }
 
     private fun firstInitialization() {
-        supportActionBar?.title = "Attendance"
+        supportActionBar?.title = "History Kunjungan"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         sessionManager = SessionManager(this)
@@ -54,7 +51,7 @@ class AttendanceActivity : AppCompatActivity() {
     }
     
     private fun getAttendanceData() {
-        viewModel.getAllAttendances(sessionManager.fetchAuthToken().toString())
+        setDataAttendance()
 
         viewModel.resourceAttendance.observe(this) { event ->
             event.getContentIfNotHandled().let { resource ->
@@ -79,8 +76,20 @@ class AttendanceActivity : AppCompatActivity() {
                             }
                         )
                     }
+                    is MyResource.Empty -> {
+                        binding.progressBar.visibility = View.GONE
+                        binding.viewEmpty.root.visibility = View.VISIBLE
+                    }
                 }
             }
+        }
+    }
+
+    private fun setDataAttendance() {
+        if (sessionManager.fetchUserRole() == "admin") {
+            viewModel.getAllAttendances(sessionManager.fetchAuthToken().toString())
+        } else if (sessionManager.fetchUserRole() == "student") {
+            viewModel.getAllAttendanceMember(sessionManager.fetchAuthToken().toString())
         }
     }
 

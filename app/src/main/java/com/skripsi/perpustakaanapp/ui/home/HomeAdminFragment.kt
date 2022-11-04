@@ -11,14 +11,13 @@ import com.skripsi.perpustakaanapp.core.adapter.CardMenuAdapter
 import com.skripsi.perpustakaanapp.core.models.CardMenu
 import com.skripsi.perpustakaanapp.databinding.FragmentHomeAdminBinding
 import com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.createbook.CreateBookActivity
-import com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.scanbookreturn.ScannerReturnBookActivity
 import com.skripsi.perpustakaanapp.ui.admin.listuser.UserActivity
-import com.skripsi.perpustakaanapp.ui.admin.pendingloan.PendingLoanActivity
+import com.skripsi.perpustakaanapp.ui.pendingloan.PendingLoanActivity
 import com.skripsi.perpustakaanapp.ui.admin.usermanagerial.createnewadmin.CreateNewAdminActivity
 import com.skripsi.perpustakaanapp.ui.admin.scanner.ScannerActivity
 import com.skripsi.perpustakaanapp.ui.book.listbook.BookActivity
-import com.skripsi.perpustakaanapp.ui.member.listattendance.AttendanceActivity
-import com.skripsi.perpustakaanapp.ui.userprofile.UserProfileActivity
+import com.skripsi.perpustakaanapp.ui.loan.LoanActivity
+import com.skripsi.perpustakaanapp.ui.listattendance.AttendanceActivity
 
 
 class HomeAdminFragment : Fragment() {
@@ -79,7 +78,7 @@ class HomeAdminFragment : Fragment() {
                 R.drawable.icon_pending_loan, "Menunggu Persetujuan", null, PendingLoanActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_1)))
         models?.add(
             CardMenu(
-                R.drawable.icon_loan, "Sedang Dipinjam", null, UserProfileActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_2)))
+                R.drawable.icon_loan, "Sedang Dipinjam", null, LoanActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_2), "admin_ongoing_loan"))
         models?.add(
             CardMenu(
                 R.drawable.icon_attendant_list, "Daftar Absen", null, AttendanceActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_3)))
@@ -88,7 +87,7 @@ class HomeAdminFragment : Fragment() {
                 R.drawable.icon_scanner, "Scan Pengunjung", null, ScannerActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_4), "attendance"))
         models?.add(
             CardMenu(
-                R.drawable.icon_scanner, "Scan Pengembalian Buku", null, ScannerReturnBookActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_5), "returning_book"))
+                R.drawable.icon_scanner, "Scan Pengembalian Buku", null, ScannerActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_5), "returning_book"))
     }
 
     private fun setAdapter() {

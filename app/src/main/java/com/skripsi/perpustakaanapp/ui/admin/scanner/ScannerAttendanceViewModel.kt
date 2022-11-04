@@ -11,7 +11,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ScannerViewModel(private val repository: LibraryRepository): ViewModel() {
+class ScannerAttendanceViewModel(private val repository: LibraryRepository): ViewModel() {
 
     val resourceScanner = MutableLiveData<MyEvent<MyResource<String?>>>()
 

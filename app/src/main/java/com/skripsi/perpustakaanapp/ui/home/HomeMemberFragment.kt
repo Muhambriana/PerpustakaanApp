@@ -10,11 +10,10 @@ import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.adapter.CardMenuAdapter
 import com.skripsi.perpustakaanapp.core.models.CardMenu
 import com.skripsi.perpustakaanapp.databinding.FragmentHomeMemberBinding
-import com.skripsi.perpustakaanapp.ui.admin.pendingloan.PendingLoanActivity
+import com.skripsi.perpustakaanapp.ui.pendingloan.PendingLoanActivity
 import com.skripsi.perpustakaanapp.ui.book.listbook.BookActivity
-import com.skripsi.perpustakaanapp.ui.member.listattendance.AttendanceActivity
-import com.skripsi.perpustakaanapp.ui.member.loanhistory.LoanHistoryActivity
-import com.skripsi.perpustakaanapp.ui.userprofile.UserProfileActivity
+import com.skripsi.perpustakaanapp.ui.loan.LoanActivity
+import com.skripsi.perpustakaanapp.ui.listattendance.AttendanceActivity
 
 class HomeMemberFragment : Fragment() {
 
@@ -52,11 +51,13 @@ class HomeMemberFragment : Fragment() {
                     startActivity(intent)
                 }
                 binding?.cardMenuOnLoan?.id -> {
-                    val intent = Intent(activity, LoanHistoryActivity::class.java)
+                    val intent = Intent(activity, LoanActivity::class.java)
+                    intent.putExtra("menu_extra_data", "member_ongoing_loan")
                     startActivity(intent)
                 }
                 binding?.cardMenuLoanHistory?.id -> {
-                    val intent = Intent(activity, LoanHistoryActivity::class.java)
+                    val intent = Intent(activity, LoanActivity::class.java)
+                    intent.putExtra("menu_extra_data", "member_finish_loan")
                     startActivity(intent)
                 }
             }
@@ -73,16 +74,16 @@ class HomeMemberFragment : Fragment() {
         models = mutableListOf()
         models?.add(
             CardMenu(
-                R.drawable.icon_ebook, "Baca e-Book", null, AttendanceActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_1)))
+                R.drawable.icon_ebook, "Baca e-Book", null, BookActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_1), "ebook"))
         models?.add(
             CardMenu(
-                R.drawable.icon_overdue, "Telat Dikembalikan", null, UserProfileActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_4)))
+                R.drawable.icon_overdue, "Telat Dikembalikan", null, LoanActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_4), "member_overdue_loan"))
         models?.add(
             CardMenu(
                 R.drawable.icon_attendant_list, "History Kunjungan", null, AttendanceActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_3)))
         models?.add(
             CardMenu(
-                R.drawable.icon_rejected, "Peminjaman Ditolak", null, AttendanceActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_2)))
+                R.drawable.icon_rejected, "Peminjaman Ditolak", null, LoanActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_2), "member_rejected_loan"))
     }
 
     private fun setAdapter() {

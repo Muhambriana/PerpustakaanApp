@@ -4,19 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.admin.scanner.ScannerAttendanceFragment"
-    android:fitsSystemWindows="true"
-    android:id="@+id/container">
+    tools:context=".ui.pendingloan.PendingLoanMemberFragment"
+    android:fitsSystemWindows="true">
 
-    <RelativeLayout
-        android:id="@+id/camera_view"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_pending_loan"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/teal_200"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_height="wrap_content"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:itemCount="6"
+        tools:listitem="@layout/item_list_pending_loan"/>
 
     <ProgressBar
         android:id="@+id/progress_bar"
@@ -27,5 +27,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <include
+        android:id="@+id/view_empty"
+        layout="@layout/view_empty"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

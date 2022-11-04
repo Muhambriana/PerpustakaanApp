@@ -18,8 +18,10 @@ class ScannerActivity : AppCompatActivity(){
 
     private fun openFragment() {
         if (intent.getStringExtra(SCANNER_ID) == "attendance") {
+            supportActionBar?.title = "Scan Pengunjung"
             loadFragment(ScannerAttendanceFragment())
         } else if (intent.getStringExtra(SCANNER_ID) == "returning_book") {
+            supportActionBar?.title = "Scan Pengembalian Buku"
             loadFragment(ScannerReturningBookFragment())
         }
     }

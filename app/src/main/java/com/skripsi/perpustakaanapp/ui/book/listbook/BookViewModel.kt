@@ -38,6 +38,27 @@ class BookViewModel(private val repository: LibraryRepository) : ViewModel() {
         })
     }
 
+    fun getAllEBooks(token: String) {
+        resourceBook.postValue(MyEvent(MyResource.Loading()))
+        val response = repository.getAllEBooks(token)
+        response.enqueue(object : Callback<ListBookResponse> {
+            override fun onResponse(
+                call: Call<ListBookResponse>,
+                response: Response<ListBookResponse>)
+            {
+                if (response.body()?.code == 0) {
+                    resourceBook.postValue(MyEvent(MyResource.Success(response.body()?.bookItems)))
+                } else {
+                    resourceBook.postValue(MyEvent(MyResource.Error(response.body()?.message)))
+                }
+            }
+
+            override fun onFailure(call: Call<ListBookResponse>, t: Throwable) {
+                resourceBook.postValue(MyEvent(MyResource.Error(t.message)))
+            }
+        })
+    }
+
     fun searchBook(token: String, title: String?) {
         resourceSearchBook.postValue(MyEvent(MyResource.Loading()))
         val model = ModelForSearchBook(title)

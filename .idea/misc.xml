@@ -15,6 +15,7 @@
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/drawable/button_custom.xml" value="0.2395" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/drawable/card_item.xml" value="0.2395" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/drawable/card_item_menu.xml" value="0.2395" />
+        <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/drawable/custom_button.xml" value="0.2395" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/drawable/custom_card_cover.xml" value="0.2395" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/drawable/custom_card_statistic.xml" value="0.2395" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/drawable/custom_fragment_cover.xml" value="0.2395" />
@@ -66,13 +67,18 @@
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/custom_menu.xml" value="0.23333333333333334" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/detail_menu.xml" value="0.19153484395040615" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/drawer_layout.xml" value="0.23333333333333334" />
+        <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/fragment_admin_loan.xml" value="0.23333333333333334" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/fragment_card_menu.xml" value="0.23333333333333334" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/fragment_gallery.xml" value="0.23333333333333334" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/fragment_home_admin.xml" value="0.23333333333333334" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/fragment_home_member.xml" value="0.23333333333333334" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/fragment_item_menu.xml" value="0.1" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/fragment_member_card.xml" value="0.13489583333333333" />
+        <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/fragment_member_loan.xml" value="0.23333333333333334" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/fragment_member_statistic.xml" value="0.4" />
+        <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/fragment_ongoing_loan_member.xml" value="0.23333333333333334" />
+        <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/fragment_pending_loan_admin.xml" value="0.23333333333333334" />
+        <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/fragment_pending_loan_member.xml" value="0.23333333333333334" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/fragment_profile.xml" value="0.176" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/fragment_q_r_code.xml" value="0.23333333333333334" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/fragment_scanner_attendance.xml" value="0.21822916666666667" />
@@ -96,6 +102,8 @@
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/my_toolbar_main.xml" value="0.23333333333333334" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/nav_header.xml" value="0.13541666666666666" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/nav_header_side_nav.xml" value="0.13541666666666666" />
+        <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/view_empty.xml" value="0.23333333333333334" />
+        <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/layout/view_error.xml" value="0.23333333333333334" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/menu-v26/activity_book_menu.xml" value="0.23333333333333334" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/menu/activity_book_menu.xml" value="0.16" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/menu/activity_detail_menu.xml" value="0.19153484395040615" />

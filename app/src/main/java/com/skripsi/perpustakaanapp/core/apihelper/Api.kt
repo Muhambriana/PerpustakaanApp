@@ -36,6 +36,11 @@ interface Api {
         @Header("Authorization") token: String
     ): Call<ListBookResponse>
 
+    @POST("book/list/ebook")
+    fun getAllEBook(
+        @Header("Authorization") token: String
+    ): Call<ListBookResponse>
+
     @Multipart
     @POST("book/create")
     fun postCreateBook(
@@ -67,6 +72,11 @@ interface Api {
         @Header("Authorization") token: String
     ):Call<ListPendingLoanResponse>
 
+    @POST("pendingtask/list/byusername")
+    fun getAllPendingLoanByUsername(
+        @Header("Authorization") token: String
+    ):Call<ListPendingLoanResponse>
+
     @POST("pendingtask/approve")
     fun postApproveLoan(
         @Header("Authorization") token: String,
@@ -83,6 +93,46 @@ interface Api {
     fun getAllLoanHistoryMember(
         @Header("Authorization") token: String,
         @Body username: ModelUsername
+    ):Call<ListLoanHistoryResponse>
+
+    @POST("transaction/ongoing/member")
+    fun getAllOngoingLoanMember(
+        @Header("Authorization") token: String
+    ):Call<ListLoanHistoryResponse>
+
+    @POST("transaction/ongoing/admin")
+    fun getAllOngoingLoan(
+        @Header("Authorization") token: String
+    ):Call<ListLoanHistoryResponse>
+
+    @POST("transaction/rejected/member")
+    fun getAllRejectedLoanMember(
+        @Header("Authorization") token: String
+    ):Call<ListLoanHistoryResponse>
+
+    @POST("transaction/rejected/admin")
+    fun getAllRejectedLoan(
+        @Header("Authorization") token: String
+    ):Call<ListLoanHistoryResponse>
+
+    @POST("transaction/overdue/member")
+    fun getAllOverdueLoanMember(
+        @Header("Authorization") token: String
+    ):Call<ListLoanHistoryResponse>
+
+    @POST("transaction/overdue/admin")
+    fun getAllOverdueLoan(
+        @Header("Authorization") token: String
+    ):Call<ListLoanHistoryResponse>
+
+    @POST("transaction/finish/member")
+    fun getAllFinishLoanMember(
+        @Header("Authorization") token: String
+    ):Call<ListLoanHistoryResponse>
+
+    @POST("transaction/finish/admin")
+    fun getAllFinishLoan(
+        @Header("Authorization") token: String
     ):Call<ListLoanHistoryResponse>
 
     @POST("book/detail")
@@ -154,6 +204,11 @@ interface Api {
 
     @POST("attendance/list")
     fun getAllAttendance(
+        @Header("Authorization") token: String
+    ):Call<ListAttendanceResponse>
+
+    @POST("attendance/list/member")
+    fun getAllAttendanceMember(
         @Header("Authorization") token: String
     ):Call<ListAttendanceResponse>
 

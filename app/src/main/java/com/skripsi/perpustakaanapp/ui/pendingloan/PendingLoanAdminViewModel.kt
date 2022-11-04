@@ -1,4 +1,4 @@
-package com.skripsi.perpustakaanapp.ui.admin.pendingloan
+package com.skripsi.perpustakaanapp.ui.pendingloan
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,7 +13,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class PendingLoanViewModel(private val repository: LibraryRepository) : ViewModel() {
+class PendingLoanAdminViewModel(private val repository: LibraryRepository) : ViewModel() {
 
     val resourcePendingLoan = MutableLiveData<MyEvent<MyResource<List<PendingLoan>>>>()
     val resourceApproveLoan = MutableLiveData<MyEvent<MyResource<String?>>>()
@@ -29,6 +29,10 @@ class PendingLoanViewModel(private val repository: LibraryRepository) : ViewMode
                 response: Response<ListPendingLoanResponse>
             ) {
                 if (response.body()?.code == 0) {
+                    if (response.body()?.pendingLoanItems?.isEmpty() == true) {
+                        resourcePendingLoan.postValue(MyEvent(MyResource.Empty()))
+                        return
+                    }
                     resourcePendingLoan.postValue(MyEvent(MyResource.Success(response.body()?.pendingLoanItems)))
                 }
                 else {

@@ -52,7 +52,10 @@ class EbookActivity : AppCompatActivity() {
                         binding.progressBar.visibility = View.VISIBLE
                     }
                     is MyResource.Success -> {
-                        binding.viewPdf.fromStream(resource.data).load()
+                        binding.viewPdf.fromStream(resource.data)
+
+                            .spacing(4)
+                            .load()
                         binding.progressBar.visibility = View.GONE
                     }
                     is MyResource.Error -> {

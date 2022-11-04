@@ -1,10 +1,12 @@
-package com.skripsi.perpustakaanapp.ui.admin.pendingloan
+package com.skripsi.perpustakaanapp.ui.pendingloan
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.WindowManager
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.MyViewModelFactory
@@ -13,57 +15,49 @@ import com.skripsi.perpustakaanapp.core.adapter.PendingLoanAdapter
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.core.resource.MyResource
-import com.skripsi.perpustakaanapp.databinding.ActivityPendingLoanBinding
+import com.skripsi.perpustakaanapp.databinding.FragmentPendingLoanAdminBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.MySnackBar
 import com.skripsi.perpustakaanapp.ui.book.detailbook.DetailBookActivity
 import com.skripsi.perpustakaanapp.ui.userprofile.UserProfileActivity
 import com.skripsi.perpustakaanapp.utils.WindowTouchableHelper
 
-class PendingLoanActivity : AppCompatActivity() {
+class PendingLoanAdminFragment : Fragment() {
 
-    private lateinit var binding: ActivityPendingLoanBinding
+    private lateinit var binding: FragmentPendingLoanAdminBinding
     private lateinit var sessionManager: SessionManager
-    private lateinit var viewModel: PendingLoanViewModel
+    private lateinit var viewModel: PendingLoanAdminViewModel
 
     private val client=  RetrofitClient
     private val pendingLoanAdapter = PendingLoanAdapter()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityPendingLoanBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
+        binding = FragmentPendingLoanAdminBinding.inflate(layoutInflater, container, false)
+        return binding.root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         firstInitialization()
         getPendingLoanData()
         onClickListener()
     }
 
-    override fun supportNavigateUpTo(upIntent: Intent) {
-        onBackPressed()
-        super.supportNavigateUpTo(upIntent)
-    }
-
     private fun firstInitialization() {
-        supportActionBar?.title = "Antrian Peminjaman"
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        sessionManager = SessionManager(this)
+        sessionManager = SessionManager(requireContext())
 
         viewModel = ViewModelProvider(this, MyViewModelFactory(LibraryRepository(client))).get(
-            PendingLoanViewModel::class.java
+            PendingLoanAdminViewModel::class.java
         )
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return super.onSupportNavigateUp()
     }
 
     private fun getPendingLoanData() {
         viewModel.getAllPendingLoans(sessionManager.fetchAuthToken().toString())
 
-        viewModel.resourcePendingLoan.observe(this) { event ->
+        viewModel.resourcePendingLoan.observe(requireActivity()) { event ->
             event.getContentIfNotHandled()?.let { resource ->
                 when (resource) {
                     is MyResource.Loading -> {
@@ -77,7 +71,7 @@ class PendingLoanActivity : AppCompatActivity() {
                     is MyResource.Error -> {
                         binding.progressBar.visibility = View.GONE
                         MyAlertDialog.showWith2Event(
-                            this,
+                            requireContext(),
                             R.drawable.icon_cancel,
                             resource.message.toString(),
                             resources.getString(R.string.refresh),
@@ -86,9 +80,13 @@ class PendingLoanActivity : AppCompatActivity() {
                                 getPendingLoanData()
                             },
                             { _,_ ->
-                                finish()
+                                activity?.finish()
                             }
                         )
+                    }
+                    is MyResource.Empty -> {
+                        binding.progressBar.visibility = View.GONE
+                        binding.viewEmpty.root.visibility = View.VISIBLE
                     }
                 }
             }
@@ -97,13 +95,13 @@ class PendingLoanActivity : AppCompatActivity() {
 
     private fun onClickListener() {
         pendingLoanAdapter.onMemberUsernameClick = { memberUsername ->
-            val intent = Intent(this, UserProfileActivity::class.java)
+            val intent = Intent(requireContext(), UserProfileActivity::class.java)
             intent.putExtra(UserProfileActivity.USERNAME, memberUsername)
             startActivity(intent)
         }
 
         pendingLoanAdapter.onBookTitleClick = { bookId ->
-            val intent = Intent(this, DetailBookActivity::class.java)
+            val intent = Intent(requireContext(), DetailBookActivity::class.java)
             intent.putExtra(DetailBookActivity.BOOK_ID, bookId)
             startActivity(intent)
         }
@@ -117,7 +115,7 @@ class PendingLoanActivity : AppCompatActivity() {
     private fun approveLoanListener() {
         pendingLoanAdapter.buttonApproveClick = { id ->
             MyAlertDialog.showWith2Event(
-                this,
+                requireContext(),
                 null,
                 resources.getString(R.string.loan_approval_confirmation),
                 resources.getString(R.string.confirmation_yes),
@@ -133,22 +131,22 @@ class PendingLoanActivity : AppCompatActivity() {
     private fun postApproveLoan(id: Int) {
         viewModel.approveLoan(sessionManager.fetchAuthToken().toString(), id, sessionManager.fetchUsername().toString())
 
-        viewModel.resourceApproveLoan.observe(this) { event ->
+        viewModel.resourceApproveLoan.observe(requireActivity()) { event ->
             event.getContentIfNotHandled()?.let { resource ->
                 when (resource) {
                     is MyResource.Loading -> {
-                        WindowTouchableHelper.disable(this)
+                        WindowTouchableHelper.disable(requireActivity())
                         binding.progressBar.visibility = View.VISIBLE
                     }
                     is MyResource.Success -> {
-                        WindowTouchableHelper.enable(this)
+                        WindowTouchableHelper.enable(requireActivity())
                         binding.progressBar.visibility = View.GONE
                         MySnackBar.showBlack(binding.root, resource.data.toString())
                         getPendingLoanData()
 
                     }
                     is MyResource.Error -> {
-                        WindowTouchableHelper.enable(this)
+                        WindowTouchableHelper.enable(requireActivity())
                         binding.progressBar.visibility = View.GONE
                         MySnackBar.showRed(binding.root, resource.message.toString())
                     }
@@ -160,7 +158,7 @@ class PendingLoanActivity : AppCompatActivity() {
     private fun rejectLoanListener() {
         pendingLoanAdapter.buttonRejectClick = { id ->
             MyAlertDialog.showWith2Event(
-                this,
+                requireContext(),
                 null,
                 resources.getString(R.string.loan_approval_confirmation),
                 resources.getString(R.string.confirmation_yes),
@@ -176,24 +174,25 @@ class PendingLoanActivity : AppCompatActivity() {
     private fun postRejectLoan(id: Int) {
         viewModel.rejectLoan(sessionManager.fetchAuthToken().toString(), id, sessionManager.fetchUsername().toString())
 
-        viewModel.resourceRejectLoan.observe(this) { event ->
+        viewModel.resourceRejectLoan.observe(requireActivity()) { event ->
             event.getContentIfNotHandled()?.let { resource ->
                 when (resource) {
                     is MyResource.Loading -> {
-                        window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                        activity?.window?.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                         binding.progressBar.visibility = View.VISIBLE
                     }
                     is MyResource.Success -> {
-                        window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                        activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                         binding.progressBar.visibility = View.GONE
                         MySnackBar.showBlack(binding.root, resource.data.toString())
                         // Refresh list
                         getPendingLoanData()
                     }
                     is MyResource.Error -> {
-                        window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                        activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                         MySnackBar.showRed(binding.root, resource.message.toString())
                     }
+                    else -> {}
                 }
             }
         }

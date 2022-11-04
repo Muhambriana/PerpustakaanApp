@@ -1,4 +1,4 @@
-package com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.scanbookreturn
+package com.skripsi.perpustakaanapp.ui.admin.scanner
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

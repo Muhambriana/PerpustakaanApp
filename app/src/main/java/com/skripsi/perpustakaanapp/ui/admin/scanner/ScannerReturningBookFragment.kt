@@ -16,7 +16,6 @@ import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.core.resource.MyResource
 import com.skripsi.perpustakaanapp.databinding.FragmentScannerReturningBookBinding
 import com.skripsi.perpustakaanapp.ui.MySnackBar
-import com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.scanbookreturn.ScannerReturnBookViewModel
 import com.skripsi.perpustakaanapp.utils.PermissionCheck
 import me.dm7.barcodescanner.zxing.ZXingScannerView
 

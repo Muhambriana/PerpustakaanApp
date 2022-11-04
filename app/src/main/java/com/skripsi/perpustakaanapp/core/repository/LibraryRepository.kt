@@ -9,6 +9,8 @@ class LibraryRepository constructor(private val retrofitClient: RetrofitClient) 
 
     fun getAllBooks(token: String) = retrofitClient.create().getAllBook(token)
 
+    fun getAllEBooks(token: String) = retrofitClient.create().getAllEBook(token)
+
     fun createBook(token: String, data: RequestBody, image: MultipartBody.Part?, pdf: MultipartBody.Part?) = retrofitClient.create().postCreateBook(token, data, image, pdf)
 
     fun userLogin(nis: String, password: String) = retrofitClient.create().userLogin(nis, password)
@@ -25,11 +27,29 @@ class LibraryRepository constructor(private val retrofitClient: RetrofitClient) 
 
     fun getAllPendingLoan(token: String) = retrofitClient.create().getAllPendingLoan(token)
 
+    fun getAllPendingLoanByUsername(token: String) = retrofitClient.create().getAllPendingLoanByUsername(token)
+
     fun approveLoan(token: String, data: ModelForApproveAndRejectLoan) = retrofitClient.create().postApproveLoan(token, data)
 
     fun rejectLoan(token: String, data: ModelForApproveAndRejectLoan) = retrofitClient.create().postRejectLoan(token, data)
 
     fun getAllLoanHistoryMember(token: String, username: ModelUsername) = retrofitClient.create().getAllLoanHistoryMember(token, username)
+
+    fun getAllOngoingLoanMember(token: String) = retrofitClient.create().getAllOngoingLoanMember(token)
+
+    fun getAllOngoingLoan(token: String) = retrofitClient.create().getAllOngoingLoan(token)
+
+    fun getAllRejectedLoanMember(token: String) = retrofitClient.create().getAllRejectedLoanMember(token)
+
+    fun getAllRejectedLoan(token: String) = retrofitClient.create().getAllRejectedLoan(token)
+
+    fun getAllOverdueLoanMember(token: String) = retrofitClient.create().getAllOverdueLoanMember(token)
+
+    fun getAllOverdueLoan(token: String) = retrofitClient.create().getAllOverdueLoan(token)
+
+    fun getAllFinishLoanMember(token: String) = retrofitClient.create().getAllFinishLoanMember(token)
+
+    fun getAllFinishLoan(token: String) = retrofitClient.create().getAllFinishLoan(token)
 
     fun getDetailBook(token: String, bookId: ModelBookId) = retrofitClient.create().getDetailBook(token, bookId)
 
@@ -54,6 +74,8 @@ class LibraryRepository constructor(private val retrofitClient: RetrofitClient) 
     fun attendanceScan(token: String, data: ModelForAttendance) = retrofitClient.create().attendanceScan(token, data)
 
     fun getAllAttendance(token: String) = retrofitClient.create().getAllAttendance(token)
+
+    fun getAllAttendanceMember(token: String) = retrofitClient.create().getAllAttendanceMember(token)
 
     fun returningScan(token: String, data: ModelForReturnBook) = retrofitClient.create().returningScan(token, data)
 

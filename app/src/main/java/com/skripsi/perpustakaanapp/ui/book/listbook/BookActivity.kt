@@ -149,7 +149,7 @@ class BookActivity : AppCompatActivity() {
     }
 
     private fun getBookData() {
-        viewModel.getAllBooks(sessionManager.fetchAuthToken().toString())
+        setBookData()
         viewModel.resourceBook.observe(this) { event ->
             event.getContentIfNotHandled()?.let { resource ->
                 when (resource) {
@@ -172,10 +172,18 @@ class BookActivity : AppCompatActivity() {
                                 finish()
                             }
                         )
-                    }
+                    } else -> {}
                 }
             }
         }
+    }
+
+    private fun setBookData() {
+        if (intent.getStringExtra("menu_extra_data") == "ebook") {
+            viewModel.getAllEBooks(sessionManager.fetchAuthToken().toString())
+            return
+        }
+        viewModel.getAllBooks(sessionManager.fetchAuthToken().toString())
     }
 
     private fun hideRecycleList() {

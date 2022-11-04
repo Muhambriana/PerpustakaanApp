@@ -19,10 +19,11 @@ import com.skripsi.perpustakaanapp.ui.MySnackBar
 import com.skripsi.perpustakaanapp.utils.PermissionCheck
 import me.dm7.barcodescanner.zxing.ZXingScannerView
 
+
 class ScannerAttendanceFragment : Fragment(), ZXingScannerView.ResultHandler {
 
     private lateinit var sessionManager: SessionManager
-    private lateinit var viewModel: ScannerViewModel
+    private lateinit var viewModel: ScannerAttendanceViewModel
 
     private val client = RetrofitClient
     private var zXingScannerView: ZXingScannerView? = null
@@ -53,7 +54,7 @@ class ScannerAttendanceFragment : Fragment(), ZXingScannerView.ResultHandler {
         sessionManager = SessionManager(requireContext())
 
         viewModel = ViewModelProvider(this, MyViewModelFactory(LibraryRepository(client))).get(
-            ScannerViewModel::class.java
+            ScannerAttendanceViewModel::class.java
         )
     }
 
