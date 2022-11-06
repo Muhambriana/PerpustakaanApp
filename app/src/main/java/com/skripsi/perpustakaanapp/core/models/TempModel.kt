@@ -1,6 +1,7 @@
 package com.skripsi.perpustakaanapp.core.models
 
 import com.google.gson.annotations.SerializedName
+import java.math.BigDecimal
 
 data class ModelBookId(
     @SerializedName("bookId")
@@ -57,7 +58,10 @@ data class ModelForAttendance(
 data class ModelForReturnBook(
 
     @field:SerializedName("qrCode")
-    val qrCode: String? = null
+    val qrCode: String? = null,
+
+    @field:SerializedName("userPayment")
+    val userPayment: BigDecimal? = null
 )
 
 

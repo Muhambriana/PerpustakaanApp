@@ -7,44 +7,38 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
-import com.google.zxing.Result
+import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.MyViewModelFactory
 import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
+import com.skripsi.perpustakaanapp.core.resource.MyEvent
 import com.skripsi.perpustakaanapp.core.resource.MyResource
+import com.skripsi.perpustakaanapp.databinding.FragmentPaymentPenaltyBinding
 import com.skripsi.perpustakaanapp.databinding.FragmentScannerReturningBookBinding
 import com.skripsi.perpustakaanapp.ui.MySnackBar
-import com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.updatebook.UpdateBookFragment
-import com.skripsi.perpustakaanapp.utils.PermissionCheck
 import me.dm7.barcodescanner.zxing.ZXingScannerView
 
-class ScannerReturningBookFragment : Fragment(), ZXingScannerView.ResultHandler {
+class PaymentPenaltyFragment : DialogFragment() {
 
     private lateinit var sessionManager: SessionManager
     private lateinit var viewModel: ScannerReturnBookViewModel
 
+    private var fragmentPaymentPenaltyBinding: FragmentPaymentPenaltyBinding? = null
+    private val binding get() = fragmentPaymentPenaltyBinding
     private val client = RetrofitClient
-    private var zXingScannerView: ZXingScannerView? = null
-    private var fragmentScannerReturningBookBinding: FragmentScannerReturningBookBinding? = null
-    private val binding get() = fragmentScannerReturningBookBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        fragmentScannerReturningBookBinding = FragmentScannerReturningBookBinding.inflate(layoutInflater, container, false)
+        fragmentPaymentPenaltyBinding = FragmentPaymentPenaltyBinding.inflate(layoutInflater, container, false)
         return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        if (PermissionCheck.camera(requireActivity())) {
-            zXingScannerView = ZXingScannerView(requireContext())
-            binding?.cameraView?.addView(zXingScannerView)
-            readQR()
-        }
-
         firstInitialization()
     }
 
@@ -56,25 +50,23 @@ class ScannerReturningBookFragment : Fragment(), ZXingScannerView.ResultHandler 
         viewModel = ViewModelProvider(this, MyViewModelFactory(LibraryRepository(client))).get(
             ScannerReturnBookViewModel::class.java
         )
-    }
 
-    private fun readQR() {
-        zXingScannerView?.startCamera()
-        zXingScannerView?.setResultHandler(this)
-        zXingScannerView?.setAutoFocus(true)
-    }
-
-    override fun handleResult (result: Result) {
-        postReturnBook(result.text)
-        Handler(Looper.getMainLooper()).postDelayed({ zXingScannerView?.resumeCameraPreview(this) }, 2000)
+        val qrCode = arguments?.getString("qr_code")
+        if (qrCode == null) {
+            binding?.upload?.isEnabled = false
+            return
+        }
+        binding?.upload?.setOnClickListener {
+            postReturnBook(qrCode)
+        }
+        binding?.tvPenalty?.text = arguments?.getString("total_penalty")
     }
 
     private fun postReturnBook(qrCode: String) {
-        zXingScannerView?.stopCameraPreview()
 
-        viewModel.scannerReturning(sessionManager.fetchAuthToken().toString(), qrCode)
+        viewModel.scannerOverdueReturning(sessionManager.fetchAuthToken().toString(), qrCode, binding?.edtMoney?.text.toString().toBigDecimalOrNull())
 
-        viewModel.resourceScanner.observe(this) { event ->
+        viewModel.resourcePenaltyPayment.observe(this) { event ->
             event.getContentIfNotHandled().let { resource ->
                 when(resource) {
                     is MyResource.Loading -> {
@@ -83,10 +75,15 @@ class ScannerReturningBookFragment : Fragment(), ZXingScannerView.ResultHandler 
                     is MyResource.Success -> {
                         if (resource.data?.code == 0) {
                             binding?.progressBar?.visibility = View.GONE
+                            binding?.upload?.isEnabled = false
                             MySnackBar.showWhite(binding?.root, resource.data.message.uppercase())
+                            Handler(Looper.getMainLooper()).postDelayed(
+                                {
+                                    dismiss()
+                                }, 1500)
                         } else if (resource.data?.code == -3) {
                             binding?.progressBar?.visibility = View.GONE
-                            showDialogFragment(qrCode, resource.data.message)
+                            MySnackBar.showRed(binding?.root, "Pastikan Jumlah Pembayaran Sesuai Dengan Denda")
                         }
                     }
                     is MyResource.Error -> {
@@ -99,29 +96,7 @@ class ScannerReturningBookFragment : Fragment(), ZXingScannerView.ResultHandler 
         }
     }
 
-    private fun showDialogFragment(qrCode: String, totalPenalty: String) {
-        val bundle = Bundle()
-        bundle.putString("qr_code", qrCode)
-        bundle.putString("total_penalty", totalPenalty)
-        activity?.supportFragmentManager?.let {
-            val fragment = PaymentPenaltyFragment()
-            fragment.arguments = bundle
-            activity?.supportFragmentManager.let { fragmentManager ->
-                if (fragmentManager != null) {
-                    fragment.show(fragmentManager, "")
-                }
-            }
-        }
+    private fun paying() {
+        binding?.edtMoney?.text
     }
-
-    override fun onPause() {
-        super.onPause()
-        zXingScannerView?.stopCamera()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        zXingScannerView?.stopCamera()
-    }
-
 }
