@@ -12,7 +12,7 @@ import com.skripsi.perpustakaanapp.core.models.CardMenu
 import com.skripsi.perpustakaanapp.databinding.FragmentHomeAdminBinding
 import com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.createbook.CreateBookActivity
 import com.skripsi.perpustakaanapp.ui.admin.listuser.UserActivity
-import com.skripsi.perpustakaanapp.ui.pendingloan.PendingLoanActivity
+import com.skripsi.perpustakaanapp.ui.admin.pendingloan.PendingLoanActivity
 import com.skripsi.perpustakaanapp.ui.admin.usermanagerial.createnewadmin.CreateNewAdminActivity
 import com.skripsi.perpustakaanapp.ui.admin.scanner.ScannerActivity
 import com.skripsi.perpustakaanapp.ui.book.listbook.BookActivity

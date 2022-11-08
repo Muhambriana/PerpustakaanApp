@@ -1,4 +1,4 @@
-package com.skripsi.perpustakaanapp.ui.pendingloan
+package com.skripsi.perpustakaanapp.ui.admin.pendingloan
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

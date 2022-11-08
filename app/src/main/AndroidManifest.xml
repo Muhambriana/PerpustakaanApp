@@ -28,9 +28,6 @@
             android:name=".ui.book.detailloanhistory.DetailLoanHistoryActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.admin.bookmanagerial.scanbookreturn.ScannerReturnBookActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.home.HomeActivity"
             android:exported="false"
             android:theme="@style/Theme.PerpustakaanApp.NoActionBar"></activity>
@@ -53,7 +50,7 @@
             android:name=".ui.SettingsActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.pendingloan.PendingLoanActivity"
+            android:name=".ui.admin.pendingloan.PendingLoanActivity"
             android:exported="false" />
         <activity
             android:name=".ui.admin.usermanagerial.createnewadmin.CreateNewAdminActivity"

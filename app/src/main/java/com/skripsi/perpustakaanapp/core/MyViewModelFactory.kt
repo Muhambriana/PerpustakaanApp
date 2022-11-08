@@ -7,8 +7,7 @@ import com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.createbook.CreateBook
 import com.skripsi.perpustakaanapp.ui.admin.scanner.ScannerReturnBookViewModel
 import com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.updatebook.UpdateBookViewModel
 import com.skripsi.perpustakaanapp.ui.admin.listuser.UserViewModel
-import com.skripsi.perpustakaanapp.ui.pendingloan.PendingLoanAdminViewModel
-import com.skripsi.perpustakaanapp.ui.pendingloan.PendingLoanMemberViewModel
+import com.skripsi.perpustakaanapp.ui.admin.pendingloan.PendingLoanAdminViewModel
 import com.skripsi.perpustakaanapp.ui.admin.usermanagerial.createnewadmin.CreateNewAdminViewModel
 import com.skripsi.perpustakaanapp.ui.admin.scanner.ScannerAttendanceViewModel
 import com.skripsi.perpustakaanapp.ui.admin.usermanagerial.updateuser.UpdateUserViewModel
@@ -89,9 +88,6 @@ class MyViewModelFactory constructor(private val libraryRepository: LibraryRepos
             }
             modelClass.isAssignableFrom(EbookViewModel::class.java) -> {
                 return EbookViewModel(this.libraryRepository) as T
-            }
-            modelClass.isAssignableFrom(PendingLoanMemberViewModel::class.java) -> {
-                return PendingLoanMemberViewModel(this.libraryRepository) as T
             }
             modelClass.isAssignableFrom(MemberLoanViewModel::class.java) -> {
                 return MemberLoanViewModel(this.libraryRepository) as T

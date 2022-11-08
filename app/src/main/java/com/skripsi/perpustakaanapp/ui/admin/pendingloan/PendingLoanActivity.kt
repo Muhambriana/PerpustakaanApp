@@ -1,6 +1,5 @@
-package com.skripsi.perpustakaanapp.ui.pendingloan
+package com.skripsi.perpustakaanapp.ui.admin.pendingloan
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -31,7 +30,7 @@ class PendingLoanActivity : AppCompatActivity() {
         if (sessionManager.fetchUserRole() == "admin") {
             loadFragment(PendingLoanAdminFragment())
         } else if (sessionManager.fetchUserRole() == "student") {
-            loadFragment(PendingLoanMemberFragment())
+
         }
     }
 

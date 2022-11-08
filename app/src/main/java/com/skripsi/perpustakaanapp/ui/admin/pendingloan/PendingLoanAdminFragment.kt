@@ -1,4 +1,4 @@
-package com.skripsi.perpustakaanapp.ui.pendingloan
+package com.skripsi.perpustakaanapp.ui.admin.pendingloan
 
 import android.content.Intent
 import android.os.Bundle

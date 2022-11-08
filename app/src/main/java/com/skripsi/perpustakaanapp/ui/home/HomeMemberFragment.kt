@@ -10,7 +10,6 @@ import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.adapter.CardMenuAdapter
 import com.skripsi.perpustakaanapp.core.models.CardMenu
 import com.skripsi.perpustakaanapp.databinding.FragmentHomeMemberBinding
-import com.skripsi.perpustakaanapp.ui.pendingloan.PendingLoanActivity
 import com.skripsi.perpustakaanapp.ui.book.listbook.BookActivity
 import com.skripsi.perpustakaanapp.ui.loan.LoanActivity
 import com.skripsi.perpustakaanapp.ui.listattendance.AttendanceActivity

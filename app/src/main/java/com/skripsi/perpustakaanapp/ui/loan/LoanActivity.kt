@@ -1,16 +1,11 @@
 package com.skripsi.perpustakaanapp.ui.loan
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.fragment.app.Fragment
-import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.databinding.ActivityLoanBinding
-import com.skripsi.perpustakaanapp.databinding.ActivityPendingLoanBinding
-import com.skripsi.perpustakaanapp.ui.pendingloan.PendingLoanAdminFragment
-import com.skripsi.perpustakaanapp.ui.pendingloan.PendingLoanMemberFragment
 
 class LoanActivity : AppCompatActivity() {
 
