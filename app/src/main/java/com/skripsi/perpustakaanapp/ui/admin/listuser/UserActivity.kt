@@ -7,6 +7,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.MyViewModelFactory
@@ -102,7 +103,7 @@ class UserActivity : AppCompatActivity() {
     }
 
     private fun showRecycleList() {
-        binding.rvUser.layoutManager = LinearLayoutManager(this)
+        binding.rvUser.layoutManager = GridLayoutManager(this, 2)
         binding.rvUser.adapter = userAdapter
         userAdapter.setUserList(userData)
 

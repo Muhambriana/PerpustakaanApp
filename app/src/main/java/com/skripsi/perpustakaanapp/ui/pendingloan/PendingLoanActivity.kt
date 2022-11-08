@@ -36,7 +36,7 @@ class PendingLoanActivity : AppCompatActivity() {
 
     private  fun loadFragment(fragment: Fragment){
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(binding.containerScanner.id,fragment)
+        transaction.replace(binding.containerPendingLoan.id,fragment)
         transaction.commit()
     }
 

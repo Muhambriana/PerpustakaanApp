@@ -14,6 +14,7 @@ import androidx.activity.result.contract.ActivityResultContracts.StartActivityFo
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.MyViewModelFactory
@@ -192,6 +193,17 @@ class BookActivity : AppCompatActivity() {
     }
 
     private fun showRecycleList(dataSearch: List<Book>?) {
+//        with(binding?.rvFilm) {
+//            this?.layoutManager =
+//                if (this?.resources?.configuration?.orientation == Configuration.ORIENTATION_PORTRAIT) {
+//                    GridLayoutManager(context,2)
+//                } else {
+//                    GridLayoutManager(this?.context,4)
+//                }
+//            this?.setHasFixedSize(true)
+//            this?.adapter = filmAdapter
+//        }
+//
         binding.rvBook.layoutManager = LinearLayoutManager(this)
         binding.rvBook.adapter = bookAdapter
         if (dataSearch == null) {

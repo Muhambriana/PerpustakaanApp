@@ -4,28 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="9dp"
-    android:layout_marginTop="10dp"
-    android:layout_marginEnd="9dp"
-    android:background="@drawable/card_selector"
+    android:layout_marginTop="5dp"
+    android:background="@drawable/card_bg"
     android:descendantFocusability="beforeDescendants"
-    android:paddingStart="5dp"
-    android:paddingTop="15dp"
-    android:paddingEnd="5dp"
-    android:paddingBottom="15dp">
+    android:paddingStart="10dp"
+    android:paddingEnd="0dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
 
     <TextView
         android:id="@+id/tv_book_title"
-        android:layout_width="250dp"
-        android:layout_height="32dp"
-        android:layout_marginEnd="68dp"
+        android:layout_width="249dp"
+        android:layout_height="45dp"
         android:gravity="center"
         android:textColor="@color/colorSilver"
         android:textSize="15sp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.213"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.225"
@@ -36,16 +31,17 @@
         android:layout_width="250dp"
         android:layout_height="32dp"
         android:layout_marginEnd="68dp"
+        android:paddingLeft="10dp"
         android:gravity="center_vertical"
+        android:text="1811502044"
         android:textColor="@color/colorSilver"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.253"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_book_title"
-        app:layout_constraintVertical_bias="0.0"
-        android:text="1811502044" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
         android:id="@+id/btn_approve"
@@ -53,19 +49,17 @@
         android:layout_height="33dp"
         android:layout_marginTop="20dp"
         android:src="@drawable/icon_checked"
-        app:layout_constraintStart_toEndOf="@id/tv_book_title"
+        app:layout_constraintEnd_toStartOf="@+id/btn_reject"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/btn_reject"
         android:layout_width="39dp"
         android:layout_height="33dp"
+        android:layout_marginEnd="2dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="5dp"
         android:src="@drawable/icon_cancel"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@id/btn_approve"
         app:layout_constraintTop_toTopOf="parent" />
 
 

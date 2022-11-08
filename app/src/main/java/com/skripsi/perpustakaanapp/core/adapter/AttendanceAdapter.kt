@@ -35,8 +35,11 @@ class AttendanceAdapter: RecyclerView.Adapter<AttendanceAdapter.AttendanceViewHo
         private val binding = ItemListAttendanceBinding.bind(itemView)
         fun bind(attendance: Attendance) {
             with(binding) {
-                tvBookTitle.text = attendance.id
-                tvOfficer.text = attendance.clockIn
+                tvItemUsername.text = attendance.id
+                tvItemOfficer.text = attendance.admin
+                tvItemDate.text = attendance.date
+                tvItemClockIn.text = attendance.clockIn
+                tvItemClockOut.text = attendance.clockOut
             }
         }
 

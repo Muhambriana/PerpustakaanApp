@@ -28,12 +28,10 @@
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.007"
                 tools:text="JUDUL BUKU" />
 
             <ImageView
@@ -41,10 +39,7 @@
                 android:layout_width="230dp"
                 android:layout_height="300dp"
                 android:layout_marginTop="4dp"
-                android:layout_marginEnd="100dp"
                 android:src="@color/teal_200"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_book_title"
                 tools:ignore="ContentDescription" />
@@ -60,12 +55,10 @@
                 android:textColor="@color/teal_700"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/image_cover_book"
-                app:layout_constraintTop_toBottomOf="@+id/tv_book_title"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_book_title" />
 
             <TextView
                 android:id="@+id/tv_author"
@@ -75,12 +68,10 @@
                 android:layout_marginEnd="6dp"
                 android:gravity="center_vertical"
                 android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/image_cover_book"
                 app:layout_constraintTop_toBottomOf="@+id/text_author"
-                app:layout_constraintVertical_bias="0.0"
                 tools:text="@string/author" />
 
             <TextView
@@ -94,12 +85,10 @@
                 android:textColor="@color/teal_700"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/image_cover_book"
-                app:layout_constraintTop_toBottomOf="@+id/tv_author"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_author" />
 
             <TextView
                 android:id="@+id/tv_year"
@@ -109,12 +98,10 @@
                 android:layout_marginEnd="6dp"
                 android:gravity="center_vertical"
                 android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/image_cover_book"
                 app:layout_constraintTop_toBottomOf="@+id/text_year"
-                app:layout_constraintVertical_bias="0.0"
                 tools:text="@string/year" />
 
             <TextView
@@ -128,12 +115,10 @@
                 android:textColor="@color/teal_700"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/image_cover_book"
-                app:layout_constraintTop_toBottomOf="@+id/tv_year"
-                app:layout_constraintVertical_bias="0.03" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_year" />
 
             <TextView
                 android:id="@+id/tv_publisher"
@@ -142,40 +127,36 @@
                 android:layout_marginStart="12dp"
                 android:gravity="center_vertical"
                 android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/image_cover_book"
                 app:layout_constraintTop_toBottomOf="@+id/text_publisher"
-                app:layout_constraintVertical_bias="0.0"
                 tools:text="@string/publisher" />
 
             <TextView
                 android:id="@+id/text_category"
                 android:layout_width="88dp"
                 android:layout_height="50dp"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
                 android:gravity="center_vertical|start"
                 android:text="Kategori"
                 android:textColor="@color/teal_700"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button_ebook"
-                app:layout_constraintVertical_bias="0.05" />
+                app:layout_constraintTop_toBottomOf="@+id/button_ebook" />
 
             <TextView
                 android:id="@+id/tv_category"
                 android:layout_width="200dp"
                 android:layout_height="50dp"
 
+                android:layout_marginTop="24dp"
                 android:gravity="center_vertical"
                 android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/text_category"
                 app:layout_constraintTop_toBottomOf="@+id/button_ebook"
-                app:layout_constraintVertical_bias="0.048"
                 tools:text="Novel" />
 
             <TextView
@@ -214,29 +195,23 @@
                 android:layout_width="154dp"
                 android:layout_height="48dp"
                 android:layout_marginStart="10dp"
-                android:layout_marginBottom="416dp"
+                android:layout_marginTop="10dp"
                 android:backgroundTint="@color/purple_500"
                 android:gravity="center_vertical|start"
                 android:text="Baca Ebook"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/image_cover_book"
-                app:layout_constraintVertical_bias="0.258" />
+                app:layout_constraintTop_toBottomOf="@+id/image_cover_book" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab_favorite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="13dp"
-                android:layout_marginTop="52dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="36dp"
                 android:contentDescription="Favorite"
                 app:layout_anchorGravity="bottom|end"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/image_cover_book"
                 app:layout_constraintTop_toBottomOf="@+id/tv_publisher"
                 app:srcCompat="@android:drawable/ic_dialog_email" />
@@ -245,6 +220,7 @@
                 android:id="@+id/progress_bar"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
+                android:visibility="gone"
                 android:indeterminateDrawable="@drawable/custom_progress_bar"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -258,8 +234,8 @@
         android:id="@+id/button_loan"
         android:layout_width="match_parent"
         android:layout_height="53dp"
-        android:layout_marginBottom="-5dp"
         android:layout_alignParentBottom="true"
+        android:layout_marginBottom="-5dp"
         android:text="@string/loan"
         app:layout_constraintEnd_toEndOf="parent" />
 

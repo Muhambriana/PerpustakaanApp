@@ -4,9 +4,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.signature.ObjectKey
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.models.Book
 import com.skripsi.perpustakaanapp.databinding.ItemListBookBinding
+import com.skripsi.perpustakaanapp.utils.NetworkInfo
 import com.skripsi.perpustakaanapp.utils.setSingleClickListener
 
 class BookAdapter : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
@@ -40,6 +43,21 @@ class BookAdapter : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
         fun bind(book: Book){
             with(binding){
                 tvBookTitle.text = book.title
+                tvBookAuthor.text = book.author
+                setBookPoster(book.imageUrl, itemView)
+            }
+        }
+
+        private fun setBookPoster(avatar: String?, context: View) {
+            if (avatar != null) {
+                Glide.with(context)
+                    .load(NetworkInfo.BOOK_IMAGE_BASE_URL + avatar)
+                    // For reload image on glide from the same url
+                    .signature(ObjectKey(System.currentTimeMillis().toString()))
+                    // To show the original size of image
+//                    .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                    .fitCenter()
+                    .into(binding.ivBookPoster)
             }
         }
 

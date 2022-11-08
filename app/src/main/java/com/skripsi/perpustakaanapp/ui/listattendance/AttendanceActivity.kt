@@ -94,8 +94,8 @@ class AttendanceActivity : AppCompatActivity() {
     }
 
     private fun showRecycleList() {
-        binding.rvHistoryLoan.layoutManager = LinearLayoutManager(this)
-        binding.rvHistoryLoan.adapter = attendanceAdapter
+        binding.rvAttendance.layoutManager = LinearLayoutManager(this)
+        binding.rvAttendance.adapter = attendanceAdapter
         attendanceAdapter.setAttendanceList(attendanceData)
 
         // On user item click

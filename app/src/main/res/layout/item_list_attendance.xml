@@ -4,49 +4,143 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="9dp"
-    android:layout_marginTop="10dp"
-    android:layout_marginEnd="9dp"
-    android:background="@drawable/card_selector"
+    android:layout_marginTop="7dp"
+    android:background="@color/white"
     android:descendantFocusability="beforeDescendants"
-    android:paddingStart="5dp"
-    android:paddingTop="15dp"
-    android:paddingEnd="5dp"
-    android:paddingBottom="15dp">
+    android:padding="10dp">
 
     <TextView
-        android:id="@+id/tv_book_title"
-        android:layout_width="250dp"
+        android:id="@+id/tv_item_title_username"
+        android:layout_width="120dp"
         android:layout_height="32dp"
-        android:layout_marginEnd="68dp"
-        android:gravity="center"
-        android:textColor="@color/colorSilver"
+        android:layout_marginTop="10dp"
+        android:gravity="center_vertical"
+        android:fontFamily="@font/amiko"
+        android:text="Pengujung"
         android:textSize="15sp"
-        android:textStyle="bold|italic"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_item_title_officer"
+        android:layout_width="120dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/amiko"
+        android:gravity="center_vertical"
+        android:text="Nama Petugas"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_item_title_username" />
+
+    <TextView
+        android:id="@+id/tv_item_title_date"
+        android:layout_width="121dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/amiko"
+        android:gravity="center_vertical"
+        android:text="Tanggal Kunjungan"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_item_title_officer" />
+
+    <TextView
+        android:id="@+id/tv_item_title_clock_in"
+        android:layout_width="119dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="24dp"
+        android:gravity="center"
+        android:text="Jam Masuk"
+        android:textSize="15sp"
+        android:textColor="@color/green_700"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_item_title_date" />
+
+    <TextView
+        android:id="@+id/tv_item_title_clock_out"
+        android:layout_width="119dp"
+        android:layout_height="22dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="25dp"
+        android:gravity="center"
+        android:text="Jam Keluar"
+        android:textSize="15sp"
+        android:textColor="@color/purple_500"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.213"
+        app:layout_constraintTop_toBottomOf="@+id/tv_item_date" />
+
+    <TextView
+        android:id="@+id/tv_item_username"
+        android:layout_width="244dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="156dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/amiko"
+        android:gravity="center_vertical"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toEndOf="@+id/tv_item_title_username"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.225"
-        tools:text="@string/book_title" />
+        tools:text="1811502044" />
 
     <TextView
-        android:id="@+id/tv_officer"
-        android:layout_width="250dp"
-        android:layout_height="32dp"
-        android:layout_marginEnd="68dp"
+        android:id="@+id/tv_item_officer"
+        android:layout_width="242dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/amiko"
         android:gravity="center_vertical"
-        android:textColor="@color/colorSilver"
+        android:text="Briana Muham"
         android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.253"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_book_title"
-        app:layout_constraintVertical_bias="0.0"
-        android:text="1811502044" />
+        app:layout_constraintStart_toEndOf="@+id/tv_item_title_officer"
+        app:layout_constraintTop_toBottomOf="@id/tv_item_username" />
 
+    <TextView
+        android:id="@+id/tv_item_date"
+        android:layout_width="242dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/amiko"
+        android:gravity="center_vertical"
+        android:text="20-09-10"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toEndOf="@+id/tv_item_title_officer"
+        app:layout_constraintTop_toBottomOf="@+id/tv_item_officer" />
+
+    <TextView
+        android:id="@+id/tv_item_clock_in"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/amiko"
+        android:gravity="center"
+        android:text="11.23.44"
+        android:textColor="@color/green_700"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_item_title_clock_in" />
+
+    <TextView
+        android:id="@+id/tv_item_clock_out"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="50dp"
+        android:fontFamily="@font/amiko"
+        android:gravity="center"
+        android:text="11.23.44"
+        android:textColor="@color/purple_500"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_item_title_clock_out" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -197,6 +197,10 @@ class CreateBookActivity : AppCompatActivity() {
         binding.edCopies.text?.clear()
         imageMultipartBody = null
         pdfMultiPartBody = null
+        binding.textImage.text = null
+        binding.imageView.setImageURI(null)
+        binding.textPdf.text = null
+        binding.previewPdf.fromUri(null)
         binding.contentCreate.visibility = View.GONE
     }
 

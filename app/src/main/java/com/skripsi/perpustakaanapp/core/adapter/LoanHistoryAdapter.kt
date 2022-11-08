@@ -1,8 +1,11 @@
 package com.skripsi.perpustakaanapp.core.adapter
 
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.models.LoanHistory
@@ -38,8 +41,13 @@ class LoanHistoryAdapter : RecyclerView.Adapter<LoanHistoryAdapter.LoanHistoryVi
         private val binding = ItemListLoanHistoryBinding.bind(itemView)
         fun bind(loanHistory: LoanHistory) {
             with(binding) {
-                tvBookTitle.text = loanHistory.bookTitle
-                tvOfficer.text = loanHistory.managedBy
+                tvItemBookTitle.text = loanHistory.bookTitle
+                tvItemOfficer.text = loanHistory.managedBy
+                tvItemStatus.text = loanHistory.status
+                tvItemStatus.background = setStatusColor(loanHistory.status)?.let {
+                    ContextCompat.getDrawable(itemView.context,
+                        it)
+                }
             }
         }
 
@@ -47,15 +55,34 @@ class LoanHistoryAdapter : RecyclerView.Adapter<LoanHistoryAdapter.LoanHistoryVi
             binding.root.setSingleClickListener {
                 onItemClick?.invoke(listLoanHistory[adapterPosition])
             }
-            binding.tvBookTitle.setSingleClickListener {
+            binding.tvItemBookTitle.setSingleClickListener {
                 listLoanHistory[adapterPosition].bookId?.let { bookId ->
                     onBookTitleClick?.invoke(bookId) }
             }
-            binding.tvOfficer.setSingleClickListener {
+            binding.tvItemOfficer.setSingleClickListener {
                 listLoanHistory[adapterPosition].managedBy?.let { officerUsername ->
                     onOfficerUsernameClick?.invoke(officerUsername)
                 }
             }
+        }
+
+        private fun setStatusColor(status: String?): Int? {
+            if (null == status) {
+                return null
+            }
+            if (status == "RETURNED") {
+                return R.drawable.custom_blue_text_view_background
+            }
+            if (status == "APPROVED") {
+                return R.drawable.custom_green_text_view_background
+            }
+            if (status == "REJECT") {
+                return R.drawable.custom_red_text_view_background
+            }
+            if (status == "PENDING") {
+                return R.drawable.custom_yellow_text_view_background
+            }
+            return null
         }
     }
 
