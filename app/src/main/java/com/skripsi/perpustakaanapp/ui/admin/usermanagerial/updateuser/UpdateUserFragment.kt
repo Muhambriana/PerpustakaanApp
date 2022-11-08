@@ -3,6 +3,7 @@ package com.skripsi.perpustakaanapp.ui.admin.usermanagerial.updateuser
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputFilter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -47,14 +48,29 @@ class UpdateUserFragment : BottomSheetDialogFragment() {
             UpdateUserViewModel::class.java
         )
 
+        binding?.edtFirstName?.filters?.plus(InputFilter.AllCaps())
+        binding?.edtLastName?.filters?.plus(InputFilter.AllCaps())
         binding?.progressBar?.visibility = View.GONE
 
         getData()
         setGender()
 
-        binding?.buttonSave?.setSingleClickListener {
-            askAppointment()
-        }
+        buttonListener()
+    }
+
+    private fun getData() {
+        val bundle: Bundle? = this.arguments
+        dataUser = bundle?.getParcelable(FRAGMENT_EXTRA_DATA)
+        setEditText()
+    }
+
+    private fun setEditText() {
+        binding?.edtUsername?.setText(dataUser?.username)
+        binding?.edtFirstName?.setText(dataUser?.firstName)
+        binding?.edtLastName?.setText(dataUser?.lastName)
+        binding?.edtEmail?.setText(dataUser?.email)
+        binding?.edtPhoneNo?.setText(dataUser?.phoneNo)
+        binding?.edtAddress?.setText(dataUser?.address)
     }
 
     private fun setGender(): Int? {
@@ -78,19 +94,13 @@ class UpdateUserFragment : BottomSheetDialogFragment() {
         return gender
     }
 
-    private fun getData() {
-        val bundle: Bundle? = this.arguments
-        dataUser = bundle?.getParcelable(FRAGMENT_EXTRA_DATA)
-        setEditText()
-    }
-
-    private fun setEditText() {
-        binding?.edtUsername?.setText(dataUser?.username)
-        binding?.edtFirstName?.setText(dataUser?.firstName)
-        binding?.edtLastName?.setText(dataUser?.lastName)
-        binding?.edtEmail?.setText(dataUser?.email)
-        binding?.edtPhoneNo?.setText(dataUser?.phoneNo)
-        binding?.edtAddress?.setText(dataUser?.address)
+    private fun buttonListener() {
+        binding?.buttonBack?.setSingleClickListener {
+            dismiss()
+        }
+        binding?.buttonSave?.setSingleClickListener {
+            askAppointment()
+        }
     }
 
     private fun askAppointment() {

@@ -1,8 +1,11 @@
 package com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.updatebook
 
+import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.text.InputFilter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,12 +24,14 @@ import com.skripsi.perpustakaanapp.core.resource.MyResource
 import com.skripsi.perpustakaanapp.databinding.FragmentUpdateBookBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.MySnackBar
+import com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.createbook.CreateBookActivity
 import com.skripsi.perpustakaanapp.ui.book.detailbook.DetailBookActivity
 import com.skripsi.perpustakaanapp.utils.FilePathHelper
 import com.skripsi.perpustakaanapp.utils.NetworkInfo.BOOK_IMAGE_BASE_URL
 import com.skripsi.perpustakaanapp.utils.PermissionCheck
 import com.skripsi.perpustakaanapp.utils.setSingleClickListener
 import okhttp3.MultipartBody
+import java.io.File
 
 class UpdateBookFragment : BottomSheetDialogFragment() {
 
@@ -37,6 +42,7 @@ class UpdateBookFragment : BottomSheetDialogFragment() {
     private var dataBook: Book? = null
     private val client = RetrofitClient
     private var imageMultipartBody: MultipartBody.Part? = null
+    private var pdfMultiPartBody: MultipartBody.Part? = null
 
 
     override fun onCreateView(
@@ -54,6 +60,7 @@ class UpdateBookFragment : BottomSheetDialogFragment() {
             UpdateBookViewModel::class.java
         )
 
+        binding.edBookTitle.filters += InputFilter.AllCaps()
         binding.progressBar.visibility = View.GONE
 
         getData()
@@ -62,12 +69,26 @@ class UpdateBookFragment : BottomSheetDialogFragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_IMAGE) {
-            val selectedImage = data?.data
-            Glide.with(requireContext())
+        if (resultCode == Activity.RESULT_OK && requestCode == CreateBookActivity.REQUEST_CODE_IMAGE) {
+            val selectedImage: Uri? = data?.data
+            Glide.with(this)
                 .load(selectedImage)
                 .into(binding.bookPoster)
             imageMultipartBody = selectedImage?.let { FilePathHelper.getImage(requireContext(), it) }
+        } else if (resultCode == Activity.RESULT_OK && requestCode == CreateBookActivity.REQUEST_CODE_FILE) {
+            val selectedPdf: Uri? = data?.data
+            if (selectedPdf!= null) {
+                val file: File? = FilePathHelper.getFile(requireContext(), selectedPdf)
+                binding.previewPdf.background = null
+                binding.previewPdf.fromFile(file)
+                    .pages(0)
+                    .spacing(0)
+                    .swipeHorizontal(false)
+                    .enableSwipe(false)
+                    .load()
+            }
+//            binding.textPdf.text = selectedPdf?.let { FilePathHelper.getFileName(this, it) }
+            pdfMultiPartBody = selectedPdf?.let { FilePathHelper.getPDF(requireContext(), it) }
         }
     }
 
@@ -99,7 +120,7 @@ class UpdateBookFragment : BottomSheetDialogFragment() {
 
     private fun setButtonListener() {
         binding.buttonBack.setSingleClickListener {
-            requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
+            dismiss()
         }
 
         binding.buttonSave.setSingleClickListener {
@@ -109,6 +130,11 @@ class UpdateBookFragment : BottomSheetDialogFragment() {
         binding.buttonUploadImage.setSingleClickListener {
             if (PermissionCheck.readExternalStorage(activity)) {
                 chooseImage()
+            }
+        }
+        binding.buttonChooseEbook.setSingleClickListener {
+            if (PermissionCheck.readExternalStorage(activity)) {
+                choosePDFFIle()
             }
         }
     }
@@ -136,19 +162,24 @@ class UpdateBookFragment : BottomSheetDialogFragment() {
         }
     }
 
+    private fun choosePDFFIle() {
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.type = "application/pdf"
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
+        startActivityForResult(intent, CreateBookActivity.REQUEST_CODE_FILE)
+    }
+
     private fun postBookData() {
         uploadImage()
+        uploadEBook()
         viewModel.updateBook(
             token = sessionManager.fetchAuthToken().toString(),
             binding.tvBookId.text.toString(),
             binding.edBookTitle.text.toString(),
-            binding.edEdition.text.toString(),
             binding.edAuthor.text.toString(),
             binding.edPublisher.text.toString(),
             binding.edPublisherDate.text.toString(),
             binding.edCopies.text.toString(),
-            binding.edSource.text.toString(),
-            binding.edRemark.text.toString(),
             if (dataBook?.imageUrl != null) {
                 binding.edBookTitle.text.toString()
             } else {
@@ -183,6 +214,7 @@ class UpdateBookFragment : BottomSheetDialogFragment() {
                         binding.progressBar.visibility = View.GONE
                         MySnackBar.showRed(binding.root, resource.message.toString())
                     }
+                    else -> {}
                 }
             }
         }
@@ -212,6 +244,31 @@ class UpdateBookFragment : BottomSheetDialogFragment() {
                         binding.progressBar.visibility = View.GONE
                         MySnackBar.showRed(binding.root, resource.message.toString())
                     }
+                    else -> {}
+                }
+            }
+        }
+    }
+
+    private fun uploadEBook() {
+
+        pdfMultiPartBody?.let { viewModel.updateEBook(sessionManager.fetchAuthToken().toString(), dataBook?.bookId.toString(), it) }
+
+        viewModel.resourceUpdateEBook.observe(this) { event ->
+            event.getContentIfNotHandled().let { resource ->
+                when (resource) {
+                    is MyResource.Loading -> {
+                        binding.progressBar.visibility = View.VISIBLE
+                    }
+                    is MyResource.Success -> {
+                        binding.progressBar.visibility = View.GONE
+                        MySnackBar.showBlack(binding.root, resource.data.toString())
+                    }
+                    is MyResource.Error -> {
+                        binding.progressBar.visibility = View.GONE
+                        MySnackBar.showRed(binding.root, resource.message.toString())
+                    }
+                    else -> {}
                 }
             }
         }
@@ -220,5 +277,6 @@ class UpdateBookFragment : BottomSheetDialogFragment() {
     companion object {
         const val FRAGMENT_EXTRA_DATA = "extra_data"
         private const val REQUEST_CODE_IMAGE = 201
+        private const val REQUEST_CODE_FILE = 202
     }
 }

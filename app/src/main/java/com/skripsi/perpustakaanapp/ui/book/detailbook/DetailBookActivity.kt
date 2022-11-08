@@ -51,7 +51,7 @@ class DetailBookActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         //when still loading the data, action bar will show nothing
-        supportActionBar?.title = ""
+        supportActionBar?.title = "Detail Buku"
 
         //when still loading the data, fab will invisible will show nothing
         binding.fabFavorite.visibility = View.INVISIBLE
@@ -145,6 +145,7 @@ class DetailBookActivity : AppCompatActivity() {
                         binding.progressBar.visibility = View.GONE
                         MySnackBar.showRed(binding.root, resource.message.toString())
                     }
+                    else -> {}
                 }
             }
         }
@@ -168,6 +169,7 @@ class DetailBookActivity : AppCompatActivity() {
                         binding.progressBar.visibility = View.GONE
                         MyAlertDialog.show(this, R.drawable.icon_cancel, "Failed", resource.message.toString())
                     }
+                    else -> {}
                 }
             }
         }
@@ -177,16 +179,16 @@ class DetailBookActivity : AppCompatActivity() {
         setEnableLoanButton()
 
         binding.progressBar.visibility = View.GONE
-        supportActionBar?.title = detailBook?.title
-        binding.author.text = detailBook?.author
-        binding.year.text = detailBook?.publisherDate
-        binding.publisher.text = detailBook?.publisher
+        binding.tvBookTitle.text = detailBook?.title
+        binding.tvAuthor.text = detailBook?.author
+        binding.tvYear.text = detailBook?.publisherDate
+        binding.tvPublisher.text = detailBook?.publisher
         setBookCover()
         setEBookLink()
     }
 
     private fun setEBookLink() {
-        binding.textLinkEbook.setOnClickListener {
+        binding.buttonEbook.setOnClickListener {
             val intent = Intent(this@DetailBookActivity, EbookActivity::class.java)
             intent.putExtra(EbookActivity.EXTRA_LINK, detailBook?.eBook)
             startActivity(intent)

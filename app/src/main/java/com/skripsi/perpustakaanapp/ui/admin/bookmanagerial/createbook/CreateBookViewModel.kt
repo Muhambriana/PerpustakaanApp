@@ -19,9 +19,9 @@ class CreateBookViewModel(private val repository: LibraryRepository) : ViewModel
 
     val resourceCreateBook = MutableLiveData<MyEvent<MyResource<String?>>>()
 
-    fun createBook(token: String, title: String, edition: String, author: String, publisher: String, publisherDate: String, copies: String, image: MultipartBody.Part?, pdf: MultipartBody.Part?){
+    fun createBook(token: String, title: String, author: String, publisher: String, publisherDate: String, copies: String, image: MultipartBody.Part?, pdf: MultipartBody.Part?){
         resourceCreateBook.postValue(MyEvent(MyResource.Loading()))
-        val book = Book(null, title, edition, author, publisher, publisherDate, copies)
+        val book = Book(null, title, author, publisher, publisherDate, copies)
         val jsonString = Gson().toJson(book)
         val data = RequestBody.create(MediaType.parse("text/plain"), jsonString)
         println("kocak isi pdf: $pdf")

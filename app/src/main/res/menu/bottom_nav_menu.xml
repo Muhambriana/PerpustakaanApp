@@ -12,5 +12,5 @@
     <item
         android:id="@+id/bottom_nav_menu2"
         android:icon="@drawable/ic_stats"
-        android:title="Profile" />
+        android:title="Aktivitas" />
 </menu>

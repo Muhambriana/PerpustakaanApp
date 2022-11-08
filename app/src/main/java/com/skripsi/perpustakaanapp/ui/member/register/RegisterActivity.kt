@@ -1,6 +1,9 @@
 package com.skripsi.perpustakaanapp.ui.member.register
 
 import android.os.Bundle
+import android.text.InputFilter
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -41,6 +44,31 @@ class RegisterActivity : AppCompatActivity() {
         binding.progressBar.visibility = View.INVISIBLE
 
         gender = getGender()
+
+        editTextFilter()
+    }
+
+    private fun editTextFilter() {
+        hideShowPassword()
+        binding.edtFirstName.filters += InputFilter.AllCaps()
+        binding.edtLastName.filters += InputFilter.AllCaps()
+    }
+
+    private fun hideShowPassword() {
+        binding.buttonHideShow.setOnClickListener {
+            if(binding.edtPassword.transformationMethod.equals(PasswordTransformationMethod.getInstance())){
+                binding.buttonHideShow.setImageResource(R.drawable.ic_visibility_off);
+                //Show Password
+                binding.edtPassword.transformationMethod = HideReturnsTransformationMethod.getInstance();
+                binding.edtPassword.setSelection(binding.edtPassword.length())
+            }
+            else{
+                binding.buttonHideShow.setImageResource(R.drawable.ic_visibility_on);
+                //Hide Password
+                binding.edtPassword.transformationMethod = PasswordTransformationMethod.getInstance();
+                binding.edtPassword.setSelection(binding.edtPassword.length())
+            }
+        }
     }
 
     private fun clickListener() {
@@ -100,8 +128,8 @@ class RegisterActivity : AppCompatActivity() {
                             R.drawable.icon_checked,
                             it.data.toString().uppercase(),
                             "Berhasil Mendaftar") { _, _ ->
-//                            finish()
                         }
+                        clearEditText()
                     }
                     is MyResource.Error -> {
                         binding.progressBar.visibility = View.GONE
@@ -113,6 +141,18 @@ class RegisterActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun clearEditText() {
+        binding.edtUsername.text.clear()
+        binding.edtPassword.text.clear()
+        binding.edtFirstName.text.clear()
+        binding.edtLastName.text.clear()
+        binding.edEmail.text.clear()
+        binding.edtTelNumber.text.clear()
+        binding.edtAddress.text.clear()
+        gender = null
+        binding.rbGender.clearCheck()
     }
 
     private fun getGender(): Int? {

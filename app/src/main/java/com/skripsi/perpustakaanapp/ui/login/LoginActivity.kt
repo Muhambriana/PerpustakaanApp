@@ -5,6 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
 import android.os.Bundle
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -48,6 +50,25 @@ class LoginActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, MyViewModelFactory(LibraryRepository(client))).get(
             LoginViewModel::class.java
         )
+
+        hideShowPassword()
+    }
+
+    private fun hideShowPassword() {
+        binding.buttonHideShow.setOnClickListener {
+            if(binding.edtPassword.transformationMethod.equals(PasswordTransformationMethod.getInstance())){
+                binding.buttonHideShow.setImageResource(R.drawable.ic_visibility_off);
+                //Show Password
+                binding.edtPassword.transformationMethod = HideReturnsTransformationMethod.getInstance();
+                binding.edtPassword.setSelection(binding.edtPassword.length())
+            }
+            else{
+                binding.buttonHideShow.setImageResource(R.drawable.ic_visibility_on);
+                //Hide Password
+                binding.edtPassword.transformationMethod = PasswordTransformationMethod.getInstance();
+                binding.edtPassword.setSelection(binding.edtPassword.length())
+            }
+        }
     }
 
     private fun clickListener() {

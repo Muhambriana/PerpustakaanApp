@@ -2,6 +2,9 @@ package com.skripsi.perpustakaanapp.ui.admin.usermanagerial.createnewadmin
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputFilter
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -57,6 +60,30 @@ class CreateNewAdminActivity : AppCompatActivity() {
         )
 
         binding.progressBar.visibility = View.INVISIBLE
+        editTextFilter()
+    }
+
+    private fun editTextFilter() {
+        hideShowPassword()
+        binding.edtFirstName.filters += InputFilter.AllCaps()
+        binding.edtLastName.filters += InputFilter.AllCaps()
+    }
+
+    private fun hideShowPassword() {
+        binding.buttonHideShow.setOnClickListener {
+            if(binding.edtPassword.transformationMethod.equals(PasswordTransformationMethod.getInstance())){
+                binding.buttonHideShow.setImageResource(R.drawable.ic_visibility_off);
+                //Show Password
+                binding.edtPassword.transformationMethod = HideReturnsTransformationMethod.getInstance();
+                binding.edtPassword.setSelection(binding.edtPassword.length())
+            }
+            else{
+                binding.buttonHideShow.setImageResource(R.drawable.ic_visibility_on);
+                //Hide Password
+                binding.edtPassword.transformationMethod = PasswordTransformationMethod.getInstance();
+                binding.edtPassword.setSelection(binding.edtPassword.length())
+            }
+        }
     }
 
     private fun clickListener() {
@@ -66,12 +93,12 @@ class CreateNewAdminActivity : AppCompatActivity() {
     }
 
     private fun askAppointment() {
-        val username = binding.edUsername.text.toString()
+        val username = binding.edtUsername.text.toString()
         val password = binding.edtPassword.text.toString()
         when {
             username.isEmpty() -> {
-                binding.edUsername.error = "NISN Tidak Boleh Kosong"
-                binding.edUsername.requestFocus()
+                binding.edtUsername.error = "NISN Tidak Boleh Kosong"
+                binding.edtUsername.requestFocus()
             }
             password.isEmpty() -> {
                 binding.edtPassword.error = "Password Tidak Boleh Kosong"
@@ -99,13 +126,13 @@ class CreateNewAdminActivity : AppCompatActivity() {
         //pass data to view model
         gender?.let {
             viewModel.createNewAdmin(
-                binding.edUsername.text.toString(),
+                binding.edtUsername.text.toString(),
                 binding.edtPassword.text.toString(),
                 binding.edtFirstName.text.toString(),
                 binding.edtLastName.text.toString(),
                 "admin",
-                binding.edEmail.text.toString(),
-                binding.edtTelNumber.text.toString(),
+                binding.edtEmail.text.toString(),
+                binding.edtPhoneNo.text.toString(),
                 binding.edtAddress.text.toString(),
                 it
             )
@@ -119,14 +146,28 @@ class CreateNewAdminActivity : AppCompatActivity() {
                     }
                     is MyResource.Success -> {
                         binding.progressBar.visibility = View.GONE
+                        clearEditText()
                         MySnackBar.showBlack(binding.root, resource.data.toString())
                     }
                     is MyResource.Error -> {
                         binding.progressBar.visibility = View.GONE
                         MySnackBar.showRed(binding.root, resource.message.toString())
                     }
+                    else -> {}
                 }
             }
         }
+    }
+
+    private fun clearEditText() {
+        binding.edtUsername.text.clear()
+        binding.edtPassword.text.clear()
+        binding.edtFirstName.text.clear()
+        binding.edtLastName.text.clear()
+        binding.edtEmail.text.clear()
+        binding.edtPhoneNo.text.clear()
+        binding.edtAddress.text.clear()
+        gender = null
+        binding.rbGender.clearCheck()
     }
 }

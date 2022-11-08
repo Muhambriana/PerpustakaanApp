@@ -95,8 +95,4 @@ class PaymentPenaltyFragment : DialogFragment() {
             }
         }
     }
-
-    private fun paying() {
-        binding?.edtMoney?.text
-    }
 }

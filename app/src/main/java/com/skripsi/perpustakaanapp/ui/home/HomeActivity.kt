@@ -28,9 +28,8 @@ import com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.updatebook.UpdateBook
 import com.skripsi.perpustakaanapp.ui.admin.scanner.ScannerAttendanceFragment
 import com.skripsi.perpustakaanapp.ui.login.LoginActivity
 import com.skripsi.perpustakaanapp.ui.member.qrcode.QRCodeFragment
-import com.skripsi.perpustakaanapp.ui.statistik.MemberStatisticFragment
+import com.skripsi.perpustakaanapp.ui.statistik.StatisticFragment
 import com.skripsi.perpustakaanapp.ui.userprofile.UserProfileActivity
-import com.skripsi.perpustakaanapp.ui.userprofile.UserProfileFragment
 import com.skripsi.perpustakaanapp.utils.NetworkInfo
 import com.skripsi.perpustakaanapp.utils.WindowTouchableHelper
 import java.util.*
@@ -123,15 +122,7 @@ class HomeActivity : AppCompatActivity() {
                     true
                 }
                 R.id.bottom_nav_menu2 -> {
-//                    val bundle = Bundle()
-//                    bundle.putString("USERNAME", sessionManager.fetchUsername())
-//                    val fragment = UserProfileFragment()
-//                    fragment.arguments = bundle
-//                    supportFragmentManager
-//                        .beginTransaction()
-//                        .replace(R.id.container, fragment)
-//                        .commit()
-                    bottomMenu2Listener()
+                    loadFragment(StatisticFragment())
                     true
                 }
                 else -> false
@@ -144,14 +135,6 @@ class HomeActivity : AppCompatActivity() {
             loadFragment(QRCodeFragment())
         } else if (sessionManager.fetchUserRole() == "admin") {
             loadFragment(ScannerAttendanceFragment())
-        }
-    }
-
-    private fun bottomMenu2Listener() {
-        if (sessionManager.fetchUserRole() == "student") {
-            loadFragment(UpdateBookFragment())
-        } else if (sessionManager.fetchUserRole() == "admin") {
-            loadFragment(MemberStatisticFragment())
         }
     }
 

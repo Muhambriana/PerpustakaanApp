@@ -23,6 +23,7 @@ import com.skripsi.perpustakaanapp.ui.member.favoritebook.FavoriteBookViewModel
 import com.skripsi.perpustakaanapp.ui.listattendance.AttendanceViewModel
 import com.skripsi.perpustakaanapp.ui.member.loanhistory.LoanHistoryViewModel
 import com.skripsi.perpustakaanapp.ui.member.register.RegisterViewModel
+import com.skripsi.perpustakaanapp.ui.statistik.StatisticViewModel
 import com.skripsi.perpustakaanapp.ui.userprofile.UserProfileViewModel
 
 class MyViewModelFactory constructor(private val libraryRepository: LibraryRepository) :
@@ -97,6 +98,9 @@ class MyViewModelFactory constructor(private val libraryRepository: LibraryRepos
             }
             modelClass.isAssignableFrom(AdminLoanViewModel::class.java) -> {
                 return AdminLoanViewModel(this.libraryRepository) as T
+            }
+            modelClass.isAssignableFrom(StatisticViewModel::class.java) -> {
+                return StatisticViewModel(this.libraryRepository) as T
             }
             else -> throw IllegalArgumentException("ViewModel Not Found")
         }

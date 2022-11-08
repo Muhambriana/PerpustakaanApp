@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.userprofile.UserProfileActivity"
     android:fitsSystemWindows="true"
-    android:background="#faf7ee">
+    android:background="#f5f5f5">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -222,24 +222,11 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/container_member_card">
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/button_upload_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="124dp"
-                android:layout_marginTop="92dp"
-                android:background="@color/transparent"
-                android:backgroundTint="@color/transparent"
-                android:contentDescription="Ganti Foto Profile"
-                android:scaleType="center"
-                android:src="@drawable/icon_edit_image"
-                app:layout_constraintStart_toStartOf="@+id/image_avatar"
-                app:layout_constraintTop_toTopOf="@+id/image_avatar" />
-
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/image_avatar"
                 android:layout_width="159dp"
                 android:layout_height="148dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="100dp"
                 android:src="@color/teal_200"
@@ -247,6 +234,20 @@
                 app:layout_constraintHorizontal_bias="0.828"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:ignore="ContentDescription" />
+
+            <ImageButton
+                android:id="@+id/button_upload_image"
+                android:layout_width="43dp"
+                android:layout_height="41dp"
+                android:layout_alignStart="@+id/image_avatar"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="97dp"
+                android:layout_marginTop="114dp"
+                android:contentDescription="Ubah Foto Profile"
+                android:scaleType="center"
+                android:src="@drawable/icon_edit_image"
+                app:layout_constraintStart_toStartOf="@+id/image_avatar"
+                app:layout_constraintTop_toTopOf="@+id/image_avatar" />
 
             <TextView
                 android:id="@+id/text_first_name"

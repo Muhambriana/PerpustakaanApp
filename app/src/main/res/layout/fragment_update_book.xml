@@ -10,175 +10,214 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="10dp">
 
         <ImageView
             android:id="@+id/button_back"
-            android:layout_width="48dp"
-            android:layout_height="34dp"
+            android:layout_width="39dp"
+            android:layout_height="41dp"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:contentDescription="back_button"
             android:scaleType="fitStart"
-            android:src="@drawable/icon_back_arrow"
+            android:src="@drawable/icon_close"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/button_upload_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="124dp"
-            android:layout_marginTop="92dp"
-            android:background="@color/transparent"
-            android:backgroundTint="@color/transparent"
-            android:scaleType="center"
-            android:src="@drawable/icon_edit_image"
-            app:layout_constraintStart_toStartOf="@+id/book_poster"
-            app:layout_constraintTop_toTopOf="@+id/book_poster"
-            android:contentDescription="Ganti Cover Buku" />
-
-        <ImageView
-            android:id="@+id/book_poster"
-            android:layout_width="159dp"
-            android:layout_height="148dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="100dp"
-            android:src="@color/teal_200"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.828"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/button_back"
-            tools:ignore="ContentDescription" />
-
-        <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/ed_book_title"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/content_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Judul Buku"
-            android:inputType="text"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="10dp"
+            app:cardCornerRadius="5dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/book_poster"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginTop="15dp"
-            app:met_floatingLabel="highlight" />
+            app:layout_constraintTop_toBottomOf="@+id/button_back">
 
-        <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/ed_edition"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/book_poster"
+                    android:layout_width="159dp"
+                    android:layout_height="148dp"
+                    android:layout_marginTop="4dp"
+                    android:src="@color/teal_200"
+                    android:scaleType="fitCenter"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
+
+                <ImageButton
+                    android:id="@+id/button_upload_image"
+                    android:layout_width="43dp"
+                    android:layout_height="41dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="128dp"
+                    android:layout_marginTop="116dp"
+                    android:contentDescription="Ubah Foto Profile"
+                    android:scaleType="center"
+                    android:src="@drawable/icon_edit_image"
+                    app:layout_constraintStart_toStartOf="@+id/book_poster"
+                    app:layout_constraintTop_toTopOf="@+id/book_poster" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/content_edit_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Edisi Buku"
-            android:inputType="text"
-            android:textSize="16sp"
-            app:met_floatingLabel="highlight"
+            android:layout_marginTop="20dp"
+            app:cardCornerRadius="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/content_edit">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="10dp">
+
+<!--                <TextView-->
+<!--                    android:id="@+id/textView2"-->
+<!--                    android:layout_width="140dp"-->
+<!--                    android:layout_height="50dp"-->
+<!--                    android:layout_marginStart="10dp"-->
+<!--                    android:layout_marginTop="12dp"-->
+<!--                    android:gravity="center_vertical"-->
+<!--                    android:text="Username"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:textSize="16sp"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent" />-->
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/ed_book_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:hint="Judul Buku"
+                    android:inputType="text"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:met_floatingLabel="highlight" />
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/ed_author"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:hint="Penulis"
+                    android:inputType="textCapWords"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ed_book_title"
+                    app:met_floatingLabel="highlight" />
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/ed_publisher"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:hint="Penerbit"
+                    android:inputType="textCapWords"
+                    android:textSize="16sp"
+                    app:met_floatingLabel="highlight"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ed_author" />
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/ed_publisher_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:hint="Tahun Terbit"
+                    android:inputType="date"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ed_publisher"
+                    app:met_floatingLabel="highlight" />
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/ed_copies"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Jumlah Examplar"
+                    android:inputType="number"
+                    android:textSize="16sp"
+                    app:met_floatingLabel="highlight"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ed_publisher_date"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp" />
+
+                <com.github.barteksc.pdfviewer.PDFView
+                    android:id="@+id/preview_pdf"
+                    android:layout_width="150dp"
+                    android:layout_height="145dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@color/teal_200"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.91"
+                    app:layout_constraintStart_toEndOf="@+id/button_choose_ebook"
+                    app:layout_constraintTop_toBottomOf="@+id/ed_copies"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <Button
+                    android:id="@+id/button_choose_ebook"
+                    android:layout_width="155dp"
+                    android:layout_height="58dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="50dp"
+                    android:text="Update EBook"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ed_copies"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <ProgressBar
+                    android:id="@+id/progress_bar"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:indeterminateDrawable="@drawable/custom_progress_bar"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_save"
+            android:layout_width="279dp"
+            android:layout_height="44dp"
+            android:layout_marginTop="28dp"
+            android:backgroundTint="@color/green_400"
+            android:background="@drawable/custom_button"
+            android:text="SIMPAN"
+            android:textSize="20sp"
+            android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ed_book_title"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp" />
-
-        <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/ed_author"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Penulis"
-            android:inputType="textPersonName"
-            android:textSize="16sp"
-            app:met_floatingLabel="highlight"
-            app:met_maxCharacters="2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ed_edition"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp" />
-
-        <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/ed_publisher"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Penerbit"
-            android:inputType="text"
-            android:textSize="16sp"
-            app:met_floatingLabel="highlight"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ed_author"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp" />
-
-        <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/ed_publisher_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Tahun Terbit"
-            android:inputType="date"
-            android:textSize="16sp"
-            app:met_floatingLabel="highlight"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ed_publisher"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp" />
-
-        <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/ed_copies"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Jumlah Examplar"
-            android:inputType="number"
-            android:textSize="16sp"
-            app:met_floatingLabel="highlight"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ed_publisher_date"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp" />
-
-        <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/ed_source"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Sumber"
-            android:inputType="text"
-            android:textSize="16sp"
-            app:met_floatingLabel="highlight"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ed_copies"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp" />
-
-        <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/ed_remark"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Remark"
-            android:inputType="text"
-            android:textSize="16sp"
-            app:met_floatingLabel="highlight"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ed_source"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp" />
-
-
-        <!--        <com.rengwuxian.materialedittext.MaterialEditText-->
-<!--            android:id="@+id/ed_price"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:hint="Harga Buku"-->
-<!--            android:inputType="number"-->
-<!--            android:textSize="16sp"-->
-<!--            app:met_floatingLabel="highlight"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/ed_remark"-->
-<!--            android:layout_marginStart="10dp"-->
-<!--            android:layout_marginEnd="10dp" />-->
+            app:layout_constraintTop_toBottomOf="@id/content_edit_2" />
 
         <TextView
             android:id="@+id/tv_book_id"
@@ -190,155 +229,6 @@
             app:layout_constraintTop_toBottomOf="@id/button_save"
             app:layout_constraintLeft_toLeftOf="parent"
             tools:layout_editor_absoluteX="193dp" />
-
-        <Button
-            android:id="@+id/button_save"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="SIMPAN"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ed_remark"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginTop="20dp"/>
-
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:indeterminateDrawable="@drawable/custom_progress_bar"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <!--  <LinearLayout-->
-        <!--      android:layout_width="match_parent"-->
-        <!--      android:layout_height="180dp"-->
-        <!--      android:background="#eceff1"-->
-        <!--      android:orientation="horizontal">-->
-
-        <!--    <LinearLayout-->
-        <!--        android:layout_width="wrap_content"-->
-        <!--        android:layout_height="match_parent"-->
-        <!--        android:orientation="vertical"-->
-        <!--        android:layout_marginLeft="8dp"-->
-        <!--        android:layout_marginTop="8dp">-->
-
-        <!--      <TextView-->
-        <!--          android:layout_width="wrap_content"-->
-        <!--          android:layout_height="wrap_content"-->
-        <!--          android:layout_weight="1"-->
-        <!--          android:text="Nama" />-->
-
-        <!--      <TextView-->
-        <!--          android:layout_width="wrap_content"-->
-        <!--          android:layout_height="wrap_content"-->
-        <!--          android:layout_weight="1"-->
-        <!--          android:text="NIK" />-->
-
-        <!--      <TextView-->
-        <!--          android:layout_width="wrap_content"-->
-        <!--          android:layout_height="wrap_content"-->
-        <!--          android:layout_weight="1"-->
-        <!--          android:text="Umur" />-->
-
-        <!--      <TextView-->
-        <!--          android:layout_width="wrap_content"-->
-        <!--          android:layout_height="wrap_content"-->
-        <!--          android:layout_weight="1"-->
-        <!--          android:text="Alamat" />-->
-
-        <!--      <TextView-->
-        <!--          android:layout_width="wrap_content"-->
-        <!--          android:layout_height="wrap_content"-->
-        <!--          android:layout_weight="1"-->
-        <!--          android:text="Asal Institusi" />-->
-
-        <!--    </LinearLayout>-->
-
-        <!--    <LinearLayout-->
-        <!--        android:layout_width="wrap_content"-->
-        <!--        android:layout_height="match_parent"-->
-        <!--        android:orientation="vertical"-->
-        <!--        android:layout_marginLeft="8dp"-->
-        <!--        android:layout_marginTop="8dp">-->
-
-        <!--      <TextView-->
-        <!--          android:layout_width="wrap_content"-->
-        <!--          android:layout_height="wrap_content"-->
-        <!--          android:layout_weight="1"-->
-        <!--          android:text=":" />-->
-
-        <!--      <TextView-->
-        <!--          android:layout_width="wrap_content"-->
-        <!--          android:layout_height="wrap_content"-->
-        <!--          android:layout_weight="1"-->
-        <!--          android:text=":" />-->
-
-        <!--      <TextView-->
-        <!--          android:layout_width="wrap_content"-->
-        <!--          android:layout_height="wrap_content"-->
-        <!--          android:layout_weight="1"-->
-        <!--          android:text=":" />-->
-
-        <!--      <TextView-->
-        <!--          android:layout_width="wrap_content"-->
-        <!--          android:layout_height="wrap_content"-->
-        <!--          android:layout_weight="1"-->
-        <!--          android:text=":" />-->
-
-        <!--      <TextView-->
-        <!--          android:layout_width="wrap_content"-->
-        <!--          android:layout_height="wrap_content"-->
-        <!--          android:layout_weight="1"-->
-        <!--          android:text=":" />-->
-
-        <!--    </LinearLayout>-->
-
-        <!--    <LinearLayout-->
-        <!--        android:layout_width="match_parent"-->
-        <!--        android:layout_height="match_parent"-->
-        <!--        android:orientation="vertical"-->
-        <!--        android:layout_marginLeft="8dp"-->
-        <!--        android:layout_marginTop="8dp">-->
-
-        <!--      <TextView-->
-        <!--          android:id="@+id/hasil_nama"-->
-        <!--          android:layout_width="match_parent"-->
-        <!--          android:layout_height="wrap_content"-->
-        <!--          android:layout_weight="1" />-->
-
-        <!--      <TextView-->
-        <!--          android:id="@+id/hasil_nik"-->
-        <!--          android:layout_width="match_parent"-->
-        <!--          android:layout_height="wrap_content"-->
-        <!--          android:layout_weight="1" />-->
-
-        <!--      <TextView-->
-        <!--          android:id="@+id/hasil_umur"-->
-        <!--          android:layout_width="match_parent"-->
-        <!--          android:layout_height="wrap_content"-->
-        <!--          android:layout_weight="1" />-->
-
-        <!--      <TextView-->
-        <!--          android:id="@+id/hasil_alamat"-->
-        <!--          android:layout_width="match_parent"-->
-        <!--          android:layout_height="wrap_content"-->
-        <!--          android:layout_weight="1" />-->
-
-        <!--      <TextView-->
-        <!--          android:id="@+id/hasil_institusi"-->
-        <!--          android:layout_width="match_parent"-->
-        <!--          android:layout_height="wrap_content"-->
-        <!--          android:layout_weight="1" />-->
-
-        <!--    </LinearLayout>-->
-
-        <!--  </LinearLayout>-->
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

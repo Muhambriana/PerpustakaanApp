@@ -7,81 +7,97 @@
     tools:context=".ui.member.register.RegisterActivity"
     android:background="#24281a">
 
-
     <EditText
         android:id="@+id/edt_username"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:fontFamily="@font/amiko"
         android:hint="Username"
-        android:backgroundTint="@color/green_400"
+        android:backgroundTint="@color/white"
         android:inputType="number"
         android:paddingEnd="5dp"
+        android:maxLength="10"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vector_3"
+        app:layout_constraintTop_toBottomOf="@+id/wave_top"
         android:layout_marginStart="10dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"/>
+
+    <ImageButton
+        android:id="@+id/button_hide_show"
+        android:layout_width="50dp"
+        android:layout_height="38dp"
+        android:background="@color/transparent"
+        android:src="@drawable/ic_visibility_on"
+        app:layout_constraintEnd_toEndOf="@+id/edt_password"
+        app:layout_constraintHorizontal_bias="0.979"
+        app:layout_constraintStart_toStartOf="@+id/edt_password"
+        app:layout_constraintTop_toTopOf="@+id/edt_password"
+        tools:ignore="contentDescription" />
 
     <EditText
         android:id="@+id/edt_password"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="5dp"
+        android:backgroundTint="@color/white"
         android:hint="Password"
-        android:backgroundTint="@color/green_400"
         android:inputType="textPassword"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edt_username"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp" />
+        app:layout_constraintTop_toBottomOf="@id/edt_username" />
 
     <EditText
         android:id="@+id/edt_first_name"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="5dp"
         android:hint="Nama Depan"
-        android:backgroundTint="@color/green_400"
-        android:inputType="textPersonName"
+        android:backgroundTint="@color/white"
+        android:inputType="textCapCharacters"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edt_password"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp" />
+        app:layout_constraintTop_toBottomOf="@id/edt_password" />
 
     <EditText
         android:id="@+id/edt_last_name"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="5dp"
         android:hint="Nama Belakang"
-        android:backgroundTint="@color/green_400"
+        android:backgroundTint="@color/white"
         android:inputType="textPersonName"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edt_first_name"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp" />
+        app:layout_constraintTop_toBottomOf="@id/edt_first_name"/>
 
     <EditText
         android:id="@+id/ed_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="5dp"
         android:hint="Email"
-        android:backgroundTint="@color/green_400"
+        android:backgroundTint="@color/white"
         android:inputType="textEmailAddress"
         android:textSize="16sp"
         app:met_floatingLabel="highlight"
         app:met_maxCharacters="2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edt_last_name"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp" />
+        app:layout_constraintTop_toBottomOf="@id/edt_last_name" />
 
     <EditText
         android:id="@+id/edt_tel_number"
@@ -89,8 +105,9 @@
         android:layout_height="40dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
+        android:layout_marginTop="5dp"
         android:hint="Nomor Handphone"
-        android:backgroundTint="@color/green_400"
+        android:backgroundTint="@color/white"
         android:inputType="number"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -102,17 +119,23 @@
     <EditText
         android:id="@+id/edt_address"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="86dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="5dp"
+        android:backgroundTint="@color/white"
+        android:gravity="top|start"
         android:hint="Alamat"
-        android:backgroundTint="@color/green_400"
-        android:inputType="textPostalAddress"
+        android:inputType="textMultiLine"
+        android:lines="8"
+        android:maxLines="10"
+        android:minLines="6"
+        android:scrollbars="vertical"
         android:textSize="16sp"
-        app:met_floatingLabel="highlight"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/edt_tel_number"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp" />
+        app:met_floatingLabel="highlight" />
 
     <RadioGroup
         android:id="@+id/rb_gender"
@@ -167,50 +190,35 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <View
-        android:id="@+id/vector_1"
-        android:layout_width="429dp"
-        android:layout_height="160dp"
-        android:layout_alignParentStart="true"
+    <com.scwang.wave.MultiWaveHeader
+        android:id="@+id/wave_top"
+        android:layout_width="match_parent"
+        android:layout_height="115dp"
         android:layout_alignParentTop="true"
-        android:background="@drawable/ic_wave_bottom_1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <View
-        android:id="@+id/vector_2"
-        android:layout_width="551dp"
-        android:layout_height="105dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginEnd="1dp"
-        android:background="@drawable/ic_wave_bottom_2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <View
-        android:id="@+id/vector_3"
-        android:layout_width="469dp"
-        android:layout_height="177dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/ic_wave_top_2"
+        android:layout_centerHorizontal="true"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteY="4dp" />
+        app:mwhCloseColor="@color/green_700"
+        app:mwhGradientAngle="160"
+        app:mwhStartColor="@color/green_700"
+        app:mwhWaveHeight="60dp" />
 
-    <View
-        android:id="@+id/vector_4"
-        android:layout_width="793dp"
-        android:layout_height="198dp"
-        android:layout_alignParentStart="true"
+    <com.scwang.wave.MultiWaveHeader
+        android:id="@+id/wave_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="115dp"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/ic_wave_top_1"
-        app:layout_constraintBottom_toTopOf="@+id/edt_username"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:layout_centerHorizontal="true"
+        android:scaleY="-1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintStart_toStartOf="parent"
+        app:mwhCloseColor="@color/green_700"
+        app:mwhGradientAngle="160"
+        app:mwhStartColor="@color/green_700"
+        app:mwhWaveHeight="60dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

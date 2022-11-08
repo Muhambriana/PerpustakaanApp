@@ -80,4 +80,10 @@ class LibraryRepository constructor(private val retrofitClient: RetrofitClient) 
     fun returningScan(token: String, data: ModelForReturnBook) = retrofitClient.create().returningScan(token, data)
 
     fun showPDF(token: String, fileName: String) = retrofitClient.create().showPDF(token, fileName)
+
+    fun statsAdmin(token: String) = retrofitClient.create().statsAdmin(token)
+
+    fun statsMember(token: String) = retrofitClient.create().statsMember(token)
+
+    fun updateEBook(token: String,  bookId: RequestBody?, pdf: MultipartBody.Part?) = retrofitClient.create().updateEBook(token, bookId, pdf)
 }

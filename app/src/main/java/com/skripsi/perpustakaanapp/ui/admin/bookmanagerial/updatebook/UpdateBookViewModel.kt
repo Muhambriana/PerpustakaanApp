@@ -16,12 +16,13 @@ import retrofit2.Response
 
 class UpdateBookViewModel(private val repository: LibraryRepository) : ViewModel(){
 
-    var resourceUpdateBook = MutableLiveData<MyEvent<MyResource<String?>>>()
+    val resourceUpdateBook = MutableLiveData<MyEvent<MyResource<String?>>>()
     val resourceUpdateImage = MutableLiveData<MyEvent<MyResource<String?>>>()
+    val resourceUpdateEBook = MutableLiveData<MyEvent<MyResource<String?>>>()
 
-    fun updateBook(token: String,bookId: String, title: String, edition: String, author: String, publisher: String, publisherDate: String, copies: String, source: String, remark: String, imageUrl: String?){
+    fun updateBook(token: String,bookId: String, title: String, author: String, publisher: String, publisherDate: String, copies: String, imageUrl: String?){
         resourceUpdateBook.postValue(MyEvent(MyResource.Loading()))
-        val book = Book(bookId, title, edition, author, publisher, publisherDate, copies)
+        val book = Book(bookId, title, author, publisher, publisherDate, copies, imageUrl)
         val post = repository.updateBook(token, book)
         post.enqueue(object : Callback<GeneralResponse>{
             override fun onResponse(
@@ -61,6 +62,29 @@ class UpdateBookViewModel(private val repository: LibraryRepository) : ViewModel
 
             override fun onFailure(call: Call<GeneralResponse>, t: Throwable) {
                 resourceUpdateImage.postValue(MyEvent(MyResource.Error(t.message)))
+            }
+        })
+    }
+
+    fun updateEBook(token: String, bookId: String, pdf: MultipartBody.Part?) {
+        resourceUpdateEBook.postValue(MyEvent(MyResource.Loading()))
+        val id = RequestBody.create(MediaType.parse("text/plain"), bookId)
+        val post = repository.updateEBook(token, id, pdf)
+        post.enqueue(object: Callback<GeneralResponse> {
+            override fun onResponse(
+                call: Call<GeneralResponse>,
+                response: Response<GeneralResponse>
+            ) {
+                if (response.body()?.code == 0) {
+                    resourceUpdateEBook.postValue(MyEvent(MyResource.Success(response.body()?.message)))
+                }
+                else {
+                    resourceUpdateEBook.postValue(MyEvent(MyResource.Error(response.body()?.message)))
+                }
+            }
+
+            override fun onFailure(call: Call<GeneralResponse>, t: Throwable) {
+                resourceUpdateEBook.postValue(MyEvent(MyResource.Error(t.message)))
             }
         })
     }

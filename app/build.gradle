@@ -74,6 +74,9 @@ dependencies {
     //Pdf viewer
     implementation "com.github.barteksc:android-pdf-viewer:2.8.2"
 
+    //Wave animation
+    implementation 'com.scwang.wave:MultiWaveHeader:1.0.0'
+
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'

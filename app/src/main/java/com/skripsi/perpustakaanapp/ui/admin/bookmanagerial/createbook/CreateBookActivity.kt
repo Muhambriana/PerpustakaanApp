@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
+import android.text.InputFilter
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -53,7 +54,7 @@ class CreateBookActivity : AppCompatActivity() {
             CreateBookViewModel::class.java
         )
 
-        binding.progressBar.visibility = View.INVISIBLE
+        binding.edBookTitle.filters += InputFilter.AllCaps()
     }
 
     private fun clickListener() {
@@ -89,13 +90,20 @@ class CreateBookActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_IMAGE) {
             val selectedImage: Uri? = data?.data
-            Glide.with(this)
-                .load(selectedImage)
-                .into(binding.imageView)
-            imageMultipartBody = selectedImage?.let { FilePathHelper.getImage(this, it) }
+            if (selectedImage != null) {
+                binding.contentCreate.visibility = View.VISIBLE
+                binding.textImage.text = FilePathHelper.getFileName(this, selectedImage)
+                Glide.with(this)
+                    .load(selectedImage)
+                    .into(binding.imageView)
+                imageMultipartBody = selectedImage.let { FilePathHelper.getImage(this, it) }
+            }
         } else if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_FILE) {
             val selectedPdf:Uri? = data?.data
             if (selectedPdf!= null) {
+                binding.contentCreate.visibility = View.VISIBLE
+                binding.textPdf.text = FilePathHelper.getFileName(this, selectedPdf)
+
                 val file: File? = FilePathHelper.getFile(this, selectedPdf)
                 binding.previewPdf.fromFile(file)
                     .pages(0)
@@ -103,9 +111,9 @@ class CreateBookActivity : AppCompatActivity() {
                     .swipeHorizontal(false)
                     .enableSwipe(false)
                     .load()
+                pdfMultiPartBody = FilePathHelper.getPDF(this, selectedPdf)
             }
-            binding.textPdf.text = selectedPdf?.let { FilePathHelper.getFileName(this, it) }
-            pdfMultiPartBody = selectedPdf?.let { FilePathHelper.getPDF(this, it) }
+
         }
     }
 
@@ -143,7 +151,6 @@ class CreateBookActivity : AppCompatActivity() {
         viewModel.createBook(
             token = sessionManager.fetchAuthToken().toString(),
             binding.edBookTitle.text.toString(),
-            binding.edEdition.text.toString(),
             binding.edAuthor.text.toString(),
             binding.edPublisher.text.toString(),
             binding.edPublisherDate.text.toString(),
@@ -184,11 +191,18 @@ class CreateBookActivity : AppCompatActivity() {
 
     private fun clearEditText() {
         binding.edBookTitle.text?.clear()
+        binding.edAuthor.text?.clear()
+        binding.edPublisher.text?.clear()
+        binding.edPublisherDate.text?.clear()
+        binding.edCopies.text?.clear()
+        imageMultipartBody = null
+        pdfMultiPartBody = null
+        binding.contentCreate.visibility = View.GONE
     }
 
     companion object {
-        private const val REQUEST_CODE_IMAGE = 201
-        private const val REQUEST_CODE_FILE = 202
+        const val REQUEST_CODE_IMAGE = 201
+        const val REQUEST_CODE_FILE = 202
         private const val TYPE_TEXT_FLAG_CAP_CHARACTERS = 4096
     }
 }

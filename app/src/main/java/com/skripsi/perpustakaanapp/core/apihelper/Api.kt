@@ -223,5 +223,22 @@ interface Api {
         @Header("Authorization") token: String,
         @Path("name") fileName: String
     ):Call<ResponseBody>
+
+    @POST("statistic/admin")
+    fun statsAdmin(
+        @Header("Authorization") token: String
+    ):Call<StatisticResponse>
+
+    @POST("statistic/member")
+    fun statsMember(
+        @Header("Authorization") token: String
+    ):Call<StatisticResponse>
+
+    @POST("image/update/pdf")
+    fun updateEBook(
+        @Header("Authorization") token: String,
+        @Part("bookId")  bookId: RequestBody?,
+        @Part pdf: MultipartBody.Part?
+    ):Call<GeneralResponse>
 }
 

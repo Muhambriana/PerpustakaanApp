@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeActivity"
-    android:fitsSystemWindows="true"
-    android:background="#faf7ee">
+    android:fitsSystemWindows="true">
 
     <View
         android:id="@+id/bg_top_header"
@@ -70,7 +69,6 @@
         android:textSize="15sp"
         android:textStyle="italic"
         tools:text="Waktu" />
-
 
     <FrameLayout
         android:id="@+id/container"
