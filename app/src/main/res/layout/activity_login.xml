@@ -80,7 +80,7 @@
         android:fontFamily="@font/amiko"
         android:hint="Password"
         android:paddingStart="10dp"
-        android:paddingEnd="5dp"
+        android:paddingEnd="50dp"
         android:textSize="15sp"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"

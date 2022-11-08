@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.InputFilter
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -34,11 +35,6 @@ class CreateNewAdminActivity : AppCompatActivity() {
 
         firstInitialization()
         clickListener()
-    }
-
-    override fun supportNavigateUpTo(upIntent: Intent) {
-        onBackPressed()
-        super.supportNavigateUpTo(upIntent)
     }
 
     private fun firstInitialization() {
@@ -169,5 +165,15 @@ class CreateNewAdminActivity : AppCompatActivity() {
         binding.edtAddress.text.clear()
         gender = null
         binding.rbGender.clearCheck()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> true
+        }
     }
 }

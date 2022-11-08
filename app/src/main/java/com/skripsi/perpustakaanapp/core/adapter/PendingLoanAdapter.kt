@@ -13,9 +13,6 @@ import com.skripsi.perpustakaanapp.utils.setSingleClickListener
 
 class PendingLoanAdapter : RecyclerView.Adapter<PendingLoanAdapter.PendingLoanViewHolder>() {
 
-    private lateinit var sessionManager: SessionManager
-    private lateinit var context: Context
-
     private var listPendingLoan = mutableListOf<PendingLoan>()
     var buttonApproveClick: ((Int) -> Unit)? = null
     var buttonRejectClick: ((Int) -> Unit)? = null
@@ -26,11 +23,6 @@ class PendingLoanAdapter : RecyclerView.Adapter<PendingLoanAdapter.PendingLoanVi
         if (pendingLoanData == null) return
         listPendingLoan.clear()
         listPendingLoan.addAll(pendingLoanData)
-    }
-
-    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
-        super.onAttachedToRecyclerView(recyclerView)
-        sessionManager = SessionManager(recyclerView.context)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
@@ -66,22 +58,15 @@ class PendingLoanAdapter : RecyclerView.Adapter<PendingLoanAdapter.PendingLoanVi
                     onBookTitleClick?.invoke(bookId)
                 }
             }
-            if (sessionManager.fetchUserRole() == "admin") {
-                binding.btnApprove.setSingleClickListener {
-                    listPendingLoan[adapterPosition].pendingLoanId?.let { id ->
-                        buttonApproveClick?.invoke(id)
-                    }
+            binding.btnApprove.setSingleClickListener {
+                listPendingLoan[adapterPosition].pendingLoanId?.let { id ->
+                    buttonApproveClick?.invoke(id)
                 }
-                binding.btnReject.setSingleClickListener {
-                    listPendingLoan[adapterPosition].pendingLoanId?.let { id ->
-                        buttonRejectClick?.invoke(id)
-                    }
+            }
+            binding.btnReject.setSingleClickListener {
+                listPendingLoan[adapterPosition].pendingLoanId?.let { id ->
+                    buttonRejectClick?.invoke(id)
                 }
-            } else {
-                binding.btnApprove.isEnabled = false
-                binding.btnReject.isEnabled = false
-                binding.btnApprove.visibility = View.INVISIBLE
-                binding.btnReject.visibility = View.INVISIBLE
             }
         }
     }

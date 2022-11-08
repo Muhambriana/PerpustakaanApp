@@ -14,6 +14,35 @@ import retrofit2.Response
 class AdminLoanViewModel(private val repository: LibraryRepository) : ViewModel() {
     val resourceLoan = MutableLiveData<MyEvent<MyResource<List<LoanHistory>>>>()
 
+    fun getAllFinishLoan(token: String) {
+        resourceLoan.postValue(MyEvent(MyResource.Loading()))
+        val response = repository.getAllFinishLoan(token)
+        response.enqueue(object : Callback<ListLoanHistoryResponse> {
+            override fun onResponse(
+                call: Call<ListLoanHistoryResponse>,
+                response: Response<ListLoanHistoryResponse>
+            ) {
+                if (response.body()?.code == 0) {
+                    if (response.body()?.loanHistoryItems?.isEmpty() == true) {
+                        resourceLoan.postValue(MyEvent(MyResource.Empty()))
+                        return
+                    }
+                    resourceLoan.postValue(MyEvent(MyResource.Success(response.body()?.loanHistoryItems)))
+                }
+                else {
+                    resourceLoan.postValue(MyEvent(MyResource.Error(response.body()?.message)))
+                }
+            }
+
+            override fun onFailure(
+                call: Call<ListLoanHistoryResponse>,
+                t: Throwable
+            ) {
+                resourceLoan.postValue(MyEvent(MyResource.Error(t.message)))
+            }
+        })
+    }
+
     fun getAllOngoingLoan(token: String) {
         resourceLoan.postValue(MyEvent(MyResource.Loading()))
         val response = repository.getAllOngoingLoan(token)
@@ -75,35 +104,6 @@ class AdminLoanViewModel(private val repository: LibraryRepository) : ViewModel(
     fun getAllOverdueLoan(token: String) {
         resourceLoan.postValue(MyEvent(MyResource.Loading()))
         val response = repository.getAllOverdueLoan(token)
-        response.enqueue(object : Callback<ListLoanHistoryResponse> {
-            override fun onResponse(
-                call: Call<ListLoanHistoryResponse>,
-                response: Response<ListLoanHistoryResponse>
-            ) {
-                if (response.body()?.code == 0) {
-                    if (response.body()?.loanHistoryItems?.isEmpty() == true) {
-                        resourceLoan.postValue(MyEvent(MyResource.Empty()))
-                        return
-                    }
-                    resourceLoan.postValue(MyEvent(MyResource.Success(response.body()?.loanHistoryItems)))
-                }
-                else {
-                    resourceLoan.postValue(MyEvent(MyResource.Error(response.body()?.message)))
-                }
-            }
-
-            override fun onFailure(
-                call: Call<ListLoanHistoryResponse>,
-                t: Throwable
-            ) {
-                resourceLoan.postValue(MyEvent(MyResource.Error(t.message)))
-            }
-        })
-    }
-
-    fun getAllFinishLoan(token: String) {
-        resourceLoan.postValue(MyEvent(MyResource.Loading()))
-        val response = repository.getAllFinishLoan(token)
         response.enqueue(object : Callback<ListLoanHistoryResponse> {
             override fun onResponse(
                 call: Call<ListLoanHistoryResponse>,

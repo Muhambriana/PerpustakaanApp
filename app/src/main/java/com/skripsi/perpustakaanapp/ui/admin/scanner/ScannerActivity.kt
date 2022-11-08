@@ -1,6 +1,7 @@
 package com.skripsi.perpustakaanapp.ui.admin.scanner
 
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.skripsi.perpustakaanapp.databinding.ActivityScannerBinding
@@ -17,6 +18,7 @@ class ScannerActivity : AppCompatActivity(){
     }
 
     private fun openFragment() {
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         if (intent.getStringExtra(SCANNER_ID) == "attendance") {
             supportActionBar?.title = "Scan Pengunjung"
             loadFragment(ScannerAttendanceFragment())
@@ -30,6 +32,16 @@ class ScannerActivity : AppCompatActivity(){
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(binding.containerScanner.id,fragment)
         transaction.commit()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> true
+        }
     }
 
     companion object{

@@ -95,13 +95,13 @@ interface Api {
         @Body username: ModelUsername
     ):Call<ListLoanHistoryResponse>
 
-    @POST("transaction/ongoing/member")
-    fun getAllOngoingLoanMember(
+    @POST("transaction/pending/member")
+    fun getAllPendingLoanMember(
         @Header("Authorization") token: String
     ):Call<ListLoanHistoryResponse>
 
-    @POST("transaction/ongoing/admin")
-    fun getAllOngoingLoan(
+    @POST("transaction/ongoing/member")
+    fun getAllOngoingLoanMember(
         @Header("Authorization") token: String
     ):Call<ListLoanHistoryResponse>
 
@@ -110,18 +110,8 @@ interface Api {
         @Header("Authorization") token: String
     ):Call<ListLoanHistoryResponse>
 
-    @POST("transaction/rejected/admin")
-    fun getAllRejectedLoan(
-        @Header("Authorization") token: String
-    ):Call<ListLoanHistoryResponse>
-
     @POST("transaction/overdue/member")
     fun getAllOverdueLoanMember(
-        @Header("Authorization") token: String
-    ):Call<ListLoanHistoryResponse>
-
-    @POST("transaction/overdue/admin")
-    fun getAllOverdueLoan(
         @Header("Authorization") token: String
     ):Call<ListLoanHistoryResponse>
 
@@ -132,6 +122,21 @@ interface Api {
 
     @POST("transaction/finish/admin")
     fun getAllFinishLoan(
+        @Header("Authorization") token: String
+    ):Call<ListLoanHistoryResponse>
+
+    @POST("transaction/ongoing/admin")
+    fun getAllOngoingLoan(
+        @Header("Authorization") token: String
+    ):Call<ListLoanHistoryResponse>
+
+    @POST("transaction/rejected/admin")
+    fun getAllRejectedLoan(
+        @Header("Authorization") token: String
+    ):Call<ListLoanHistoryResponse>
+
+    @POST("transaction/overdue/admin")
+    fun getAllOverdueLoan(
         @Header("Authorization") token: String
     ):Call<ListLoanHistoryResponse>
 

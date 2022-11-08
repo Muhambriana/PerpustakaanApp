@@ -2,6 +2,7 @@ package com.skripsi.perpustakaanapp.ui.pendingloan
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.skripsi.perpustakaanapp.core.SessionManager
@@ -40,8 +41,13 @@ class PendingLoanActivity : AppCompatActivity() {
         transaction.commit()
     }
 
-    override fun supportNavigateUpTo(upIntent: Intent) {
-        onBackPressed()
-        super.supportNavigateUpTo(upIntent)
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> true
+        }
     }
 }

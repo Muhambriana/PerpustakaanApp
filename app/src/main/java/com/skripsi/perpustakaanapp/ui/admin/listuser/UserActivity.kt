@@ -2,6 +2,7 @@ package com.skripsi.perpustakaanapp.ui.admin.listuser
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -116,6 +117,16 @@ class UserActivity : AppCompatActivity() {
             val intent = Intent(this, UserProfileActivity::class.java)
             intent.putExtra(UserProfileActivity.EXTRA_DATA, it)
             resultLauncher.launch(intent)
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> true
         }
     }
 }

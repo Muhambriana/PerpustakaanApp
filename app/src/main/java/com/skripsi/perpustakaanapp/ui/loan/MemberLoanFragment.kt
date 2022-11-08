@@ -100,8 +100,12 @@ class MemberLoanFragment : Fragment() {
 
     private fun setLoanData() {
         when (activity?.intent?.getStringExtra(PURPOSE)) {
+            "member_pending_loan" -> {
+                (activity as AppCompatActivity?)?.supportActionBar?.title = "Menunggu Persetujuan"
+                viewModel.getAllPendingLoan(sessionManager.fetchAuthToken().toString())
+            }
             "member_ongoing_loan" -> {
-                (activity as AppCompatActivity?)?.supportActionBar?.title = "Sedang DIpinjam"
+                (activity as AppCompatActivity?)?.supportActionBar?.title = "Sedang Dipinjam"
                 viewModel.getAllOngoingLoan(sessionManager.fetchAuthToken().toString())
             }
             "member_rejected_loan" -> {

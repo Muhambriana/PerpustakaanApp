@@ -47,7 +47,8 @@ class HomeMemberFragment : Fragment() {
                     startActivity(intent)
                 }
                 binding?.cardMenuPendingLoan?.id -> {
-                    val intent = Intent(activity, PendingLoanActivity::class.java)
+                    val intent = Intent(activity, LoanActivity::class.java)
+                    intent.putExtra("menu_extra_data", "member_pending_loan")
                     startActivity(intent)
                 }
                 binding?.cardMenuOnLoan?.id -> {

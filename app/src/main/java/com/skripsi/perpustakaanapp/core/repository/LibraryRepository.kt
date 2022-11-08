@@ -35,21 +35,23 @@ class LibraryRepository constructor(private val retrofitClient: RetrofitClient) 
 
     fun getAllLoanHistoryMember(token: String, username: ModelUsername) = retrofitClient.create().getAllLoanHistoryMember(token, username)
 
-    fun getAllOngoingLoanMember(token: String) = retrofitClient.create().getAllOngoingLoanMember(token)
+    fun getAllPendingLoanMember(token: String) = retrofitClient.create().getAllPendingLoanMember(token)
 
-    fun getAllOngoingLoan(token: String) = retrofitClient.create().getAllOngoingLoan(token)
+    fun getAllOngoingLoanMember(token: String) = retrofitClient.create().getAllOngoingLoanMember(token)
 
     fun getAllRejectedLoanMember(token: String) = retrofitClient.create().getAllRejectedLoanMember(token)
 
-    fun getAllRejectedLoan(token: String) = retrofitClient.create().getAllRejectedLoan(token)
-
     fun getAllOverdueLoanMember(token: String) = retrofitClient.create().getAllOverdueLoanMember(token)
-
-    fun getAllOverdueLoan(token: String) = retrofitClient.create().getAllOverdueLoan(token)
 
     fun getAllFinishLoanMember(token: String) = retrofitClient.create().getAllFinishLoanMember(token)
 
     fun getAllFinishLoan(token: String) = retrofitClient.create().getAllFinishLoan(token)
+
+    fun getAllOngoingLoan(token: String) = retrofitClient.create().getAllOngoingLoan(token)
+
+    fun getAllRejectedLoan(token: String) = retrofitClient.create().getAllRejectedLoan(token)
+
+    fun getAllOverdueLoan(token: String) = retrofitClient.create().getAllOverdueLoan(token)
 
     fun getDetailBook(token: String, bookId: ModelBookId) = retrofitClient.create().getDetailBook(token, bookId)
 
