@@ -5,8 +5,10 @@ import android.text.InputFilter
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.ViewModelProvider
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.MyViewModelFactory
@@ -15,7 +17,9 @@ import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.core.resource.MyResource
 import com.skripsi.perpustakaanapp.databinding.ActivityRegisterBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
+import com.skripsi.perpustakaanapp.ui.MySnackBar
 import com.skripsi.perpustakaanapp.utils.setSingleClickListener
+
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -47,6 +51,7 @@ class RegisterActivity : AppCompatActivity() {
         gender = getGender()
 
         editTextFilter()
+        prepDropdownList()
     }
 
     private fun editTextFilter() {
@@ -54,6 +59,34 @@ class RegisterActivity : AppCompatActivity() {
         binding.edtFirstName.filters += InputFilter.AllCaps()
         binding.edtLastName.filters += InputFilter.AllCaps()
     }
+
+    private fun prepDropdownList() {
+        val adapter = ArrayAdapter.createFromResource(this,
+            R.array.edu_level,
+            android.R.layout.simple_spinner_item)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item)
+
+        binding.spinnerEduLevel.adapter = adapter
+
+        binding.spinnerEduLevel.onItemSelectedListener = object :
+            AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>,
+                                        view: View, position: Int, id: Long) {
+                if (position == 0) {
+                    MySnackBar.showRed(binding.root, "Harap Pilih Jenjang Terlebih Dahulu")
+                    return
+                }
+                Toast.makeText(this@RegisterActivity,
+                    "Item yang dipilih" + " " +
+                            "" + resources.getStringArray(R.array.edu_level)[position], Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                // write code to perform some action
+            }
+        }
+    }
+
 
     private fun hideShowPassword() {
         binding.buttonHideShow.setOnClickListener {

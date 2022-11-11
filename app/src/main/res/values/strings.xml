@@ -7,6 +7,12 @@
     <string name="dont_have_an_account">Don\'t have an account?</string>
     <string name="sign_up">Sign Up</string>
     <string name="text_nisn">*User Id Siswa Adalah NISN</string>
+    <string-array name="edu_level">
+        <item>Pilih Jenjang</item>
+        <item>SMP</item>
+        <item>SMA</item>
+        <item>SMK</item>
+    </string-array>
 
     <!-- String Resource For Alert User -->
     <string name="refresh">Muat Ulang</string>

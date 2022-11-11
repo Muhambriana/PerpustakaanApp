@@ -137,32 +137,53 @@
 
     <RadioGroup
         android:id="@+id/rb_gender"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edt_address">
 
         <RadioButton
             android:id="@+id/rb_gender_male"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="@string/male"
-            android:textColor="@color/white"
-            android:layout_gravity="center"/>
+            android:textColor="@color/white" />
 
         <RadioButton
             android:id="@+id/rb_gender_female"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
             android:text="@string/female"
-            android:textColor="@color/white"
-            android:layout_marginStart="20dp" />
+            android:textColor="@color/white" />
     </RadioGroup>
+
+<!--    <TextView-->
+<!--        android:id="@+id/tv_edu_level"-->
+<!--        android:layout_width="100dp"-->
+<!--        android:layout_height="40dp"-->
+<!--        android:layout_marginStart="13dp"-->
+<!--        android:layout_marginTop="5dp"-->
+<!--        android:text="Pilih Jenjang"-->
+<!--        android:textSize="16sp"-->
+<!--        android:gravity="center_vertical"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/edt_address" />-->
+
+    <Spinner
+        android:id="@+id/spinner_edu_level"
+        android:layout_width="170dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/custom_spinner_bg"
+        android:popupBackground="@drawable/custom_spinner_bg"
+        android:spinnerMode="dropdown"
+        app:layout_constraintStart_toEndOf="@+id/rb_gender"
+        app:layout_constraintTop_toBottomOf="@id/edt_address" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button_save"
