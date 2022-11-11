@@ -87,6 +87,7 @@ class DetailBookViewModel(private val repository: LibraryRepository) : ViewModel
                         response.body()?.publisher,
                         response.body()?.publisherDate,
                         response.body()?.stock,
+                        response.body()?.description,
                         response.body()?.imageUrl,
                         response.body()?.eBook)
                     resourceDetailBook.postValue(MyEvent(MyResource.Success(book)))
