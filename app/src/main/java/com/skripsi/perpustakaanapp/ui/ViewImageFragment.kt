@@ -10,10 +10,13 @@ import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.signature.ObjectKey
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.databinding.FragmentViewImageBinding
+import com.skripsi.perpustakaanapp.utils.GlideManagement
 import com.skripsi.perpustakaanapp.utils.NetworkInfo
 import com.skripsi.perpustakaanapp.utils.setSingleClickListener
 
 class ViewImageFragment : DialogFragment() {
+
+    private lateinit var glideManagement: GlideManagement
 
     private var fragmentViewImageBinding:FragmentViewImageBinding? = null
     private val binding get() = fragmentViewImageBinding
@@ -40,6 +43,7 @@ class ViewImageFragment : DialogFragment() {
     }
 
     private fun setImageToView() {
+        glideManagement = GlideManagement(requireContext())
         val avatar = arguments?.getString("avatar")
         avatar?.let {
             binding?.let {

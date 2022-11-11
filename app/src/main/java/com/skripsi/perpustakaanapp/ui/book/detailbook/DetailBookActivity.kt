@@ -25,6 +25,7 @@ import com.skripsi.perpustakaanapp.ui.MySnackBar
 import com.skripsi.perpustakaanapp.ui.ViewImageFragment
 import com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.updatebook.UpdateBookFragment
 import com.skripsi.perpustakaanapp.ui.book.ebook.EbookActivity
+import com.skripsi.perpustakaanapp.utils.GlideManagement
 import com.skripsi.perpustakaanapp.utils.NetworkInfo.BOOK_IMAGE_BASE_URL
 import com.skripsi.perpustakaanapp.utils.setSingleClickListener
 
@@ -34,6 +35,7 @@ class DetailBookActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBookBinding
     private lateinit var sessionManager: SessionManager
     private lateinit var viewModel: DetailBookViewModel
+    private lateinit var glideManagement: GlideManagement
 
     private var detailBook: Book? = null
     private val client = RetrofitClient
@@ -74,7 +76,6 @@ class DetailBookActivity : AppCompatActivity() {
             // Receive whole data book from previous activity
             else {
                 detailBook = intent.getParcelableExtra(EXTRA_DATA)
-                println("kocak sangat ${detailBook?.description}")
                 showDetailBook()
                 observeStatusFavorite(detailBook?.bookId)
             }
@@ -203,10 +204,11 @@ class DetailBookActivity : AppCompatActivity() {
 
     private fun setBookCover() {
         if (detailBook?.imageUrl != null) {
+            glideManagement = GlideManagement(this)
             Glide.with(this)
                 .load(BOOK_IMAGE_BASE_URL + detailBook?.imageUrl)
                 // For reload image on glide from the same url
-                .signature(ObjectKey(System.currentTimeMillis().toString()))
+                .signature(ObjectKey(glideManagement.fetchCachePoster().toString()))
                 // To show the original size of image
                 .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
                 .fitCenter()

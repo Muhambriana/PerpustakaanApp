@@ -23,6 +23,7 @@ import com.skripsi.perpustakaanapp.ui.MySnackBar
 import com.skripsi.perpustakaanapp.ui.ViewImageFragment
 import com.skripsi.perpustakaanapp.ui.admin.usermanagerial.updateuser.UpdateUserFragment
 import com.skripsi.perpustakaanapp.utils.FilePathHelper
+import com.skripsi.perpustakaanapp.utils.GlideManagement
 import com.skripsi.perpustakaanapp.utils.NetworkInfo.AVATAR_IMAGE_BASE_URL
 import com.skripsi.perpustakaanapp.utils.PermissionCheck
 import com.skripsi.perpustakaanapp.utils.setSingleClickListener
@@ -33,6 +34,7 @@ class UserProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUserProfileBinding
     private lateinit var sessionManager: SessionManager
     private lateinit var viewModel: UserProfileViewModel
+    private lateinit var glideManagement: GlideManagement
 
     private val client = RetrofitClient
     private var detailUser: User? = null
@@ -92,9 +94,9 @@ class UserProfileActivity : AppCompatActivity() {
     }
 
     private fun uploadImage(user: String) {
-        viewModel.updateImage(sessionManager.fetchAuthToken().toString(), user, imageMultipartBody)
+        glideManagement = GlideManagement(this)
 
-        println("kocak username: ${detailUser?.username}")
+        viewModel.updateImage(sessionManager.fetchAuthToken().toString(), user, imageMultipartBody)
 
         viewModel.resourceUpdateImage.observe(this) { event ->
             event.getContentIfNotHandled().let { resource ->
@@ -104,6 +106,7 @@ class UserProfileActivity : AppCompatActivity() {
                     }
                     is MyResource.Success -> {
                         binding.progressBar.visibility = View.GONE
+                        glideManagement.updateCacheAvatar()
                         setResult(RESULT_OK)
                         restartActivity(user)
                     }

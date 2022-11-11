@@ -31,6 +31,7 @@ import com.skripsi.perpustakaanapp.ui.login.LoginActivity
 import com.skripsi.perpustakaanapp.ui.member.qrcode.QRCodeFragment
 import com.skripsi.perpustakaanapp.ui.statistik.StatisticFragment
 import com.skripsi.perpustakaanapp.ui.userprofile.UserProfileActivity
+import com.skripsi.perpustakaanapp.utils.GlideManagement
 import com.skripsi.perpustakaanapp.utils.NetworkInfo
 import com.skripsi.perpustakaanapp.utils.WindowTouchableHelper
 import java.util.*
@@ -41,9 +42,11 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var sessionManager: SessionManager
     private lateinit var viewModel: HomeViewModel
     private lateinit var resultLauncher: ActivityResultLauncher<Intent>
+    private lateinit var glideManagement: GlideManagement
 
     private var doubleBackPressed = false
     private var tempRole: String? = null
+    private var avatar: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,6 +65,7 @@ class HomeActivity : AppCompatActivity() {
     private fun firstInitialization() {
         supportActionBar?.hide()
         setSupportActionBar(binding.myToolbar)
+        avatar = intent.getStringExtra("AVATAR")
 
         sessionManager = SessionManager(this)
 
@@ -78,6 +82,7 @@ class HomeActivity : AppCompatActivity() {
             ActivityResultContracts.StartActivityForResult()
         ){ result ->
             if (result.resultCode == RESULT_OK) {
+                avatar = sessionManager.fetchUsername()+".png"
                 //Re-run getBookData and update with the latest
                 userAvatar()
             }
@@ -85,23 +90,23 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun userAvatar() {
+        glideManagement = GlideManagement(this)
         binding.toolbarIcon.setOnClickListener {
             val intent = Intent(this, UserProfileActivity::class.java)
             intent.putExtra(UserProfileActivity.USERNAME, sessionManager.fetchUsername())
             resultLauncher.launch(intent)
         }
-        val avatar = intent.getStringExtra("AVATAR")
         if (avatar == null) {
             Glide.with(this)
                 .load(ContextCompat.getDrawable(this, R.drawable.icon_user))
-                .signature(ObjectKey(System.currentTimeMillis().toString()))
+//                .signature(ObjectKey(glideManagement.fetchCacheAvatar().toString()))
                 .centerCrop()
                 .into(binding.toolbarIcon)
             return
         }
         Glide.with(this)
             .load(NetworkInfo.AVATAR_IMAGE_BASE_URL+avatar)
-            .signature(ObjectKey(System.currentTimeMillis().toString()))
+            .signature(ObjectKey(glideManagement.fetchCacheAvatar().toString()))
             .centerCrop()
             .into(binding.toolbarIcon)
     }

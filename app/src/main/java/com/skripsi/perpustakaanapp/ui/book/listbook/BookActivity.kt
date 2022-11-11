@@ -16,6 +16,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.MyViewModelFactory
 import com.skripsi.perpustakaanapp.core.SessionManager
@@ -30,6 +31,7 @@ import com.skripsi.perpustakaanapp.ui.MySnackBar
 import com.skripsi.perpustakaanapp.ui.book.detailbook.DetailBookActivity
 import com.skripsi.perpustakaanapp.ui.member.favoritebook.FavoriteBookActivity
 import com.skripsi.perpustakaanapp.ui.userprofile.UserProfileActivity
+import com.skripsi.perpustakaanapp.utils.GlideManagement
 import com.skripsi.perpustakaanapp.utils.NetworkInfo
 import java.io.IOException
 import java.io.InputStream

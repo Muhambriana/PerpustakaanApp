@@ -10,12 +10,14 @@ import com.bumptech.glide.signature.ObjectKey
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.models.User
 import com.skripsi.perpustakaanapp.databinding.ItemListUserBinding
+import com.skripsi.perpustakaanapp.utils.GlideManagement
 import com.skripsi.perpustakaanapp.utils.NetworkInfo.AVATAR_IMAGE_BASE_URL
 import com.skripsi.perpustakaanapp.utils.NetworkInfo.BOOK_IMAGE_BASE_URL
 import com.skripsi.perpustakaanapp.utils.setSingleClickListener
 
 class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
+    private lateinit var glideManagement: GlideManagement
     private var listUser = mutableListOf<User>()
     var onItemClick: ((User) -> Unit)? = null
 
@@ -48,10 +50,11 @@ class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
         private fun setAvatar(avatar: String?, context: View) {
             if (avatar != null) {
+                glideManagement = GlideManagement(context.context)
                 Glide.with(context)
                     .load(AVATAR_IMAGE_BASE_URL + avatar)
                     // For reload image on glide from the same url
-                    .signature(ObjectKey(System.currentTimeMillis().toString()))
+                    .signature(ObjectKey(glideManagement.fetchCacheAvatar().toString()))
                     // To show the original size of image
 //                    .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
                     .fitCenter()

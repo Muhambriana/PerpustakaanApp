@@ -9,6 +9,7 @@ import com.bumptech.glide.signature.ObjectKey
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.models.Book
 import com.skripsi.perpustakaanapp.databinding.ItemListBookBinding
+import com.skripsi.perpustakaanapp.utils.GlideManagement
 import com.skripsi.perpustakaanapp.utils.NetworkInfo
 import com.skripsi.perpustakaanapp.utils.setSingleClickListener
 
@@ -16,6 +17,8 @@ class BookAdapter : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
 
     private var listBook = mutableListOf<Book>()
     var onItemClick: ((Book) -> Unit)? = null
+
+    private lateinit var glideManagement: GlideManagement
 
     fun setBookList(books: List<Book>?) {
         if (books == null) return
@@ -50,10 +53,11 @@ class BookAdapter : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
 
         private fun setBookPoster(avatar: String?, context: View) {
             if (avatar != null) {
+                glideManagement = GlideManagement(context.context)
                 Glide.with(context)
                     .load(NetworkInfo.BOOK_IMAGE_BASE_URL + avatar)
                     // For reload image on glide from the same url
-                    .signature(ObjectKey(System.currentTimeMillis().toString()))
+                    .signature(ObjectKey(glideManagement.fetchCachePoster().toString()))
                     // To show the original size of image
 //                    .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
                     .fitCenter()
