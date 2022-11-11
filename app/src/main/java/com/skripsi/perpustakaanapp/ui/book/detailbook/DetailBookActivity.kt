@@ -243,7 +243,7 @@ class DetailBookActivity : AppCompatActivity() {
 
     private fun doLoan() {
         binding.buttonLoan.setSingleClickListener {
-            viewModel.createTransaction(sessionManager.fetchUsername(), detailBook?.bookId)
+            viewModel.createTransaction(sessionManager.fetchAuthToken().toString(), sessionManager.fetchUsername().toString(), detailBook?.bookId)
 
             viewModel.resourceLoanBook.observe(this) { event ->
                 event.getContentIfNotHandled()?.let { resource ->
@@ -259,6 +259,7 @@ class DetailBookActivity : AppCompatActivity() {
                             binding.progressBar.visibility = View.GONE
                             MySnackBar.showRed(binding.root, resource.message.toString())
                         }
+                        else -> {}
                     }
                 }
             }

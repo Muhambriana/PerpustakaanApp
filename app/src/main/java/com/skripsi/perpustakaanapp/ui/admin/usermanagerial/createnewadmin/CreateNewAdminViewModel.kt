@@ -15,10 +15,10 @@ class CreateNewAdminViewModel(private val repository: LibraryRepository) : ViewM
 
     val resourceCreateAdmin = MutableLiveData<MyEvent<MyResource<String?>>>()
 
-    fun createNewAdmin(username: String, password: String, firstName: String, lastName: String, roleName: String, email: String, phoneNo: String, address: String, gender: Int){
+    fun createNewAdmin(token:String, username: String, password: String, firstName: String, lastName: String, roleName: String, email: String, phoneNo: String, address: String, gender: Int){
         resourceCreateAdmin.postValue(MyEvent(MyResource.Loading()))
         val user = User(username, password, firstName, lastName, roleName, email, phoneNo, address, gender)
-        val post = repository.createUser(user)
+        val post = repository.createAdmin(token, user)
         post.enqueue(object : Callback<GeneralResponse> {
             override fun onResponse(call: Call<GeneralResponse>, response: Response<GeneralResponse>
             ) {

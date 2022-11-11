@@ -107,7 +107,7 @@ class UpdateUserFragment : BottomSheetDialogFragment() {
         val username = binding?.edtUsername?.text.toString()
 
         if (username.isEmpty()) {
-            binding?.edtUsername?.error = "NISN Tidak Boleh Kosong"
+            binding?.edtUsername?.error = "Username Tidak Boleh Kosong"
             binding?.edtUsername?.requestFocus()
         } else {
             MyAlertDialog.showWith2Event(

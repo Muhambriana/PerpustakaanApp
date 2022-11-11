@@ -15,7 +15,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
         android:backgroundTint="@color/white"
-        android:hint="Username"
+        android:hint="Isi Dengan NISN"
         android:inputType="number"
         android:maxLength="10"
         android:paddingEnd="5dp"

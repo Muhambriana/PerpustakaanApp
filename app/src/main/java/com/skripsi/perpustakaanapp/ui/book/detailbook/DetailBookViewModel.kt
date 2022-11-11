@@ -48,10 +48,10 @@ class DetailBookViewModel(private val repository: LibraryRepository) : ViewModel
         })
     }
 
-    fun createTransaction(userName: String?, bookId: String?) {
+    fun createTransaction(token: String, username: String?, bookId: String?) {
         resourceLoanBook.postValue(MyEvent(MyResource.Loading()))
-        val modelForCreateTransaction = ModelForCreateTransaction(userName, bookId)
-        val post = repository.createTransaction(modelForCreateTransaction)
+        val modelForCreateTransaction = ModelForCreateTransaction(username, bookId)
+        val post = repository.createTransaction(token, modelForCreateTransaction)
         post.enqueue(object : Callback<GeneralResponse> {
             override fun onResponse(
                 call: Call<GeneralResponse>,

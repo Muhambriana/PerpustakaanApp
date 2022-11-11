@@ -17,13 +17,15 @@ class LibraryRepository constructor(private val retrofitClient: RetrofitClient) 
 
     fun userLogout(token: String) = retrofitClient.create().userLogout(token)
 
-    fun createUser(user: User) = retrofitClient.create().createUser(user)
+    fun createAdmin(token: String, user: User) = retrofitClient.create().createAdmin(token, user)
+
+    fun registerMember(user: User) = retrofitClient.create().registerMember(user)
 
     fun updateBook(token: String, book: Book) = retrofitClient.create().postUpdateBook(token, book)
 
     fun deleteBook(token: String, bookId: ModelBookId) = retrofitClient.create().postDeleteBook(token, bookId)
 
-    fun createTransaction(data: ModelForCreateTransaction) = retrofitClient.create().postCreateTransaction(data)
+    fun createTransaction(token: String, data: ModelForCreateTransaction) = retrofitClient.create().postCreateTransaction(token, data)
 
     fun getAllPendingLoan(token: String) = retrofitClient.create().getAllPendingLoan(token)
 

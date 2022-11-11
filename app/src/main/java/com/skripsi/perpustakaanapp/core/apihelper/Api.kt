@@ -14,7 +14,13 @@ import java.io.InputStream
 interface Api {
 
     @POST("user/create")
-    fun createUser(
+    fun createAdmin(
+        @Header("Authorization") token: String,
+        @Body user: User
+    ): Call<GeneralResponse>
+
+    @POST("user/create")
+    fun registerMember(
         @Body user: User
     ): Call<GeneralResponse>
 
@@ -64,6 +70,7 @@ interface Api {
 
     @POST("transaction/create")
     fun postCreateTransaction(
+        @Header("Authorization") token: String,
         @Body data: ModelForCreateTransaction
     ):Call<GeneralResponse>
 

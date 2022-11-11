@@ -32,7 +32,7 @@ class UserProfileViewModel(private val repository: LibraryRepository): ViewModel
                 response: Response<DetailUserResponse>
             ) {
                 if (response.body()?.code == 0) {
-                    val user = User(null, null, response.body()?.firstName, response.body()?.lastName, response.body()?.roleName, response.body()?.email, response.body()?.phoneNo, response.body()?.address, response.body()?.gender, response.body()?.avatar)
+                    val user = User(response.body()?.username, null, response.body()?.firstName, response.body()?.lastName, response.body()?.roleName, response.body()?.email, response.body()?.phoneNo, response.body()?.address, response.body()?.gender, response.body()?.avatar)
                     resourceDetailUser.postValue(MyEvent(MyResource.Success(user)))
                 }
                 else {

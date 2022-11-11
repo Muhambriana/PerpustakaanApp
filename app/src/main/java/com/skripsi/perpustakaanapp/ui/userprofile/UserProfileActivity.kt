@@ -145,41 +145,6 @@ class UserProfileActivity : AppCompatActivity() {
         startActivityForResult(intent, REQUEST_CODE_IMAGE)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        if (sessionManager.fetchUserRole() == "admin"){
-            menuInflater.inflate(R.menu.activity_detail_menu, menu)
-        }
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.edit_menu -> {
-                updateMember()
-                true
-            }
-            R.id.delete_menu -> {
-                MyAlertDialog.showWith2Event(
-                    this,
-                    null,
-                    resources.getString(R.string.delete_confirmation),
-                    resources.getString(R.string.confirmation_yes),
-                    resources.getString(R.string.confirmation_recheck),
-                    {_,_ ->
-                        deleteMember()
-                    }, {_,_ ->
-
-                    })
-                true
-            }
-            android.R.id.home -> {
-                onBackPressed()
-                true
-            }
-            else -> true
-        }
-    }
-
     private fun setDataToModels() {
         username = intent.getStringExtra(USERNAME)
         if (intent.extras != null){
@@ -314,6 +279,41 @@ class UserProfileActivity : AppCompatActivity() {
             }
         }
         return result
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        if (sessionManager.fetchUserRole() == "admin"){
+            menuInflater.inflate(R.menu.activity_detail_menu, menu)
+        }
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.edit_menu -> {
+                updateMember()
+                true
+            }
+            R.id.delete_menu -> {
+                MyAlertDialog.showWith2Event(
+                    this,
+                    null,
+                    resources.getString(R.string.delete_confirmation),
+                    resources.getString(R.string.confirmation_yes),
+                    resources.getString(R.string.confirmation_recheck),
+                    {_,_ ->
+                        deleteMember()
+                    }, {_,_ ->
+
+                    })
+                true
+            }
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> true
+        }
     }
 
     companion object {

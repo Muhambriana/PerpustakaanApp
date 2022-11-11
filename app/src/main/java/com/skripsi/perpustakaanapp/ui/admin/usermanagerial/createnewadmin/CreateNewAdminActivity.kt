@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.MyViewModelFactory
+import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.core.resource.MyResource
@@ -23,9 +24,9 @@ class CreateNewAdminActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCreateNewAdminBinding
     private lateinit var viewModel: CreateNewAdminViewModel
+    private lateinit var sessionManager: SessionManager
 
     private val client = RetrofitClient
-
     private var gender: Int? = null
     
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -119,9 +120,11 @@ class CreateNewAdminActivity : AppCompatActivity() {
     }
 
     private fun postUserData() {
+        sessionManager = SessionManager(this)
         //pass data to view model
         gender?.let {
             viewModel.createNewAdmin(
+                sessionManager.fetchAuthToken().toString(),
                 binding.edtUsername.text.toString(),
                 binding.edtPassword.text.toString(),
                 binding.edtFirstName.text.toString(),
