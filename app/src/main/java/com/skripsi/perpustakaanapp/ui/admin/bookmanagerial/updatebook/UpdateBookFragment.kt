@@ -24,7 +24,6 @@ import com.skripsi.perpustakaanapp.core.resource.MyResource
 import com.skripsi.perpustakaanapp.databinding.FragmentUpdateBookBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.MySnackBar
-import com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.createbook.CreateBookActivity
 import com.skripsi.perpustakaanapp.ui.book.detailbook.DetailBookActivity
 import com.skripsi.perpustakaanapp.utils.FilePathHelper
 import com.skripsi.perpustakaanapp.utils.NetworkInfo.BOOK_IMAGE_BASE_URL
@@ -69,13 +68,13 @@ class UpdateBookFragment : BottomSheetDialogFragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && requestCode == CreateBookActivity.REQUEST_CODE_IMAGE) {
+        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_IMAGE) {
             val selectedImage: Uri? = data?.data
             Glide.with(this)
                 .load(selectedImage)
                 .into(binding.bookPoster)
             imageMultipartBody = selectedImage?.let { FilePathHelper.getImage(requireContext(), it) }
-        } else if (resultCode == Activity.RESULT_OK && requestCode == CreateBookActivity.REQUEST_CODE_FILE) {
+        } else if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_FILE) {
             val selectedPdf: Uri? = data?.data
             if (selectedPdf!= null) {
                 val file: File? = FilePathHelper.getFile(requireContext(), selectedPdf)
@@ -105,6 +104,7 @@ class UpdateBookFragment : BottomSheetDialogFragment() {
         binding.edCopies.setText(dataBook?.stock)
         binding.edPublisher.setText(dataBook?.publisher)
         binding.edPublisherDate.setText(dataBook?.publisherDate)
+        binding.edDescription.setText(dataBook?.description)
         setBookPoster(dataBook?.imageUrl)
     }
 
@@ -166,7 +166,7 @@ class UpdateBookFragment : BottomSheetDialogFragment() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "application/pdf"
         intent.addCategory(Intent.CATEGORY_OPENABLE)
-        startActivityForResult(intent, CreateBookActivity.REQUEST_CODE_FILE)
+        startActivityForResult(intent, REQUEST_CODE_FILE)
     }
 
     private fun postBookData() {
@@ -180,7 +180,13 @@ class UpdateBookFragment : BottomSheetDialogFragment() {
             binding.edPublisher.text.toString(),
             binding.edPublisherDate.text.toString(),
             binding.edCopies.text.toString(),
-            if (dataBook?.imageUrl != null) {
+            binding.edDescription.text.toString(),
+            if (imageMultipartBody != null) {
+                binding.edBookTitle.text.toString()
+            } else {
+                null
+            },
+            if (pdfMultiPartBody != null) {
                 binding.edBookTitle.text.toString()
             } else {
                 null

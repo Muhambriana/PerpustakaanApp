@@ -74,6 +74,7 @@ class DetailBookActivity : AppCompatActivity() {
             // Receive whole data book from previous activity
             else {
                 detailBook = intent.getParcelableExtra(EXTRA_DATA)
+                println("kocak sangat ${detailBook?.description}")
                 showDetailBook()
                 observeStatusFavorite(detailBook?.bookId)
             }
@@ -183,11 +184,16 @@ class DetailBookActivity : AppCompatActivity() {
         binding.tvAuthor.text = detailBook?.author
         binding.tvYear.text = detailBook?.publisherDate
         binding.tvPublisher.text = detailBook?.publisher
+        binding.tvDescription.text = detailBook?.description
         setBookCover()
         setEBookLink()
     }
 
     private fun setEBookLink() {
+        if (detailBook?.eBook.equals("-") ) {
+            binding.buttonEbook.isEnabled = false
+            return
+        }
         binding.buttonEbook.setOnClickListener {
             val intent = Intent(this@DetailBookActivity, EbookActivity::class.java)
             intent.putExtra(EbookActivity.EXTRA_LINK, detailBook?.eBook)
@@ -309,6 +315,7 @@ class DetailBookActivity : AppCompatActivity() {
                         Snackbar
                             .make(binding.root, resource.data.toString(), Snackbar.LENGTH_LONG)
                             .show()
+                        setResult(101);
                     }
                     is MyResource.Error -> {
                         binding.progressBar.visibility = View.GONE

@@ -9,6 +9,7 @@ import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.MyViewModelFactory
@@ -45,6 +46,9 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun firstInitialization() {
+        // Disable dark mode in all over the app
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        
         supportActionBar?.hide()
 
         viewModel = ViewModelProvider(this, MyViewModelFactory(LibraryRepository(client))).get(

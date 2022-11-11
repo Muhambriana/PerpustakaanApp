@@ -26,9 +26,21 @@ data class LoanHistory(
     @SerializedName("penalty")
     val penalty: BigDecimal? = null,
 
-    @SerializedName("managedBy")
+    @SerializedName("adminBy")
     val managedBy: String? = null,
 
     @SerializedName("qrCode")
-    val qrCode: String? = null
+    val qrCode: String? = null,
+
+    @SerializedName("bookPoster")
+    val bookPoster: String? = null,
+
+    @SerializedName("borrower")
+    val borrower: String? = null,
+
+    @SerializedName("proposedDate")
+    val proposedDate: String? = null,
+
+    @SerializedName("returnDate")
+    val returnDate: String? = null,
 ):Parcelable

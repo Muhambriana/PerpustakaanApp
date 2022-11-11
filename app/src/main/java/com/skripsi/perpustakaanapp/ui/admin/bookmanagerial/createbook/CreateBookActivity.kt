@@ -124,10 +124,15 @@ class CreateBookActivity : AppCompatActivity() {
 
     private fun askAppointment() {
         val title = binding.edBookTitle.text.toString()
+        val stock = binding.edCopies.text.toString()
         when {
             title.isEmpty() -> {
                 binding.edBookTitle.error = "Judul Buku Tidak Boleh Kosong"
                 binding.edBookTitle.requestFocus()
+            }
+            stock.isEmpty() -> {
+                binding.edCopies.error = "Minimal Jumlah Stock adalah 0"
+                binding.edCopies.requestFocus()
             }
             else -> {
                 MyAlertDialog.showWith2Event(
@@ -155,6 +160,7 @@ class CreateBookActivity : AppCompatActivity() {
             binding.edPublisher.text.toString(),
             binding.edPublisherDate.text.toString(),
             binding.edCopies.text.toString(),
+            binding.edDescription.text.toString(),
             (if (imageMultipartBody != null) {
                 imageMultipartBody
             }else {
@@ -198,7 +204,7 @@ class CreateBookActivity : AppCompatActivity() {
         imageMultipartBody = null
         pdfMultiPartBody = null
         binding.textImage.text = null
-        binding.imageView.setImageURI(null)
+        binding.imageView.setImageResource(0)
         binding.textPdf.text = null
         binding.previewPdf.fromUri(null)
         binding.contentCreate.visibility = View.GONE

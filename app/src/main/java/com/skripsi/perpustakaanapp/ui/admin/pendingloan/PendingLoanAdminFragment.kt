@@ -142,14 +142,15 @@ class PendingLoanAdminFragment : Fragment() {
                         WindowTouchableHelper.enable(requireActivity())
                         binding.progressBar.visibility = View.GONE
                         MySnackBar.showBlack(binding.root, resource.data.toString())
+                        binding.rvPendingLoan.adapter = null
                         getPendingLoanData()
-
                     }
                     is MyResource.Error -> {
                         WindowTouchableHelper.enable(requireActivity())
                         binding.progressBar.visibility = View.GONE
                         MySnackBar.showRed(binding.root, resource.message.toString())
                     }
+                    else -> {}
                 }
             }
         }
@@ -186,6 +187,7 @@ class PendingLoanAdminFragment : Fragment() {
                         binding.progressBar.visibility = View.GONE
                         MySnackBar.showBlack(binding.root, resource.data.toString())
                         // Refresh list
+                        binding.rvPendingLoan.adapter = null
                         getPendingLoanData()
                     }
                     is MyResource.Error -> {

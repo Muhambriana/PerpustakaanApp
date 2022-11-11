@@ -11,6 +11,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -84,19 +85,25 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun userAvatar() {
-        val avatar = intent.getStringExtra("AVATAR")
-        if (avatar != null) {
-            Glide.with(this)
-                .load(NetworkInfo.AVATAR_IMAGE_BASE_URL+avatar)
-                .signature(ObjectKey(System.currentTimeMillis().toString()))
-                .centerCrop()
-                .into(binding.toolbarIcon)
-        }
         binding.toolbarIcon.setOnClickListener {
             val intent = Intent(this, UserProfileActivity::class.java)
             intent.putExtra(UserProfileActivity.USERNAME, sessionManager.fetchUsername())
             resultLauncher.launch(intent)
         }
+        val avatar = intent.getStringExtra("AVATAR")
+        if (avatar == null) {
+            Glide.with(this)
+                .load(ContextCompat.getDrawable(this, R.drawable.icon_user))
+                .signature(ObjectKey(System.currentTimeMillis().toString()))
+                .centerCrop()
+                .into(binding.toolbarIcon)
+            return
+        }
+        Glide.with(this)
+            .load(NetworkInfo.AVATAR_IMAGE_BASE_URL+avatar)
+            .signature(ObjectKey(System.currentTimeMillis().toString()))
+            .centerCrop()
+            .into(binding.toolbarIcon)
     }
 
     private fun getDateNow() {

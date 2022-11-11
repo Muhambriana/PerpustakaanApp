@@ -18,6 +18,7 @@ import com.skripsi.perpustakaanapp.core.resource.MyEvent
 import com.skripsi.perpustakaanapp.core.resource.MyResource
 import com.skripsi.perpustakaanapp.databinding.FragmentPaymentPenaltyBinding
 import com.skripsi.perpustakaanapp.databinding.FragmentScannerReturningBookBinding
+import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.MySnackBar
 import me.dm7.barcodescanner.zxing.ZXingScannerView
 
@@ -57,7 +58,18 @@ class PaymentPenaltyFragment : DialogFragment() {
             return
         }
         binding?.upload?.setOnClickListener {
-            postReturnBook(qrCode)
+            MyAlertDialog.showWith2Event(
+                requireContext(),
+                null,
+                resources.getString(R.string.penalty_confirmation),
+                resources.getString(R.string.confirmation_yes),
+                resources.getString(R.string.confirmation_recheck),
+                {_,_ ->
+                    postReturnBook(qrCode)
+                }, {_,_ ->
+
+                })
+
         }
         binding?.tvPenalty?.text = arguments?.getString("total_penalty")
     }

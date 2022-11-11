@@ -12,6 +12,8 @@
     <string name="refresh">Muat Ulang</string>
     <string name="back_to_dashboard">Kembali Ke DashBoard</string>
     <string name="data_confirmation">Apakah Anda Yakin Data Sudah Benar?</string>
+    <string name="penalty_confirmation">Pastikan Siswa Telah Membayar Denda</string>
+    <string name="register_confirmation">*PASTIKAN SEMUA DATA BENAR, KARENA HANYA ADMIN YANG BISA MENGUBAH DATA</string>
     <string name="confirmation_yes">Saya Yakin</string>
     <string name="confirmation_recheck">Periksa Kembali</string>
     <string name="confirmation_no">Tidak</string>

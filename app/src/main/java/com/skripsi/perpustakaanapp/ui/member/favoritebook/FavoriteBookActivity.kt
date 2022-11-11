@@ -3,6 +3,8 @@ package com.skripsi.perpustakaanapp.ui.member.favoritebook
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.skripsi.perpustakaanapp.R
@@ -21,6 +23,7 @@ class FavoriteBookActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFavoriteBookBinding
     private lateinit var sessionManager: SessionManager
     private lateinit var viewModel: FavoriteBookViewModel
+    private lateinit var resultLauncher: ActivityResultLauncher<Intent>
 
     private val  client = RetrofitClient
     private val favBookAdapter = BookAdapter()
@@ -30,6 +33,7 @@ class FavoriteBookActivity : AppCompatActivity() {
         binding = ActivityFavoriteBookBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setLauncher()
         firstInitialization()
         getFavoriteBookData()
     }
@@ -39,6 +43,19 @@ class FavoriteBookActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, MyViewModelFactory(LibraryRepository(client))).get(
             FavoriteBookViewModel::class.java
         )
+    }
+
+    private fun setLauncher() {
+        //For get return data after launch activity
+        resultLauncher =  registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ){ result ->
+            if (result.resultCode == 101) {
+                binding.rvBook.adapter = null
+                //Re-run getBookData and update with the latest
+                getFavoriteBookData()
+            }
+        }
     }
 
     private fun getFavoriteBookData() {
@@ -68,6 +85,10 @@ class FavoriteBookActivity : AppCompatActivity() {
                             }
                         )
                     }
+                    is MyResource.Empty -> {
+                        binding.progressBar.visibility = View.GONE
+                        binding.viewEmpty.root.visibility = View.VISIBLE
+                    }
                 }
             }
         }
@@ -75,7 +96,7 @@ class FavoriteBookActivity : AppCompatActivity() {
         favBookAdapter.onItemClick = {
             val intent = Intent(this, DetailBookActivity::class.java)
             intent.putExtra(DetailBookActivity.EXTRA_DATA, it)
-            startActivity(intent)
+            resultLauncher.launch(intent)
         }
     }
 }

@@ -6,7 +6,7 @@ import com.google.zxing.BarcodeFormat
 import com.google.zxing.qrcode.QRCodeWriter
 
 object GenerateQRCode {
-    private fun getQRCode(text: String?): Bitmap {
+    private fun getQRCode(text: String?): Bitmap? {
         val writer = QRCodeWriter()
         val bitMatrix = writer.encode(text, BarcodeFormat.QR_CODE, 400, 400)
 
@@ -24,7 +24,10 @@ object GenerateQRCode {
         return qrCode
     }
 
-    fun generate(username: String?): Bitmap {
-        return getQRCode(username)
+    fun generate(data: String?): Bitmap? {
+       if (data == null) {
+           return null
+       }
+        return getQRCode(data)
     }
 }

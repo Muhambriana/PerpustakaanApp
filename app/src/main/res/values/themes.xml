@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.PerpustakaanApp" parent="Theme.MaterialComponents.DayNight">
+    <style name="Theme.PerpustakaanApp" parent="Theme.MaterialComponents.Light">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/green_700</item>
         <item name="colorPrimaryVariant">@color/green_400</item>

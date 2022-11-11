@@ -239,6 +239,7 @@ interface Api {
         @Header("Authorization") token: String
     ):Call<StatisticResponse>
 
+    @Multipart
     @POST("image/update/pdf")
     fun updateEBook(
         @Header("Authorization") token: String,

@@ -6,6 +6,7 @@ import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.ViewModelProvider
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.MyViewModelFactory
@@ -97,7 +98,17 @@ class RegisterActivity : AppCompatActivity() {
                     "Pilih Jenis Kelamin Terlebih Dahulu")
             }
             else -> {
-                postUserData()
+                MyAlertDialog.showWith2Event(
+                    this,
+                    null,
+                    resources.getString(R.string.register_confirmation),
+                    resources.getString(R.string.confirmation_yes),
+                    resources.getString(R.string.confirmation_recheck),
+                    {_,_ ->
+                        postUserData()
+                    }, {_,_ ->
+
+                    })
             }
         }
     }

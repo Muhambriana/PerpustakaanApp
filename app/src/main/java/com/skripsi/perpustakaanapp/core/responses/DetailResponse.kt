@@ -16,29 +16,26 @@ data class DetailBookResponse(
     @field:SerializedName("title")
     val title: String? = null,
 
-    @field:SerializedName("edition")
-    val edition: String? = null,
-
     @field:SerializedName("author")
     val author: String? = null,
 
     @field:SerializedName("publisher")
     val publisher: String? = null,
 
-    @field:SerializedName("publisherDate")
+    @field:SerializedName("yearOfPublication")
     val publisherDate: String? = null,
 
     @field:SerializedName("stock")
     val stock: String? = null,
 
-    @field:SerializedName("source")
-    val source: String? = null,
-
-    @field:SerializedName("remark")
-    val remark: String? = null,
+    @field:SerializedName("description")
+    val description: String? = null,
 
     @field:SerializedName("imageUrl")
     val imageUrl: String? = null,
+
+    @field:SerializedName("ebook")
+    val eBook: String? = null
 
 )
 

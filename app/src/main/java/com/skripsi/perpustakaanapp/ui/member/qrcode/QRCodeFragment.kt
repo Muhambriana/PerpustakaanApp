@@ -12,6 +12,7 @@ import com.google.zxing.qrcode.QRCodeWriter
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.databinding.FragmentQRCodeBinding
+import com.skripsi.perpustakaanapp.utils.GenerateQRCode
 
 // TODO: Rename parameter arguments, choose names that match
 class QRCodeFragment : Fragment() {
@@ -31,36 +32,16 @@ class QRCodeFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val result:Bitmap? = generateQRCode()
+        getQR()
+        val result:Bitmap? = GenerateQRCode.generate(qrCode)
         if (result != null) {
             binding?.qrCodeImage?.setImageBitmap(result)
         }
     }
 
-    private fun generateQRCode(): Bitmap? {
-        sessionManager = SessionManager(requireContext())
-        getQR()
-        var bitmap: Bitmap? = null
-        if (qrCode != null) {
-            val writer = QRCodeWriter()
-            val bitMatrix = writer.encode(qrCode, BarcodeFormat.QR_CODE, 400, 400)
-
-            val w = bitMatrix.width
-            val h = bitMatrix.height
-            val pixels = IntArray(w * h)
-            for (y in 0 until h ) {
-                for (x in 0 until w){
-                    pixels[y * w + x] = if (bitMatrix[x, y]) Color.BLACK else Color.WHITE
-                }
-            }
-
-            bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
-            bitmap.setPixels(pixels, 0, w, 0, 0, w, h)
-        }
-        return bitmap
-    }
 
     private fun getQR() {
+        sessionManager= SessionManager(requireContext())
         val bundle = arguments?.getString("qr_code")
         if (bundle != null) {
             qrCode = bundle

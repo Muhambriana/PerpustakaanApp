@@ -23,6 +23,10 @@ class FavoriteBookViewModel(private val repository: LibraryRepository) : ViewMod
                 response: Response<ListFavoriteResponse>
             ) {
                 if (response.body()?.code == 0) {
+                    if (response.body()?.favoriteItems?.isEmpty() == true) {
+                        resourceFavorite.postValue(MyEvent(MyResource.Empty()))
+                        return
+                    }
                     resourceFavorite.postValue(MyEvent(MyResource.Success(response.body()?.favoriteItems)))
                 } else {
                     resourceFavorite.postValue(MyEvent(MyResource.Error(response.body()?.message)))

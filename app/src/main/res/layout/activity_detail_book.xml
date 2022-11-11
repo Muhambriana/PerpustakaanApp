@@ -23,8 +23,10 @@
             <TextView
                 android:id="@+id/tv_book_title"
                 android:layout_width="350dp"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="56dp"
+                android:fontFamily="@font/monda"
+                android:paddingBottom="5dp"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -38,7 +40,7 @@
                 android:id="@+id/image_cover_book"
                 android:layout_width="230dp"
                 android:layout_height="300dp"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="10dp"
                 android:src="@color/teal_200"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_book_title"
@@ -46,10 +48,10 @@
 
             <TextView
                 android:id="@+id/text_author"
-                android:layout_width="73dp"
-                android:layout_height="32dp"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="40dp"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
                 android:gravity="center_vertical|start"
                 android:text="@string/text_author"
                 android:textColor="@color/teal_700"
@@ -57,21 +59,21 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/image_cover_book"
-                app:layout_constraintTop_toBottomOf="@+id/tv_book_title" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_category" />
 
             <TextView
                 android:id="@+id/tv_author"
-                android:layout_width="126dp"
-                android:layout_height="51dp"
-                android:layout_marginStart="12dp"
-                android:layout_marginEnd="6dp"
+                android:layout_width="292dp"
+                android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:textSize="14sp"
+                android:paddingStart="0dp"
+                android:paddingEnd="10dp"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/image_cover_book"
-                app:layout_constraintTop_toBottomOf="@+id/text_author"
+                app:layout_constraintStart_toEndOf="@+id/text_author"
+                app:layout_constraintTop_toTopOf="@+id/text_author"
                 tools:text="@string/author" />
 
             <TextView
@@ -79,6 +81,7 @@
                 android:layout_width="116dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="12dp"
+                android:layout_marginTop="40dp"
                 android:layout_marginEnd="6dp"
                 android:gravity="center_vertical|start"
                 android:text="@string/text_year"
@@ -88,7 +91,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/image_cover_book"
-                app:layout_constraintTop_toBottomOf="@+id/tv_author" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_book_title" />
 
             <TextView
                 android:id="@+id/tv_year"
@@ -123,7 +126,7 @@
             <TextView
                 android:id="@+id/tv_publisher"
                 android:layout_width="110dp"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:gravity="center_vertical"
                 android:textSize="14sp"
@@ -133,9 +136,9 @@
 
             <TextView
                 android:id="@+id/text_category"
-                android:layout_width="88dp"
+                android:layout_width="80dp"
                 android:layout_height="50dp"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="24dp"
                 android:gravity="center_vertical|start"
                 android:text="Kategori"
@@ -149,7 +152,6 @@
                 android:id="@+id/tv_category"
                 android:layout_width="200dp"
                 android:layout_height="50dp"
-
                 android:layout_marginTop="24dp"
                 android:gravity="center_vertical"
                 android:textSize="14sp"
@@ -161,7 +163,7 @@
 
             <TextView
                 android:id="@+id/text_description"
-                android:layout_width="104dp"
+                android:layout_width="80dp"
                 android:layout_height="32dp"
                 android:layout_marginStart="10dp"
                 android:gravity="center_vertical|start"
@@ -171,13 +173,13 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.013"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_category"
-                app:layout_constraintVertical_bias="0.05" />
+                app:layout_constraintTop_toBottomOf="@+id/text_author"
+                app:layout_constraintVertical_bias="0.056" />
 
             <TextView
-                android:id="@+id/description"
+                android:id="@+id/tv_description"
                 android:layout_width="298dp"
                 android:layout_height="332dp"
                 android:layout_marginStart="12dp"
@@ -196,7 +198,7 @@
                 android:layout_height="48dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
-                android:backgroundTint="@color/purple_500"
+                android:backgroundTint="@color/green_700"
                 android:gravity="center_vertical|start"
                 android:text="Baca Ebook"
                 android:textSize="16sp"
@@ -220,8 +222,8 @@
                 android:id="@+id/progress_bar"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:visibility="gone"
                 android:indeterminateDrawable="@drawable/custom_progress_bar"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

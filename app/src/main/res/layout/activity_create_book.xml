@@ -141,31 +141,47 @@
         app:layout_constraintTop_toBottomOf="@id/ed_publisher_date"
         app:met_floatingLabel="highlight" />
 
+    <EditText
+        android:id="@+id/ed_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:backgroundTint="@color/green_400"
+        android:gravity="top|start"
+        android:hint="Deskripsi Buku"
+        android:inputType="textMultiLine"
+        android:lines="8"
+        android:maxLines="10"
+        android:minLines="6"
+        android:scrollbars="vertical"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ed_copies"
+        app:met_floatingLabel="highlight" />
+
     <Button
         android:id="@+id/button_image"
         android:layout_width="140dp"
         android:layout_height="70dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="20dp"
         android:background="@color/transparent"
         android:text="Pilih Gambar"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ed_copies" />
+        app:layout_constraintTop_toBottomOf="@+id/ed_description" />
 
     <Button
         android:id="@+id/button_pdf"
         android:layout_width="140dp"
         android:layout_height="70dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginTop="20dp"
         android:background="@color/transparent"
         android:text="Pilih File e-Book"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.914"
-        app:layout_constraintStart_toEndOf="@+id/button_image"
-        app:layout_constraintTop_toBottomOf="@+id/ed_copies" />
+        app:layout_constraintTop_toBottomOf="@+id/ed_description" />
 
     <Button
         android:id="@+id/button_save"

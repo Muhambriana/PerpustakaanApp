@@ -25,6 +25,9 @@ data class Book(
     @field:SerializedName("stock")
     val stock: String? = null,
 
+    @field:SerializedName("description")
+    val description: String? = null,
+
     @field:SerializedName("imageUrl")
     val imageUrl: String? = null,
 
