@@ -161,6 +161,7 @@ class CreateBookActivity : AppCompatActivity() {
             binding.edPublisherDate.text.toString(),
             binding.edCopies.text.toString(),
             binding.edDescription.text.toString(),
+            "Sementara",
             (if (imageMultipartBody != null) {
                 imageMultipartBody
             }else {
@@ -171,7 +172,6 @@ class CreateBookActivity : AppCompatActivity() {
             } else {
                 null
             })
-
         )
 
         viewModel.resourceCreateBook.observe(this) { event ->

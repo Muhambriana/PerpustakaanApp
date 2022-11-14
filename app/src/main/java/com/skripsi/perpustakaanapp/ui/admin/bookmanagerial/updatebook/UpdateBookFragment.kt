@@ -192,7 +192,8 @@ class UpdateBookFragment : BottomSheetDialogFragment() {
                 binding.edBookTitle.text.toString()
             } else {
                 null
-            }
+            },
+            "Sementara"
         )
 
         viewModel.resourceUpdateBook.observe(this) { event ->

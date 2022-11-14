@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.Target.SIZE_ORIGINAL
 import com.bumptech.glide.signature.ObjectKey
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.models.Book
@@ -59,7 +60,7 @@ class BookAdapter : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
                     // For reload image on glide from the same url
                     .signature(ObjectKey(glideManagement.fetchCachePoster().toString()))
                     // To show the original size of image
-//                    .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                    .override(SIZE_ORIGINAL, SIZE_ORIGINAL)
                     .fitCenter()
                     .into(binding.ivBookPoster)
             }

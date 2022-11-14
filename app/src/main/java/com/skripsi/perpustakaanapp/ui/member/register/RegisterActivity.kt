@@ -5,9 +5,7 @@ import android.text.InputFilter
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.view.View
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.skripsi.perpustakaanapp.R
@@ -62,29 +60,11 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun prepDropdownList() {
         val adapter = ArrayAdapter.createFromResource(this,
-            R.array.edu_level,
-            android.R.layout.simple_spinner_item)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item)
+            R.array.edu_level_member,
+            R.layout.custom_spinner_text)
+        adapter.setDropDownViewResource(R.layout.custom_spinner_dropdown)
 
         binding.spinnerEduLevel.adapter = adapter
-
-        binding.spinnerEduLevel.onItemSelectedListener = object :
-            AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>,
-                                        view: View, position: Int, id: Long) {
-                if (position == 0) {
-                    MySnackBar.showRed(binding.root, "Harap Pilih Jenjang Terlebih Dahulu")
-                    return
-                }
-                Toast.makeText(this@RegisterActivity,
-                    "Item yang dipilih" + " " +
-                            "" + resources.getStringArray(R.array.edu_level)[position], Toast.LENGTH_SHORT).show()
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {
-                // write code to perform some action
-            }
-        }
     }
 
 
@@ -117,18 +97,22 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun askAppointment() {
-        val username = binding.edtUsername.text.toString()
-
         when {
-            username.isEmpty() -> {
+            binding.edtUsername.text.isEmpty() -> {
                 binding.edtUsername.error = "NISN Tidak Boleh Kosong"
                 binding.edtUsername.requestFocus()
             }
+            binding.edtPassword.text.isEmpty() -> {
+                binding.edtPassword.error = "Pssword Tidak Boleh Ksong"
+                binding.edtPassword.requestFocus()
+            }
             binding.rbGender.checkedRadioButtonId == -1 -> {
-                MyAlertDialog.show(this,
-                    R.drawable.icon_warning,
-                    "WARNING",
-                    "Pilih Jenis Kelamin Terlebih Dahulu")
+                binding.rbGender.requestFocus()
+                MySnackBar.showRed(binding.root, "Pilih Jenis Kelamin Terlebih Dahulu")
+            }
+            binding.spinnerEduLevel.selectedItemPosition == 0 -> {
+                binding.spinnerEduLevel.requestFocus()
+                MySnackBar.showRed(binding.root, "Pilih Jenjang Terlebih Dahulu")
             }
             else -> {
                 MyAlertDialog.showWith2Event(
@@ -147,7 +131,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun postUserData() {
-
+        MySnackBar.showRed(binding.root, "Dipilih: "+binding.spinnerEduLevel.selectedItem.toString())
         viewModel.registerUser(
             binding.edtUsername.text.toString(),
             binding.edtPassword.text.toString(),
@@ -157,7 +141,8 @@ class RegisterActivity : AppCompatActivity() {
             binding.edEmail.text.toString(),
             binding.edtTelNumber.text.toString(),
             binding.edtAddress.text.toString(),
-            gender!!
+            gender!!,
+            binding.spinnerEduLevel.selectedItem.toString()
         )
 
         viewModel.resourceRegisterUser.observe(this) { event ->
@@ -182,6 +167,7 @@ class RegisterActivity : AppCompatActivity() {
                             "FAILED",
                             it.message.toString())
                     }
+                    else -> {}
                 }
             }
         }
@@ -197,6 +183,7 @@ class RegisterActivity : AppCompatActivity() {
         binding.edtAddress.text.clear()
         gender = null
         binding.rbGender.clearCheck()
+        binding.spinnerEduLevel.setSelection(0)
     }
 
     private fun getGender(): Int? {

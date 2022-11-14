@@ -188,7 +188,7 @@ class UserProfileFragment : Fragment() {
             Glide.with(this)
                 .load(NetworkInfo.AVATAR_IMAGE_BASE_URL +detailUser?.avatar)
                 .signature(ObjectKey(System.currentTimeMillis().toString()))
-                .centerCrop()
+                .fitCenter()
                 .into(imageView)
         }
     }

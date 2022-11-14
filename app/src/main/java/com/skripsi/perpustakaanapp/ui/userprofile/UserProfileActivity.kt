@@ -7,8 +7,10 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.signature.ObjectKey
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.MyViewModelFactory
@@ -217,12 +219,19 @@ class UserProfileActivity : AppCompatActivity() {
     }
 
     private fun inMemberCard() {
+        if (detailUser?.educationLevel == "SMP") {
+            binding.containerMemberCard.background = ContextCompat.getDrawable(this, R.drawable.image_member_card_smp)
+        } else if (detailUser?.educationLevel == "SMK") {
+            binding.containerMemberCard.background = ContextCompat.getDrawable(this, R.drawable.image_member_card_smk
+            )
+        }
         setProfilePhoto(binding.imageAvatarInCard)
         binding.tvUsernameInCard.text = detailUser?.username
         binding.tvFullNameInCard.text = fullName(detailUser?.firstName, detailUser?.lastName)
         binding.tvGenderInCard.text = recognizeGender()
         binding.tvPhoneNoInCard.text = detailUser?.phoneNo
         binding.tvAddressInCard.text = detailUser?.address
+        binding.tvEduLevel.text = detailUser?.educationLevel
     }
 
     private fun fullName(firstName: String?, lastName: String?): String {
@@ -248,7 +257,8 @@ class UserProfileActivity : AppCompatActivity() {
             Glide.with(this)
                 .load(AVATAR_IMAGE_BASE_URL+detailUser?.avatar)
                 .signature(ObjectKey(System.currentTimeMillis().toString()))
-                .centerCrop()
+                .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                .fitCenter()
                 .into(imageView)
 
             openFullImage(detailUser?.avatar)

@@ -111,6 +111,18 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
                 <TextView
+                    android:id="@+id/textView14"
+                    android:layout_width="140dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="10dp"
+                    android:gravity="center_vertical"
+                    android:text="Jenjang"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+                <TextView
                     android:id="@+id/textView12"
                     android:layout_width="140dp"
                     android:layout_height="40dp"
@@ -120,7 +132,7 @@
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView7" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
                 <EditText
                     android:id="@+id/edt_username"
@@ -181,11 +193,22 @@
                     android:layout_marginEnd="10dp"
                     android:backgroundTint="@color/green_400"
                     android:hint="Nomor Handphone"
-                    android:inputType="number"
+                    android:autofillHints="phone"
+                    android:inputType="phone"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/edt_email"
                     app:met_floatingLabel="highlight" />
+
+                <Spinner
+                    android:id="@+id/spinner_edu_level"
+                    android:layout_width="170dp"
+                    android:layout_height="42dp"
+                    android:layout_marginEnd="40dp"
+                    android:background="@drawable/custom_spinner_bg"
+                    android:spinnerMode="dropdown"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rb_gender" />
 
                 <EditText
                     android:id="@+id/edt_address"
@@ -195,6 +218,7 @@
                     android:backgroundTint="@color/green_400"
                     android:gravity="top|start"
                     android:hint="Alamat"
+                    android:autofillHints="postalAddress"
                     android:inputType="textMultiLine"
                     android:lines="8"
                     android:maxLines="10"
@@ -202,7 +226,7 @@
                     android:scrollbars="vertical"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/rb_gender"
+                    app:layout_constraintTop_toBottomOf="@id/spinner_edu_level"
                     app:met_floatingLabel="highlight" />
 
                 <RadioGroup

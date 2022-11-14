@@ -1,12 +1,12 @@
 package com.skripsi.perpustakaanapp.ui.admin.usermanagerial.createnewadmin
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.InputFilter
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.view.MenuItem
 import android.view.View
+import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.skripsi.perpustakaanapp.R
@@ -58,6 +58,7 @@ class CreateNewAdminActivity : AppCompatActivity() {
 
         binding.progressBar.visibility = View.INVISIBLE
         editTextFilter()
+        prepDropdownList()
     }
 
     private fun editTextFilter() {
@@ -65,6 +66,16 @@ class CreateNewAdminActivity : AppCompatActivity() {
         binding.edtFirstName.filters += InputFilter.AllCaps()
         binding.edtLastName.filters += InputFilter.AllCaps()
     }
+
+    private fun prepDropdownList() {
+        val adapter = ArrayAdapter.createFromResource(this,
+            R.array.edu_level_member,
+            R.layout.custom_spinner_text)
+        adapter.setDropDownViewResource(R.layout.custom_spinner_dropdown)
+
+        binding.spinnerEduLevel.adapter = adapter
+    }
+
 
     private fun hideShowPassword() {
         binding.buttonHideShow.setOnClickListener {
@@ -103,6 +114,10 @@ class CreateNewAdminActivity : AppCompatActivity() {
             binding.rbGender.checkedRadioButtonId == -1 -> {
                 MySnackBar.showRed(binding.root, "Pilih Gender Terlbih Dahulu")
             }
+            binding.spinnerEduLevel.selectedItemPosition == 0 -> {
+                binding.spinnerEduLevel.requestFocus()
+                MySnackBar.showRed(binding.root, "Pilih Jenjang Terlebih Dahulu")
+            }
             else -> {
                 MyAlertDialog.showWith2Event(
                     this,
@@ -133,7 +148,8 @@ class CreateNewAdminActivity : AppCompatActivity() {
                 binding.edtEmail.text.toString(),
                 binding.edtPhoneNo.text.toString(),
                 binding.edtAddress.text.toString(),
-                it
+                it,
+                binding.spinnerEduLevel.selectedItem.toString()
             )
         }
 
@@ -168,6 +184,7 @@ class CreateNewAdminActivity : AppCompatActivity() {
         binding.edtAddress.text.clear()
         gender = null
         binding.rbGender.clearCheck()
+        binding.spinnerEduLevel.setSelection(0)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

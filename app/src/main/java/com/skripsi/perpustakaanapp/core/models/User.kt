@@ -35,6 +35,9 @@ data class User(
     val gender: Int? = null,
 
     @field:SerializedName("avatar")
-    var avatar: String? = null
+    var avatar: String? = null,
+
+    @field:SerializedName("educationLevel")
+    var educationLevel: String? = null,
 
 ):Parcelable

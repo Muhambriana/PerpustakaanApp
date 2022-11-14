@@ -7,6 +7,7 @@ import android.text.InputFilter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.skripsi.perpustakaanapp.R
@@ -21,6 +22,7 @@ import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.MySnackBar
 import com.skripsi.perpustakaanapp.ui.userprofile.UserProfileActivity
 import com.skripsi.perpustakaanapp.utils.setSingleClickListener
+import java.lang.reflect.Array
 
 class UpdateUserFragment : BottomSheetDialogFragment() {
 
@@ -53,8 +55,7 @@ class UpdateUserFragment : BottomSheetDialogFragment() {
         binding?.progressBar?.visibility = View.GONE
 
         getData()
-        setGender()
-
+        prepDropdownList()
         buttonListener()
     }
 
@@ -71,6 +72,12 @@ class UpdateUserFragment : BottomSheetDialogFragment() {
         binding?.edtEmail?.setText(dataUser?.email)
         binding?.edtPhoneNo?.setText(dataUser?.phoneNo)
         binding?.edtAddress?.setText(dataUser?.address)
+        setGender()
+        setEduLevel()
+    }
+
+    private fun setEduLevel() {
+
     }
 
     private fun setGender(): Int? {
@@ -94,6 +101,25 @@ class UpdateUserFragment : BottomSheetDialogFragment() {
         return gender
     }
 
+    private fun prepDropdownList() {
+        if (dataUser?.roleName== "admin") {
+            adapterSpinner(R.array.edu_level_admin)
+        }else if (dataUser?.roleName == "student") {
+            adapterSpinner(R.array.edu_level_member)
+        }
+    }
+
+    private fun adapterSpinner(value: Int) {
+        val adapter = ArrayAdapter.createFromResource(requireContext(),
+            R.array.edu_level_member,
+            R.layout.custom_spinner_text)
+        adapter.setDropDownViewResource(R.layout.custom_spinner_dropdown)
+
+        binding?.spinnerEduLevel?.adapter = adapter
+        binding?.spinnerEduLevel?.setSelection(adapter.getPosition(dataUser?.educationLevel))
+    }
+
+
     private fun buttonListener() {
         binding?.buttonBack?.setSingleClickListener {
             dismiss()
@@ -104,23 +130,28 @@ class UpdateUserFragment : BottomSheetDialogFragment() {
     }
 
     private fun askAppointment() {
-        val username = binding?.edtUsername?.text.toString()
+        when {
+            binding?.edtUsername?.text?.isEmpty() == true -> {
+                binding?.edtUsername?.error = "Username Tidak Boleh Kosong"
+                binding?.edtUsername?.requestFocus()
+            }
+            binding?.spinnerEduLevel?.selectedItemPosition == 0 -> {
+                binding?.spinnerEduLevel?.requestFocus()
+                MySnackBar.showRed(binding?.root, "Pilih Jenjang Terlebih Dahulu")
+            }
+            else -> {
+                MyAlertDialog.showWith2Event(
+                    requireContext(),
+                    null,
+                    resources.getString(R.string.data_confirmation),
+                    resources.getString(R.string.confirmation_yes),
+                    resources.getString(R.string.confirmation_recheck),
+                    {_,_ ->
+                        postUpdateData()
+                    }, {_,_ ->
 
-        if (username.isEmpty()) {
-            binding?.edtUsername?.error = "Username Tidak Boleh Kosong"
-            binding?.edtUsername?.requestFocus()
-        } else {
-            MyAlertDialog.showWith2Event(
-                requireContext(),
-                null,
-                resources.getString(R.string.data_confirmation),
-                resources.getString(R.string.confirmation_yes),
-                resources.getString(R.string.confirmation_recheck),
-                {_,_ ->
-                    postUpdateData()
-                }, {_,_ ->
-
-                })
+                    })
+            }
         }
     }
 
@@ -133,7 +164,8 @@ class UpdateUserFragment : BottomSheetDialogFragment() {
             binding?.edtEmail?.text.toString(),
             binding?.edtPhoneNo?.text.toString(),
             binding?.edtAddress?.text.toString(),
-            gender!!
+            gender!!,
+            binding?.spinnerEduLevel?.selectedItem.toString()
         )
 
         viewModel.resourceUpdateUser.observe(this) { event ->
@@ -164,7 +196,6 @@ class UpdateUserFragment : BottomSheetDialogFragment() {
 
     companion object{
         const val FRAGMENT_EXTRA_DATA = "extra_data"
-        const val REQUEST_CODE_IMAGE = "request_code_image"
     }
 
 

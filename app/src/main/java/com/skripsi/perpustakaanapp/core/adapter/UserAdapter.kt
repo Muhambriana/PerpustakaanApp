@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.signature.ObjectKey
 
 import com.skripsi.perpustakaanapp.R
@@ -56,7 +57,7 @@ class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
                     // For reload image on glide from the same url
                     .signature(ObjectKey(glideManagement.fetchCacheAvatar().toString()))
                     // To show the original size of image
-//                    .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                    .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
                     .fitCenter()
                     .into(binding.ivAvatar)
             }

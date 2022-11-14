@@ -32,9 +32,12 @@ data class Book(
     val imageUrl: String? = null,
 
     @field:SerializedName("ebook")
-    val eBook: String? = null
+    val eBook: String? = null,
 
-) : Parcelable
+    @field:SerializedName("category")
+    val category: String? = null
+
+    ) : Parcelable
 
 //data class BookRequestAndImage(
 //

@@ -15,9 +15,9 @@ class UpdateUserViewModel(private val repository: LibraryRepository) : ViewModel
 
     val resourceUpdateUser = MutableLiveData<MyEvent<MyResource<String?>>>()
 
-    fun updateUser(token: String, username: String, firstName: String, lastName: String, email: String, phoneNo: String, address: String, gender: Int) {
+    fun updateUser(token: String, username: String, firstName: String, lastName: String, email: String, phoneNo: String, address: String, gender: Int, educationLevel: String) {
         resourceUpdateUser.postValue(MyEvent(MyResource.Loading()))
-        val data = User(username, null, firstName, lastName, null, email, phoneNo, address, gender)
+        val data = User(username, null, firstName, lastName, null, email, phoneNo, address, gender, null, educationLevel)
         val response = repository.updateUser(token, data)
         response.enqueue(object : Callback<GeneralResponse> {
             override fun onResponse(

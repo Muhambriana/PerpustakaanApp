@@ -17,7 +17,7 @@
             android:layout_width="355dp"
             android:layout_height="255dp"
             android:layout_marginBottom="100dp"
-            android:src="@drawable/image_member_card"
+            android:src="@drawable/image_member_card_sma"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -44,7 +44,7 @@
             android:layout_marginTop="80dp"
             android:fontFamily="@font/mo_me"
             android:text="Briana Muham"
-            android:textSize="15dp"
+            android:textSize="13sp"
             android:textStyle="bold"
             android:textColor="@color/black"
             app:layout_constraintStart_toEndOf="@+id/image_avatar_in_card"
@@ -320,10 +320,33 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/text_phone_no"
+                android:id="@+id/text_edu_level"
                 android:layout_width="105dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_gender"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/mo_li"
+                android:text="Jenjang"
+                android:textColor="@color/black"
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/tv_edu_level"
+                android:layout_width="310dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_edu_level"
+                android:layout_marginStart="15dp"
+                android:fontFamily="@font/mo_re"
+                android:text="SMA"
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/text_phone_no"
+                android:layout_width="105dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_edu_level"
                 android:layout_marginStart="10dp"
                 android:fontFamily="@font/mo_li"
                 android:text="Nomor Telefon"

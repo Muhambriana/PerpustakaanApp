@@ -35,7 +35,10 @@ data class DetailBookResponse(
     val imageUrl: String? = null,
 
     @field:SerializedName("ebook")
-    val eBook: String? = null
+    val eBook: String? = null,
+
+    @field:SerializedName("category")
+    val category: String? = null
 
 )
 
@@ -72,6 +75,9 @@ data class DetailUserResponse(
     val gender: Int? = null,
 
     @field:SerializedName("avatar")
-    var avatar: String? = null
+    var avatar: String? = null,
+
+    @field:SerializedName("educationLevel")
+    var educationLevel: String? = null,
 
 )
