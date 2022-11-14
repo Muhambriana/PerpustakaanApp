@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.signature.ObjectKey
 import com.google.android.material.snackbar.Snackbar
@@ -26,6 +27,7 @@ import com.skripsi.perpustakaanapp.ui.ViewImageFragment
 import com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.updatebook.UpdateBookFragment
 import com.skripsi.perpustakaanapp.ui.book.ebook.EbookActivity
 import com.skripsi.perpustakaanapp.utils.GlideManagement
+import com.skripsi.perpustakaanapp.utils.NetworkInfo.AVATAR_IMAGE_BASE_URL
 import com.skripsi.perpustakaanapp.utils.NetworkInfo.BOOK_IMAGE_BASE_URL
 import com.skripsi.perpustakaanapp.utils.setSingleClickListener
 
@@ -205,18 +207,24 @@ class DetailBookActivity : AppCompatActivity() {
     private fun setBookCover() {
         if (detailBook?.imageUrl != null) {
             glideManagement = GlideManagement(this)
-            Glide.with(this)
-                .load(BOOK_IMAGE_BASE_URL + detailBook?.imageUrl)
-                // For reload image on glide from the same url
-                .signature(ObjectKey(glideManagement.fetchCachePoster().toString()))
-                // To show the original size of image
-                .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
-                .fitCenter()
-                .into(binding.imageCoverBook)
-
-            // set click listener for image when clicked
-            openFullImage(detailBook?.imageUrl)
+            glideSetup(detailBook?.imageUrl)
         }
+    }
+
+    private fun glideSetup(imageName: String?) {
+        val imageUrl = GlideUrl(BOOK_IMAGE_BASE_URL+imageName) { mapOf(Pair("Authorization", sessionManager.fetchAuthToken())) }
+
+        Glide.with(this)
+            .load(imageUrl)
+            // For reload image on glide from the same url
+            .signature(ObjectKey(glideManagement.fetchCachePoster().toString()))
+            // To show the original size of image
+            .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+            .fitCenter()
+            .into(binding.imageCoverBook)
+
+        // set click listener for image when clicked
+        openFullImage(detailBook?.imageUrl)
     }
 
     private fun openFullImage(imageUrl: String?) {

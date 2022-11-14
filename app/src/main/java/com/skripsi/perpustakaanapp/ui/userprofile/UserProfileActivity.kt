@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.signature.ObjectKey
 import com.skripsi.perpustakaanapp.R
@@ -254,15 +255,20 @@ class UserProfileActivity : AppCompatActivity() {
 
     private fun setProfilePhoto(imageView: ImageView) {
         if (detailUser?.avatar != null) {
-            Glide.with(this)
-                .load(AVATAR_IMAGE_BASE_URL+detailUser?.avatar)
-                .signature(ObjectKey(System.currentTimeMillis().toString()))
-                .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
-                .fitCenter()
-                .into(imageView)
-
+            glideSetup(detailUser?.avatar, imageView)
             openFullImage(detailUser?.avatar)
         }
+    }
+
+    private fun glideSetup(imageName: String?, imageView: ImageView) {
+        val imageUrl = GlideUrl(AVATAR_IMAGE_BASE_URL+imageName) { mapOf(Pair("Authorization", sessionManager.fetchAuthToken())) }
+
+        Glide.with(this)
+            .load(imageUrl)
+            .signature(ObjectKey(System.currentTimeMillis().toString()))
+            .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+            .fitCenter()
+            .into(imageView)
     }
 
     private fun openFullImage(imageUrl: String?) {

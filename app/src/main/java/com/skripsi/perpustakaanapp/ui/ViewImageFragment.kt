@@ -6,16 +6,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.signature.ObjectKey
 import com.skripsi.perpustakaanapp.R
+import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.databinding.FragmentViewImageBinding
 import com.skripsi.perpustakaanapp.utils.GlideManagement
 import com.skripsi.perpustakaanapp.utils.NetworkInfo
+import com.skripsi.perpustakaanapp.utils.NetworkInfo.AVATAR_IMAGE_BASE_URL
+import com.skripsi.perpustakaanapp.utils.NetworkInfo.BOOK_IMAGE_BASE_URL
 import com.skripsi.perpustakaanapp.utils.setSingleClickListener
 
 class ViewImageFragment : DialogFragment() {
 
+    private lateinit var sessionManager: SessionManager
     private lateinit var glideManagement: GlideManagement
 
     private var fragmentViewImageBinding:FragmentViewImageBinding? = null
@@ -46,24 +51,25 @@ class ViewImageFragment : DialogFragment() {
         glideManagement = GlideManagement(requireContext())
         val avatar = arguments?.getString("avatar")
         avatar?.let {
-            binding?.let {
-                Glide.with(this)
-                    .load(NetworkInfo.AVATAR_IMAGE_BASE_URL + avatar)
-                    .signature(ObjectKey(System.currentTimeMillis().toString()))
-                    .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
-                    .into(it.imageView)
-            }
+            glideSetup(AVATAR_IMAGE_BASE_URL, avatar)
         }
 
         val bookPoster = arguments?.getString("poster")
         bookPoster?.let {
-            binding?.let {
-                Glide.with(this)
-                    .load(NetworkInfo.BOOK_IMAGE_BASE_URL + bookPoster)
-                    .signature(ObjectKey(System.currentTimeMillis().toString()))
-                    .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
-                    .into(it.imageView)
-            }
+            glideSetup(BOOK_IMAGE_BASE_URL, bookPoster)
+        }
+    }
+
+    private fun glideSetup(imageBaseUrl: String, imageName: String?) {
+        sessionManager=  SessionManager(requireContext())
+        val imageUrl = GlideUrl(imageBaseUrl+imageName) { mapOf(Pair("Authorization", sessionManager.fetchAuthToken())) }
+
+        binding?.let {
+            Glide.with(this)
+                .load(imageUrl)
+                .signature(ObjectKey(System.currentTimeMillis().toString()))
+                .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                .into(it.imageView)
         }
     }
 

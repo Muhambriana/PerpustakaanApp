@@ -1,7 +1,6 @@
 package com.skripsi.perpustakaanapp.ui.home
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -11,10 +10,14 @@ import android.view.MenuItem
 import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.model.GlideUrl
+import com.bumptech.glide.load.model.LazyHeaderFactory
+import com.bumptech.glide.load.model.LazyHeaders
 import com.bumptech.glide.signature.ObjectKey
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.MyViewModelFactory
@@ -25,7 +28,6 @@ import com.skripsi.perpustakaanapp.core.resource.MyResource
 import com.skripsi.perpustakaanapp.databinding.ActivityHomeBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.MySnackBar
-import com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.updatebook.UpdateBookFragment
 import com.skripsi.perpustakaanapp.ui.admin.scanner.ScannerAttendanceFragment
 import com.skripsi.perpustakaanapp.ui.login.LoginActivity
 import com.skripsi.perpustakaanapp.ui.member.qrcode.QRCodeFragment
@@ -33,8 +35,10 @@ import com.skripsi.perpustakaanapp.ui.statistik.StatisticFragment
 import com.skripsi.perpustakaanapp.ui.userprofile.UserProfileActivity
 import com.skripsi.perpustakaanapp.utils.GlideManagement
 import com.skripsi.perpustakaanapp.utils.NetworkInfo
+import com.skripsi.perpustakaanapp.utils.NetworkInfo.AVATAR_IMAGE_BASE_URL
 import com.skripsi.perpustakaanapp.utils.WindowTouchableHelper
 import java.util.*
+
 
 class HomeActivity : AppCompatActivity() {
 
@@ -97,15 +101,17 @@ class HomeActivity : AppCompatActivity() {
             resultLauncher.launch(intent)
         }
         if (avatar == null) {
-            Glide.with(this)
-                .load(ContextCompat.getDrawable(this, R.drawable.icon_user))
-//                .signature(ObjectKey(glideManagement.fetchCacheAvatar().toString()))
-                .centerCrop()
-                .into(binding.toolbarIcon)
+            binding.toolbarIcon.background = ContextCompat.getDrawable(this, R.drawable.icon_user)
             return
         }
+        glideSetup(avatar)
+    }
+
+    private fun glideSetup(imageName: String?) {
+        val imageUrl = GlideUrl(AVATAR_IMAGE_BASE_URL+imageName) { mapOf(Pair("Authorization", sessionManager.fetchAuthToken())) }
+
         Glide.with(this)
-            .load(NetworkInfo.AVATAR_IMAGE_BASE_URL+avatar)
+            .load(imageUrl)
             .signature(ObjectKey(glideManagement.fetchCacheAvatar().toString()))
             .centerCrop()
             .into(binding.toolbarIcon)

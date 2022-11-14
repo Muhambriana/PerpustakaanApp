@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.signature.ObjectKey
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -112,8 +113,10 @@ class UpdateBookFragment : BottomSheetDialogFragment() {
 
     private fun setBookPoster(imageName: String?) {
         imageName?.let {
+            val imageUrl = GlideUrl(BOOK_IMAGE_BASE_URL+imageName) { mapOf(Pair("Authorization", sessionManager.fetchAuthToken())) }
+
             Glide.with(requireContext())
-                .load(BOOK_IMAGE_BASE_URL + imageName)
+                .load(imageUrl)
                 .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
                 .signature(ObjectKey(System.currentTimeMillis().toString()))
                 .into(binding.bookPoster)
