@@ -141,7 +141,28 @@
         app:layout_constraintTop_toBottomOf="@id/ed_publisher_date"
         app:met_floatingLabel="highlight" />
 
-    <EditText
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_marginStart="10dp"
+        android:gravity="center"
+        android:text="Kategori Buku"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ed_copies" />
+
+    <Spinner
+        android:id="@+id/spinner_book_category"
+        android:layout_width="170dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/custom_spinner_bg"
+        android:spinnerMode="dropdown"
+        app:layout_constraintStart_toEndOf="@+id/textView16"
+        app:layout_constraintTop_toBottomOf="@id/ed_copies" />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/ed_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -158,7 +179,7 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ed_copies"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_book_category"
         app:met_floatingLabel="highlight" />
 
     <Button

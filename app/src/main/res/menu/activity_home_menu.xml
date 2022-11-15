@@ -29,6 +29,10 @@
                 android:id="@+id/swap_menu"
                 android:icon="@drawable/ic_swap"
                 android:title="Sebagai Anggota" />
+            <item
+                android:id="@+id/add_category"
+                android:icon="@drawable/ic_add"
+                android:title="Tambah Kategori Buku" />
         </menu>
     </item>
 

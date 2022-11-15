@@ -73,11 +73,6 @@ class UpdateUserFragment : BottomSheetDialogFragment() {
         binding?.edtPhoneNo?.setText(dataUser?.phoneNo)
         binding?.edtAddress?.setText(dataUser?.address)
         setGender()
-        setEduLevel()
-    }
-
-    private fun setEduLevel() {
-
     }
 
     private fun setGender(): Int? {

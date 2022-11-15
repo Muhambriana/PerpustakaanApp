@@ -1,5 +1,6 @@
 package com.skripsi.perpustakaanapp.ui.home
 
+import android.app.ProgressDialog.show
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -26,8 +27,11 @@ import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.core.resource.MyResource
 import com.skripsi.perpustakaanapp.databinding.ActivityHomeBinding
+import com.skripsi.perpustakaanapp.databinding.FragmentBookCategoryBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
+import com.skripsi.perpustakaanapp.ui.MyAlertDialog.Companion.show
 import com.skripsi.perpustakaanapp.ui.MySnackBar
+import com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.bookcategory.BookCategoryFragment
 import com.skripsi.perpustakaanapp.ui.admin.scanner.ScannerAttendanceFragment
 import com.skripsi.perpustakaanapp.ui.login.LoginActivity
 import com.skripsi.perpustakaanapp.ui.member.qrcode.QRCodeFragment
@@ -64,6 +68,13 @@ class HomeActivity : AppCompatActivity() {
         firstInitialization()
         setLauncher()
         setBottomNav()
+        setUpGlideManagement()
+    }
+
+    private fun setUpGlideManagement() {
+        glideManagement = GlideManagement(this)
+        glideManagement.updateCachePoster()
+        glideManagement.updateCacheAvatar()
     }
 
     private fun firstInitialization() {
@@ -205,17 +216,22 @@ class HomeActivity : AppCompatActivity() {
                 swapRole(item)
                 true
             }
+            R.id.add_category -> {
+                BookCategoryFragment().show(supportFragmentManager, "UpdateBookFragment")
+                true
+            }
             else -> true
         }
     }
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        val swapMenu = menu?.findItem(R.id.swap_menu)
         if (sessionManager.fetchUserRole() == "student") {
-            val swapMenu = menu?.findItem(R.id.swap_menu)
             swapMenu?.isVisible = false
+            menu?.findItem(R.id.add_category)?.isVisible = false
+
         }
         if (tempRole == "admin") {
-            val swapMenu = menu?.findItem(R.id.swap_menu)
             swapMenu?.title = "Sebagai Admin"
         }
         return super.onPrepareOptionsMenu(menu)

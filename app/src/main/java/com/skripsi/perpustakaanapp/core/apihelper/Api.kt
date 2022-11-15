@@ -253,5 +253,16 @@ interface Api {
         @Part("bookId")  bookId: RequestBody?,
         @Part pdf: MultipartBody.Part?
     ):Call<GeneralResponse>
+
+    @POST("category/create")
+    fun createCategory(
+        @Header("Authorization") token: String,
+        @Body data: BookCategory
+    ):Call<GeneralResponse>
+
+    @POST("category/list")
+    fun getAllCategory(
+        @Header("Authorization") token: String
+    ):Call<ListCategoryResponse>
 }
 

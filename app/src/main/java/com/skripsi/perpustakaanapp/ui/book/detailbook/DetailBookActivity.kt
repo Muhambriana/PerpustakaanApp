@@ -188,6 +188,7 @@ class DetailBookActivity : AppCompatActivity() {
         binding.tvYear.text = detailBook?.publisherDate
         binding.tvPublisher.text = detailBook?.publisher
         binding.tvDescription.text = detailBook?.description
+        binding.tvCategory.text = detailBook?.category
         setBookCover()
         setEBookLink()
     }

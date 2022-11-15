@@ -3,6 +3,7 @@ package com.skripsi.perpustakaanapp.core
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
+import com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.bookcategory.BookCategoryViewModel
 import com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.createbook.CreateBookViewModel
 import com.skripsi.perpustakaanapp.ui.admin.scanner.ScannerReturnBookViewModel
 import com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.updatebook.UpdateBookViewModel
@@ -97,6 +98,9 @@ class MyViewModelFactory constructor(private val libraryRepository: LibraryRepos
             }
             modelClass.isAssignableFrom(StatisticViewModel::class.java) -> {
                 return StatisticViewModel(this.libraryRepository) as T
+            }
+            modelClass.isAssignableFrom(BookCategoryViewModel::class.java) -> {
+                return BookCategoryViewModel(this.libraryRepository) as T
             }
             else -> throw IllegalArgumentException("ViewModel Not Found")
         }

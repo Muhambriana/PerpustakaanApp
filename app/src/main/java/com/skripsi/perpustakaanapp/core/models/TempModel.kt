@@ -30,7 +30,6 @@ data class ModelUsername(
 )
 
 data class ModelForChangeStatusFavorite(
-
     @field:SerializedName("username")
     val username: String? = null,
 
@@ -56,13 +55,13 @@ data class ModelForAttendance(
 )
 
 data class ModelForReturnBook(
-
     @field:SerializedName("qrCode")
     val qrCode: String? = null,
 
     @field:SerializedName("userPayment")
     val userPayment: BigDecimal? = null
 )
+
 
 
 

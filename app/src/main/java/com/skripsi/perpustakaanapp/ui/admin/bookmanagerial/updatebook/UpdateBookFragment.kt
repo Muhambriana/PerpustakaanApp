@@ -9,6 +9,7 @@ import android.text.InputFilter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.model.GlideUrl
@@ -20,6 +21,7 @@ import com.skripsi.perpustakaanapp.core.MyViewModelFactory
 import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.models.Book
+import com.skripsi.perpustakaanapp.core.models.BookCategory
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.core.resource.MyResource
 import com.skripsi.perpustakaanapp.databinding.FragmentUpdateBookBinding
@@ -49,7 +51,7 @@ class UpdateBookFragment : BottomSheetDialogFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) : View {
         binding = FragmentUpdateBookBinding.inflate(LayoutInflater.from(inflater.context), container, false)
         return binding.root
@@ -66,6 +68,7 @@ class UpdateBookFragment : BottomSheetDialogFragment() {
         binding.progressBar.visibility = View.GONE
 
         getData()
+        getCategoryData()
         setButtonListener()
     }
 
@@ -151,6 +154,10 @@ class UpdateBookFragment : BottomSheetDialogFragment() {
                 binding.edBookTitle.error = "Judul Buku Tidak Boleh Kosong"
                 binding.edBookTitle.requestFocus()
             }
+            binding.spinnerBookCategory.selectedItemPosition == 0 -> {
+                binding.spinnerBookCategory.requestFocus()
+                MySnackBar.showRed(binding.root, "Pilih Kategori Buku Terlebih Dahulu")
+            }
             else -> {
                 MyAlertDialog.showWith2Event(
                     requireContext(),
@@ -186,6 +193,7 @@ class UpdateBookFragment : BottomSheetDialogFragment() {
             binding.edPublisherDate.text.toString(),
             binding.edCopies.text.toString(),
             binding.edDescription.text.toString(),
+            binding.spinnerBookCategory.selectedItem.toString(),
             if (imageMultipartBody != null) {
                 binding.edBookTitle.text.toString()
             } else {
@@ -195,8 +203,7 @@ class UpdateBookFragment : BottomSheetDialogFragment() {
                 binding.edBookTitle.text.toString()
             } else {
                 null
-            },
-            "Sementara"
+            }
         )
 
         viewModel.resourceUpdateBook.observe(this) { event ->
@@ -288,6 +295,43 @@ class UpdateBookFragment : BottomSheetDialogFragment() {
                     else -> {}
                 }
             }
+        }
+    }
+
+    private fun getCategoryData(){
+        sessionManager = SessionManager(requireContext())
+        viewModel.getAllBookCategory(token = sessionManager.fetchAuthToken().toString())
+
+        viewModel.resourceBookCategory.observe(this) { event ->
+            event.getContentIfNotHandled().let { resource ->
+                when (resource) {
+                    is MyResource.Loading -> {}
+                    is MyResource.Success -> {
+                        prepSpinnerBookCategory(resource.data)
+                    }
+                    is MyResource.Error -> {
+                        MySnackBar.showRed(binding.root, resource.message.toString())
+                    }
+                    is MyResource.Empty -> {
+                        MySnackBar.showRed(binding.root, "Data Kosong")
+                    }
+                }
+            }
+        }
+    }
+
+    private fun prepSpinnerBookCategory(categoryData: List<BookCategory>?) {
+        if (categoryData?.isNotEmpty() == true) {
+            val listCategory: MutableList<String?> = ArrayList()
+            for (i in categoryData.indices) {
+                listCategory.add(categoryData[i].categoryName)
+            }
+            val adapter = ArrayAdapter(requireContext(),
+                R.layout.custom_spinner_text,
+                listCategory)
+            adapter.setDropDownViewResource(R.layout.custom_spinner_dropdown)
+            binding.spinnerBookCategory.adapter = adapter
+            binding.spinnerBookCategory.setSelection(adapter.getPosition(dataBook?.category))
         }
     }
 

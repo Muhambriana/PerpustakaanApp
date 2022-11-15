@@ -4,9 +4,9 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.provider.OpenableColumns
 import android.text.InputFilter
 import android.view.View
+import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -14,6 +14,7 @@ import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.MyViewModelFactory
 import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
+import com.skripsi.perpustakaanapp.core.models.BookCategory
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.core.resource.MyResource
 import com.skripsi.perpustakaanapp.databinding.ActivityCreateBookBinding
@@ -22,9 +23,7 @@ import com.skripsi.perpustakaanapp.ui.MySnackBar
 import com.skripsi.perpustakaanapp.utils.FilePathHelper
 import com.skripsi.perpustakaanapp.utils.PermissionCheck
 import com.skripsi.perpustakaanapp.utils.setSingleClickListener
-import okhttp3.MediaType
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import java.io.File
 
 class CreateBookActivity : AppCompatActivity() {
@@ -55,6 +54,7 @@ class CreateBookActivity : AppCompatActivity() {
         )
 
         binding.edBookTitle.filters += InputFilter.AllCaps()
+        getCategoryData()
     }
 
     private fun clickListener() {
@@ -134,6 +134,10 @@ class CreateBookActivity : AppCompatActivity() {
                 binding.edCopies.error = "Minimal Jumlah Stock adalah 0"
                 binding.edCopies.requestFocus()
             }
+            binding.spinnerBookCategory.selectedItemPosition == 0 -> {
+                binding.spinnerBookCategory.requestFocus()
+                MySnackBar.showRed(binding.root, "Pilih Kategori Buku Terlebih Dahulu")
+            }
             else -> {
                 MyAlertDialog.showWith2Event(
                     this,
@@ -161,7 +165,7 @@ class CreateBookActivity : AppCompatActivity() {
             binding.edPublisherDate.text.toString(),
             binding.edCopies.text.toString(),
             binding.edDescription.text.toString(),
-            "Sementara",
+            binding.spinnerBookCategory.selectedItem.toString(),
             (if (imageMultipartBody != null) {
                 imageMultipartBody
             }else {
@@ -190,6 +194,7 @@ class CreateBookActivity : AppCompatActivity() {
                         println("kocak error: "+resource.message)
                         MySnackBar.showRed(binding.root, resource.message.toString())
                     }
+                    else -> {}
                 }
             }
         }
@@ -201,6 +206,7 @@ class CreateBookActivity : AppCompatActivity() {
         binding.edPublisher.text?.clear()
         binding.edPublisherDate.text?.clear()
         binding.edCopies.text?.clear()
+        binding.spinnerBookCategory.setSelection(0)
         imageMultipartBody = null
         pdfMultiPartBody = null
         binding.textImage.text = null
@@ -210,9 +216,45 @@ class CreateBookActivity : AppCompatActivity() {
         binding.contentCreate.visibility = View.GONE
     }
 
+    private fun getCategoryData(){
+        sessionManager = SessionManager(this)
+        viewModel.getAllBookCategory(token = sessionManager.fetchAuthToken().toString())
+
+        viewModel.resourceBookCategory.observe(this) { event ->
+            event.getContentIfNotHandled().let { resource ->
+                when (resource) {
+                    is MyResource.Loading -> {}
+                    is MyResource.Success -> {
+                        prepSpinnerBookCategory(resource.data)
+                    }
+                    is MyResource.Error -> {
+                        MySnackBar.showRed(binding.root, resource.message.toString())
+                    }
+                    is MyResource.Empty -> {
+                        MySnackBar.showRed(binding.root, "Data Kosong")
+                    }
+                }
+            }
+        }
+    }
+
+    private fun prepSpinnerBookCategory(categoryData: List<BookCategory>?) {
+        if (categoryData?.isNotEmpty() == true) {
+            val listCategory: MutableList<String?> = ArrayList()
+            listCategory.add("Pilih Kategori Buku")
+            for (element in categoryData) {
+                listCategory.add(element.categoryName)
+            }
+            val adapter = ArrayAdapter(this,
+                R.layout.custom_spinner_text,
+                listCategory)
+            adapter.setDropDownViewResource(R.layout.custom_spinner_dropdown)
+            binding.spinnerBookCategory.adapter = adapter
+        }
+    }
+
     companion object {
         const val REQUEST_CODE_IMAGE = 201
         const val REQUEST_CODE_FILE = 202
-        private const val TYPE_TEXT_FLAG_CAP_CHARACTERS = 4096
     }
 }

@@ -90,4 +90,8 @@ class LibraryRepository constructor(private val retrofitClient: RetrofitClient) 
     fun statsMember(token: String) = retrofitClient.create().statsMember(token)
 
     fun updateEBook(token: String,  bookId: RequestBody?, pdf: MultipartBody.Part?) = retrofitClient.create().updateEBook(token, bookId, pdf)
+
+    fun createBookCategory(token: String, data: BookCategory) = retrofitClient.create().createCategory(token, data)
+
+    fun getAllCategory(token: String) = retrofitClient.create().getAllCategory(token)
 }
