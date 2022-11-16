@@ -208,6 +208,12 @@ interface Api {
         @Body data: User
     ):Call<GeneralResponse>
 
+    @POST("user/findUserByUsername")
+    fun findUser(
+        @Header("Authorization") token: String,
+        @Body username: ModelUsername
+    ):Call<ListUserResponse>
+
     @POST("attendance/scan")
     fun attendanceScan(
         @Header("Authorization") token: String,

@@ -188,7 +188,7 @@ class BookActivity : AppCompatActivity() {
         if (dataSearch == null) {
             bookAdapter.setBookList(bookData)
         } else {
-            bookAdapter .setBookList(dataSearch)
+            bookAdapter.setBookList(dataSearch)
         }
         // On book item click
         bookItemClick()
@@ -220,6 +220,11 @@ class BookActivity : AppCompatActivity() {
                         binding.progressBar.visibility = View.GONE
                         MySnackBar.showRed(binding.root, resource.message.toString())
                         showRecycleList(resource.data)
+                    }
+                    is MyResource.Empty -> {
+                        binding.progressBar.visibility = View.GONE
+                        MySnackBar.showBlack(binding.root, "Buku Tidak Ditemukan")
+//                        binding.viewEmpty.root.visibility = View.VISIBLE
                     }
                 }
             }

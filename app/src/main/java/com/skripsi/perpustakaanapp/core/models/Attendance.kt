@@ -12,6 +12,9 @@ data class Attendance(
     @field:SerializedName("id")
     val id: String? = null,
 
+    @field:SerializedName("username")
+    val user: String? = null,
+
     @field:SerializedName("date")
     val date: String? = null,
 
@@ -21,7 +24,7 @@ data class Attendance(
     @field:SerializedName("clockOut")
     val clockOut: String? = null,
 
-    @field:SerializedName("adminBy")
+    @field:SerializedName("admin")
     val admin: String? = null
 
 ): Parcelable

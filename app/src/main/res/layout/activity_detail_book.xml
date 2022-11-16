@@ -194,14 +194,14 @@
 
             <Button
                 android:id="@+id/button_ebook"
-                android:layout_width="154dp"
+                android:layout_width="wrap_content"
                 android:layout_height="48dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:backgroundTint="@color/green_700"
                 android:gravity="center_vertical|start"
                 android:text="Baca Ebook"
-                android:textSize="16sp"
+                android:textSize="13sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/image_cover_book" />

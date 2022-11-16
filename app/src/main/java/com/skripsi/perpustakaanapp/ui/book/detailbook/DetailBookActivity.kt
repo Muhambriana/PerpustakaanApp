@@ -196,6 +196,7 @@ class DetailBookActivity : AppCompatActivity() {
     private fun setEBookLink() {
         if (detailBook?.eBook.equals("-") ) {
             binding.buttonEbook.isEnabled = false
+            binding.buttonEbook.text = "EBook Belum Tersedia"
             return
         }
         binding.buttonEbook.setOnClickListener {

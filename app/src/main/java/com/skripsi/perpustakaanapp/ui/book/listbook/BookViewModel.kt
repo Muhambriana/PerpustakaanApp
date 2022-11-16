@@ -69,11 +69,12 @@ class BookViewModel(private val repository: LibraryRepository) : ViewModel() {
                 response: Response<ListBookResponse>
             ) {
                 if (response.body()?.code == 0) {
-                    if (response.body()?.bookItems?.isEmpty() == false) {
-                    resourceSearchBook.postValue(MyEvent(MyResource.Success(response.body()?.bookItems)))
-                    } else {
-                    resourceSearchBook.postValue(MyEvent((MyResource.Error(response.body()?.message, response.body()?.bookItems))))
+                    if (response.body()?.bookItems?.isEmpty() == true) {
+                        resourceSearchBook.postValue(MyEvent(MyResource.Empty()))
+                        return
                     }
+                    resourceSearchBook.postValue(MyEvent(MyResource.Success(response.body()?.bookItems)))
+
                 } else {
                     resourceSearchBook.postValue(MyEvent(MyResource.Error(response.body()?.message)))
                 }
