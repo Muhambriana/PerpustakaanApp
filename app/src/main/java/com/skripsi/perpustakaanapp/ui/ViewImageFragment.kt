@@ -12,8 +12,6 @@ import com.bumptech.glide.signature.ObjectKey
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.databinding.FragmentViewImageBinding
-import com.skripsi.perpustakaanapp.utils.GlideManagement
-import com.skripsi.perpustakaanapp.utils.NetworkInfo
 import com.skripsi.perpustakaanapp.utils.NetworkInfo.AVATAR_IMAGE_BASE_URL
 import com.skripsi.perpustakaanapp.utils.NetworkInfo.BOOK_IMAGE_BASE_URL
 import com.skripsi.perpustakaanapp.utils.setSingleClickListener
@@ -21,7 +19,6 @@ import com.skripsi.perpustakaanapp.utils.setSingleClickListener
 class ViewImageFragment : DialogFragment() {
 
     private lateinit var sessionManager: SessionManager
-    private lateinit var glideManagement: GlideManagement
 
     private var fragmentViewImageBinding:FragmentViewImageBinding? = null
     private val binding get() = fragmentViewImageBinding
@@ -48,7 +45,6 @@ class ViewImageFragment : DialogFragment() {
     }
 
     private fun setImageToView() {
-        glideManagement = GlideManagement(requireContext())
         val avatar = arguments?.getString("avatar")
         avatar?.let {
             glideSetup(AVATAR_IMAGE_BASE_URL, avatar)

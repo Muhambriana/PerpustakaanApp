@@ -13,15 +13,12 @@ import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.core.models.User
 import com.skripsi.perpustakaanapp.databinding.ItemListUserBinding
-import com.skripsi.perpustakaanapp.utils.GlideManagement
 import com.skripsi.perpustakaanapp.utils.NetworkInfo.AVATAR_IMAGE_BASE_URL
-import com.skripsi.perpustakaanapp.utils.NetworkInfo.BOOK_IMAGE_BASE_URL
 import com.skripsi.perpustakaanapp.utils.setSingleClickListener
 
 class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
     private lateinit var sessionManager: SessionManager
-    private lateinit var glideManagement: GlideManagement
 
     private var listUser = mutableListOf<User>()
     var onItemClick: ((User) -> Unit)? = null
@@ -34,7 +31,6 @@ class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         sessionManager = SessionManager(recyclerView.context)
-        glideManagement = GlideManagement(recyclerView.context)
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         UserViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_list_user, parent, false))
@@ -69,7 +65,7 @@ class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
             Glide.with(itemView.context)
                 .load(imageUrl)
                 // For reload image on glide from the same url
-                .signature(ObjectKey(glideManagement.fetchCacheAvatar().toString()))
+                .signature(ObjectKey(System.currentTimeMillis().toString()))
                 // To show the original size of image
                 .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
                 .fitCenter()

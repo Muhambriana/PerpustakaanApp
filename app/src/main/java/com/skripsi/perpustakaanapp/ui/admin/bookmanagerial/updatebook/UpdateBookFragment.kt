@@ -29,7 +29,6 @@ import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.MySnackBar
 import com.skripsi.perpustakaanapp.ui.book.detailbook.DetailBookActivity
 import com.skripsi.perpustakaanapp.utils.FilePathHelper
-import com.skripsi.perpustakaanapp.utils.GlideManagement
 import com.skripsi.perpustakaanapp.utils.NetworkInfo.BOOK_IMAGE_BASE_URL
 import com.skripsi.perpustakaanapp.utils.PermissionCheck
 import com.skripsi.perpustakaanapp.utils.setSingleClickListener
@@ -41,7 +40,6 @@ class UpdateBookFragment : BottomSheetDialogFragment() {
     private lateinit var sessionManager: SessionManager
     private lateinit var binding: FragmentUpdateBookBinding
     private lateinit var viewModel: UpdateBookViewModel
-    private lateinit var glideManagement: GlideManagement
 
     private var dataBook: Book? = null
     private val client = RetrofitClient
@@ -70,6 +68,8 @@ class UpdateBookFragment : BottomSheetDialogFragment() {
         getData()
         getCategoryData()
         setButtonListener()
+
+        println("glide setelah update: ")
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -248,8 +248,6 @@ class UpdateBookFragment : BottomSheetDialogFragment() {
     private fun uploadImage() {
 
         imageMultipartBody?.let {
-            glideManagement = GlideManagement(requireContext())
-            glideManagement.updateCachePoster()
             viewModel.updateBookImage(sessionManager.fetchAuthToken().toString(), dataBook?.bookId.toString(), it)
         }
 

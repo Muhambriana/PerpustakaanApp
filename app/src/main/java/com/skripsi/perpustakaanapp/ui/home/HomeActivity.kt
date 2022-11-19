@@ -1,6 +1,5 @@
 package com.skripsi.perpustakaanapp.ui.home
 
-import android.app.ProgressDialog.show
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -17,8 +16,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.model.GlideUrl
-import com.bumptech.glide.load.model.LazyHeaderFactory
-import com.bumptech.glide.load.model.LazyHeaders
 import com.bumptech.glide.signature.ObjectKey
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.MyViewModelFactory
@@ -27,9 +24,7 @@ import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.core.resource.MyResource
 import com.skripsi.perpustakaanapp.databinding.ActivityHomeBinding
-import com.skripsi.perpustakaanapp.databinding.FragmentBookCategoryBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
-import com.skripsi.perpustakaanapp.ui.MyAlertDialog.Companion.show
 import com.skripsi.perpustakaanapp.ui.MySnackBar
 import com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.bookcategory.BookCategoryFragment
 import com.skripsi.perpustakaanapp.ui.admin.scanner.ScannerAttendanceFragment
@@ -37,8 +32,6 @@ import com.skripsi.perpustakaanapp.ui.login.LoginActivity
 import com.skripsi.perpustakaanapp.ui.member.qrcode.QRCodeFragment
 import com.skripsi.perpustakaanapp.ui.statistik.StatisticFragment
 import com.skripsi.perpustakaanapp.ui.userprofile.UserProfileActivity
-import com.skripsi.perpustakaanapp.utils.GlideManagement
-import com.skripsi.perpustakaanapp.utils.NetworkInfo
 import com.skripsi.perpustakaanapp.utils.NetworkInfo.AVATAR_IMAGE_BASE_URL
 import com.skripsi.perpustakaanapp.utils.WindowTouchableHelper
 import java.util.*
@@ -50,7 +43,6 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var sessionManager: SessionManager
     private lateinit var viewModel: HomeViewModel
     private lateinit var resultLauncher: ActivityResultLauncher<Intent>
-    private lateinit var glideManagement: GlideManagement
 
     private var doubleBackPressed = false
     private var tempRole: String? = null
@@ -68,13 +60,6 @@ class HomeActivity : AppCompatActivity() {
         firstInitialization()
         setLauncher()
         setBottomNav()
-        setUpGlideManagement()
-    }
-
-    private fun setUpGlideManagement() {
-        glideManagement = GlideManagement(this)
-        glideManagement.updateCachePoster()
-        glideManagement.updateCacheAvatar()
     }
 
     private fun firstInitialization() {
@@ -105,7 +90,6 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun userAvatar() {
-        glideManagement = GlideManagement(this)
         binding.toolbarIcon.setOnClickListener {
             val intent = Intent(this, UserProfileActivity::class.java)
             intent.putExtra(UserProfileActivity.USERNAME, sessionManager.fetchUsername())
@@ -123,7 +107,7 @@ class HomeActivity : AppCompatActivity() {
 
         Glide.with(this)
             .load(imageUrl)
-            .signature(ObjectKey(glideManagement.fetchCacheAvatar().toString()))
+            .signature(ObjectKey(System.currentTimeMillis().toString()))
             .centerCrop()
             .into(binding.toolbarIcon)
     }

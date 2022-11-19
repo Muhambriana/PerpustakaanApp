@@ -212,7 +212,7 @@ class CreateBookActivity : AppCompatActivity() {
         binding.textImage.text = null
         binding.imageView.setImageResource(0)
         binding.textPdf.text = null
-        binding.previewPdf.fromUri(null)
+        binding.previewPdf.fromFile(null)
         binding.contentCreate.visibility = View.GONE
     }
 

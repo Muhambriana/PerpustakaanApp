@@ -22,7 +22,7 @@
             android:background="@android:color/white"
             android:contentDescription="Peminjaman"
             android:scaleType="centerCrop"
-            android:src="@drawable/icon_bg_history"
+            android:src="@drawable/icon_bg_history_2"
             app:layout_constraintDimensionRatio="H,1.5:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
