@@ -160,7 +160,7 @@ interface Api {
     ):Call<DetailUserResponse>
 
     @Multipart
-    @POST("image/update")
+    @POST("media/update/image")
     fun updateImage(
         @Header("Authorization") token: String,
         @Part("bookId")  bookId: RequestBody?,
@@ -236,7 +236,7 @@ interface Api {
         @Body data: ModelForReturnBook
     ):Call<GeneralResponse>
 
-    @GET("image/eBook/show/{name}")
+    @GET("media/eBook/show/{name}")
     fun showPDF(
         @Header("Authorization") token: String,
         @Path("name") fileName: String
@@ -253,7 +253,7 @@ interface Api {
     ):Call<StatisticResponse>
 
     @Multipart
-    @POST("image/update/pdf")
+    @POST("media/update/pdf")
     fun updateEBook(
         @Header("Authorization") token: String,
         @Part("bookId")  bookId: RequestBody?,

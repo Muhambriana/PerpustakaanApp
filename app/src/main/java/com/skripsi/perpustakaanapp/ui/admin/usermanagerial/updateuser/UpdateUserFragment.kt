@@ -106,7 +106,7 @@ class UpdateUserFragment : BottomSheetDialogFragment() {
 
     private fun adapterSpinner(value: Int) {
         val adapter = ArrayAdapter.createFromResource(requireContext(),
-            R.array.edu_level_member,
+            value,
             R.layout.custom_spinner_text)
         adapter.setDropDownViewResource(R.layout.custom_spinner_dropdown)
 

@@ -154,10 +154,6 @@ class UpdateBookFragment : BottomSheetDialogFragment() {
                 binding.edBookTitle.error = "Judul Buku Tidak Boleh Kosong"
                 binding.edBookTitle.requestFocus()
             }
-            binding.spinnerBookCategory.selectedItemPosition == 0 -> {
-                binding.spinnerBookCategory.requestFocus()
-                MySnackBar.showRed(binding.root, "Pilih Kategori Buku Terlebih Dahulu")
-            }
             else -> {
                 MyAlertDialog.showWith2Event(
                     requireContext(),
@@ -182,8 +178,11 @@ class UpdateBookFragment : BottomSheetDialogFragment() {
     }
 
     private fun postBookData() {
+        println("kocak masuk 1")
         uploadImage()
+        println("kocak masuk 2")
         uploadEBook()
+        println("kocak masuk 3")
         viewModel.updateBook(
             token = sessionManager.fetchAuthToken().toString(),
             binding.tvBookId.text.toString(),
@@ -210,6 +209,7 @@ class UpdateBookFragment : BottomSheetDialogFragment() {
             event.getContentIfNotHandled().let { resource ->
                 when(resource) {
                     is MyResource.Loading -> {
+                        println("kocak masuk 4")
                         binding.progressBar.visibility = View.VISIBLE
                     }
                     is MyResource.Success -> {

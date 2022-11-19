@@ -69,7 +69,7 @@ class CreateNewAdminActivity : AppCompatActivity() {
 
     private fun prepDropdownList() {
         val adapter = ArrayAdapter.createFromResource(this,
-            R.array.edu_level_member,
+            R.array.edu_level_admin,
             R.layout.custom_spinner_text)
         adapter.setDropDownViewResource(R.layout.custom_spinner_dropdown)
 
