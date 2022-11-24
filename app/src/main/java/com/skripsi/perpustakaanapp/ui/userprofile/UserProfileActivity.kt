@@ -217,9 +217,12 @@ class UserProfileActivity : AppCompatActivity() {
     }
 
     private fun inMemberCard() {
-        if (detailUser?.educationLevel == "SMP") {
+        if (detailUser?.educationLevel == "SMP" || detailUser?.educationLevel == "Guru SMP") {
             binding.containerMemberCard.background = ContextCompat.getDrawable(this, R.drawable.image_member_card_smp)
-        } else if (detailUser?.educationLevel == "SMK") {
+        } else if (detailUser?.educationLevel == "SMA" || detailUser?.educationLevel == "Guru SMA") {
+            binding.containerMemberCard.background = ContextCompat.getDrawable(this, R.drawable.image_member_card_sma
+            )
+        } else if (detailUser?.educationLevel == "SMK" || detailUser?.educationLevel == "Guru SMK") {
             binding.containerMemberCard.background = ContextCompat.getDrawable(this, R.drawable.image_member_card_smk
             )
         }
@@ -263,7 +266,7 @@ class UserProfileActivity : AppCompatActivity() {
         Glide.with(this)
             .load(imageUrl)
             .signature(ObjectKey(System.currentTimeMillis().toString()))
-            .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+            .override(200,600)
             .fitCenter()
             .into(imageView)
     }

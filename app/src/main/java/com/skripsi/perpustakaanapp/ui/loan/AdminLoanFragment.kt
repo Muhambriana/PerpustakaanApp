@@ -72,7 +72,7 @@ class AdminLoanFragment : Fragment() {
 
     private fun getHistoryLoanData() {
         // To know which menu call this, and set with the right data
-        setLoanData()
+        setRequest()
 
         viewModel.resourceLoan.observe(requireActivity()) { event ->
             event.getContentIfNotHandled()?.let { resource ->
@@ -98,7 +98,7 @@ class AdminLoanFragment : Fragment() {
         }
     }
 
-    private fun setLoanData() {
+    private fun setRequest() {
         if (activity?.intent?.getStringExtra(PURPOSE) == "admin_ongoing_loan") {
             (activity as AppCompatActivity?)?.supportActionBar?.title = "Belum Dikembalikan"
             viewModel.getAllOngoingLoan(sessionManager.fetchAuthToken().toString())

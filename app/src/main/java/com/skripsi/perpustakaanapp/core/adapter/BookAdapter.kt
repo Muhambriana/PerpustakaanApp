@@ -71,7 +71,7 @@ class BookAdapter : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
                 // For reload image on glide from the same url
                 .signature(ObjectKey(System.currentTimeMillis().toString()))
                 // To show the original size of image
-                .override(SIZE_ORIGINAL, SIZE_ORIGINAL)
+                .override(200, 600)
                 .fitCenter()
                 .into(binding.ivBookPoster)
         }

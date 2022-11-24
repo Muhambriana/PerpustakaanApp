@@ -108,7 +108,7 @@ class PendingLoanAdminFragment : Fragment() {
 
         if (sessionManager.fetchUserRole() == "admin") {
             approveLoanListener()
-            rejectLoanListener()
+            postRejectLoan()
         }
     }
 
@@ -156,7 +156,7 @@ class PendingLoanAdminFragment : Fragment() {
         }
     }
 
-    private fun rejectLoanListener() {
+    private fun postRejectLoan() {
         pendingLoanAdapter.buttonRejectClick = { id ->
             MyAlertDialog.showWith2Event(
                 requireContext(),

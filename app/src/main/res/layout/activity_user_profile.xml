@@ -17,7 +17,7 @@
             android:layout_width="355dp"
             android:layout_height="255dp"
             android:layout_marginBottom="100dp"
-            android:src="@drawable/image_member_card_sma"
+            tools:src="@drawable/image_member_card_sma"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

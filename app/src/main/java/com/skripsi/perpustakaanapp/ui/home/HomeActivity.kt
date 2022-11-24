@@ -108,6 +108,7 @@ class HomeActivity : AppCompatActivity() {
         Glide.with(this)
             .load(imageUrl)
             .signature(ObjectKey(System.currentTimeMillis().toString()))
+            .override(100, 400)
             .centerCrop()
             .into(binding.toolbarIcon)
     }

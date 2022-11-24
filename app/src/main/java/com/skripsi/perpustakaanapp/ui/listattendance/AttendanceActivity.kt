@@ -51,7 +51,7 @@ class AttendanceActivity : AppCompatActivity() {
     }
     
     private fun getAttendanceData() {
-        setDataAttendance()
+        setRequest()
 
         viewModel.resourceAttendance.observe(this) { event ->
             event.getContentIfNotHandled().let { resource ->
@@ -85,7 +85,7 @@ class AttendanceActivity : AppCompatActivity() {
         }
     }
 
-    private fun setDataAttendance() {
+    private fun setRequest() {
         if (sessionManager.fetchUserRole() == "admin") {
             viewModel.getAllAttendances(sessionManager.fetchAuthToken().toString())
         } else if (sessionManager.fetchUserRole() == "student") {
