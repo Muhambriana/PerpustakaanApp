@@ -70,7 +70,7 @@ class TrashClass {
 //        //=== Daftar buku===
 //        Start
 //        Tampil halaman dashboard
-//        Dipilih menu daftar buku asa
+//        Dipilih menu daftar buku
 //        Hide menu favorite
 //        Dijalankan fungsi getBookData()
 //        If data buku != empty then
@@ -88,17 +88,17 @@ class TrashClass {
 //        //=== Daftar user===
 //        Start
 //        Tampil halaman dashboard
-//        Dipilih menu daftar buku asa
+//        Dipilih menu daftar buku
 //        Dijalankan fungsi getUserData()
-//        If list buku != empty then asa
+//        If list buku != empty then
 //            Tampilkan list user
 //            If klik salah satu item user then
 //                Tampilkan detail user
 //            Else
 //                Tetap di halaman daftar user
-//            End if asa
+//            End if
 //        Else
-//            Tampilkan pesan data kosong asa
+//            Tampilkan pesan data kosong
 //        End if
 //        End
 //
@@ -125,18 +125,18 @@ class TrashClass {
 //        //===ON LOAN===
 //        Start
 //        Tampil halaman dashboard
-//        Dipilih menu sedang dipinjam asa
+//        Dipilih menu sedang dipinjam
 //        Dijalankan fungsi getLoanData()
 //        Dijalankan fungsi setRequest()
 //        Dijalankan fungsi viewModel getAllOngoingLoan()
-//        If list peminjaman != empty then asa
+//        If list peminjaman != empty then
 //            Tampilkan list peminjaman sedang berlangsung
 //            if klik salah satu item peminjaman then
 //                Tampilkan detail peminjaman
 //            Else
 //                Tetap di halaman sedang dipinjam
 //        Else
-//            Tampilkan pesan data kosong asa
+//            Tampilkan pesan data kosong
 //        End if
 //        End
 //
@@ -146,33 +146,33 @@ class TrashClass {
 //        //===HISTORY LOAN===
 //        Start
 //        Tampil halaman dashboard
-//        Dipilih menu sedang dipinjam asa
+//        Dipilih menu sedang dipinjam
 //        Dijalankan fungsi getLoanData()
 //        Dijalankan fungsi setRequest()
 //        Dijalankan fungsi viewModel getAllFinishLoan()
-//        If list history != empty then asa
+//        If list history != empty then
 //            Tampilkan list peminjaman sedang berlangsung
-//            If klik salah satu item history peminjaman then asa
+//            If klik salah satu item history peminjaman then
 //                Tampilkan detail peminjaman
 //            Else
 //                Tetap di halaman history peminjaman
 //        Else
-//            Tampilkan pesan data kosong asa
+//            Tampilkan pesan data kosong
 //        End if
 //        End
 //
 //        //=== Daftar Absen Kunjungan===
 //        Start
 //        Tampil halaman dashboard
-//        Dipilih menu sedang dipinjam asa
+//        Dipilih menu sedang dipinjam
 //        Dijalankan fungsi getAttendanceData()
 //        Dijalankan fungsi setRequest()
 //        Dijalankan fungsi viewModel getAllAttendance()
-//        If list absen != empty then asa
+//        If list absen != empty then
 //            Tampilkan list absen
 //        Else
-//            Tampilkan pesan data kosong asa
-//        End if asa
+//            Tampilkan pesan data kosong
+//        End if
 //        End
 //
 //
@@ -181,16 +181,16 @@ class TrashClass {
 //        //===SCAN KEHADIRAN===
 //        Start
 //        Tampil halaman dashboard
-//        Dipilih menu scan pengunjung asa
+//        Dipilih menu scan pengunjung
 //        If permission check == true
-//            Buka kamera asa
+//            Buka kamera
 //            Jalankan fungsi readQR()
-//            If qr tidak terbaca asa
+//            If qr tidak terbaca
 //            Kembali ke baris 6
 //            End if
 //        Else
 //            Meminta user menyetujui persyaratan
-//        End if asa
+//        End if
 //        End
 //
 //        //===SCAN PENGEMBALIAN BUKU===
@@ -198,101 +198,187 @@ class TrashClass {
 //        Tampil halaman dashboard
 //        Dipilih menu scan pengembalian buku
 //        If permission check == true
-//        Buka kamera asa
+//        Buka kamera
 //        Jalankan fungsi readQR()
-//        If qr tidak terbaca asa
+//        If qr tidak terbaca
 //        Kembali ke baris 6
 //        End if
 //            Else
 //        Meminta user menyetujui persyaratan
-//                End if asa
+//                End if
+//        End
+//
+//        //===DETAIL BUKU ADMIN===
+//        Start
+//        Tampil halaman detail buku asa
+//        Sembunyikan button pinjam buku asa
+//        Sembunyikan button love
+//        If klik menu delete then
+//            Dijalankan fungsi deleteBook()
+//        If klik menu update then
+//            Tampilkan halaman update buku asa
+//            Ubah data yang diinginkan asa
+//            If klik button simpan then
+//                Dijalankan fungsi postBookData()
+//            Else
+//                Tetap di halaman update buku
+//            End if asa
+//        If klik button Ebook then asa
+//            Tampilkan halaman ebook
+//        Else
+//            Tetap di halaman detail buku
+//        End if
 //        End
 //
 //
 //
+//        //===DETAIL BUKU MEMBER===
+//        Start
+//        Tampil halaman detail buku asa
+//        Sembunyikan menu update
+//        Sembunyikan menu delete
+//        If klik button love then
+//            Dijalankan fungsi favoriteViewModel()
+//        If klik button pinjam buku then
+//            Dijalankan fungsi doLoan()
+//        If klik button Ebook then asa
+//            Tampilkan halaman ebook
+//        Else
+//            Tetap di halaman detail buku
+//        End
 //
 //
 //
+//        //===DETAIL USER ADMIN===
+//        Start
+//        Tampil halaman user profil asa
+//        If klik menu delete then
+//            Dijalankan fungsi deleteMember()
+//        If klik menu update then
+//            Tampilkan halaman update user asa
+//            Ubah data yang diinginkan asa
+//            If klik button simpan then
+//                Dijalankan fungsi postUserData()
+//            Else
+//                Tetap di halaman update user
+//            End if asa
+//        If klik button ubah avatar
+//            Pilih gambar asa
+//            Tampilkan dialog konfirmasi
+//            If klik button ya asa
+//            Jalankan fungsi uploadImage()
+//            Else
+//                Batalkan perubahan()
+//            End if
+//        Else
+//            Tetap di halaman user profil
+//        End if asa
+//        End
 //
 //
 //
-//
-//
-//
-//
+//        //===DETAIL USER MEMBER===
+//        Start
+//        Tampil halaman user profil asa
+//        If klik button ubah avatar
+//            Pilih gambar asa
+//            Tampilkan dialog konfirmasi
+//            If klik button ya asa
+//                Jalankan fungsi uploadImage()
+//            Else
+//                Batalkan perubahan()
+//            End if asa
+//        Else
+//        Tetap di halaman user profil
+//        End if asa
+//        End
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //        Start
-//        Tampil splash screen Tampil form login 
-//        Input username dan password 
+//        Tampil splash screen Tampil form login
+//        Input username dan password
 //            if login sukses then
-//                Tampil halamaan dashboard aplikasi 
+//                Tampil halamaan dashboard aplikasi
 //            Else
-//                Tetap di halaman login 
+//                Tetap di halaman login
 //            If pilih menu tambah buku then
 //                Tampil halaman tambah buku
-//                Tampil form field buku 
+//                Tampil form field buku
 //                Input judul buku
 //                Input penulis buku
 //                Input penerbit buku
-//                Input tahun terbit buku 
-//                Input jumlah stok buku 
+//                Input tahun terbit buku
+//                Input jumlah stok buku
 //                Pilih kategori buku yang tersedia
 //                Input deskripsi buku
 //                Pilih gambar untuk poster buku
 //                Pilih file pdf untuk ebook
 //                If klik simpan then
-//                    Upload data ke server 
+//                    Upload data ke server
 //                Else
-//                    Kembali ke halaman dashaboard 
-//                End if 
+//                    Kembali ke halaman dashaboard
+//                End if
 //            If pilih menu tambah admin then
 //                Tampil halaman tambah user
-//                Tampil form field user 
-//                Input username 
-//                Input password 
+//                Tampil form field user
+//                Input username
+//                Input password
 //                Input nama depan
 //                Input nama belakang
-//                Input email 
+//                Input email
 //                Input nomer handphone
 //                Pilih jenis kelamin
-//                Pilih jenjang 
-//                Input alamat 
+//                Pilih jenjang
+//                Input alamat
 //                If klik simpan then
-//                Upload data ke server 
+//                Upload data ke server
 //                Else
-//                Kembali ke halaman dashaboard 
-//                End if 
+//                Kembali ke halaman dashaboard
+//                End if
 //            If pilih menu daftar buku
 //                Tampil halaman buku
 //                Tampil daftar buku
-//                If pilih salah satu buku then 
-//                    Tampil halaman detail buku 
-//                    If klik icon more then 
+//                If pilih salah satu buku then
+//                    Tampil halaman detail buku
+//                    If klik icon more then
 //                        Tampil pilihan update dan delete
-//                            If klik delete then 
-//                                Hapus buku dari daftar 
+//                            If klik delete then
+//                                Hapus buku dari daftar
 //                            Else
 //                                Kembali ke halaman detail buku
-//                            End if 
+//                            End if
 //                            If klik update then
-//                                Tampil halaman update buku 
-//                                Tampil form field buku 
+//                                Tampil halaman update buku
+//                                Tampil form field buku
 //                                Ubah data yang diinginkan
-//                                    If klik simpan then 
+//                                    If klik simpan then
 //                                        Upload data terbaru ke server
 //                                    Else
 //                                        Kembali ke halaman detail buku
-//                                    End if 
+//                                    End if
 //                            Else
 //                                Kembali ke halaman detail buku
 //                            End if
 //                    Else
-//                        Kembali ke halaman buku 
+//                        Kembali ke halaman buku
 //                    End if
 //                Else
-//                    Kembali ke halaman dashboard 
+//                    Kembali ke halaman dashboard
 //                End if
 //            If pilih menu daftar user
-//
+
     }
 }

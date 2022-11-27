@@ -22,7 +22,6 @@ import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.MySnackBar
 import com.skripsi.perpustakaanapp.ui.userprofile.UserProfileActivity
 import com.skripsi.perpustakaanapp.utils.setSingleClickListener
-import java.lang.reflect.Array
 
 class UpdateUserFragment : BottomSheetDialogFragment() {
 
@@ -142,7 +141,7 @@ class UpdateUserFragment : BottomSheetDialogFragment() {
                     resources.getString(R.string.confirmation_yes),
                     resources.getString(R.string.confirmation_recheck),
                     {_,_ ->
-                        postUpdateData()
+                        postUserData()
                     }, {_,_ ->
 
                     })
@@ -150,7 +149,7 @@ class UpdateUserFragment : BottomSheetDialogFragment() {
         }
     }
 
-    private fun postUpdateData() {
+    private fun postUserData() {
         viewModel.updateUser(
             sessionManager.fetchAuthToken().toString(),
             binding?.edtUsername?.text.toString(),
