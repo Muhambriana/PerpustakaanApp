@@ -19,7 +19,6 @@ import com.skripsi.perpustakaanapp.databinding.FragmentMemberLoanBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.book.detailbook.DetailBookActivity
 import com.skripsi.perpustakaanapp.ui.book.detailloanhistory.DetailLoanHistoryActivity
-import com.skripsi.perpustakaanapp.ui.member.loanhistory.LoanHistoryViewModel
 import com.skripsi.perpustakaanapp.ui.userprofile.UserProfileActivity
 
 class MemberLoanFragment : Fragment() {
@@ -41,7 +40,7 @@ class MemberLoanFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         firstInitialization()
-        getHistoryLoanData()
+        getLoanData()
         onClickListener()
     }
 
@@ -70,9 +69,9 @@ class MemberLoanFragment : Fragment() {
         }
     }
 
-    private fun getHistoryLoanData() {
+    private fun getLoanData() {
         // To know which menu call this, and set with the right data
-        setLoanData()
+        setRequest()
 
         viewModel.resourceLoan.observe(requireActivity()) { event ->
             event.getContentIfNotHandled()?.let { resource ->
@@ -98,7 +97,7 @@ class MemberLoanFragment : Fragment() {
         }
     }
 
-    private fun setLoanData() {
+    private fun setRequest() {
         when (activity?.intent?.getStringExtra(PURPOSE)) {
             "member_pending_loan" -> {
                 (activity as AppCompatActivity?)?.supportActionBar?.title = "Menunggu Persetujuan"

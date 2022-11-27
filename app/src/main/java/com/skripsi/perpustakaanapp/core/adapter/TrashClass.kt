@@ -210,20 +210,20 @@ class TrashClass {
 //
 //        //===DETAIL BUKU ADMIN===
 //        Start
-//        Tampil halaman detail buku asa
-//        Sembunyikan button pinjam buku asa
+//        Tampil halaman detail buku
+//        Sembunyikan button pinjam buku
 //        Sembunyikan button love
 //        If klik menu delete then
 //            Dijalankan fungsi deleteBook()
 //        If klik menu update then
-//            Tampilkan halaman update buku asa
-//            Ubah data yang diinginkan asa
+//            Tampilkan halaman update buku
+//            Ubah data yang diinginkan
 //            If klik button simpan then
 //                Dijalankan fungsi postBookData()
 //            Else
 //                Tetap di halaman update buku
-//            End if asa
-//        If klik button Ebook then asa
+//            End if
+//        If klik button Ebook then
 //            Tampilkan halaman ebook
 //        Else
 //            Tetap di halaman detail buku
@@ -234,68 +234,171 @@ class TrashClass {
 //
 //        //===DETAIL BUKU MEMBER===
 //        Start
-//        Tampil halaman detail buku asa
+//        Tampil halaman detail buku
 //        Sembunyikan menu update
 //        Sembunyikan menu delete
 //        If klik button love then
 //            Dijalankan fungsi favoriteViewModel()
 //        If klik button pinjam buku then
 //            Dijalankan fungsi doLoan()
-//        If klik button Ebook then asa
+//        If klik button Ebook then
 //            Tampilkan halaman ebook
 //        Else
 //            Tetap di halaman detail buku
+//        End if
 //        End
 //
 //
 //
 //        //===DETAIL USER ADMIN===
 //        Start
-//        Tampil halaman user profil asa
+//        Tampil halaman user profil
 //        If klik menu delete then
 //            Dijalankan fungsi deleteMember()
 //        If klik menu update then
-//            Tampilkan halaman update user asa
-//            Ubah data yang diinginkan asa
+//            Tampilkan halaman update user
+//            Ubah data yang diinginkan
 //            If klik button simpan then
 //                Dijalankan fungsi postUserData()
 //            Else
 //                Tetap di halaman update user
-//            End if asa
+//            End if
 //        If klik button ubah avatar
-//            Pilih gambar asa
+//            Pilih gambar
 //            Tampilkan dialog konfirmasi
-//            If klik button ya asa
+//            If klik button ya
 //            Jalankan fungsi uploadImage()
 //            Else
 //                Batalkan perubahan()
 //            End if
 //        Else
 //            Tetap di halaman user profil
-//        End if asa
+//        End if
 //        End
 //
 //
 //
 //        //===DETAIL USER MEMBER===
 //        Start
-//        Tampil halaman user profil asa
+//        Tampil halaman user profil
 //        If klik button ubah avatar
-//            Pilih gambar asa
+//            Pilih gambar
 //            Tampilkan dialog konfirmasi
-//            If klik button ya asa
+//            If klik button ya
 //                Jalankan fungsi uploadImage()
 //            Else
 //                Batalkan perubahan()
-//            End if asa
+//            End if
 //        Else
 //        Tetap di halaman user profil
-//        End if asa
+//        End if
 //        End
 
 
 
 
+
+//        //===PENDING LOAN===
+//        Start
+//        Tampil halaman dashboard
+//        Dipilih menu menunggu persetujuan
+//        Dijalankan fungsi getLoanData()
+//        Dijalankan fungsi setRequest()
+//        Dijalankan fungsi viewModel getAllPendingLoan()
+//        If list peminjaman != empty then
+//            Tampilkan list peminjaman tertunda
+//            If klik salah satu item peminjaman then
+//                Tampilkan detail peminjaman
+//            Else
+//                Tetap di halaman menunggu persetujuan
+//            End if
+//        Else
+//            Tampilkan pesan data kosong
+//        End if
+//        End
+//
+//
+//        //===ONGOING LOAN===
+//        Start
+//        Tampil halaman dashboard
+//        Dipilih menu sedang dipinjam
+//        Dijalankan fungsi getLoanData()
+//        Dijalankan fungsi setRequest()
+//        Dijalankan fungsi viewModel getAllOngoingLoan()
+//        If list peminjaman != empty then
+//            Tampilkan list peminjaman
+//            If klik salah satu item peminjaman then
+//                Tampilkan detail peminjaman
+//            Else
+//                Tetap di halaman sedang dipinjam
+//            End if
+//        Else
+//            Tampilkan pesan data kosong
+//        End if
+//        End
+//
+//        //===HISTORY LOAN===
+//        Start
+//        Tampil halaman dashboard
+//        Dipilih menu history peminjaman
+//        Dijalankan fungsi getLoanData()
+//        Dijalankan fungsi setRequest()
+//        Dijalankan fungsi viewModel getAllFinishLoan()
+//        If list history != empty then
+//        Tampilkan list history tertunda
+//            If klik salah satu item history then
+//                Tampilkan detail history
+//            Else
+//                Tetap di halaman history history
+//            End if
+//        Else
+//            Tampilkan pesan data kosong
+//            End if
+//        End
+//
+//
+//
+//        //===OVERDUE LOAN===
+//        Start
+//        Tampil halaman dashboard
+//        Dipilih menu telat dikembalikan
+//        Dijalankan fungsi getLoanData()
+//        Dijalankan fungsi setRequest()
+//        Dijalankan fungsi viewModel getAllOverdueLoan()
+//        If list peminjaman != empty then
+//            Tampilkan list peminjaman
+//            If klik salah satu item peminjaman then
+//                Tampilkan detail peminjaman
+//            Else
+//                Tetap di halaman telat dikembalikan
+//            End if
+//        Else
+//            Tampilkan pesan data kosong
+//        End if
+//        End
+//
+//        //===REJECTED LOAN===
+//        Start
+//        Tampil halaman dashboard
+//        Dipilih menu peminjaman ditolak
+//        Dijalankan fungsi getLoanData()
+//        Dijalankan fungsi setRequest()
+//        Dijalankan fungsi viewModel getAllRejectedLoan()
+//        If list peminjaman != empty then
+//            Tampilkan list peminjaman
+//            If klik salah satu item peminjaman then
+//                Tampilkan detail peminjaman
+//            Else
+//                Tetap di halaman peminjaman ditolak
+//            End if
+//        Else
+//            Tampilkan pesan data kosong
+//        End if
+//        End
+//
+//
+//
+//
 
 
 
