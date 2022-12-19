@@ -19,6 +19,9 @@
         android:theme="@style/Theme.PerpustakaanApp"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.developer.AboutActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.loan.LoanActivity"
             android:exported="false" />
         <activity
@@ -30,7 +33,7 @@
         <activity
             android:name=".ui.home.HomeActivity"
             android:exported="false"
-            android:theme="@style/Theme.PerpustakaanApp.NoActionBar"></activity>
+            android:theme="@style/Theme.PerpustakaanApp.NoActionBar" />
         <activity
             android:name=".ui.listattendance.AttendanceActivity"
             android:exported="false" />
@@ -45,9 +48,6 @@
             android:exported="false" />
         <activity
             android:name=".ui.admin.listuser.UserActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.SettingsActivity"
             android:exported="false" />
         <activity
             android:name=".ui.admin.pendingloan.PendingLoanActivity"
@@ -65,9 +65,7 @@
         <activity
             android:name=".ui.book.detailbook.DetailBookActivity"
             android:exported="false" />
-        <activity
-            android:name=".ui.member.loanhistory.LoanHistoryActivity"
-            android:exported="false" />
+
         <activity
             android:name=".ui.book.listbook.BookActivity"
             android:exported="false" />

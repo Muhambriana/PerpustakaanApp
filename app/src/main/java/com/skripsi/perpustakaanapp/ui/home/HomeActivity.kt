@@ -28,6 +28,7 @@ import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.MySnackBar
 import com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.bookcategory.BookCategoryFragment
 import com.skripsi.perpustakaanapp.ui.admin.scanner.ScannerAttendanceFragment
+import com.skripsi.perpustakaanapp.ui.developer.AboutActivity
 import com.skripsi.perpustakaanapp.ui.login.LoginActivity
 import com.skripsi.perpustakaanapp.ui.member.qrcode.QRCodeFragment
 import com.skripsi.perpustakaanapp.ui.statistik.StatisticFragment
@@ -81,7 +82,7 @@ class HomeActivity : AppCompatActivity() {
         resultLauncher =  registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ){ result ->
-            if (result.resultCode == RESULT_OK) {
+            if (result.resultCode == 202) {
                 avatar = sessionManager.fetchUsername()+".png"
                 //Re-run getBookData and update with the latest
                 userAvatar()
@@ -103,11 +104,10 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun glideSetup(imageName: String?) {
-        val imageUrl = GlideUrl(AVATAR_IMAGE_BASE_URL+imageName) { mapOf(Pair("Authorization", sessionManager.fetchAuthToken())) }
+        val imageUrl = GlideUrl("$AVATAR_IMAGE_BASE_URL$imageName/${System.currentTimeMillis()}") { mapOf(Pair("Authorization", sessionManager.fetchAuthToken())) }
 
         Glide.with(this)
             .load(imageUrl)
-            .signature(ObjectKey(System.currentTimeMillis().toString()))
             .override(100, 400)
             .centerCrop()
             .into(binding.toolbarIcon)
@@ -203,6 +203,11 @@ class HomeActivity : AppCompatActivity() {
             }
             R.id.add_category -> {
                 BookCategoryFragment().show(supportFragmentManager, "UpdateBookFragment")
+                true
+            }
+            R.id.about_menu -> {
+                val intent = Intent(this, AboutActivity::class.java)
+                startActivity(intent)
                 true
             }
             else -> true

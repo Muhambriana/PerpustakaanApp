@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.signature.ObjectKey
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.MyViewModelFactory
@@ -185,8 +186,9 @@ class UserProfileFragment : Fragment() {
 
     private fun setProfilePhoto(imageView: ImageView) {
         if (detailUser?.avatar != null) {
+            val imageUrl = GlideUrl("${NetworkInfo.AVATAR_IMAGE_BASE_URL}${detailUser?.avatar}/${System.currentTimeMillis()}") { mapOf(Pair("Authorization", sessionManager.fetchAuthToken())) }
             Glide.with(this)
-                .load(NetworkInfo.AVATAR_IMAGE_BASE_URL +detailUser?.avatar)
+                .load(imageUrl)
                 .signature(ObjectKey(System.currentTimeMillis().toString()))
                 .fitCenter()
                 .into(imageView)

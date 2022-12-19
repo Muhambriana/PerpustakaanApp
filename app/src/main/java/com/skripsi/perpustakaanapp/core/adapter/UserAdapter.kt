@@ -13,6 +13,7 @@ import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.core.models.User
 import com.skripsi.perpustakaanapp.databinding.ItemListUserBinding
+import com.skripsi.perpustakaanapp.utils.NetworkInfo
 import com.skripsi.perpustakaanapp.utils.NetworkInfo.AVATAR_IMAGE_BASE_URL
 import com.skripsi.perpustakaanapp.utils.setSingleClickListener
 
@@ -60,12 +61,11 @@ class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
         }
 
         private fun glideSetup(imageName: String?) {
-            val imageUrl = GlideUrl(AVATAR_IMAGE_BASE_URL+imageName) { mapOf(Pair("Authorization", sessionManager.fetchAuthToken())) }
+            val imageUrl = GlideUrl("${AVATAR_IMAGE_BASE_URL}$imageName/${System.currentTimeMillis()}") { mapOf(Pair("Authorization", sessionManager.fetchAuthToken())) }
+
 
             Glide.with(itemView.context)
                 .load(imageUrl)
-                // For reload image on glide from the same url
-                .signature(ObjectKey(System.currentTimeMillis().toString()))
                 // To show the original size of image
                 .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
                 .fitCenter()

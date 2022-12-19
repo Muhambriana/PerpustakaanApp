@@ -98,7 +98,6 @@ class BookActivity : AppCompatActivity() {
             }
             R.id.favorite_menu -> {
                 val intent = Intent(this, FavoriteBookActivity::class.java)
-                intent.putExtra(UserProfileActivity.USERNAME, sessionManager.fetchUsername())
                 startActivity(intent)
                 true
             }

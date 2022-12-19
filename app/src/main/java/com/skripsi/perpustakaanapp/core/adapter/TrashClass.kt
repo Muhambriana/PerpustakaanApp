@@ -402,6 +402,44 @@ class TrashClass {
 
 
 
+//        //===DASHBOARD===
+//        Start
+//        Tampil halaman dashboard
+//        Tampilkan halaman home
+//        If klik bottom menu statistik then
+//            Tampilkan halaman statistik
+//            If role == admin then
+//                Dijalankan fungsi statisticAdmin()
+//            Else role == student then
+//                Dijalankan fungsi statisticMember()
+//            End if
+//        If klik bottom menu scan qr
+//            If role == admin then
+//                Dijalankan fungsi qrCodeFragment()
+//            Else role == student then
+//                Dijalankan fungsi scannerAttendanceFragment()
+//            End if
+//        If klik avatar then
+//        Tampilkan halaman user profil
+//        If klik menu about then
+//            Tampilkan halaman tentang developer
+//        If role == admin then
+//            Tampilkan pilihan menu ganti role
+//            If klik menu sebagai anggota then
+//                tempRole = admin
+//                role = student
+//            If klik menu sebagai admin then
+//                tempRole = null
+//                role = tempRole
+//            Else
+//                role tidak berubah
+//        Else
+//            Tetap di halaman dashboard
+//        End if
+//        End
+//
+//
+
 
 
 

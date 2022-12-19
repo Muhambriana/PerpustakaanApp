@@ -107,7 +107,7 @@ class UserProfileActivity : AppCompatActivity() {
                     }
                     is MyResource.Success -> {
                         binding.progressBar.visibility = View.GONE
-                        setResult(RESULT_OK)
+                        setResult(202)
                         restartActivity(user)
                     }
                     is MyResource.Error -> {
@@ -261,11 +261,9 @@ class UserProfileActivity : AppCompatActivity() {
     }
 
     private fun glideSetup(imageName: String?, imageView: ImageView) {
-        val imageUrl = GlideUrl(AVATAR_IMAGE_BASE_URL+imageName) { mapOf(Pair("Authorization", sessionManager.fetchAuthToken())) }
-
+        val imageUrl = GlideUrl("$AVATAR_IMAGE_BASE_URL$imageName/${System.currentTimeMillis()}") { mapOf(Pair("Authorization", sessionManager.fetchAuthToken())) }
         Glide.with(this)
             .load(imageUrl)
-            .signature(ObjectKey(System.currentTimeMillis().toString()))
             .override(200,600)
             .fitCenter()
             .into(imageView)

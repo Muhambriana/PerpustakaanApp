@@ -58,7 +58,7 @@ class ViewImageFragment : DialogFragment() {
 
     private fun glideSetup(imageBaseUrl: String, imageName: String?) {
         sessionManager=  SessionManager(requireContext())
-        val imageUrl = GlideUrl(imageBaseUrl+imageName) { mapOf(Pair("Authorization", sessionManager.fetchAuthToken())) }
+        val imageUrl = GlideUrl("$imageBaseUrl$imageName/${System.currentTimeMillis()}") { mapOf(Pair("Authorization", sessionManager.fetchAuthToken())) }
 
         binding?.let {
             Glide.with(this)

@@ -68,6 +68,9 @@ class UserActivity : AppCompatActivity() {
             if (result.resultCode == RESULT_OK) {
                 //Re-run getUserData and update with the latest
                 getUserData()
+            } else if (result.resultCode == 202) {
+                //Re-run getUserData and update with the latest
+                getUserData()
             }
         }
     }
@@ -158,7 +161,6 @@ class UserActivity : AppCompatActivity() {
                 }
             }
         }
-
     }
 
     private fun hideRecycleList() {

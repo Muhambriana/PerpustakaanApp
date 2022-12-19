@@ -5,6 +5,8 @@ import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.InputFilter
 import android.view.LayoutInflater
 import android.view.View
@@ -83,7 +85,7 @@ class UpdateBookFragment : BottomSheetDialogFragment() {
         } else if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_FILE) {
             val selectedPdf: Uri? = data?.data
             if (selectedPdf!= null) {
-                val file: File? = FilePathHelper.getFile(requireContext(), selectedPdf)
+                val file: File? = FilePathHelper.getFilePDF(requireContext(), selectedPdf)
                 binding.previewPdf.background = null
                 binding.previewPdf.fromFile(file)
                     .pages(0)
@@ -116,12 +118,11 @@ class UpdateBookFragment : BottomSheetDialogFragment() {
 
     private fun setBookPoster(imageName: String?) {
         imageName?.let {
-            val imageUrl = GlideUrl(BOOK_IMAGE_BASE_URL+imageName) { mapOf(Pair("Authorization", sessionManager.fetchAuthToken())) }
+            val imageUrl = GlideUrl("$BOOK_IMAGE_BASE_URL$imageName/${System.currentTimeMillis()}") { mapOf(Pair("Authorization", sessionManager.fetchAuthToken())) }
 
             Glide.with(requireContext())
                 .load(imageUrl)
                 .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
-                .signature(ObjectKey(System.currentTimeMillis().toString()))
                 .into(binding.bookPoster)
         }
     }
@@ -221,12 +222,18 @@ class UpdateBookFragment : BottomSheetDialogFragment() {
                         MySnackBar.showBlack(binding.root, resource.data.toString())
 
                         // Star Intent to DetailActivity
-                        val intent = Intent(context, DetailBookActivity::class.java)
-                        intent.putExtra(DetailBookActivity.BOOK_ID, dataBook?.bookId)
-                        startActivity(intent)
+                        Handler(Looper.getMainLooper()).postDelayed(
+                            {
+                                val intent = Intent(context, DetailBookActivity::class.java)
+                                intent.putExtra(DetailBookActivity.BOOK_ID, dataBook?.bookId)
+                                startActivity(intent)
 
-                        // Finish this activity(include the fragment)
-                        activity?.finish()
+                                // Finish this activity(include the fragment)
+                                activity?.finish()
+                            }, 1500)
+
+
+
 
                     }
                     is MyResource.Error -> {

@@ -80,7 +80,7 @@ class CreateBookActivity : AppCompatActivity() {
     }
 
     private fun choosePDFFIle() {
-        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
         intent.type = "application/pdf"
         intent.addCategory(Intent.CATEGORY_OPENABLE)
         startActivityForResult(intent, REQUEST_CODE_FILE)
@@ -104,7 +104,7 @@ class CreateBookActivity : AppCompatActivity() {
                 binding.contentCreate.visibility = View.VISIBLE
                 binding.textPdf.text = FilePathHelper.getFileName(this, selectedPdf)
 
-                val file: File? = FilePathHelper.getFile(this, selectedPdf)
+                val file: File? = FilePathHelper.getFilePDF(this, selectedPdf)
                 binding.previewPdf.fromFile(file)
                     .pages(0)
                     .spacing(0)
@@ -113,7 +113,6 @@ class CreateBookActivity : AppCompatActivity() {
                     .load()
                 pdfMultiPartBody = FilePathHelper.getPDF(this, selectedPdf)
             }
-
         }
     }
 

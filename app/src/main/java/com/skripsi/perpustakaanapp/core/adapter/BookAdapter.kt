@@ -64,12 +64,10 @@ class BookAdapter : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
         }
 
         private fun glideSetup(imageName: String?) {
-            val imageUrl = GlideUrl(BOOK_IMAGE_BASE_URL +imageName) { mapOf(Pair("Authorization", sessionManager.fetchAuthToken())) }
+            val imageUrl = GlideUrl("$BOOK_IMAGE_BASE_URL$imageName/${System.currentTimeMillis()}") { mapOf(Pair("Authorization", sessionManager.fetchAuthToken())) }
 
             Glide.with(itemView)
                 .load(imageUrl)
-                // For reload image on glide from the same url
-                .signature(ObjectKey(System.currentTimeMillis().toString()))
                 // To show the original size of image
                 .override(200, 600)
                 .fitCenter()

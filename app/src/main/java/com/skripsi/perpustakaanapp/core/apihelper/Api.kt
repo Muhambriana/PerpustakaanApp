@@ -62,7 +62,7 @@ interface Api {
         @Body book: Book
     ):Call<GeneralResponse>
 
-    @POST("book/delete")
+    @HTTP(method = "DELETE", path = "book/delete", hasBody = true)
     fun postDeleteBook(
         @Header("Authorization") token: String,
         @Body bookId: ModelBookId
@@ -196,7 +196,7 @@ interface Api {
         @Header("Authorization") token: String
     ):Call<ListUserResponse>
 
-    @POST("user/delete")
+    @DELETE("user/delete")
     fun deleteMember(
         @Header("Authorization") token: String,
         @Body username: ModelUsername
