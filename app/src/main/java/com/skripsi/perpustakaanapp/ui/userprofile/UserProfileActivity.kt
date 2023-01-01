@@ -54,8 +54,7 @@ class UserProfileActivity : AppCompatActivity() {
     }
 
     private fun firstInitialization() {
-        //when still loading the data, action bar will show nothing
-        supportActionBar?.title = ""
+        supportActionBar?.title = "Profil"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         binding.progressBar.visibility = View.GONE

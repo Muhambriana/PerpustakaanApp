@@ -402,6 +402,56 @@ class TrashClass {
 
 
 
+
+        //        //===WEB DASHBOARD===
+//        Start
+//        Tampil halaman login
+//        Input username dan password
+//        If login sukses then
+//            Tampil halaman dashboard
+//            If pilih menu tambah admin then
+//                Tampil halaman tambah admin
+//                Input username
+//                Input password
+//                Input first name
+//                Input last name
+//                Pilih gender
+//                Input address
+//                Input phone number
+//                Input email
+//                Pilih jenjang
+//                If klik tombol save then
+//                    Simpan ke database
+//                Else
+//                    Tetap di halaman tambah admin
+//                End if
+//            Else if pilih menu tambah buku then
+//                Tampil halaman buku admin
+//                Input title
+//                Input publisher
+//                Input year of publish
+//                Input stock
+//                input description
+//                Pilih book category
+//                If klik tombol save then
+//                    Simpan ke database
+//                Else
+//                    Tetap di halaman tambah buku
+//                End if
+//            Else if pilih menu daftar user then
+//                Tampil halaman daftar user berisi list user
+//            Else if pilih menu daftar user then
+//                Tampil halaman daftar user berisi list user
+//            Else
+//                Tetap di halaman dashboard
+//            End if
+//        Else
+//            Tampilkan pesan error
+//        End if
+//        End
+
+
+
 //        //===DASHBOARD===
 //        Start
 //        Tampil halaman dashboard

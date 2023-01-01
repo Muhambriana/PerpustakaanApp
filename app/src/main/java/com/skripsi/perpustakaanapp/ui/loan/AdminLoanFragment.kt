@@ -103,7 +103,7 @@ class AdminLoanFragment : Fragment() {
             (activity as AppCompatActivity?)?.supportActionBar?.title = "Belum Dikembalikan"
             viewModel.getAllOngoingLoan(sessionManager.fetchAuthToken().toString())
         } else if (activity?.intent?.getStringExtra(PURPOSE) == "admin_finish_loan") {
-            (activity as AppCompatActivity?)?.supportActionBar?.title = "Belum Dikembalikan"
+            (activity as AppCompatActivity?)?.supportActionBar?.title = "Histori Peminjaman"
             viewModel.getAllFinishLoan(sessionManager.fetchAuthToken().toString())
         }
     }

@@ -175,13 +175,13 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_author"
+                app:layout_constraintTop_toBottomOf="@+id/tv_author"
                 app:layout_constraintVertical_bias="0.056" />
 
             <TextView
                 android:id="@+id/tv_description"
                 android:layout_width="298dp"
-                android:layout_height="332dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="30dp"

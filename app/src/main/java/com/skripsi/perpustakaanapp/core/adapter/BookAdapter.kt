@@ -53,13 +53,14 @@ class BookAdapter : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
             with(binding){
                 tvBookTitle.text = book.title
                 tvBookAuthor.text = book.author
+                tvBookCategory.text = book.category
                 setBookPoster(book.imageUrl)
             }
         }
 
-        private fun setBookPoster(avatar: String?) {
-            if (avatar != null) {
-                glideSetup(avatar)
+        private fun setBookPoster(poster: String?) {
+            if (poster != null) {
+                glideSetup(poster)
             }
         }
 

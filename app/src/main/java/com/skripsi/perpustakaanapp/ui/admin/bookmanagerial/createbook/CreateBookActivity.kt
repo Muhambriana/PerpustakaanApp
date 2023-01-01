@@ -205,6 +205,7 @@ class CreateBookActivity : AppCompatActivity() {
         binding.edPublisher.text?.clear()
         binding.edPublisherDate.text?.clear()
         binding.edCopies.text?.clear()
+        binding.edDescription.text?.clear()
         binding.spinnerBookCategory.setSelection(0)
         imageMultipartBody = null
         pdfMultiPartBody = null

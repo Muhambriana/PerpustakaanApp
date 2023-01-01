@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.signature.ObjectKey
 import com.skripsi.perpustakaanapp.R
@@ -24,6 +25,7 @@ import com.skripsi.perpustakaanapp.ui.member.qrcode.QRCodeFragment
 import com.skripsi.perpustakaanapp.ui.userprofile.UserProfileActivity
 import com.skripsi.perpustakaanapp.utils.GenerateQRCode
 import com.skripsi.perpustakaanapp.utils.NetworkInfo
+import com.skripsi.perpustakaanapp.utils.NetworkInfo.BOOK_IMAGE_BASE_URL
 import jp.wasabeef.glide.transformations.BlurTransformation
 
 class DetailLoanHistoryActivity : AppCompatActivity() {
@@ -66,17 +68,30 @@ class DetailLoanHistoryActivity : AppCompatActivity() {
         binding.tvDetailReleaseDate.text = detailLoanHistory?.releaseDate
         binding.tvDetailDueDate.text = detailLoanHistory?.dueDate
         binding.tvDetailReturnDate.text = detailLoanHistory?.returnDate
-        setImage()
+        setBookPoster(detailLoanHistory?.bookPoster)
+        setQR()
         onClickListener()
         baseOnRole()
     }
 
-    private fun setImage() {
+    private fun setBookPoster(poster: String?) {
+        if (poster != null) {
+            glideSetup(poster)
+        }
+    }
+
+    private fun glideSetup(imageName: String?) {
+        val imageUrl = GlideUrl("$BOOK_IMAGE_BASE_URL$imageName/${System.currentTimeMillis()}") { mapOf(Pair("Authorization", sessionManager.fetchAuthToken())) }
+
         Glide.with(this)
-            .load(NetworkInfo.BOOK_IMAGE_BASE_URL + detailLoanHistory?.bookPoster)
-            .apply(RequestOptions.bitmapTransform(BlurTransformation(25, 3)))
+            .load(imageUrl)
+            // To show the original size of image
+            .override(200, 600)
             .fitCenter()
-            .into(binding.imgDetailBookPoster)
+            .into(binding.ivDetailBookPoster)
+    }
+
+    private fun setQR() {
         binding.imgDetailQr.setImageBitmap(GenerateQRCode.generate(detailLoanHistory?.qrCode))
     }
 

@@ -43,6 +43,7 @@ class LoanHistoryAdapter : RecyclerView.Adapter<LoanHistoryAdapter.LoanHistoryVi
             with(binding) {
                 tvItemBookTitle.text = loanHistory.bookTitle
                 tvItemOfficer.text = loanHistory.managedBy
+                tvItemBorrower.text = loanHistory.borrower
                 tvItemStatus.text = loanHistory.status
                 tvItemStatus.background = setStatusColor(loanHistory.status)?.let {
                     ContextCompat.getDrawable(itemView.context,

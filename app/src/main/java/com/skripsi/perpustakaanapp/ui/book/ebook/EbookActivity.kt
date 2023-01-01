@@ -33,6 +33,7 @@ class EbookActivity : AppCompatActivity() {
     }
 
     private fun firstInitialization() {
+        supportActionBar?.title ="eBook"
         sessionManager = SessionManager(this)
         viewModel = ViewModelProvider(this, MyViewModelFactory(LibraryRepository(client))).get(
             EbookViewModel::class.java

@@ -84,7 +84,7 @@ class HomeAdminFragment : Fragment() {
                 R.drawable.icon_history_2, "Riwayat Peminjaman", null, LoanActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_6), "admin_finish_loan"))
         models?.add(
             CardMenu(
-                R.drawable.icon_attendant_list, "Daftar Absen", null, AttendanceActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_3)))
+                R.drawable.icon_attendant_list, "History Kunjungan", null, AttendanceActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_3)))
         models?.add(
             CardMenu(
                 R.drawable.icon_scanner, "Scan Pengunjung", null, ScannerActivity::class.java, ContextCompat.getDrawable(requireContext(), R.drawable.home_gradient_4), "attendance"))

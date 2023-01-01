@@ -19,6 +19,17 @@
         android:theme="@style/Theme.PerpustakaanApp"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.SplashScreenActivity"
+            android:exported="true"
+            android:label="@string/title_activity_splash_screen"
+            android:theme="@style/Theme.PerpustakaanApp.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".ui.developer.AboutActivity"
             android:exported="false" />
         <activity
@@ -65,19 +76,14 @@
         <activity
             android:name=".ui.book.detailbook.DetailBookActivity"
             android:exported="false" />
-
         <activity
             android:name=".ui.book.listbook.BookActivity"
             android:exported="false" />
         <activity
             android:name=".ui.login.LoginActivity"
-            android:exported="true"
+            android:exported="false"
             android:theme="@style/TextColorWhite">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <meta-data
