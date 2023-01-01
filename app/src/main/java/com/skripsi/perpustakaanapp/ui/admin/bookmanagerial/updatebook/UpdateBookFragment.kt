@@ -195,12 +195,12 @@ class UpdateBookFragment : BottomSheetDialogFragment() {
             binding.edDescription.text.toString(),
             binding.spinnerBookCategory.selectedItem.toString(),
             if (imageMultipartBody != null) {
-                binding.edBookTitle.text.toString()
+                binding.edBookTitle.text.toString()+binding.spinnerBookCategory.selectedItem.toString()
             } else {
                 null
             },
             if (pdfMultiPartBody != null) {
-                binding.edBookTitle.text.toString()
+                binding.edBookTitle.text.toString()+binding.spinnerBookCategory.selectedItem.toString()
             } else {
                 null
             }
