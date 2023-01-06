@@ -4,13 +4,11 @@ import android.content.ContentUris
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
-import android.os.Build
 import android.os.Environment
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.util.Log
-import androidx.documentfile.provider.DocumentFile
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody

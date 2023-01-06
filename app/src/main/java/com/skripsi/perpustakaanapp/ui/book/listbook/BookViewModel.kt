@@ -33,7 +33,8 @@ class BookViewModel(private val repository: LibraryRepository) : ViewModel() {
             }
 
             override fun onFailure(call: Call<ListBookResponse>, t: Throwable) {
-                resourceBook.postValue(MyEvent(MyResource.Error(t.message)))
+                resourceBook.postValue(MyEvent(MyResource.Error("Failed Connection, Check Your Connection")))
+//                t.message?.let { Log.e("BookViewModel", it) }
             }
         })
     }
@@ -54,7 +55,8 @@ class BookViewModel(private val repository: LibraryRepository) : ViewModel() {
             }
 
             override fun onFailure(call: Call<ListBookResponse>, t: Throwable) {
-                resourceBook.postValue(MyEvent(MyResource.Error(t.message)))
+                resourceBook.postValue(MyEvent(MyResource.Error("Failed Connection, Check Your Connection")))
+//                t.message?.let { Log.e("BookViewModel", it) }
             }
         })
     }
@@ -81,7 +83,8 @@ class BookViewModel(private val repository: LibraryRepository) : ViewModel() {
             }
 
             override fun onFailure(call: Call<ListBookResponse>, t: Throwable) {
-                resourceSearchBook.postValue(MyEvent(MyResource.Error(t.message)))
+                resourceSearchBook.postValue(MyEvent(MyResource.Error("Failed Connection, Check Your Connection")))
+//                t.message?.let { Log.e("BookViewModel", it) }
             }
         })
     }

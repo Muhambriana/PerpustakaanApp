@@ -30,7 +30,8 @@ class CreateNewAdminViewModel(private val repository: LibraryRepository) : ViewM
             }
 
             override fun onFailure(call: Call<GeneralResponse>, t: Throwable) {
-                resourceCreateAdmin.postValue(MyEvent(MyResource.Error(t.message)))
+                resourceCreateAdmin.postValue(MyEvent(MyResource.Error("Failed Connection, Check Your Connection")))
+//                t.message?.let { Log.e("CreateNewAdminVM", it) }
             }
         })
     }

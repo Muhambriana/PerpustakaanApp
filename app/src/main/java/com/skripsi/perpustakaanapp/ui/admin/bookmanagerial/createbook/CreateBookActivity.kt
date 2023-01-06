@@ -190,7 +190,6 @@ class CreateBookActivity : AppCompatActivity() {
                     }
                     is MyResource.Error -> {
                         binding.progressBar.visibility = View.GONE
-                        println("kocak error: "+resource.message)
                         MySnackBar.showRed(binding.root, resource.message.toString())
                     }
                     else -> {}

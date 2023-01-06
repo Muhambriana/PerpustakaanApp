@@ -36,7 +36,8 @@ class AttendanceViewModel(private val repository: LibraryRepository) : ViewModel
             }
 
             override fun onFailure(call: Call<ListAttendanceResponse>, t: Throwable) {
-                resourceAttendance.postValue(MyEvent(MyResource.Error(t.message)))
+                resourceAttendance.postValue(MyEvent(MyResource.Error("Failed Connection, Check Your Connection")))
+//                t.message?.let { Log.e("AttendanceViewModel", it) }
             }
         })
     }
@@ -62,7 +63,8 @@ class AttendanceViewModel(private val repository: LibraryRepository) : ViewModel
             }
 
             override fun onFailure(call: Call<ListAttendanceResponse>, t: Throwable) {
-                resourceAttendance.postValue(MyEvent(MyResource.Error(t.message)))
+                resourceAttendance.postValue(MyEvent(MyResource.Error("Failed Connection, Check Your Connection")))
+//                t.message?.let { Log.e("AttendanceViewModel", it) }
             }
         })
     }

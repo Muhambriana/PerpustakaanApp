@@ -2,14 +2,11 @@ package com.skripsi.perpustakaanapp.ui.statistik
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.skripsi.perpustakaanapp.core.models.LoanHistory
-import com.skripsi.perpustakaanapp.core.models.ModelUsername
 import com.skripsi.perpustakaanapp.core.models.StatisticAdminModel
 import com.skripsi.perpustakaanapp.core.models.StatisticMemberModel
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.core.resource.MyEvent
 import com.skripsi.perpustakaanapp.core.resource.MyResource
-import com.skripsi.perpustakaanapp.core.responses.ListLoanHistoryResponse
 import com.skripsi.perpustakaanapp.core.responses.StatisticResponse
 import retrofit2.Call
 import retrofit2.Callback
@@ -40,7 +37,8 @@ class StatisticViewModel(private val repository: LibraryRepository) : ViewModel(
                 call: Call<StatisticResponse>,
                 t: Throwable
             ) {
-                resourceStatisticAdmin.postValue(MyEvent(MyResource.Error(t.message)))
+                resourceStatisticAdmin.postValue(MyEvent(MyResource.Error("Failed Connection, Check Your Connection")))
+//                t.message?.let { Log.e("StatisticViewModel", it) }
             }
         })
     }
@@ -65,7 +63,8 @@ class StatisticViewModel(private val repository: LibraryRepository) : ViewModel(
                 call: Call<StatisticResponse>,
                 t: Throwable
             ) {
-                resourceStatisticMember.postValue(MyEvent(MyResource.Error(t.message)))
+                resourceStatisticMember.postValue(MyEvent(MyResource.Error("Failed Connection, Check Your Connection")))
+//                t.message?.let { Log.e("StatisticViewModel", it) }
             }
         })
     }

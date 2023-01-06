@@ -41,7 +41,8 @@ class UpdateBookViewModel(private val repository: LibraryRepository) : ViewModel
             }
 
             override fun onFailure(call: Call<GeneralResponse>, t: Throwable) {
-                resourceUpdateBook.postValue(MyEvent(MyResource.Error(t.message)))
+                resourceUpdateBook.postValue(MyEvent(MyResource.Error("Connection Failed")))
+//                t.message?.let { Log.e(" UpdateBookViewModel", it) }
             }
         })
     }
@@ -64,7 +65,8 @@ class UpdateBookViewModel(private val repository: LibraryRepository) : ViewModel
             }
 
             override fun onFailure(call: Call<GeneralResponse>, t: Throwable) {
-                resourceUpdateImage.postValue(MyEvent(MyResource.Error(t.message)))
+                resourceUpdateImage.postValue(MyEvent(MyResource.Error("Connection Failed")))
+//                t.message?.let { Log.e(" UpdateBookViewModel", it) }
             }
         })
     }
@@ -87,7 +89,8 @@ class UpdateBookViewModel(private val repository: LibraryRepository) : ViewModel
             }
 
             override fun onFailure(call: Call<GeneralResponse>, t: Throwable) {
-                resourceUpdateEBook.postValue(MyEvent(MyResource.Error(t.message)))
+                resourceUpdateEBook.postValue(MyEvent(MyResource.Error("Connection Failed")))
+//                t.message?.let { Log.e(" UpdateBookViewModel", it) }
             }
         })
     }
@@ -110,7 +113,8 @@ class UpdateBookViewModel(private val repository: LibraryRepository) : ViewModel
                 }
             }
             override fun onFailure(call: Call<ListCategoryResponse>, t: Throwable) {
-                resourceBookCategory.postValue(MyEvent(MyResource.Error(t.message)))
+                resourceBookCategory.postValue(MyEvent(MyResource.Error("Connection Failed")))
+//                t.message?.let { Log.e(" UpdateBookViewModel", it) }
             }
         })
     }

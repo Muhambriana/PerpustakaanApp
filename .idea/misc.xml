@@ -11,6 +11,7 @@
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/drawable-v24/card_item_menu.xml" value="0.2395" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/drawable-v24/card_selector.xml" value="0.1285" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/drawable-v24/card_state.xml" value="0.2395" />
+        <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2095" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/drawable/actionbar_space.xml" value="0.2395" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/drawable/button_custom.xml" value="0.2395" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/drawable/card_item.xml" value="0.2395" />
@@ -35,6 +36,7 @@
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/drawable/home_gradient_4.xml" value="0.2395" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/drawable/ic_icon_favorite_false.xml" value="0.2395" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/drawable/ic_icon_favorite_true.xml" value="0.2395" />
+        <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2095" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/drawable/ic_wave_bottom_1.xml" value="0.2395" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/drawable/ic_wave_top_1.xml" value="0.2395" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/drawable/ic_wave_top_2.xml" value="0.2395" />
@@ -142,6 +144,7 @@
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/menu/s_ide_nav.xml" value="0.264" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/menu/side_nav.xml" value="0.23333333333333334" />
         <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/menu/side_nav_menu.xml" value="0.23333333333333334" />
+        <entry key="..\:/FOLDER SKRIPSI/AndroidStudioProject/PerpustakaanApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
       </map>
     </option>
   </component>

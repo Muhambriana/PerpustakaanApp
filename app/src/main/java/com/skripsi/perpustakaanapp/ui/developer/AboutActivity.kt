@@ -1,16 +1,12 @@
 package com.skripsi.perpustakaanapp.ui.developer
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.request.target.Target
-import com.bumptech.glide.signature.ObjectKey
-import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.databinding.ActivityAboutBinding
-import com.skripsi.perpustakaanapp.databinding.ActivityUserProfileBinding
-import com.skripsi.perpustakaanapp.utils.NetworkInfo
 import com.skripsi.perpustakaanapp.utils.NetworkInfo.AVATAR_IMAGE_BASE_URL
 
 class AboutActivity : AppCompatActivity() {

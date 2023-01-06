@@ -9,7 +9,6 @@ import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.ByteArrayInputStream
 import java.io.InputStream
 
 
@@ -25,7 +24,8 @@ class EbookViewModel(private val repository: LibraryRepository): ViewModel() {
             }
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                resourcePDF.postValue(MyEvent(MyResource.Error(t.message)))
+                resourcePDF.postValue(MyEvent(MyResource.Error("Failed Connection, Check Your Connection")))
+//                t.message?.let { Log.e("EbookViewModel", it) }
             }
         })
     }

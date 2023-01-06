@@ -35,7 +35,8 @@ class RegisterViewModel(private val repository: LibraryRepository) : ViewModel()
                 call: Call<GeneralResponse>,
                 t: Throwable)
             {
-                resourceRegisterUser.postValue(MyEvent(MyResource.Error(t.message)))
+                resourceRegisterUser.postValue(MyEvent(MyResource.Error("Failed Connection, Check Your Connection")))
+//                t.message?.let { Log.e("RegisterViewModel", it) }
             }
         })
     }

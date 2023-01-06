@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.ArrayAdapter
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.appcompat.app.AppCompatActivity
@@ -25,7 +24,6 @@ import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.MySnackBar
 import com.skripsi.perpustakaanapp.ui.book.detailbook.DetailBookActivity
 import com.skripsi.perpustakaanapp.ui.member.favoritebook.FavoriteBookActivity
-import com.skripsi.perpustakaanapp.ui.userprofile.UserProfileActivity
 
 
 class BookActivity : AppCompatActivity() {

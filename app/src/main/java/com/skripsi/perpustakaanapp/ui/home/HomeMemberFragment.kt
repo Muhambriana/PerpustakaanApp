@@ -2,7 +2,9 @@ package com.skripsi.perpustakaanapp.ui.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
@@ -11,8 +13,8 @@ import com.skripsi.perpustakaanapp.core.adapter.CardMenuAdapter
 import com.skripsi.perpustakaanapp.core.models.CardMenu
 import com.skripsi.perpustakaanapp.databinding.FragmentHomeMemberBinding
 import com.skripsi.perpustakaanapp.ui.book.listbook.BookActivity
-import com.skripsi.perpustakaanapp.ui.loan.LoanActivity
 import com.skripsi.perpustakaanapp.ui.listattendance.AttendanceActivity
+import com.skripsi.perpustakaanapp.ui.loan.LoanActivity
 
 class HomeMemberFragment : Fragment() {
 

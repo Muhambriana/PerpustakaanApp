@@ -16,7 +16,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.request.target.Target
-import com.bumptech.glide.signature.ObjectKey
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.MyViewModelFactory
@@ -71,7 +70,6 @@ class UpdateBookFragment : BottomSheetDialogFragment() {
         getCategoryData()
         setButtonListener()
 
-        println("glide setelah update: ")
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -179,11 +177,8 @@ class UpdateBookFragment : BottomSheetDialogFragment() {
     }
 
     private fun postBookData() {
-        println("kocak masuk 1")
         uploadImage()
-        println("kocak masuk 2")
         uploadEBook()
-        println("kocak masuk 3")
         viewModel.updateBook(
             token = sessionManager.fetchAuthToken().toString(),
             binding.tvBookId.text.toString(),
@@ -210,7 +205,6 @@ class UpdateBookFragment : BottomSheetDialogFragment() {
             event.getContentIfNotHandled().let { resource ->
                 when(resource) {
                     is MyResource.Loading -> {
-                        println("kocak masuk 4")
                         binding.progressBar.visibility = View.VISIBLE
                     }
                     is MyResource.Success -> {

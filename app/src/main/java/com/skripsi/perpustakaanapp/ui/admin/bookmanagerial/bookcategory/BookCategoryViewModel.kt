@@ -1,5 +1,6 @@
 package com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.bookcategory
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.skripsi.perpustakaanapp.core.models.BookCategory
@@ -32,7 +33,8 @@ class BookCategoryViewModel(private val repository: LibraryRepository) : ViewMod
                 }
             }
             override fun onFailure(call: Call<GeneralResponse>, t: Throwable) {
-                resourceCreateCategory.postValue(MyEvent(MyResource.Error(t.message)))
+                resourceCreateCategory.postValue(MyEvent(MyResource.Error("Failed Connection, Check Your Connection")))
+//                t.message?.let { Log.e("BookCategoryViewModel", it) }
             }
         })
     }

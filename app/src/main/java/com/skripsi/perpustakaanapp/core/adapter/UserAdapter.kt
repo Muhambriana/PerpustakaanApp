@@ -7,13 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.request.target.Target
-import com.bumptech.glide.signature.ObjectKey
-
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.core.models.User
 import com.skripsi.perpustakaanapp.databinding.ItemListUserBinding
-import com.skripsi.perpustakaanapp.utils.NetworkInfo
 import com.skripsi.perpustakaanapp.utils.NetworkInfo.AVATAR_IMAGE_BASE_URL
 import com.skripsi.perpustakaanapp.utils.setSingleClickListener
 

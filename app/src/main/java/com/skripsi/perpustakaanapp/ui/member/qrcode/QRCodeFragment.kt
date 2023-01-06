@@ -1,15 +1,11 @@
 package com.skripsi.perpustakaanapp.ui.member.qrcode
 
 import android.graphics.Bitmap
-import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.google.zxing.BarcodeFormat
-import com.google.zxing.qrcode.QRCodeWriter
-import com.skripsi.perpustakaanapp.R
+import androidx.fragment.app.Fragment
 import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.databinding.FragmentQRCodeBinding
 import com.skripsi.perpustakaanapp.utils.GenerateQRCode

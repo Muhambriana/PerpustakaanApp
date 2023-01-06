@@ -1,13 +1,11 @@
 package com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.bookcategory
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.text.InputFilter
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.ViewModelProvider
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.MyViewModelFactory
 import com.skripsi.perpustakaanapp.core.SessionManager

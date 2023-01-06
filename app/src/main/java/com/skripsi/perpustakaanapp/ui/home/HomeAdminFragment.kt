@@ -2,7 +2,9 @@ package com.skripsi.perpustakaanapp.ui.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
@@ -13,11 +15,11 @@ import com.skripsi.perpustakaanapp.databinding.FragmentHomeAdminBinding
 import com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.createbook.CreateBookActivity
 import com.skripsi.perpustakaanapp.ui.admin.listuser.UserActivity
 import com.skripsi.perpustakaanapp.ui.admin.pendingloan.PendingLoanActivity
-import com.skripsi.perpustakaanapp.ui.admin.usermanagerial.createnewadmin.CreateNewAdminActivity
 import com.skripsi.perpustakaanapp.ui.admin.scanner.ScannerActivity
+import com.skripsi.perpustakaanapp.ui.admin.usermanagerial.createnewadmin.CreateNewAdminActivity
 import com.skripsi.perpustakaanapp.ui.book.listbook.BookActivity
-import com.skripsi.perpustakaanapp.ui.loan.LoanActivity
 import com.skripsi.perpustakaanapp.ui.listattendance.AttendanceActivity
+import com.skripsi.perpustakaanapp.ui.loan.LoanActivity
 
 
 class HomeAdminFragment : Fragment() {

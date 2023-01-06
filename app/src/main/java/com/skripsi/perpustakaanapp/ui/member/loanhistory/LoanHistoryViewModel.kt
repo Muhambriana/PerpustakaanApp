@@ -37,7 +37,8 @@ class LoanHistoryViewModel(private val repository: LibraryRepository) : ViewMode
                 call: Call<ListLoanHistoryResponse>,
                 t: Throwable
             ) {
-                resourceHistoryLoan.postValue(MyEvent(MyResource.Error(t.message)))
+                resourceHistoryLoan.postValue(MyEvent(MyResource.Error("Failed Connection, Check Your Connection")))
+//                t.message?.let { Log.e("LoanHistoryViewModel", it) }
             }
         })
     }

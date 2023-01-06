@@ -61,15 +61,15 @@ class LoginActivity : AppCompatActivity() {
     private fun hideShowPassword() {
         binding.buttonHideShow.setOnClickListener {
             if(binding.edtPassword.transformationMethod.equals(PasswordTransformationMethod.getInstance())){
-                binding.buttonHideShow.setImageResource(R.drawable.ic_visibility_off);
+                binding.buttonHideShow.setImageResource(R.drawable.ic_visibility_off)
                 //Show Password
-                binding.edtPassword.transformationMethod = HideReturnsTransformationMethod.getInstance();
+                binding.edtPassword.transformationMethod = HideReturnsTransformationMethod.getInstance()
                 binding.edtPassword.setSelection(binding.edtPassword.length())
             }
             else{
-                binding.buttonHideShow.setImageResource(R.drawable.ic_visibility_on);
+                binding.buttonHideShow.setImageResource(R.drawable.ic_visibility_on)
                 //Hide Password
-                binding.edtPassword.transformationMethod = PasswordTransformationMethod.getInstance();
+                binding.edtPassword.transformationMethod = PasswordTransformationMethod.getInstance()
                 binding.edtPassword.setSelection(binding.edtPassword.length())
             }
         }

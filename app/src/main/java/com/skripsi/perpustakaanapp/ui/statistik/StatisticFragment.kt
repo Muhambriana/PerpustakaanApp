@@ -1,10 +1,10 @@
 package com.skripsi.perpustakaanapp.ui.statistik
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.MyViewModelFactory
@@ -14,10 +14,8 @@ import com.skripsi.perpustakaanapp.core.models.StatisticAdminModel
 import com.skripsi.perpustakaanapp.core.models.StatisticMemberModel
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.core.resource.MyResource
-import com.skripsi.perpustakaanapp.databinding.FragmentAdminLoanBinding
 import com.skripsi.perpustakaanapp.databinding.FragmentStatisticBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
-import com.skripsi.perpustakaanapp.ui.loan.AdminLoanViewModel
 
 class StatisticFragment : Fragment() {
 

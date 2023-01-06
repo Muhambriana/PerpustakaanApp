@@ -34,7 +34,8 @@ class ScannerReturnBookViewModel(private val repository: LibraryRepository): Vie
             }
 
             override fun onFailure(call: Call<GeneralResponse>, t: Throwable) {
-                resourceScanner.postValue(MyEvent(MyResource.Error(t.message)))
+                resourceScanner.postValue(MyEvent(MyResource.Error("Connection Failed")))
+//                t.message?.let { Log.e("ScannerReturnBookViewModel", it) }
             }
         })
     }
@@ -56,7 +57,8 @@ class ScannerReturnBookViewModel(private val repository: LibraryRepository): Vie
             }
 
             override fun onFailure(call: Call<GeneralResponse>, t: Throwable) {
-                resourcePenaltyPayment.postValue(MyEvent(MyResource.Error(t.message)))
+                resourcePenaltyPayment.postValue(MyEvent(MyResource.Error("Connection Failed")))
+//                t.message?.let { Log.e("ScannerReturnBookViewModel", it) }
             }
         })
     }

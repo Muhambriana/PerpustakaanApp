@@ -1,7 +1,5 @@
 package com.skripsi.perpustakaanapp.core.responses
 
-import com.google.gson.annotations.SerializedName
-
 //data class LogoutResponse(
 //
 //    @field:SerializedName("code")

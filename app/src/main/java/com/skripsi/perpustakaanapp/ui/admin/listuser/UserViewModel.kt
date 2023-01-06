@@ -37,7 +37,8 @@ class UserViewModel(private val repository: LibraryRepository) : ViewModel() {
             }
 
             override fun onFailure(call: Call<ListUserResponse>, t: Throwable) {
-                resourceMember.postValue(MyEvent(MyResource.Error(t.message)))
+                resourceMember.postValue(MyEvent(MyResource.Error("Failed Connection, Check Your Connection")))
+//                t.message?.let { Log.e("UserViewModel", it) }
             }
         })
     }
@@ -63,7 +64,8 @@ class UserViewModel(private val repository: LibraryRepository) : ViewModel() {
             }
 
             override fun onFailure(call: Call<ListUserResponse>, t: Throwable) {
-                resourceSearchMember.postValue(MyEvent(MyResource.Error(t.message)))
+                resourceSearchMember.postValue(MyEvent(MyResource.Error("Failed Connection, Server Under Maintenance")))
+//                t.message?.let { Log.e("UserViewModel", it) }
             }
         })
     }

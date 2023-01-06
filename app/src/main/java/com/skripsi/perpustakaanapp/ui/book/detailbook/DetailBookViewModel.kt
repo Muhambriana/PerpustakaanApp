@@ -43,7 +43,8 @@ class DetailBookViewModel(private val repository: LibraryRepository) : ViewModel
             }
 
             override fun onFailure(call: Call<GeneralResponse>, t: Throwable) {
-                resourceDeleteBook.postValue(MyEvent(MyResource.Error(t.message)))
+                resourceDeleteBook.postValue(MyEvent(MyResource.Error("Failed Connection, Check Your Connection")))
+//                t.message?.let { Log.e("UserViewModel", it) }
             }
         })
     }
@@ -65,7 +66,8 @@ class DetailBookViewModel(private val repository: LibraryRepository) : ViewModel
             }
 
             override fun onFailure(call: Call<GeneralResponse>, t: Throwable) {
-                resourceLoanBook.postValue(MyEvent(MyResource.Error(t.message)))
+                resourceLoanBook.postValue(MyEvent(MyResource.Error("Failed Connection, Check Your Connection")))
+//                t.message?.let { Log.e("UserViewModel", it) }
             }
         })
     }
@@ -100,7 +102,8 @@ class DetailBookViewModel(private val repository: LibraryRepository) : ViewModel
             }
 
             override fun onFailure( call: Call<DetailBookResponse>, t: Throwable) {
-                resourceDetailBook.postValue(MyEvent(MyResource.Error(t.message)))
+                resourceDetailBook.postValue(MyEvent(MyResource.Error("Failed Connection, Check Your Connection")))
+//                t.message?.let { Log.e("UserViewModel", it) }
             }
         })
     }
@@ -123,7 +126,8 @@ class DetailBookViewModel(private val repository: LibraryRepository) : ViewModel
             }
 
             override fun onFailure(call: Call<GeneralResponse>, t: Throwable) {
-                resourceChangeStatusFavorite.postValue(MyEvent(MyResource.Error(t.message)))
+                resourceChangeStatusFavorite.postValue(MyEvent(MyResource.Error("Failed Connection, Check Your Connection")))
+//                t.message?.let { Log.e("UserViewModel", it) }
             }
         })
     }

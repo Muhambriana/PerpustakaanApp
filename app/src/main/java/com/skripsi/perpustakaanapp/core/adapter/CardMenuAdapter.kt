@@ -1,20 +1,14 @@
 package com.skripsi.perpustakaanapp.core.adapter
 
-import com.skripsi.perpustakaanapp.R
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.viewpager.widget.PagerAdapter
+import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.models.CardMenu
 import com.skripsi.perpustakaanapp.databinding.ItemCardMenuBinding
-import com.skripsi.perpustakaanapp.ui.book.detailbook.DetailBookActivity
-import java.util.*
 
 
 class CardMenuAdapter(private val models: List<CardMenu>, private val context: Context): PagerAdapter(){

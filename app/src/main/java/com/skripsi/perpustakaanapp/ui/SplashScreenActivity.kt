@@ -1,10 +1,10 @@
 package com.skripsi.perpustakaanapp.ui
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.view.animation.AnimationUtils
+import androidx.appcompat.app.AppCompatActivity
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.databinding.ActivitySplashScreenBinding
 import com.skripsi.perpustakaanapp.ui.login.LoginActivity

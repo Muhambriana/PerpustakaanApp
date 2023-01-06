@@ -27,7 +27,8 @@ class HomeViewModel(private val repository: LibraryRepository) : ViewModel() {
                 }
             }
             override fun onFailure(call: Call<GeneralResponse>, t: Throwable) {
-                resourceLogout.postValue(MyEvent(MyResource.Error(t.message)))
+                resourceLogout.postValue(MyEvent(MyResource.Error("Failed Connection, Check Your Connection")))
+//                t.message?.let { Log.e("HomeViewModel", it) }
             }
         })
     }

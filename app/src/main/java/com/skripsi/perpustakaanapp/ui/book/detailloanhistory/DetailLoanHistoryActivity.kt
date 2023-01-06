@@ -1,30 +1,23 @@
 package com.skripsi.perpustakaanapp.ui.book.detailloanhistory
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.signature.ObjectKey
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.models.LoanHistory
 import com.skripsi.perpustakaanapp.databinding.ActivityDetailLoanBinding
-import com.skripsi.perpustakaanapp.ui.MyAlertDialog
-import com.skripsi.perpustakaanapp.ui.ViewImageFragment
-import com.skripsi.perpustakaanapp.ui.admin.scanner.PaymentPenaltyFragment
 import com.skripsi.perpustakaanapp.ui.book.detailbook.DetailBookActivity
 import com.skripsi.perpustakaanapp.ui.member.qrcode.QRCodeBottomFragment
-import com.skripsi.perpustakaanapp.ui.member.qrcode.QRCodeFragment
 import com.skripsi.perpustakaanapp.ui.userprofile.UserProfileActivity
 import com.skripsi.perpustakaanapp.utils.GenerateQRCode
-import com.skripsi.perpustakaanapp.utils.NetworkInfo
 import com.skripsi.perpustakaanapp.utils.NetworkInfo.BOOK_IMAGE_BASE_URL
 import jp.wasabeef.glide.transformations.BlurTransformation
 

@@ -11,20 +11,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.MyViewModelFactory
 import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.core.adapter.UserAdapter
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
-import com.skripsi.perpustakaanapp.core.models.Book
 import com.skripsi.perpustakaanapp.core.models.User
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.core.resource.MyResource
 import com.skripsi.perpustakaanapp.databinding.ActivityUserBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.MySnackBar
-import com.skripsi.perpustakaanapp.ui.member.favoritebook.FavoriteBookActivity
 import com.skripsi.perpustakaanapp.ui.userprofile.UserProfileActivity
 
 class UserActivity : AppCompatActivity() {

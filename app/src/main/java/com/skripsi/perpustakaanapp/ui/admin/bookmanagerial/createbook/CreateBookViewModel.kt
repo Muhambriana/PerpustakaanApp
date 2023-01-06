@@ -1,5 +1,6 @@
 package com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.createbook
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
@@ -27,7 +28,6 @@ class CreateBookViewModel(private val repository: LibraryRepository) : ViewModel
         val book = Book(null, title, author, publisher, publisherDate, stock, description, null, null, category)
         val jsonString = Gson().toJson(book)
         val data = RequestBody.create(MediaType.parse("text/plain"), jsonString)
-        println("kocak isi pdf: $pdf")
         val post = repository.createBook(token, data, image, pdf)
         post.enqueue(object : Callback<GeneralResponse> {
             override fun onResponse(
@@ -42,13 +42,14 @@ class CreateBookViewModel(private val repository: LibraryRepository) : ViewModel
                 }
             }
             override fun onFailure(call: Call<GeneralResponse>, t: Throwable) {
-                resourceCreateBook.postValue(MyEvent(MyResource.Error(t.message)))
+                resourceCreateBook.postValue(MyEvent(MyResource.Error("Failed Connection, Check Your Connection")))
+//                t.message?.let { Log.e("CreateBookViewModel", it) }
             }
         })
     }
 
     fun getAllBookCategory(token: String){
-        resourceCreateBook.postValue(MyEvent(MyResource.Loading()))
+        resourceBookCategory.postValue(MyEvent(MyResource.Loading()))
         val post = repository.getAllCategory(token)
         post.enqueue(object : Callback<ListCategoryResponse> {
             override fun onResponse(
@@ -67,7 +68,8 @@ class CreateBookViewModel(private val repository: LibraryRepository) : ViewModel
                 }
             }
             override fun onFailure(call: Call<ListCategoryResponse>, t: Throwable) {
-                resourceBookCategory.postValue(MyEvent(MyResource.Error(t.message)))
+                resourceBookCategory.postValue(MyEvent(MyResource.Error("Failed Connection, Check Your Connection")))
+//                t.message?.let { Log.e("CreateBookViewModel", it) }
             }
         })
     }

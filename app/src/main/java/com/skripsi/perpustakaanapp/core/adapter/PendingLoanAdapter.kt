@@ -1,12 +1,10 @@
 package com.skripsi.perpustakaanapp.core.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.skripsi.perpustakaanapp.R
-import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.core.models.PendingLoan
 import com.skripsi.perpustakaanapp.databinding.ItemListPendingLoanBinding
 import com.skripsi.perpustakaanapp.utils.setSingleClickListener

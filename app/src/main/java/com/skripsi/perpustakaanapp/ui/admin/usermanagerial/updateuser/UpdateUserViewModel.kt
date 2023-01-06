@@ -31,7 +31,8 @@ class UpdateUserViewModel(private val repository: LibraryRepository) : ViewModel
                 }
             }
             override fun onFailure(call: Call<GeneralResponse>, t: Throwable) {
-                resourceUpdateUser.postValue(MyEvent(MyResource.Error(t.message)))
+                resourceUpdateUser.postValue(MyEvent(MyResource.Error("Connection Failed")))
+//                t.message?.let { Log.e("UpdateUserViewModel", it) }
             }
         })
     }

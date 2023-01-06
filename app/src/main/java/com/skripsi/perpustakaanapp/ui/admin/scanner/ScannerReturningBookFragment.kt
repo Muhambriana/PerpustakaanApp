@@ -3,10 +3,10 @@ package com.skripsi.perpustakaanapp.ui.admin.scanner
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.zxing.Result
 import com.skripsi.perpustakaanapp.core.MyViewModelFactory
@@ -16,7 +16,6 @@ import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.core.resource.MyResource
 import com.skripsi.perpustakaanapp.databinding.FragmentScannerReturningBookBinding
 import com.skripsi.perpustakaanapp.ui.MySnackBar
-import com.skripsi.perpustakaanapp.ui.admin.bookmanagerial.updatebook.UpdateBookFragment
 import com.skripsi.perpustakaanapp.utils.PermissionCheck
 import me.dm7.barcodescanner.zxing.ZXingScannerView
 

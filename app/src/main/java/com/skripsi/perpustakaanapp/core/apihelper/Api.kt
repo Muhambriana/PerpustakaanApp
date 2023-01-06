@@ -2,13 +2,11 @@ package com.skripsi.perpustakaanapp.core.apihelper
 
 import com.skripsi.perpustakaanapp.core.models.*
 import com.skripsi.perpustakaanapp.core.responses.*
-import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
-import java.io.InputStream
 
 @JvmSuppressWildcards
 interface Api {

@@ -38,7 +38,8 @@ class AdminLoanViewModel(private val repository: LibraryRepository) : ViewModel(
                 call: Call<ListLoanHistoryResponse>,
                 t: Throwable
             ) {
-                resourceLoan.postValue(MyEvent(MyResource.Error(t.message)))
+                resourceLoan.postValue(MyEvent(MyResource.Error("Failed Connection, Check Your Connection")))
+//                t.message?.let { Log.e("AdminLoanViewModel", it) }
             }
         })
     }
@@ -67,7 +68,8 @@ class AdminLoanViewModel(private val repository: LibraryRepository) : ViewModel(
                 call: Call<ListLoanHistoryResponse>,
                 t: Throwable
             ) {
-                resourceLoan.postValue(MyEvent(MyResource.Error(t.message)))
+                resourceLoan.postValue(MyEvent(MyResource.Error("Failed Connection, Check Your Connection")))
+//                t.message?.let { Log.e("AdminLoanViewModel", it) }
             }
         })
     }
@@ -88,7 +90,8 @@ class AdminLoanViewModel(private val repository: LibraryRepository) : ViewModel(
                     resourceLoan.postValue(MyEvent(MyResource.Success(response.body()?.loanHistoryItems)))
                 }
                 else {
-                    resourceLoan.postValue(MyEvent(MyResource.Error(response.body()?.message)))
+                    resourceLoan.postValue(MyEvent(MyResource.Error("Failed Connection, Check Your Connection")))
+//                t.message?.let { Log.e("AdminLoanViewModel", it) }
                 }
             }
 
@@ -96,7 +99,8 @@ class AdminLoanViewModel(private val repository: LibraryRepository) : ViewModel(
                 call: Call<ListLoanHistoryResponse>,
                 t: Throwable
             ) {
-                resourceLoan.postValue(MyEvent(MyResource.Error(t.message)))
+                resourceLoan.postValue(MyEvent(MyResource.Error("Failed Connection, Check Your Connection")))
+//                t.message?.let { Log.e("AdminLoanViewModel", it) }
             }
         })
     }
@@ -125,7 +129,8 @@ class AdminLoanViewModel(private val repository: LibraryRepository) : ViewModel(
                 call: Call<ListLoanHistoryResponse>,
                 t: Throwable
             ) {
-                resourceLoan.postValue(MyEvent(MyResource.Error(t.message)))
+                resourceLoan.postValue(MyEvent(MyResource.Error("Failed Connection, Check Your Connection")))
+//                t.message?.let { Log.e("AdminLoanViewModel", it) }
             }
         })
     }

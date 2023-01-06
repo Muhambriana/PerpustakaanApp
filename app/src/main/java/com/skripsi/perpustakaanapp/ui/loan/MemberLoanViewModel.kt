@@ -3,7 +3,6 @@ package com.skripsi.perpustakaanapp.ui.loan
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.skripsi.perpustakaanapp.core.models.LoanHistory
-import com.skripsi.perpustakaanapp.core.models.ModelUsername
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
 import com.skripsi.perpustakaanapp.core.resource.MyEvent
 import com.skripsi.perpustakaanapp.core.resource.MyResource
@@ -40,7 +39,8 @@ class MemberLoanViewModel(private val repository: LibraryRepository) : ViewModel
                 call: Call<ListLoanHistoryResponse>,
                 t: Throwable
             ) {
-                resourceLoan.postValue(MyEvent(MyResource.Error(t.message)))
+                resourceLoan.postValue(MyEvent(MyResource.Error("Failed Connection, Check Your Connection")))
+//                t.message?.let { Log.e("MemberLoanViewModel", it) }
             }
         })
     }
@@ -69,7 +69,8 @@ class MemberLoanViewModel(private val repository: LibraryRepository) : ViewModel
                 call: Call<ListLoanHistoryResponse>,
                 t: Throwable
             ) {
-                resourceLoan.postValue(MyEvent(MyResource.Error(t.message)))
+                resourceLoan.postValue(MyEvent(MyResource.Error("Failed Connection, Check Your Connection")))
+//                t.message?.let { Log.e("MemberLoanViewModel", it) }
             }
         })
     }
@@ -98,7 +99,8 @@ class MemberLoanViewModel(private val repository: LibraryRepository) : ViewModel
                 call: Call<ListLoanHistoryResponse>,
                 t: Throwable
             ) {
-                resourceLoan.postValue(MyEvent(MyResource.Error(t.message)))
+                resourceLoan.postValue(MyEvent(MyResource.Error("Failed Connection, Check Your Connection")))
+//                t.message?.let { Log.e("MemberLoanViewModel", it) }
             }
         })
     }
@@ -127,7 +129,8 @@ class MemberLoanViewModel(private val repository: LibraryRepository) : ViewModel
                 call: Call<ListLoanHistoryResponse>,
                 t: Throwable
             ) {
-                resourceLoan.postValue(MyEvent(MyResource.Error(t.message)))
+                resourceLoan.postValue(MyEvent(MyResource.Error("Failed Connection, Check Your Connection")))
+//                t.message?.let { Log.e("MemberLoanViewModel", it) }
             }
         })
     }
@@ -156,7 +159,8 @@ class MemberLoanViewModel(private val repository: LibraryRepository) : ViewModel
                 call: Call<ListLoanHistoryResponse>,
                 t: Throwable
             ) {
-                resourceLoan.postValue(MyEvent(MyResource.Error(t.message)))
+                resourceLoan.postValue(MyEvent(MyResource.Error("Failed Connection, Check Your Connection")))
+//                t.message?.let { Log.e("MemberLoanViewModel", it) }
             }
         })
     }

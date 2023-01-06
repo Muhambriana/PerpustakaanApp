@@ -21,7 +21,6 @@
         <activity
             android:name=".ui.SplashScreenActivity"
             android:exported="true"
-            android:label="@string/title_activity_splash_screen"
             android:theme="@style/Theme.PerpustakaanApp.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -82,7 +81,8 @@
         <activity
             android:name=".ui.login.LoginActivity"
             android:exported="false"
-            android:theme="@style/TextColorWhite">
+            android:theme="@style/TextColorWhite"
+            android:launchMode="singleTop">
 
         </activity>
 

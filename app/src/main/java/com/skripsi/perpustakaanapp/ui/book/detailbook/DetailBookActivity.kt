@@ -323,7 +323,7 @@ class DetailBookActivity : AppCompatActivity() {
                         Snackbar
                             .make(binding.root, resource.data.toString(), Snackbar.LENGTH_LONG)
                             .show()
-                        setResult(101);
+                        setResult(101)
                     }
                     is MyResource.Error -> {
                         binding.progressBar.visibility = View.GONE

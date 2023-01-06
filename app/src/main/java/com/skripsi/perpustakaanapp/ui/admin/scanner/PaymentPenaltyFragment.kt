@@ -3,7 +3,6 @@ package com.skripsi.perpustakaanapp.ui.admin.scanner
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,13 +13,10 @@ import com.skripsi.perpustakaanapp.core.MyViewModelFactory
 import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.core.apihelper.RetrofitClient
 import com.skripsi.perpustakaanapp.core.repository.LibraryRepository
-import com.skripsi.perpustakaanapp.core.resource.MyEvent
 import com.skripsi.perpustakaanapp.core.resource.MyResource
 import com.skripsi.perpustakaanapp.databinding.FragmentPaymentPenaltyBinding
-import com.skripsi.perpustakaanapp.databinding.FragmentScannerReturningBookBinding
 import com.skripsi.perpustakaanapp.ui.MyAlertDialog
 import com.skripsi.perpustakaanapp.ui.MySnackBar
-import me.dm7.barcodescanner.zxing.ZXingScannerView
 
 class PaymentPenaltyFragment : DialogFragment() {
 

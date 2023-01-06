@@ -13,6 +13,11 @@ android {
         targetSdk 32
         versionCode 1
         versionName "1.0"
+        buildConfigField 'String', 'URL', url
+//        buildConfigField 'String', 'PROTOCOL', protocol
+//        buildConfigField 'String', 'IP_ADDRESS', ip_address
+//        buildConfigField 'String', 'PORT', port
+//        buildConfigField 'String', 'PARENT_PATH', parent_path
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

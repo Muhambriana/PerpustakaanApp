@@ -41,7 +41,8 @@ class UserProfileViewModel(private val repository: LibraryRepository): ViewModel
             }
 
             override fun onFailure(call: Call<DetailUserResponse>, t: Throwable) {
-                resourceDetailUser.postValue(MyEvent(MyResource.Error(t.message)))
+                resourceDetailUser.postValue(MyEvent(MyResource.Error("Failed Connection, Check Your Connection")))
+//                t.message?.let { Log.e("UserProfileViewModel", it) }
             }
         })
     }
@@ -62,7 +63,8 @@ class UserProfileViewModel(private val repository: LibraryRepository): ViewModel
                 }
             }
             override fun onFailure(call: Call<GeneralResponse>, t: Throwable) {
-                resourceDeleteMember.postValue(MyEvent(MyResource.Error(t.message)))
+                resourceDeleteMember.postValue(MyEvent(MyResource.Error("Failed Connection, Check Your Connection")))
+//                t.message?.let { Log.e("UserProfileViewModel", it) }
             }
         })
     }
@@ -70,7 +72,6 @@ class UserProfileViewModel(private val repository: LibraryRepository): ViewModel
     fun updateImage(token: String, username: String, image: MultipartBody.Part?) {
         resourceUpdateImage.postValue(MyEvent(MyResource.Loading()))
         val id = RequestBody.create(MediaType.parse("text/plain"), username)
-        println("kocak id: $id")
         val post = repository.updateImage(token, null, id, image)
         post.enqueue(object : Callback<GeneralResponse> {
             override fun onResponse(
@@ -85,7 +86,8 @@ class UserProfileViewModel(private val repository: LibraryRepository): ViewModel
             }
 
             override fun onFailure(call: Call<GeneralResponse>, t: Throwable) {
-                resourceUpdateImage.postValue(MyEvent(MyResource.Error(t.message)))
+                resourceUpdateImage.postValue(MyEvent(MyResource.Error("Failed Connection, Check Your Connection")))
+//                t.message?.let { Log.e("UserProfileViewModel", it) }.postValue(MyEvent(MyResource.Error(t.message)))
             }
         })
     }

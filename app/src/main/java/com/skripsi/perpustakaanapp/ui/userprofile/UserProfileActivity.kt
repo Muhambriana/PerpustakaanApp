@@ -11,8 +11,6 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.model.GlideUrl
-import com.bumptech.glide.request.target.Target
-import com.bumptech.glide.signature.ObjectKey
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.MyViewModelFactory
 import com.skripsi.perpustakaanapp.core.SessionManager
@@ -119,7 +117,6 @@ class UserProfileActivity : AppCompatActivity() {
     }
 
     private fun restartActivity(u: String) {
-        println("kocak isi usewrname: $u")
         val intent = Intent(this, UserProfileActivity::class.java)
         intent.putExtra(USERNAME, u)
 
@@ -202,7 +199,6 @@ class UserProfileActivity : AppCompatActivity() {
                     }
                     is MyResource.Success -> {
                         detailUser = resource.data
-                        println("ini isi avatar ${detailUser?.avatar}")
                         showDetailUser()
                     }
                 }

@@ -1,5 +1,6 @@
 package com.skripsi.perpustakaanapp.ui.admin.pendingloan
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.skripsi.perpustakaanapp.core.models.ModelForApproveAndRejectLoan
@@ -44,7 +45,8 @@ class PendingLoanAdminViewModel(private val repository: LibraryRepository) : Vie
                 call: Call<ListPendingLoanResponse>,
                 t: Throwable
             ) {
-                resourcePendingLoan.postValue((MyEvent(MyResource.Error(t.message))))
+                resourcePendingLoan.postValue((MyEvent(MyResource.Error("Failed Connection, Check Your Connection"))))
+//                t.message?.let { Log.e("PendingLoanAdminVM", it) }
             }
         })
     }
@@ -70,7 +72,8 @@ class PendingLoanAdminViewModel(private val repository: LibraryRepository) : Vie
                 call: Call<GeneralResponse>,
                 t: Throwable
             ) {
-                resourceApproveLoan.postValue(MyEvent(MyResource.Error(t.message)))
+                resourceApproveLoan.postValue(MyEvent(MyResource.Error("Connection Failed")))
+//                t.message?.let { Log.e("PendingLoanAdminViewModel", it) }
             }
         })
     }
@@ -93,7 +96,8 @@ class PendingLoanAdminViewModel(private val repository: LibraryRepository) : Vie
             }
 
             override fun onFailure( call: Call<GeneralResponse>, t: Throwable) {
-                resourceRejectLoan.postValue(MyEvent(MyResource.Error(t.message)))
+                resourceRejectLoan.postValue(MyEvent(MyResource.Error("Connection Failed")))
+//                t.message?.let { Log.e("PendingLoanAdminViewModel", it) }
             }
         })
     }

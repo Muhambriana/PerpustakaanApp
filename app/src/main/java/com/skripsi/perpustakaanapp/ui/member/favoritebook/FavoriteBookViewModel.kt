@@ -33,7 +33,8 @@ class FavoriteBookViewModel(private val repository: LibraryRepository) : ViewMod
                 }
             }
             override fun onFailure(call: Call<ListFavoriteResponse>, t: Throwable) {
-                resourceFavorite.postValue(MyEvent(MyResource.Error(t.message)))
+                resourceFavorite.postValue(MyEvent(MyResource.Error("Failed Connection, Check Your Connection")))
+//                t.message?.let { Log.e("FavoriteBookViewModel", it) }
             }
         })
     }
