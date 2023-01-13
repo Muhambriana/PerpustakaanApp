@@ -70,7 +70,7 @@
         android:layout_height="30dp"
         android:layout_marginTop="76dp"
         android:gravity="center"
-        android:text="muhambriana.31@gmail.com"
+        tools:text="thisismuham"
         android:textColor="@color/white"
         android:textSize="18sp"
         app:fontFamily="sans-serif-light"

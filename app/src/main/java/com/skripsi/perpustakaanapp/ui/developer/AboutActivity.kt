@@ -19,6 +19,7 @@ class AboutActivity : AppCompatActivity() {
         binding = ActivityAboutBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.textViewEmailProfil.text = "developercontact@gmail.com"
         setPhoto()
     }
 

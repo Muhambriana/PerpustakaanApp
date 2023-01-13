@@ -131,7 +131,6 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun postUserData() {
-        MySnackBar.showRed(binding.root, "Dipilih: "+binding.spinnerEduLevel.selectedItem.toString())
         viewModel.registerUser(
             binding.edtUsername.text.toString(),
             binding.edtPassword.text.toString(),

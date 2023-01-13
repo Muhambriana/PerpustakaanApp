@@ -194,7 +194,7 @@ interface Api {
         @Header("Authorization") token: String
     ):Call<ListUserResponse>
 
-    @DELETE("user/delete")
+    @HTTP(method = "DELETE", path = "user/delete", hasBody = true)
     fun deleteMember(
         @Header("Authorization") token: String,
         @Body username: ModelUsername
