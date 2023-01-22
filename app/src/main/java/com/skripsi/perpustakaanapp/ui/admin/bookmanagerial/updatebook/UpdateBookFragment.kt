@@ -116,7 +116,7 @@ class UpdateBookFragment : BottomSheetDialogFragment() {
 
     private fun setBookPoster(imageName: String?) {
         imageName?.let {
-            val imageUrl = GlideUrl("$BOOK_IMAGE_BASE_URL$imageName/${System.currentTimeMillis()}") { mapOf(Pair("Authorization", sessionManager.fetchAuthToken())) }
+            val imageUrl = GlideUrl("$BOOK_IMAGE_BASE_URL$imageName/?${System.currentTimeMillis()}") { mapOf(Pair("Authorization", sessionManager.fetchAuthToken())) }
 
             Glide.with(requireContext())
                 .load(imageUrl)

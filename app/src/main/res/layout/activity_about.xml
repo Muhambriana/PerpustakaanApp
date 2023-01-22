@@ -10,22 +10,24 @@
 
 
     <View
+        android:id="@+id/view3"
         android:layout_width="match_parent"
         android:layout_height="385dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="40dp"
         android:background="@drawable/custom_bottom_corner_2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
+        android:id="@+id/view4"
         android:layout_width="match_parent"
         android:layout_height="325dp"
         android:background="@drawable/custom_bottom_corner"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 
@@ -41,22 +43,46 @@
         android:id="@+id/iv_photo_profile"
         android:layout_width="150dp"
         android:layout_height="137dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="75dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:src = "@color/white"
          />
 
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="47dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="12dp"
+        android:src="@drawable/icon_instagram"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view4" />
+
+    <TextView
+        android:id="@+id/textViewEmailProfil"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginTop="76dp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:fontFamily="sans-serif-light"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.226"
+        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintTop_toBottomOf="@+id/textvViewNamaProfil"
+        tools:text="thisismuham" />
+
     <TextView
         android:id="@+id/textvViewNamaProfil"
         android:layout_width="195dp"
         android:layout_height="38dp"
         android:gravity="center"
-        android:text="Muham"
+        android:text="Briana Muham"
         android:textColor="@android:color/white"
         android:textSize="24sp"
-        android:textStyle="bold"
         app:fontFamily="sans-serif-light"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -65,18 +91,35 @@
         app:layout_constraintVertical_bias="0.032" />
 
     <TextView
-        android:id="@+id/textViewEmailProfil"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_marginTop="76dp"
-        android:gravity="center"
-        tools:text="thisismuham"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        app:fontFamily="sans-serif-light"
+        android:id="@+id/tv_about_app"
+        android:layout_width="296dp"
+        android:layout_height="79dp"
+        android:layout_marginTop="20dp"
+        android:gravity="start|end"
+        android:text="Aplikasi ini dibuat untuk layanan perpustakaan Daya Utama serta sebagai syarat dari tugas akhir mahasiswa."
+        android:textColor="@android:color/white"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:fontFamily="@font/amiko"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textvViewNamaProfil" />
+        app:layout_constraintTop_toBottomOf="@+id/view3" />
+
+    <TextView
+        android:id="@+id/tv_contact"
+        android:layout_width="296dp"
+        android:layout_height="79dp"
+        android:layout_marginTop="5dp"
+        android:gravity="start|end"
+        android:text="Bila terjadi error, contact developer melalui email yang tertera pada google playstore atau instagram"
+        android:textColor="@android:color/white"
+        android:textSize="15sp"
+        android:textStyle="italic"
+        app:fontFamily="@font/amiko"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_about_app" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

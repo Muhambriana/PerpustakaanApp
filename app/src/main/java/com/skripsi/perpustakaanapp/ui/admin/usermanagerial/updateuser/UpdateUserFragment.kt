@@ -39,6 +39,10 @@ class UpdateUserFragment : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?,
     ): View? {
         fragmentUpdateUserBinding = FragmentUpdateUserBinding.inflate(layoutInflater, container, false)
+        //set all first name to uppercase
+        binding?.edtFirstName?.filters = binding?.edtFirstName?.filters?.plus(InputFilter.AllCaps())
+        //set all last name to uppercase
+        binding?.edtLastName?.filters = binding?.edtLastName?.filters?.plus(InputFilter.AllCaps())
         return binding?.root
     }
 
@@ -48,9 +52,6 @@ class UpdateUserFragment : BottomSheetDialogFragment() {
         viewModel = ViewModelProvider(this, MyViewModelFactory(LibraryRepository(client))).get(
             UpdateUserViewModel::class.java
         )
-
-        binding?.edtFirstName?.filters?.plus(InputFilter.AllCaps())
-        binding?.edtLastName?.filters?.plus(InputFilter.AllCaps())
         binding?.progressBar?.visibility = View.GONE
 
         getData()

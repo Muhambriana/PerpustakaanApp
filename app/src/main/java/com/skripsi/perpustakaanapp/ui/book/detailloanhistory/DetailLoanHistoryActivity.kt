@@ -74,7 +74,7 @@ class DetailLoanHistoryActivity : AppCompatActivity() {
     }
 
     private fun glideSetup(imageName: String?) {
-        val imageUrl = GlideUrl("$BOOK_IMAGE_BASE_URL$imageName/${System.currentTimeMillis()}") { mapOf(Pair("Authorization", sessionManager.fetchAuthToken())) }
+        val imageUrl = GlideUrl("$BOOK_IMAGE_BASE_URL$imageName/?${System.currentTimeMillis()}") { mapOf(Pair("Authorization", sessionManager.fetchAuthToken())) }
 
         Glide.with(this)
             .load(imageUrl)

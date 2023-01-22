@@ -11,8 +11,8 @@ android {
         applicationId "com.skripsi.perpustakaanapp"
         minSdk 21
         targetSdk 32
-        versionCode 1
-        versionName "1.0"
+        versionCode 4
+        versionName "1.2.1"
         buildConfigField 'String', 'URL', url
 //        buildConfigField 'String', 'PROTOCOL', protocol
 //        buildConfigField 'String', 'IP_ADDRESS', ip_address

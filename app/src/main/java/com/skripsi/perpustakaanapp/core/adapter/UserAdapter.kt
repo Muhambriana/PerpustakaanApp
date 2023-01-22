@@ -1,3 +1,4 @@
+
 package com.skripsi.perpustakaanapp.core.adapter
 
 import android.view.LayoutInflater
@@ -7,12 +8,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.request.target.Target
+import com.bumptech.glide.signature.ObjectKey
 import com.skripsi.perpustakaanapp.R
 import com.skripsi.perpustakaanapp.core.SessionManager
 import com.skripsi.perpustakaanapp.core.models.User
 import com.skripsi.perpustakaanapp.databinding.ItemListUserBinding
 import com.skripsi.perpustakaanapp.utils.NetworkInfo.AVATAR_IMAGE_BASE_URL
 import com.skripsi.perpustakaanapp.utils.setSingleClickListener
+import java.util.*
 
 class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
@@ -52,13 +55,16 @@ class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
         }
 
         private fun setAvatar(avatar: String?) {
-            if (avatar != null) {
-                glideSetup(avatar)
+            if (avatar == null || avatar == "null") {
+                binding.ivAvatar.setImageResource(R.color.teal_200)
+                return
             }
+            glideSetup(avatar)
         }
 
         private fun glideSetup(imageName: String?) {
-            val imageUrl = GlideUrl("${AVATAR_IMAGE_BASE_URL}$imageName/${System.currentTimeMillis()}") { mapOf(Pair("Authorization", sessionManager.fetchAuthToken())) }
+            val randomString = UUID.randomUUID().toString()
+            val imageUrl = GlideUrl("${AVATAR_IMAGE_BASE_URL}$imageName/?$randomString") { mapOf(Pair("Authorization", sessionManager.fetchAuthToken())) }
 
 
             Glide.with(itemView.context)

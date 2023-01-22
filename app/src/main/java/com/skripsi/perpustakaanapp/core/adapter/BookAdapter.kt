@@ -12,6 +12,7 @@ import com.skripsi.perpustakaanapp.core.models.Book
 import com.skripsi.perpustakaanapp.databinding.ItemListBookBinding
 import com.skripsi.perpustakaanapp.utils.NetworkInfo.BOOK_IMAGE_BASE_URL
 import com.skripsi.perpustakaanapp.utils.setSingleClickListener
+import java.util.*
 
 class BookAdapter : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
 
@@ -57,13 +58,16 @@ class BookAdapter : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
         }
 
         private fun setBookPoster(poster: String?) {
-            if (poster != null) {
-                glideSetup(poster)
+            if (poster == null || poster == "null") {
+                binding.ivBookPoster.setImageResource(R.color.teal_200)
+                return
             }
+            glideSetup(poster)
         }
 
         private fun glideSetup(imageName: String?) {
-            val imageUrl = GlideUrl("$BOOK_IMAGE_BASE_URL$imageName/${System.currentTimeMillis()}") { mapOf(Pair("Authorization", sessionManager.fetchAuthToken())) }
+            val randomString = UUID.randomUUID().toString()
+            val imageUrl = GlideUrl("$BOOK_IMAGE_BASE_URL$imageName/?$randomString") { mapOf(Pair("Authorization", sessionManager.fetchAuthToken())) }
 
             Glide.with(itemView)
                 .load(imageUrl)

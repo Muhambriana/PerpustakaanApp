@@ -256,7 +256,7 @@ class UserProfileActivity : AppCompatActivity() {
     }
 
     private fun glideSetup(imageName: String?, imageView: ImageView) {
-        val imageUrl = GlideUrl("$AVATAR_IMAGE_BASE_URL$imageName/${System.currentTimeMillis()}") { mapOf(Pair("Authorization", sessionManager.fetchAuthToken())) }
+        val imageUrl = GlideUrl("$AVATAR_IMAGE_BASE_URL$imageName/?${System.currentTimeMillis()}") { mapOf(Pair("Authorization", sessionManager.fetchAuthToken())) }
         Glide.with(this)
             .load(imageUrl)
             .override(200,600)
