@@ -27,15 +27,6 @@ class QRCodeFragment : Fragment() {
         return binding?.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        getQR()
-        val result:Bitmap? = GenerateQRCode.generate(qrCode)
-        if (result != null) {
-            binding?.qrCodeImage?.setImageBitmap(result)
-        }
-    }
-
-
     private fun getQR() {
         sessionManager= SessionManager(requireContext())
         val bundle = arguments?.getString("qr_code")
@@ -45,4 +36,15 @@ class QRCodeFragment : Fragment() {
             qrCode = sessionManager.fetchQRCode()
         }
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        getQR()
+        val result:Bitmap? = GenerateQRCode.generate(qrCode)
+        if (result != null) {
+            binding?.qrCodeImage?.setImageBitmap(result)
+        }
+    }
+
+
+
 }

@@ -212,6 +212,14 @@ class UserProfileActivity : AppCompatActivity() {
     }
 
     private fun inMemberCard() {
+
+        val lenEduLevel = detailUser?.educationLevel?.length
+        if (lenEduLevel != null) {
+            if (lenEduLevel > 3){
+                binding.textUsernameInCard.text = "NUPTK"
+            }
+        }
+
         if (detailUser?.educationLevel == "SMP" || detailUser?.educationLevel == "Guru SMP") {
             binding.containerMemberCard.background = ContextCompat.getDrawable(this, R.drawable.image_member_card_smp)
         } else if (detailUser?.educationLevel == "SMA" || detailUser?.educationLevel == "Guru SMA") {

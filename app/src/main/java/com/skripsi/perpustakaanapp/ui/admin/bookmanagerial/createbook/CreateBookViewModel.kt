@@ -28,7 +28,7 @@ class CreateBookViewModel(private val repository: LibraryRepository) : ViewModel
         val book = Book(null, title, author, publisher, publisherDate, stock, description, null, null, category)
         val jsonString = Gson().toJson(book)
         val data = RequestBody.create(MediaType.parse("text/plain"), jsonString)
-        val post = repository.createBook(token, data, image, pdf)
+        val post = repository.createBook(token, book, image, pdf)
         post.enqueue(object : Callback<GeneralResponse> {
             override fun onResponse(
                 call: Call<GeneralResponse>,
@@ -68,7 +68,7 @@ class CreateBookViewModel(private val repository: LibraryRepository) : ViewModel
                 }
             }
             override fun onFailure(call: Call<ListCategoryResponse>, t: Throwable) {
-                resourceBookCategory.postValue(MyEvent(MyResource.Error("Failed Connection, Check Your Connection")))
+                resourceBookCategory.postValue(MyEvent(MyResource.Error("Connection Failed")))
 //                t.message?.let { Log.e("CreateBookViewModel", it) }
             }
         })

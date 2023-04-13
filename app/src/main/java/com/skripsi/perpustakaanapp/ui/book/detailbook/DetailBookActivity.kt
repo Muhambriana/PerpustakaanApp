@@ -204,7 +204,7 @@ class DetailBookActivity : AppCompatActivity() {
     }
 
     private fun setBookCover() {
-        if (detailBook?.imageUrl != null) {
+        if (detailBook?.imageUrl != null && detailBook?.imageUrl != "-") {
             glideSetup(detailBook?.imageUrl)
         }
     }

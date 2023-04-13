@@ -11,5 +11,6 @@ data class BookCategory(
     val categoryId: String? = null,
 
     @field:SerializedName("name")
-    val categoryName: String? = null,
+    val categoryName: String? = null
+
 ):Parcelable

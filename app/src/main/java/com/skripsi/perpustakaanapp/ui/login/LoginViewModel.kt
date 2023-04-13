@@ -29,7 +29,7 @@ class LoginViewModel(private val repository: LibraryRepository) : ViewModel(){
             }
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                resourceLogin.postValue(MyEvent(MyResource.Error("Connection Failed")))
+                resourceLogin.postValue(MyEvent(MyResource.Error(t.message)))
 //                t.message?.let { Log.e("LoginViewModel", it) }
             }
         })

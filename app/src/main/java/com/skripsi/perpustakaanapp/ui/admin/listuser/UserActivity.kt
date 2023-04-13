@@ -47,7 +47,7 @@ class UserActivity : AppCompatActivity() {
     }
 
     private fun firstInitialization() {
-        supportActionBar?.title = "Anggota Perpustakaan"
+        supportActionBar?.title = "Daftar User"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         sessionManager = SessionManager(this)

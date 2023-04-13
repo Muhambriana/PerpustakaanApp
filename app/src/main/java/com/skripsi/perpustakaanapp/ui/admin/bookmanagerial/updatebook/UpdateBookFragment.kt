@@ -111,7 +111,7 @@ class UpdateBookFragment : BottomSheetDialogFragment() {
         binding.edPublisher.setText(dataBook?.publisher)
         binding.edPublisherDate.setText(dataBook?.publisherDate)
         binding.edDescription.setText(dataBook?.description)
-        setBookPoster(dataBook?.imageUrl)
+        if (dataBook?.imageUrl != null && dataBook?.imageUrl != "-") setBookPoster(dataBook?.imageUrl)
     }
 
     private fun setBookPoster(imageName: String?) {

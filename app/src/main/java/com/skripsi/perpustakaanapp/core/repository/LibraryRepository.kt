@@ -11,7 +11,7 @@ class LibraryRepository constructor(private val retrofitClient: RetrofitClient) 
 
     fun getAllEBooks(token: String) = retrofitClient.create().getAllEBook(token)
 
-    fun createBook(token: String, data: RequestBody, image: MultipartBody.Part?, pdf: MultipartBody.Part?) = retrofitClient.create().postCreateBook(token, data, image, pdf)
+    fun createBook(token: String, data: Book, image: MultipartBody.Part?, pdf: MultipartBody.Part?) = retrofitClient.create().postCreateBook(token, data, image, pdf)
 
     fun userLogin(nis: String, password: String) = retrofitClient.create().userLogin(nis, password)
 

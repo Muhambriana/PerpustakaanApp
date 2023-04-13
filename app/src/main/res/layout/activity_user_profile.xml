@@ -17,13 +17,14 @@
             android:layout_width="355dp"
             android:layout_height="255dp"
             android:layout_marginBottom="100dp"
-            tools:src="@drawable/image_member_card_sma"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            tools:ignore="contentDescription"/>
+            tools:ignore="contentDescription"
+            tools:src="@drawable/image_member_card_sma" />
 
         <ImageView
             android:id="@+id/image_avatar_in_card"
@@ -156,16 +157,14 @@
             android:id="@+id/textView8"
             android:layout_width="5dp"
             android:layout_height="15dp"
-            android:layout_marginStart="50dp"
             android:layout_marginTop="112dp"
+            android:layout_marginEnd="5dp"
             android:fontFamily="@font/mo_me"
             android:text=":"
             android:textColor="@color/black"
             android:textSize="10sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/tv_username_in_card"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/text_username_in_card"
             app:layout_constraintTop_toTopOf="@+id/container_member_card" />
 
         <TextView

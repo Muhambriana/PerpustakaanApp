@@ -49,7 +49,7 @@ interface Api {
     @POST("book/create")
     fun postCreateBook(
         @Header("Authorization") token: String,
-        @Part ("data") data: RequestBody?,
+        @Part ("data") data: Book,
         @Part image: MultipartBody.Part?,
         @Part pdfFile: MultipartBody.Part?
     ):Call<GeneralResponse>
